@@ -165,11 +165,7 @@ This project is available under the **MIT License**.
 
 ## 👨‍💻 Author
 
-**Your Name**
-
-* GitHub: `https://github.com/your-username`
-* Portfolio: `https://your-portfolio.com`
-
+**Aryan Patel**
 ---
 
 ⭐ If you found this project useful, consider giving it a star!
