@@ -46,25 +46,51 @@ A modern, responsive **full-stack studio website** built to showcase creative wo
 ## 📂 Project Structure
 
 ```text
-studio-website/
-├── frontend/
-│   ├── components/
-│   ├── pages/
-│   ├── sections/
-│   ├── styles/
-│   └── utils/
+Studioza/
+├── frontend/                      # Next.js App Router Client & Admin UI
+│   ├── public/                    # Static assets & photography samples
+│   ├── src/
+│   │   ├── app/                   # App Router Pages & Routes
+│   │   │   ├── admin/             # Studio Admin Dashboard Suite
+│   │   │   │   ├── inquiries/     # Client Inquiries Management
+│   │   │   │   ├── portfolio/     # Portfolio Categories & Works CMS
+│   │   │   │   ├── services/      # Studio Packages & Services
+│   │   │   │   ├── layout.tsx     # Admin Navigation Layout
+│   │   │   │   └── page.tsx       # Studio Metrics & Telemetry
+│   │   │   ├── contact/           # Commission & Production Brief Submission
+│   │   │   ├── login/             # Atelier Client Portal & Admin Authentication
+│   │   │   ├── main/              # Visual Archive, Category Filter & Session Tiers
+│   │   │   ├── actions.ts         # Server Actions
+│   │   │   ├── globals.css        # Global CSS & Dual-Tone Theme Variables
+│   │   │   ├── layout.tsx         # Root Layout & Typography Setup
+│   │   │   └── page.tsx           # Atelier Entrance Hero & Discipline Showcase
+│   │   ├── components/
+│   │   │   ├── AnimatedBackground.tsx # Dual-Tone Canvas (Blue Hour + Golden Hour)
+│   │   │   ├── Footer.tsx         # Global Footer (Aryan Patel Attribution)
+│   │   │   └── Navbar.tsx         # Floating Glass Navigation
+│   │   └── lib/
+│   │       └── supabase/          # Supabase SSR Client & Server Helpers
+│   ├── next.config.ts             # Next.js Configuration (External Images, etc.)
+│   ├── package.json
+│   └── tsconfig.json
 │
-├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   └── server.js
+├── backend/                       # Express & Prisma REST API Server
+│   ├── prisma/
+│   │   └── schema.prisma          # Database Schema (PostgreSQL / Supabase)
+│   ├── src/
+│   │   ├── controllers/           # Auth, Inquiries, Services, Portfolio Controllers
+│   │   ├── middleware/            # JWT Authentication & Authorization
+│   │   ├── routes/                # Express API Route Handlers
+│   │   ├── lib/                   # Supabase Admin Client
+│   │   └── index.ts               # Express Application Entry Point
+│   ├── .env.example               # Backend Environment Template
+│   ├── package.json
+│   └── tsconfig.json
 │
-├── public/
-├── .env.example
-├── package.json
-└── README.md
+├── .env.example                   # Root Environment Template
+├── .gitignore                     # Git Exclusion Rules (Secrets, .vscode, .next)
+├── package.json                   # Root Monorepo Orchestration Scripts
+└── README.md                      # Project Documentation
 ```
 
 ## 🚀 Getting Started
