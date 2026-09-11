@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #08080a;
+  --foreground: #f4f4f5;
+  --amber-accent: #f59e0b;
+  --platinum: #e2e8f0;
 }
 
 @theme inline {
@@ -10,17 +12,90 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-serif: var(--font-serif);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
 }
+
+/* Photography Studio Keyframes */
+@keyframes bokeh-drift-1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(30px, -40px) scale(1.1);
+  }
+}
+
+@keyframes bokeh-drift-2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1.05);
+  }
+  50% {
+    transform: translate(-35px, 30px) scale(0.95);
+  }
+}
+
+@keyframes anamorphic-shimmer {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scaleX(1) translateX(0%);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scaleX(1.15) translateX(3%);
+  }
+}
+
+@keyframes aperture-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-bokeh-1 {
+  animation: bokeh-drift-1 16s ease-in-out infinite;
+}
+
+.animate-bokeh-2 {
+  animation: bokeh-drift-2 20s ease-in-out infinite;
+}
+
+.animate-anamorphic {
+  animation: anamorphic-shimmer 10s ease-in-out infinite;
+}
+
+.animate-aperture-slow {
+  animation: aperture-rotate 40s linear infinite;
+}
+
+/* Photography Grid Overlay (faint optical viewfinder alignment) */
+.bg-viewfinder-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+

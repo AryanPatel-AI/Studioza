@@ -17,9 +17,16 @@ app.use(express.json());
 
 // Routes
 app.use("/api/admin/auth", authRoutes);
+app.use("/api/auth", authRoutes);
+
 app.use("/api/admin/services", servicesRoutes);
+app.use("/api/services", servicesRoutes);
+
 app.use("/api/admin/portfolio", portfolioRoutes);
+app.use("/api/portfolio", portfolioRoutes);
+
 app.use("/api/admin/inquiries", inquiriesRoutes);
+app.use("/api/inquiries", inquiriesRoutes);
 
 // Health check
 app.get("/health", (req, res) => {

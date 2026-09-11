@@ -5,5 +5,13 @@
   "workspaces": [
     "frontend",
     "backend"
-  ]
+  ],
+  "prisma": {
+    "schema": "backend/prisma/schema.prisma"
+  },
+  "scripts": {
+    "db:push": "prisma db push --schema=backend/prisma/schema.prisma",
+    "db:generate": "prisma generate --schema=backend/prisma/schema.prisma",
+    "db:studio": "prisma studio --schema=backend/prisma/schema.prisma"
+  }
 }
