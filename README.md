@@ -98,8 +98,8 @@ Studioza/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/studio-website.git
-cd studio-website
+git clone https://github.com/AryanPatel-AI/Studioza.git
+cd Studioza
 ```
 
 ### 2. Install dependencies
