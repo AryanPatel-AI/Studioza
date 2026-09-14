@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Camera, Lock, ArrowRight, Sparkles } from "lucide-react";
-import AnimatedBackground from "@/components/AnimatedBackground";
-import { setAdminCookie } from "../actions";
+import { Lock, ArrowRight, Layers, ShieldCheck } from "lucide-react";
+import { loginUser } from "@/app/actions/auth";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,67 +19,62 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
-      const res = await fetch(`${apiUrl}/api/admin/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
 
-      if (!res.ok) {
-        const data = await res.json();
-        setError(data.error || "Invalid email or password.");
+      const result = await loginUser(formData);
+      if (result.error) {
+        setError(result.error);
         return;
       }
 
-      const { token } = await res.json();
-      await setAdminCookie(token);
-
-      router.push("/admin");
+      if (result.role === "admin") {
+        router.push("/dashboard");
+      } else {
+        router.push("/dashboard");
+      }
       router.refresh();
-    } catch (err) {
-      setError("An unexpected error occurred. Please verify backend service.");
+    } catch (err: any) {
+      setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen text-neutral-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative selection:bg-amber-500 selection:text-black">
-      {/* 2-Tone Optical Canvas */}
-      <AnimatedBackground />
-
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 text-center">
-        {/* Studio Brand Mark */}
+    <div className="min-h-screen bg-[#08080a] text-zinc-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 selection:bg-amber-500 selection:text-black">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+        {/* Brand Mark */}
         <Link href="/" className="inline-flex items-center gap-3 group mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-amber-600 to-amber-300 p-0.5 shadow-xl shadow-amber-500/20 group-hover:scale-105 transition-transform">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 via-amber-600 to-amber-300 p-0.5 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
             <div className="w-full h-full bg-[#08080a] rounded-[14px] flex items-center justify-center text-amber-400">
-              <Camera className="w-6 h-6" />
+              <Layers className="w-5 h-5" />
             </div>
           </div>
           <div className="text-left">
-            <span className="font-serif text-2xl tracking-tight text-white font-bold block">
-              Studioza
+            <span className="font-semibold text-xl tracking-tight text-white block">
+              Studio
             </span>
-            <span className="text-[10px] uppercase tracking-[0.25em] text-amber-300/80 font-mono font-medium -mt-1 block">
-              Patron &amp; Admin Portal
+            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-mono block">
+              Digital Workspace
             </span>
           </div>
         </Link>
 
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
-          Authenticated Atelier Access
+        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          Welcome back
         </h1>
-        <p className="mt-2 text-xs sm:text-sm text-blue-200/80 font-light">
-          Sign in to access private master plates, commission telemetry, and inquiries.
+        <p className="mt-2 text-sm text-zinc-400 font-normal">
+          Enter your credentials to access your Studio workspace.
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <div className="p-8 sm:p-10 rounded-3xl border border-amber-400/30 bg-gradient-to-br from-[#0c162e]/90 via-[#161a28]/90 to-[#2b170a]/90 shadow-2xl backdrop-blur-2xl">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="p-8 sm:p-10 rounded-2xl border border-white/[0.08] bg-[#101014] shadow-2xl">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             {error && (
-              <div className="bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs p-3.5 rounded-xl text-center">
+              <div className="bg-rose-950/50 border border-rose-500/30 text-rose-300 text-xs p-3.5 rounded-xl text-center">
                 {error}
               </div>
             )}
@@ -88,9 +82,9 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-[11px] font-mono font-semibold uppercase tracking-wider text-amber-300/90 mb-2"
+                className="block text-xs font-medium text-zinc-300 mb-1.5"
               >
-                Atelier Email Address
+                Email Address
               </label>
               <input
                 id="email"
@@ -100,18 +94,20 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-white/[0.12] bg-white/[0.04] text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400/50 transition-all text-sm"
-                placeholder="admin@studio.com"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.03] text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 text-sm transition-all"
+                placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-[11px] font-mono font-semibold uppercase tracking-wider text-amber-300/90 mb-2"
-              >
-                Access Key / Password
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label
+                  htmlFor="password"
+                  className="block text-xs font-medium text-zinc-300"
+                >
+                  Password
+                </label>
+              </div>
               <input
                 id="password"
                 name="password"
@@ -120,7 +116,7 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-white/[0.12] bg-white/[0.04] text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400/50 transition-all text-sm"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.03] text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 text-sm transition-all"
                 placeholder="••••••••"
               />
             </div>
@@ -129,22 +125,28 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl font-semibold text-xs text-black bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-xl shadow-amber-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-semibold text-sm text-black bg-amber-400 hover:bg-amber-300 shadow-lg shadow-amber-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
-                <Lock className="w-3.5 h-3.5" />
-                {isLoading ? "Authenticating Session..." : "Authorize Atelier Access"}
+                <Lock className="w-4 h-4" />
+                {isLoading ? "Authenticating..." : "Sign In"}
               </button>
             </div>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-white/[0.08] text-center">
+          <div className="mt-6 pt-6 border-t border-white/[0.08] text-center text-xs text-zinc-400">
+            Don&apos;t have an account yet?{" "}
             <Link
-              href="/"
-              className="text-xs font-mono text-sky-300 hover:text-white transition-colors"
+              href="/signup"
+              className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
             >
-              ← Return to Atelier Overview
+              Create an account
             </Link>
           </div>
+        </div>
+
+        <div className="mt-8 flex items-center justify-center gap-2 text-xs text-zinc-500">
+          <ShieldCheck className="w-3.5 h-3.5" />
+          <span>Server-authoritative authentication &amp; encrypted sessions</span>
         </div>
       </div>
     </div>

@@ -9,13 +9,70 @@ datasource db {
 }
 
 model User {
+  id         String     @id @default(cuid())
+  name       String?
+  email      String?    @unique
+  password   String?
+  avatarUrl  String?
+  role       String     @default("user") // "user" or "admin"
+  projects   Project[]
+  assets     Asset[]
+  activities Activity[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model Project {
+  id          String     @id @default(cuid())
+  ownerId     String
+  owner       User       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name        String
+  slug        String     @unique
+  description String?
+  status      String     @default("draft") // "draft" | "published" | "archived"
+  content     String     @default("[]") // JSON string of sections/blocks
+  settings    String?    @default("{}") // JSON string of settings (SEO, theme, visibility)
+  assets      Asset[]
+  activities  Activity[]
+  publishedAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([ownerId])
+  @@index([status])
+  @@index([slug])
+}
+
+model Asset {
+  id         String   @id @default(cuid())
+  projectId  String?
+  project    Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  ownerId    String
+  owner      User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name       String
+  storageKey String
+  mimeType   String
+  size       Int
+  url        String
+  createdAt  DateTime @default(now())
+
+  @@index([projectId])
+  @@index([ownerId])
+}
+
+model Activity {
   id        String   @id @default(cuid())
-  name      String?
-  email     String?  @unique
-  password  String?
-  role      String   @default("customer") // "admin" or "customer"
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   // e.g. PROJECT_CREATED, PROJECT_UPDATED, PROJECT_PUBLISHED, etc.
+  metadata  String?  @default("{}") // JSON string of extra event details
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+  @@index([userId])
+  @@index([createdAt])
 }
 
 model Service {

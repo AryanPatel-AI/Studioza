@@ -25,13 +25,17 @@ export const metadata: Metadata = {
     "Bespoke luxury photography studio delivering medium-format editorial covers, intimate cinematic portraits, and architectural archives.",
 };
 
+import { AtelierTransitionProvider } from "@/components/transitions";
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AtelierTransitionProvider>{children}</AtelierTransitionProvider>
+      </body>
     </html>
   );
 }

@@ -1,74 +1,251 @@
 import { prisma } from "@/lib/prisma";
-import { MessageSquare, Briefcase, Camera, Sparkles, TrendingUp } from "lucide-react";
+
+export const dynamic = "force-dynamic";
+import Link from "next/link";
+import {
+  Users,
+  FolderKanban,
+  Globe,
+  FileBox,
+  Shield,
+  Clock,
+  ExternalLink,
+  ShieldAlert,
+  Activity,
+  CheckCircle2,
+} from "lucide-react";
+import { formatDate, formatTimeAgo } from "@/lib/utils";
 
 export default async function AdminDashboardPage() {
-  const totalInquiries = await prisma.inquiry.count();
-  const newInquiries = await prisma.inquiry.count({ where: { status: "NEW" } });
-  const totalServices = await prisma.service.count();
-  const totalPortfolioItems = await prisma.portfolioItem.count();
+  const [
+    totalUsers,
+    totalProjects,
+    publishedProjects,
+    totalAssets,
+    usersList,
+    projectsList,
+    recentActivities,
+  ] = await Promise.all([
+    prisma.user.count(),
+    prisma.project.count(),
+    prisma.project.count({ where: { status: "published" } }),
+    prisma.asset.count(),
+    prisma.user.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 10,
+      include: {
+        _count: {
+          select: { projects: true, assets: true },
+        },
+      },
+    }),
+    prisma.project.findMany({
+      orderBy: { updatedAt: "desc" },
+      take: 10,
+      include: {
+        owner: {
+          select: { name: true, email: true },
+        },
+      },
+    }),
+    prisma.activity.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 8,
+      include: {
+        user: { select: { name: true, email: true } },
+        project: { select: { name: true, slug: true } },
+      },
+    }),
+  ]);
 
   return (
     <div className="space-y-8">
+      {/* Header */}
       <div>
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-400/30 text-xs font-mono text-sky-300 mb-3">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          Atelier Telemetry &amp; Database
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-mono text-amber-400 mb-3">
+          <ShieldAlert className="w-3.5 h-3.5" />
+          <span>Server-Protected Admin Suite</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-serif font-bold text-white tracking-tight">
-          Dashboard Overview
-        </h1>
-        <p className="text-sm text-blue-200/80 mt-1">
-          Real-time inquiries, active service scopes, and visual archive items recorded in Supabase PostgreSQL.
+        <h1 className="text-3xl font-bold text-white tracking-tight">Platform Telemetry</h1>
+        <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+          Cross-platform user accounts, digital projects, and storage assets recorded in PostgreSQL.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Card 1: Tone 1 Blue */}
-        <div className="bg-[#0c162e]/85 border border-blue-400/20 rounded-2xl p-6 shadow-lg shadow-blue-950/30 backdrop-blur-md">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
           <div className="flex items-center justify-between">
-            <h3 className="text-sky-300 text-xs font-mono font-semibold uppercase tracking-wider">
-              Total Inquiries
-            </h3>
-            <MessageSquare className="w-4 h-4 text-sky-400" />
+            <span className="text-xs text-zinc-400 font-medium">Registered Creators</span>
+            <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
+              <Users className="w-4 h-4" />
+            </div>
           </div>
-          <p className="text-3xl font-serif font-bold text-white mt-3 font-mono">{totalInquiries}</p>
-          <p className="text-xs text-neutral-400 mt-1">Recorded commissions</p>
+          <p className="text-3xl font-bold text-white mt-2 font-mono">{totalUsers}</p>
+          <p className="text-[11px] text-zinc-500 mt-1">Authenticated accounts</p>
         </div>
 
-        {/* Card 2: Tone 2 Amber (Highlighted) */}
-        <div className="bg-[#2a170b]/85 border border-amber-500/30 rounded-2xl p-6 shadow-lg shadow-amber-950/40 backdrop-blur-md">
+        <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
           <div className="flex items-center justify-between">
-            <h3 className="text-amber-400 text-xs font-mono font-semibold uppercase tracking-wider">
-              New Inquiries
-            </h3>
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+            <span className="text-xs text-zinc-400 font-medium">Platform Projects</span>
+            <div className="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center">
+              <FolderKanban className="w-4 h-4" />
+            </div>
           </div>
-          <p className="text-3xl font-serif font-bold text-amber-300 mt-3 font-mono">{newInquiries}</p>
-          <p className="text-xs text-amber-200/70 mt-1">Awaiting director response</p>
+          <p className="text-3xl font-bold text-white mt-2 font-mono">{totalProjects}</p>
+          <p className="text-[11px] text-zinc-500 mt-1">Across all users</p>
         </div>
 
-        {/* Card 3: Tone 1 Blue */}
-        <div className="bg-[#0c162e]/85 border border-blue-400/20 rounded-2xl p-6 shadow-lg shadow-blue-950/30 backdrop-blur-md">
+        <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
           <div className="flex items-center justify-between">
-            <h3 className="text-sky-300 text-xs font-mono font-semibold uppercase tracking-wider">
-              Active Session Tiers
-            </h3>
-            <Briefcase className="w-4 h-4 text-sky-400" />
+            <span className="text-xs text-zinc-400 font-medium">Live Published</span>
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+              <Globe className="w-4 h-4" />
+            </div>
           </div>
-          <p className="text-3xl font-serif font-bold text-white mt-3 font-mono">{totalServices}</p>
-          <p className="text-xs text-neutral-400 mt-1">Live client packages</p>
+          <p className="text-3xl font-bold text-white mt-2 font-mono">{publishedProjects}</p>
+          <p className="text-[11px] text-zinc-500 mt-1">Publicly routed</p>
         </div>
 
-        {/* Card 4: Tone 2 Amber */}
-        <div className="bg-[#2a170b]/85 border border-amber-500/30 rounded-2xl p-6 shadow-lg shadow-amber-950/40 backdrop-blur-md">
+        <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
           <div className="flex items-center justify-between">
-            <h3 className="text-amber-400 text-xs font-mono font-semibold uppercase tracking-wider">
-              Archive Plates
-            </h3>
-            <Camera className="w-4 h-4 text-amber-400" />
+            <span className="text-xs text-zinc-400 font-medium">Stored Assets</span>
+            <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
+              <FileBox className="w-4 h-4" />
+            </div>
           </div>
-          <p className="text-3xl font-serif font-bold text-white mt-3 font-mono">{totalPortfolioItems}</p>
-          <p className="text-xs text-neutral-400 mt-1">Showcased works</p>
+          <p className="text-3xl font-bold text-white mt-2 font-mono">{totalAssets}</p>
+          <p className="text-[11px] text-zinc-500 mt-1">Images and media files</p>
+        </div>
+      </div>
+
+      {/* Two Column Layout: Users & Projects */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* User Directory */}
+        <div className="p-6 rounded-2xl border border-white/[0.08] bg-[#101014] space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-white tracking-tight flex items-center gap-2">
+              <Users className="w-4 h-4 text-amber-400" />
+              <span>User Directory</span>
+            </h2>
+            <span className="text-xs text-zinc-500 font-mono">{usersList.length} users</span>
+          </div>
+
+          <div className="divide-y divide-white/[0.06]">
+            {usersList.map((u) => (
+              <div key={u.id} className="py-3 flex items-center justify-between text-xs">
+                <div>
+                  <p className="font-medium text-white">{u.name || "Unnamed User"}</p>
+                  <p className="text-[11px] text-zinc-400">{u.email}</p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-zinc-300 border border-white/[0.08]">
+                    {u._count.projects} projects
+                  </span>
+                  <span
+                    className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border ${
+                      u.role === "admin"
+                        ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                        : "bg-zinc-500/10 text-zinc-400 border-zinc-500/30"
+                    }`}
+                  >
+                    {u.role}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Global Projects Overview */}
+        <div className="p-6 rounded-2xl border border-white/[0.08] bg-[#101014] space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-white tracking-tight flex items-center gap-2">
+              <FolderKanban className="w-4 h-4 text-amber-400" />
+              <span>Platform Projects</span>
+            </h2>
+            <span className="text-xs text-zinc-500 font-mono">{projectsList.length} recent</span>
+          </div>
+
+          <div className="divide-y divide-white/[0.06]">
+            {projectsList.map((p) => (
+              <div key={p.id} className="py-3 flex items-center justify-between text-xs">
+                <div>
+                  <Link
+                    href={`/projects/${p.id}`}
+                    className="font-medium text-white hover:text-amber-400 transition-colors"
+                  >
+                    {p.name}
+                  </Link>
+                  <p className="text-[11px] text-zinc-400">
+                    By {p.owner.name || p.owner.email}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border ${
+                      p.status === "published"
+                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                        : "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                    }`}
+                  >
+                    {p.status}
+                  </span>
+
+                  {p.status === "published" && (
+                    <Link
+                      href={`/p/${p.slug}`}
+                      target="_blank"
+                      className="p-1 rounded text-zinc-400 hover:text-white"
+                      title="View live"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </Link>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Global Activity Stream */}
+      <div className="p-6 rounded-2xl border border-white/[0.08] bg-[#101014] space-y-4">
+        <h2 className="text-sm font-semibold text-white tracking-tight flex items-center gap-2">
+          <Activity className="w-4 h-4 text-amber-400" />
+          <span>Global Activity Audit Stream</span>
+        </h2>
+
+        <div className="divide-y divide-white/[0.06]">
+          {recentActivities.map((act) => (
+            <div
+              key={act.id}
+              className="py-3 flex items-center justify-between text-xs"
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                <span className="font-mono text-[11px] text-zinc-300">
+                  {act.type.replace(/_/g, " ")}
+                </span>
+                {act.user && (
+                  <span className="text-zinc-400 text-[11px]">
+                    by {act.user.name || act.user.email}
+                  </span>
+                )}
+                {act.project && (
+                  <span className="text-amber-400 text-[11px] font-mono">
+                    [{act.project.name}]
+                  </span>
+                )}
+              </div>
+
+              <span className="text-zinc-500 font-mono text-[11px]">
+                {formatTimeAgo(act.createdAt)}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

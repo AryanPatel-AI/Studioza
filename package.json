@@ -10,8 +10,14 @@
     "schema": "backend/prisma/schema.prisma"
   },
   "scripts": {
+    "dev": "concurrently -n \"backend,frontend\" -c \"blue,magenta\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
     "db:push": "prisma db push --schema=backend/prisma/schema.prisma",
     "db:generate": "prisma generate --schema=backend/prisma/schema.prisma",
     "db:studio": "prisma studio --schema=backend/prisma/schema.prisma"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
   }
 }
