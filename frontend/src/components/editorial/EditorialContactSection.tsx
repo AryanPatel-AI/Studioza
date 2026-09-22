@@ -250,7 +250,7 @@ export default function EditorialContactSection({
           {/* ===================================================================== */}
           <div className="lg:col-span-5 space-y-10 lg:pr-4">
             {/* Curatorial Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.1] text-[10px] font-mono tracking-[0.25em] text-amber-400 uppercase shadow-sm">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.1] text-xs sm:text-sm font-mono tracking-[0.25em] text-amber-400 uppercase shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
               <span>Atelier Commissions • Season 2026/2027</span>
             </div>
@@ -270,10 +270,10 @@ export default function EditorialContactSection({
             </div>
 
             {/* Atelier Production Directives & Telemetry Placard */}
-            <div className="pt-4 border-t border-white/[0.08] space-y-6 text-xs font-mono text-zinc-400">
+            <div className="pt-4 border-t border-white/[0.08] space-y-6 text-sm sm:text-base font-mono text-zinc-400">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <div className="text-[10px] uppercase text-zinc-500 tracking-wider flex items-center gap-1.5">
+                  <div className="text-xs sm:text-sm uppercase text-zinc-500 tracking-wider flex items-center gap-1.5">
                     <Mail className="w-3 h-3 text-amber-400" />
                     <span>Direct Dispatch</span>
                   </div>
@@ -286,7 +286,7 @@ export default function EditorialContactSection({
                 </div>
 
                 <div className="space-y-1">
-                  <div className="text-[10px] uppercase text-zinc-500 tracking-wider flex items-center gap-1.5">
+                  <div className="text-xs sm:text-sm uppercase text-zinc-500 tracking-wider flex items-center gap-1.5">
                     <Clock className="w-3 h-3 text-amber-400" />
                     <span>Response Cadence</span>
                   </div>
@@ -296,7 +296,7 @@ export default function EditorialContactSection({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <div className="text-[10px] uppercase text-zinc-500 tracking-wider flex items-center gap-1.5">
+                  <div className="text-xs sm:text-sm uppercase text-zinc-500 tracking-wider flex items-center gap-1.5">
                     <MapPin className="w-3 h-3 text-amber-400" />
                     <span>Bases of Production</span>
                   </div>
@@ -304,7 +304,7 @@ export default function EditorialContactSection({
                 </div>
 
                 <div className="space-y-1">
-                  <div className="text-[10px] uppercase text-zinc-500 tracking-wider flex items-center gap-1.5">
+                  <div className="text-xs sm:text-sm uppercase text-zinc-500 tracking-wider flex items-center gap-1.5">
                     <ShieldCheck className="w-3 h-3 text-amber-400" />
                     <span>Annual Quota</span>
                   </div>
@@ -313,7 +313,7 @@ export default function EditorialContactSection({
               </div>
 
               {/* Director Sign-Off Stamp */}
-              <div className="pt-2 flex items-center justify-between text-[10px] text-zinc-500 border-t border-white/[0.05]">
+              <div className="pt-2 flex items-center justify-between text-xs sm:text-sm text-zinc-500 border-t border-white/[0.05]">
                 <span>ARYAN PATEL — ATELIER ART DIRECTOR</span>
                 <span className="text-amber-400/80 font-semibold">REF: 2026-INVITATION</span>
               </div>
@@ -348,13 +348,13 @@ export default function EditorialContactSection({
               />
 
               {/* Viewfinder Reticle Framing in Corners */}
-              <div className="absolute top-5 left-6 text-white/20 pointer-events-none font-mono text-[9px] tracking-widest uppercase">
+              <div className="absolute top-5 left-6 text-white/20 pointer-events-none font-mono text-xs sm:text-sm tracking-widest uppercase">
                 ATELIER COMMISSION BRIEF
               </div>
               <div className="absolute top-5 right-6 text-white/20 pointer-events-none">
                 <Scan className="w-3.5 h-3.5" />
               </div>
-              <div className="absolute bottom-5 right-6 text-white/20 pointer-events-none font-mono text-[9px] tracking-widest uppercase">
+              <div className="absolute bottom-5 right-6 text-white/20 pointer-events-none font-mono text-xs sm:text-sm tracking-widest uppercase">
                 VOL. XXIV
               </div>
 
@@ -366,21 +366,21 @@ export default function EditorialContactSection({
                   {/* Subtle Curatorial Form Header */}
                   <div className="pb-4 border-b border-white/[0.08] flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-amber-400 block mb-1">
+                      <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-amber-400 block mb-1">
                         Private Correspondence
                       </span>
                       <h3 className="text-xl sm:text-2xl font-serif font-bold text-white tracking-tight">
                         Commission Inquiry
                       </h3>
                     </div>
-                    <span className="text-[10px] font-mono text-zinc-500">
+                    <span className="text-xs sm:text-sm font-mono text-zinc-500">
                       Encrypted Dispatch
                     </span>
                   </div>
 
                   {/* Error Notification (if any) */}
                   {status === "error" && (
-                    <div className="flex items-center gap-3 bg-rose-950/60 border border-rose-500/40 text-rose-200 px-4 py-3.5 rounded-2xl text-xs font-mono">
+                    <div className="flex items-center gap-3 bg-rose-950/60 border border-rose-500/40 text-rose-200 px-4 py-3.5 rounded-2xl text-sm sm:text-base font-mono">
                       <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
                       <span>{errorMessage}</span>
                     </div>
@@ -393,7 +393,7 @@ export default function EditorialContactSection({
                     <div className="flex items-center justify-between mb-2">
                       <label
                         htmlFor={`${formId}-name`}
-                        className="text-xs font-mono tracking-wider text-zinc-300 flex items-center gap-1.5"
+                        className="text-sm sm:text-base font-mono tracking-wider text-zinc-300 flex items-center gap-1.5"
                       >
                         <span
                           className={cn(
@@ -405,7 +405,7 @@ export default function EditorialContactSection({
                         </span>
                         <span>Your Name or Representative</span>
                       </label>
-                      <span className="text-[10px] font-mono text-zinc-600">Required</span>
+                      <span className="text-xs sm:text-sm font-mono text-zinc-600">Required</span>
                     </div>
 
                     <div className="relative">
@@ -448,7 +448,7 @@ export default function EditorialContactSection({
                     <div className="flex items-center justify-between mb-2">
                       <label
                         htmlFor={`${formId}-email`}
-                        className="text-xs font-mono tracking-wider text-zinc-300 flex items-center gap-1.5"
+                        className="text-sm sm:text-base font-mono tracking-wider text-zinc-300 flex items-center gap-1.5"
                       >
                         <span
                           className={cn(
@@ -460,7 +460,7 @@ export default function EditorialContactSection({
                         </span>
                         <span>Direct Email Address</span>
                       </label>
-                      <span className="text-[10px] font-mono text-zinc-600">Confidential</span>
+                      <span className="text-xs sm:text-sm font-mono text-zinc-600">Confidential</span>
                     </div>
 
                     <div className="relative">
@@ -501,11 +501,11 @@ export default function EditorialContactSection({
                   {/* ============================================================= */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono tracking-wider text-zinc-300 flex items-center gap-1.5">
+                      <span className="text-sm sm:text-base font-mono tracking-wider text-zinc-300 flex items-center gap-1.5">
                         <span className="text-zinc-500">03 /</span>
                         <span>Commission Scope</span>
                       </span>
-                      <span className="text-[10px] font-mono text-amber-400/90 font-medium">
+                      <span className="text-xs sm:text-sm font-mono text-amber-400/90 font-medium">
                         {formData.scope}
                       </span>
                     </div>
@@ -528,7 +528,7 @@ export default function EditorialContactSection({
                             <div className="flex items-center justify-between mb-1">
                               <span
                                 className={cn(
-                                  "text-xs font-serif font-bold transition-colors",
+                                  "text-sm sm:text-base font-serif font-bold transition-colors",
                                   isSelected ? "text-amber-300" : "text-zinc-200"
                                 )}
                               >
@@ -538,7 +538,7 @@ export default function EditorialContactSection({
                                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b]" />
                               )}
                             </div>
-                            <span className="text-[10px] font-mono text-zinc-500 block">
+                            <span className="text-xs sm:text-sm font-mono text-zinc-500 block">
                               {scope.spec}
                             </span>
                           </button>
@@ -554,7 +554,7 @@ export default function EditorialContactSection({
                     <div className="flex items-center justify-between mb-2">
                       <label
                         htmlFor={`${formId}-message`}
-                        className="text-xs font-mono tracking-wider text-zinc-300 flex items-center gap-1.5"
+                        className="text-sm sm:text-base font-mono tracking-wider text-zinc-300 flex items-center gap-1.5"
                       >
                         <span
                           className={cn(
@@ -566,7 +566,7 @@ export default function EditorialContactSection({
                         </span>
                         <span>The Vision, Mood &amp; Timeline</span>
                       </label>
-                      <span className="text-[10px] font-mono text-zinc-600">Unrestricted</span>
+                      <span className="text-xs sm:text-sm font-mono text-zinc-600">Unrestricted</span>
                     </div>
 
                     <div className="relative">
@@ -618,7 +618,7 @@ export default function EditorialContactSection({
                       {status === "submitting" ? "Encoding Brief..." : "Dispatch Commission Inquiry"}
                     </StudioButton>
 
-                    <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500">
+                    <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-zinc-500">
                       <Compass className="w-3 h-3 text-amber-400" />
                       <span>Studioza Executive Desk • Confidential</span>
                     </div>
@@ -630,7 +630,7 @@ export default function EditorialContactSection({
                 /* =============================================================== */
                 <div className="py-8 sm:py-12 space-y-8 animate-in fade-in zoom-in-95 duration-700 relative z-20">
                   {/* Darkroom Certificate Reticle Header */}
-                  <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+                  <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] text-xs sm:text-sm font-mono text-zinc-500 uppercase tracking-widest">
                     <div className="flex items-center gap-2 text-amber-400 font-bold">
                       <span className="w-2 h-2 rounded-full bg-amber-400" />
                       <span>CORRESPONDENCE LOGGED</span>
@@ -653,8 +653,8 @@ export default function EditorialContactSection({
                   </div>
 
                   {/* Darkroom Telemetry Receipt Plate */}
-                  <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/[0.08] space-y-3 font-mono text-xs text-zinc-400">
-                    <div className="flex items-center justify-between border-b border-white/[0.06] pb-2 text-[10px] text-zinc-500 uppercase tracking-wider">
+                  <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/[0.08] space-y-3 font-mono text-sm sm:text-base text-zinc-400">
+                    <div className="flex items-center justify-between border-b border-white/[0.06] pb-2 text-xs sm:text-sm text-zinc-500 uppercase tracking-wider">
                       <span>Inquiry Summary</span>
                       <span className="text-amber-400">Direct Queue</span>
                     </div>
@@ -674,7 +674,7 @@ export default function EditorialContactSection({
                       <span className="text-amber-300 font-medium">{formData.scope}</span>
                     </div>
 
-                    <div className="flex items-center justify-between pt-1 border-t border-white/[0.06] text-[11px]">
+                    <div className="flex items-center justify-between pt-1 border-t border-white/[0.06] text-xs sm:text-sm">
                       <span className="text-zinc-500">Atelier Priority:</span>
                       <span className="text-emerald-400 flex items-center gap-1">
                         <CheckCircle2 className="w-3.5 h-3.5" />
@@ -697,7 +697,7 @@ export default function EditorialContactSection({
 
                     <a
                       href="#roll"
-                      className="text-xs font-mono uppercase tracking-wider text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5"
+                      className="text-sm sm:text-base font-mono uppercase tracking-wider text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5"
                     >
                       <span>Return to Archive</span>
                       <ArrowRight className="w-3.5 h-3.5" />

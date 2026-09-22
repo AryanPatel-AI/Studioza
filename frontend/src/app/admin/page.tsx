@@ -62,7 +62,7 @@ export default async function AdminDashboardPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-mono text-amber-400 mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs sm:text-sm font-mono text-amber-400 mb-3">
           <ShieldAlert className="w-3.5 h-3.5" />
           <span>Server-Protected Admin Suite</span>
         </div>
@@ -76,46 +76,46 @@ export default async function AdminDashboardPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-zinc-400 font-medium">Registered Creators</span>
+            <span className="text-xs sm:text-sm text-zinc-400 font-medium">Registered Creators</span>
             <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
               <Users className="w-4 h-4" />
             </div>
           </div>
           <p className="text-3xl font-bold text-white mt-2 font-mono">{totalUsers}</p>
-          <p className="text-[11px] text-zinc-500 mt-1">Authenticated accounts</p>
+          <p className="text-xs sm:text-sm text-zinc-500 mt-1">Authenticated accounts</p>
         </div>
 
         <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-zinc-400 font-medium">Platform Projects</span>
+            <span className="text-xs sm:text-sm text-zinc-400 font-medium">Platform Projects</span>
             <div className="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center">
               <FolderKanban className="w-4 h-4" />
             </div>
           </div>
           <p className="text-3xl font-bold text-white mt-2 font-mono">{totalProjects}</p>
-          <p className="text-[11px] text-zinc-500 mt-1">Across all users</p>
+          <p className="text-xs sm:text-sm text-zinc-500 mt-1">Across all users</p>
         </div>
 
         <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-zinc-400 font-medium">Live Published</span>
+            <span className="text-xs sm:text-sm text-zinc-400 font-medium">Live Published</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
               <Globe className="w-4 h-4" />
             </div>
           </div>
           <p className="text-3xl font-bold text-white mt-2 font-mono">{publishedProjects}</p>
-          <p className="text-[11px] text-zinc-500 mt-1">Publicly routed</p>
+          <p className="text-xs sm:text-sm text-zinc-500 mt-1">Publicly routed</p>
         </div>
 
         <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-zinc-400 font-medium">Stored Assets</span>
+            <span className="text-xs sm:text-sm text-zinc-400 font-medium">Stored Assets</span>
             <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
               <FileBox className="w-4 h-4" />
             </div>
           </div>
           <p className="text-3xl font-bold text-white mt-2 font-mono">{totalAssets}</p>
-          <p className="text-[11px] text-zinc-500 mt-1">Images and media files</p>
+          <p className="text-xs sm:text-sm text-zinc-500 mt-1">Images and media files</p>
         </div>
       </div>
 
@@ -128,23 +128,23 @@ export default async function AdminDashboardPage() {
               <Users className="w-4 h-4 text-amber-400" />
               <span>User Directory</span>
             </h2>
-            <span className="text-xs text-zinc-500 font-mono">{usersList.length} users</span>
+            <span className="text-xs sm:text-sm text-zinc-500 font-mono">{usersList.length} users</span>
           </div>
 
           <div className="divide-y divide-white/[0.06]">
             {usersList.map((u) => (
-              <div key={u.id} className="py-3 flex items-center justify-between text-xs">
+              <div key={u.id} className="py-3 flex items-center justify-between text-xs sm:text-sm">
                 <div>
                   <p className="font-medium text-white">{u.name || "Unnamed User"}</p>
-                  <p className="text-[11px] text-zinc-400">{u.email}</p>
+                  <p className="text-xs sm:text-sm text-zinc-400">{u.email}</p>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-zinc-300 border border-white/[0.08]">
+                  <span className="text-xs sm:text-sm font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-zinc-300 border border-white/[0.08]">
                     {u._count.projects} projects
                   </span>
                   <span
-                    className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border ${
+                    className={`text-xs sm:text-sm font-mono uppercase px-2 py-0.5 rounded-full border ${
                       u.role === "admin"
                         ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
                         : "bg-zinc-500/10 text-zinc-400 border-zinc-500/30"
@@ -165,12 +165,12 @@ export default async function AdminDashboardPage() {
               <FolderKanban className="w-4 h-4 text-amber-400" />
               <span>Platform Projects</span>
             </h2>
-            <span className="text-xs text-zinc-500 font-mono">{projectsList.length} recent</span>
+            <span className="text-xs sm:text-sm text-zinc-500 font-mono">{projectsList.length} recent</span>
           </div>
 
           <div className="divide-y divide-white/[0.06]">
             {projectsList.map((p) => (
-              <div key={p.id} className="py-3 flex items-center justify-between text-xs">
+              <div key={p.id} className="py-3 flex items-center justify-between text-xs sm:text-sm">
                 <div>
                   <Link
                     href={`/projects/${p.id}`}
@@ -178,14 +178,14 @@ export default async function AdminDashboardPage() {
                   >
                     {p.name}
                   </Link>
-                  <p className="text-[11px] text-zinc-400">
+                  <p className="text-xs sm:text-sm text-zinc-400">
                     By {p.owner.name || p.owner.email}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <span
-                    className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border ${
+                    className={`text-xs sm:text-sm font-mono uppercase px-2 py-0.5 rounded-full border ${
                       p.status === "published"
                         ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
                         : "bg-amber-500/10 text-amber-400 border-amber-500/30"
@@ -222,26 +222,26 @@ export default async function AdminDashboardPage() {
           {recentActivities.map((act) => (
             <div
               key={act.id}
-              className="py-3 flex items-center justify-between text-xs"
+              className="py-3 flex items-center justify-between text-xs sm:text-sm"
             >
               <div className="flex items-center gap-2.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                <span className="font-mono text-[11px] text-zinc-300">
+                <span className="font-mono text-xs sm:text-sm text-zinc-300">
                   {act.type.replace(/_/g, " ")}
                 </span>
                 {act.user && (
-                  <span className="text-zinc-400 text-[11px]">
+                  <span className="text-zinc-400 text-xs sm:text-sm">
                     by {act.user.name || act.user.email}
                   </span>
                 )}
                 {act.project && (
-                  <span className="text-amber-400 text-[11px] font-mono">
+                  <span className="text-amber-400 text-xs sm:text-sm font-mono">
                     [{act.project.name}]
                   </span>
                 )}
               </div>
 
-              <span className="text-zinc-500 font-mono text-[11px]">
+              <span className="text-zinc-500 font-mono text-xs sm:text-sm">
                 {formatTimeAgo(act.createdAt)}
               </span>
             </div>

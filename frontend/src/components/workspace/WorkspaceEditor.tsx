@@ -253,7 +253,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
       {/* Toast Notification Banner */}
       {notification && (
         <div
-          className={`fixed bottom-5 right-5 z-50 px-4 py-2.5 rounded-xl text-xs font-medium shadow-2xl flex items-center gap-2 border animate-in slide-in-from-bottom-2 duration-150 ${
+          className={`fixed bottom-5 right-5 z-50 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium shadow-2xl flex items-center gap-2 border animate-in slide-in-from-bottom-2 duration-150 ${
             notification.type === "success"
               ? "bg-emerald-950/90 border-emerald-500/40 text-emerald-200"
               : "bg-rose-950/90 border-rose-500/40 text-rose-200"
@@ -285,7 +285,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
               {project.name}
             </span>
             <span
-              className={`text-[9px] uppercase font-mono px-2 py-0.5 rounded-full border ${
+              className={`text-xs sm:text-sm uppercase font-mono px-2 py-0.5 rounded-full border ${
                 status === "published"
                   ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
                   : "bg-amber-500/10 text-amber-400 border-amber-500/30"
@@ -307,7 +307,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
         {/* Center: Device Mode & View Mode Switcher */}
         <div className="hidden md:flex items-center gap-2">
           {/* Device Frames */}
-          <div className="flex items-center p-1 bg-white/[0.04] border border-white/[0.06] rounded-xl text-xs">
+          <div className="flex items-center p-1 bg-white/[0.04] border border-white/[0.06] rounded-xl text-xs sm:text-sm">
             <button
               onClick={() => setDeviceMode("desktop")}
               className={`p-1.5 rounded-lg transition-all ${
@@ -338,7 +338,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
           </div>
 
           {/* Edit / Preview Toggle */}
-          <div className="flex items-center p-1 bg-white/[0.04] border border-white/[0.06] rounded-xl text-xs">
+          <div className="flex items-center p-1 bg-white/[0.04] border border-white/[0.06] rounded-xl text-xs sm:text-sm">
             <button
               onClick={() => setViewMode("edit")}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-medium transition-all ${
@@ -363,7 +363,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
         {/* Right: Save Status, Save Button, Publish Action */}
         <div className="flex items-center gap-2.5">
           {/* Save Status Indicator */}
-          <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-mono">
+          <div className="hidden sm:flex items-center gap-1.5 text-xs sm:text-sm font-mono">
             {saveStatus === "saved" && (
               <span className="text-emerald-400 flex items-center gap-1">
                 <Check className="w-3 h-3" />
@@ -388,7 +388,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
           <button
             onClick={handleSave}
             disabled={saveStatus === "saving"}
-            className="flex items-center gap-1.5 py-1.5 px-3 rounded-xl text-xs font-medium text-white bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] transition-all cursor-pointer"
+            className="flex items-center gap-1.5 py-1.5 px-3 rounded-xl text-xs sm:text-sm font-medium text-white bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] transition-all cursor-pointer"
             title="Save Project (Cmd+S)"
           >
             <Save className="w-3 h-3" />
@@ -401,7 +401,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
               <Link
                 href={`/p/${project.slug}`}
                 target="_blank"
-                className="flex items-center gap-1 py-1.5 px-2.5 rounded-xl text-xs font-medium text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 transition-all"
+                className="flex items-center gap-1 py-1.5 px-2.5 rounded-xl text-xs sm:text-sm font-medium text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 transition-all"
               >
                 <span>Live URL</span>
                 <ExternalLink className="w-3 h-3" />
@@ -409,7 +409,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
               <button
                 onClick={handleUnpublish}
                 disabled={isPublishing}
-                className="py-1.5 px-2.5 rounded-xl text-xs text-zinc-400 hover:text-white transition-colors"
+                className="py-1.5 px-2.5 rounded-xl text-xs sm:text-sm text-zinc-400 hover:text-white transition-colors"
                 title="Revert to Draft"
               >
                 Unpublish
@@ -419,7 +419,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
             <button
               onClick={handlePublish}
               disabled={isPublishing}
-              className="flex items-center gap-1.5 py-1.5 px-3.5 rounded-xl text-xs font-semibold text-black bg-amber-400 hover:bg-amber-300 shadow-md shadow-amber-500/20 transition-all cursor-pointer"
+              className="flex items-center gap-1.5 py-1.5 px-3.5 rounded-xl text-xs sm:text-sm font-semibold text-black bg-amber-400 hover:bg-amber-300 shadow-md shadow-amber-500/20 transition-all cursor-pointer"
             >
               <Globe className="w-3 h-3" />
               <span>{isPublishing ? "Publishing..." : "Publish"}</span>
@@ -435,7 +435,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
           <aside className="w-64 border-r border-white/[0.08] bg-[#0d0d11] flex flex-col justify-between shrink-0 overflow-y-auto hidden sm:flex">
             <div className="p-3 space-y-3">
               <div className="flex items-center justify-between px-1">
-                <span className="text-[11px] uppercase font-mono font-semibold text-zinc-400">
+                <span className="text-xs sm:text-sm uppercase font-mono font-semibold text-zinc-400">
                   Sections ({blocks.length})
                 </span>
               </div>
@@ -448,14 +448,14 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
                     <div
                       key={b.id}
                       onClick={() => setActiveBlockId(b.id)}
-                      className={`group p-2 rounded-xl text-xs cursor-pointer border transition-all flex items-center justify-between ${
+                      className={`group p-2 rounded-xl text-xs sm:text-sm cursor-pointer border transition-all flex items-center justify-between ${
                         isActive
                           ? "bg-amber-500/10 border-amber-500/40 text-white"
                           : "bg-white/[0.02] border-white/[0.04] text-zinc-400 hover:text-white hover:bg-white/[0.04]"
                       }`}
                     >
                       <div className="flex items-center gap-2 truncate">
-                        <span className="text-[10px] font-mono text-zinc-500">#{idx + 1}</span>
+                        <span className="text-xs sm:text-sm font-mono text-zinc-500">#{idx + 1}</span>
                         <span className="font-medium capitalize truncate">{b.type} Block</span>
                       </div>
 
@@ -497,39 +497,39 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
 
               {/* Add Block Menu */}
               <div className="pt-2 border-t border-white/[0.06] space-y-1">
-                <p className="text-[10px] font-mono uppercase text-zinc-500 px-1">Add Block</p>
+                <p className="text-xs sm:text-sm font-mono uppercase text-zinc-500 px-1">Add Block</p>
                 <div className="grid grid-cols-2 gap-1.5">
                   <button
                     onClick={() => addBlock("hero")}
-                    className="p-2 rounded-lg text-left bg-white/[0.02] border border-white/[0.05] hover:border-amber-500/30 text-zinc-300 text-xs flex items-center gap-1.5"
+                    className="p-2 rounded-lg text-left bg-white/[0.02] border border-white/[0.05] hover:border-amber-500/30 text-zinc-300 text-xs sm:text-sm flex items-center gap-1.5"
                   >
                     <Layout className="w-3 h-3 text-amber-400" />
                     <span>Hero</span>
                   </button>
                   <button
                     onClick={() => addBlock("text")}
-                    className="p-2 rounded-lg text-left bg-white/[0.02] border border-white/[0.05] hover:border-amber-500/30 text-zinc-300 text-xs flex items-center gap-1.5"
+                    className="p-2 rounded-lg text-left bg-white/[0.02] border border-white/[0.05] hover:border-amber-500/30 text-zinc-300 text-xs sm:text-sm flex items-center gap-1.5"
                   >
                     <FileText className="w-3 h-3 text-amber-400" />
                     <span>Story</span>
                   </button>
                   <button
                     onClick={() => addBlock("features")}
-                    className="p-2 rounded-lg text-left bg-white/[0.02] border border-white/[0.05] hover:border-amber-500/30 text-zinc-300 text-xs flex items-center gap-1.5"
+                    className="p-2 rounded-lg text-left bg-white/[0.02] border border-white/[0.05] hover:border-amber-500/30 text-zinc-300 text-xs sm:text-sm flex items-center gap-1.5"
                   >
                     <Sparkles className="w-3 h-3 text-amber-400" />
                     <span>Features</span>
                   </button>
                   <button
                     onClick={() => addBlock("gallery")}
-                    className="p-2 rounded-lg text-left bg-white/[0.02] border border-white/[0.05] hover:border-amber-500/30 text-zinc-300 text-xs flex items-center gap-1.5"
+                    className="p-2 rounded-lg text-left bg-white/[0.02] border border-white/[0.05] hover:border-amber-500/30 text-zinc-300 text-xs sm:text-sm flex items-center gap-1.5"
                   >
                     <ImageIcon className="w-3 h-3 text-amber-400" />
                     <span>Gallery</span>
                   </button>
                   <button
                     onClick={() => addBlock("cta")}
-                    className="col-span-2 p-2 rounded-lg text-left bg-white/[0.02] border border-white/[0.05] hover:border-amber-500/30 text-zinc-300 text-xs flex items-center gap-1.5"
+                    className="col-span-2 p-2 rounded-lg text-left bg-white/[0.02] border border-white/[0.05] hover:border-amber-500/30 text-zinc-300 text-xs sm:text-sm flex items-center gap-1.5"
                   >
                     <Share2 className="w-3 h-3 text-amber-400" />
                     <span>Call to Action</span>
@@ -542,7 +542,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
             {activeBlock && (
               <div className="p-3 border-t border-white/[0.08] bg-[#101014] space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] uppercase font-mono font-semibold text-amber-400">
+                  <span className="text-xs sm:text-sm uppercase font-mono font-semibold text-amber-400">
                     Edit {activeBlock.type}
                   </span>
                   <button
@@ -554,64 +554,64 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
                   </button>
                 </div>
 
-                <div className="space-y-2 text-xs">
+                <div className="space-y-2 text-xs sm:text-sm">
                   {activeBlock.badge !== undefined && (
                     <div>
-                      <label className="text-[10px] text-zinc-400 block mb-0.5">Badge / Tag</label>
+                      <label className="text-xs sm:text-sm text-zinc-400 block mb-0.5">Badge / Tag</label>
                       <input
                         type="text"
                         value={activeBlock.badge || ""}
                         onChange={(e) => updateBlock(activeBlock.id, { badge: e.target.value })}
-                        className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs"
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs sm:text-sm"
                       />
                     </div>
                   )}
 
                   {activeBlock.title !== undefined && (
                     <div>
-                      <label className="text-[10px] text-zinc-400 block mb-0.5">Title</label>
+                      <label className="text-xs sm:text-sm text-zinc-400 block mb-0.5">Title</label>
                       <input
                         type="text"
                         value={activeBlock.title || ""}
                         onChange={(e) => updateBlock(activeBlock.id, { title: e.target.value })}
-                        className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs"
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs sm:text-sm"
                       />
                     </div>
                   )}
 
                   {activeBlock.subtitle !== undefined && (
                     <div>
-                      <label className="text-[10px] text-zinc-400 block mb-0.5">Subtitle</label>
+                      <label className="text-xs sm:text-sm text-zinc-400 block mb-0.5">Subtitle</label>
                       <textarea
                         rows={2}
                         value={activeBlock.subtitle || ""}
                         onChange={(e) => updateBlock(activeBlock.id, { subtitle: e.target.value })}
-                        className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs resize-none"
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs sm:text-sm resize-none"
                       />
                     </div>
                   )}
 
                   {activeBlock.content !== undefined && (
                     <div>
-                      <label className="text-[10px] text-zinc-400 block mb-0.5">Story Text</label>
+                      <label className="text-xs sm:text-sm text-zinc-400 block mb-0.5">Story Text</label>
                       <textarea
                         rows={4}
                         value={activeBlock.content || ""}
                         onChange={(e) => updateBlock(activeBlock.id, { content: e.target.value })}
-                        className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs"
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs sm:text-sm"
                       />
                     </div>
                   )}
 
                   {activeBlock.imageUrl !== undefined && (
                     <div>
-                      <label className="text-[10px] text-zinc-400 block mb-0.5">Image URL</label>
+                      <label className="text-xs sm:text-sm text-zinc-400 block mb-0.5">Image URL</label>
                       <input
                         type="url"
                         placeholder="https://..."
                         value={activeBlock.imageUrl || ""}
                         onChange={(e) => updateBlock(activeBlock.id, { imageUrl: e.target.value })}
-                        className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs"
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs sm:text-sm"
                       />
                     </div>
                   )}
@@ -619,21 +619,21 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
                   {activeBlock.ctaText !== undefined && (
                     <div className="grid grid-cols-2 gap-1.5">
                       <div>
-                        <label className="text-[10px] text-zinc-400 block mb-0.5">Button Text</label>
+                        <label className="text-xs sm:text-sm text-zinc-400 block mb-0.5">Button Text</label>
                         <input
                           type="text"
                           value={activeBlock.ctaText || ""}
                           onChange={(e) => updateBlock(activeBlock.id, { ctaText: e.target.value })}
-                          className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs"
+                          className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs sm:text-sm"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] text-zinc-400 block mb-0.5">Button Link</label>
+                        <label className="text-xs sm:text-sm text-zinc-400 block mb-0.5">Button Link</label>
                         <input
                           type="text"
                           value={activeBlock.ctaUrl || ""}
                           onChange={(e) => updateBlock(activeBlock.id, { ctaUrl: e.target.value })}
-                          className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs"
+                          className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs sm:text-sm"
                         />
                       </div>
                     </div>
@@ -642,21 +642,21 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
                   {activeBlock.buttonText !== undefined && (
                     <div className="grid grid-cols-2 gap-1.5">
                       <div>
-                        <label className="text-[10px] text-zinc-400 block mb-0.5">Button Text</label>
+                        <label className="text-xs sm:text-sm text-zinc-400 block mb-0.5">Button Text</label>
                         <input
                           type="text"
                           value={activeBlock.buttonText || ""}
                           onChange={(e) => updateBlock(activeBlock.id, { buttonText: e.target.value })}
-                          className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs"
+                          className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs sm:text-sm"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] text-zinc-400 block mb-0.5">Button Link</label>
+                        <label className="text-xs sm:text-sm text-zinc-400 block mb-0.5">Button Link</label>
                         <input
                           type="text"
                           value={activeBlock.buttonUrl || ""}
                           onChange={(e) => updateBlock(activeBlock.id, { buttonUrl: e.target.value })}
-                          className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs"
+                          className="w-full px-2.5 py-1.5 rounded-lg border border-white/[0.1] bg-black/40 text-white text-xs sm:text-sm"
                         />
                       </div>
                     </div>
@@ -696,7 +696,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
                   {block.type === "hero" && (
                     <div className="text-center max-w-3xl mx-auto space-y-6">
                       {block.badge && (
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono uppercase bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs sm:text-sm font-mono uppercase bg-amber-500/10 text-amber-400 border border-amber-500/30">
                           {block.badge}
                         </div>
                       )}
@@ -764,13 +764,13 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
                             key={idx}
                             className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014] space-y-2"
                           >
-                            <div className="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-xs font-mono">
+                            <div className="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-xs sm:text-sm font-mono">
                               0{idx + 1}
                             </div>
                             <h3 className="font-semibold text-white text-sm tracking-tight">
                               {item.title}
                             </h3>
-                            <p className="text-xs text-zinc-400 leading-relaxed">
+                            <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                               {item.description}
                             </p>
                           </div>
@@ -808,7 +808,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
                             </div>
                             <div className="p-4 flex items-center justify-between">
                               <h3 className="font-semibold text-white text-sm">{item.title}</h3>
-                              <span className="text-[10px] uppercase font-mono text-amber-400">
+                              <span className="text-xs sm:text-sm uppercase font-mono text-amber-400">
                                 {item.category}
                               </span>
                             </div>
@@ -833,7 +833,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
                         <div className="pt-3">
                           <a
                             href={block.buttonUrl || "#"}
-                            className="inline-flex items-center gap-2 py-3 px-6 rounded-xl font-semibold text-xs text-black bg-amber-400 hover:bg-amber-300 shadow-xl shadow-amber-500/20 transition-all"
+                            className="inline-flex items-center gap-2 py-3 px-6 rounded-xl font-semibold text-xs sm:text-sm text-black bg-amber-400 hover:bg-amber-300 shadow-xl shadow-amber-500/20 transition-all"
                           >
                             <span>{block.buttonText}</span>
                           </a>

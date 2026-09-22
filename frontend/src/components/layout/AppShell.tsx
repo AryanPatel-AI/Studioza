@@ -84,7 +84,7 @@ export default function AppShell({ children, user }: AppShellProps) {
                 <span className="font-semibold text-base tracking-tight text-white block">
                   Studio
                 </span>
-                <span className="text-[9px] uppercase tracking-wider text-zinc-400 font-mono block -mt-0.5">
+                <span className="text-xs sm:text-sm uppercase tracking-wider text-zinc-400 font-mono block -mt-0.5">
                   Workspace
                 </span>
               </div>
@@ -104,7 +104,7 @@ export default function AppShell({ children, user }: AppShellProps) {
             <Link
               href="/projects?create=true"
               onClick={() => setMobileOpen(false)}
-              className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl font-medium text-xs text-black bg-amber-400 hover:bg-amber-300 shadow-sm transition-all"
+              className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl font-medium text-xs sm:text-sm text-black bg-amber-400 hover:bg-amber-300 shadow-sm transition-all"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>New Project</span>
@@ -124,7 +124,7 @@ export default function AppShell({ children, user }: AppShellProps) {
                   key={item.name}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+                  className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all ${
                     isActive
                       ? "bg-white/[0.08] text-amber-400 border border-amber-500/20 shadow-sm"
                       : "text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.04]"
@@ -133,7 +133,7 @@ export default function AppShell({ children, user }: AppShellProps) {
                   <Icon className={`w-4 h-4 ${isActive ? "text-amber-400" : "text-zinc-400"}`} />
                   <span>{item.name}</span>
                   {item.name === "Admin Portal" && (
-                    <span className="ml-auto text-[9px] uppercase font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    <span className="ml-auto text-xs sm:text-sm uppercase font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
                       Admin
                     </span>
                   )}
@@ -151,14 +151,14 @@ export default function AppShell({ children, user }: AppShellProps) {
               className="flex items-center gap-2.5 overflow-hidden"
               onClick={() => setMobileOpen(false)}
             >
-              <div className="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center font-bold text-xs shrink-0">
+              <div className="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">
                 {user.name ? user.name[0].toUpperCase() : "U"}
               </div>
               <div className="overflow-hidden">
-                <p className="text-xs font-medium text-white truncate">
+                <p className="text-xs sm:text-sm font-medium text-white truncate">
                   {user.name || "Studio Creator"}
                 </p>
-                <p className="text-[10px] text-zinc-400 truncate">{user.email}</p>
+                <p className="text-xs sm:text-sm text-zinc-400 truncate">{user.email}</p>
               </div>
             </Link>
 
@@ -191,7 +191,7 @@ export default function AppShell({ children, user }: AppShellProps) {
 
           <Link
             href="/projects?create=true"
-            className="flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg text-xs font-medium text-black bg-amber-400"
+            className="flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg text-xs sm:text-sm font-medium text-black bg-amber-400"
           >
             <Plus className="w-3 h-3" />
             <span>New</span>

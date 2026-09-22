@@ -114,7 +114,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-3 group select-none">
             {/* Minimal Optical Lens Aperture Ring */}
             <div className="w-7 h-7 rounded-full border border-white/20 group-hover:border-amber-300/80 flex items-center justify-center transition-all duration-500 bg-white/[0.02] group-hover:bg-amber-400/[0.08] relative overflow-hidden">
-              <span className="font-serif italic font-semibold text-xs text-zinc-200 group-hover:text-amber-200 transition-colors">
+              <span className="font-serif italic font-semibold text-xs sm:text-sm text-zinc-200 group-hover:text-amber-200 transition-colors">
                 S
               </span>
               <div className="absolute inset-0 rounded-full border border-amber-300/0 group-hover:border-amber-300/30 transition-all duration-500 scale-90 group-hover:scale-100" />
@@ -133,7 +133,7 @@ export default function Navbar() {
           {/* ========================================================================= */}
           {/* 2. MINIMAL DESKTOP NAVIGATION (Restrained, Timeless Typography)           */}
           {/* ========================================================================= */}
-          <nav className="hidden md:flex items-center gap-8 text-[11px] font-mono tracking-[0.22em] uppercase select-none">
+          <nav className="hidden md:flex items-center gap-8 text-xs sm:text-sm font-mono tracking-[0.22em] uppercase select-none">
             {navItems.map((item) => {
               const isActive = activeSection === item.sectionId;
               return (
@@ -172,7 +172,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-5">
             <Link
               href="/login"
-              className="text-[11px] font-mono uppercase tracking-[0.2em] text-zinc-400 hover:text-white transition-colors"
+              className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-zinc-400 hover:text-white transition-colors"
             >
               Sign In
             </Link>
@@ -195,7 +195,7 @@ export default function Navbar() {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className={cn(
-                "flex items-center gap-2 py-2 px-3.5 min-h-[42px] rounded-full border text-[10px] font-mono tracking-widest uppercase transition-all duration-300 select-none cursor-pointer",
+                "flex items-center gap-2 py-2 px-3.5 min-h-[42px] rounded-full border text-xs sm:text-sm font-mono tracking-widest uppercase transition-all duration-300 select-none cursor-pointer",
                 mobileOpen
                   ? "border-amber-400/60 bg-amber-400/10 text-amber-300"
                   : "border-white/15 bg-white/[0.03] text-zinc-300 hover:text-white hover:border-white/30"
@@ -220,7 +220,7 @@ export default function Navbar() {
         {mobileOpen && (
           <div className="md:hidden pt-5 pb-2 mt-4 border-t border-white/[0.08] space-y-4 animate-in fade-in slide-in-from-top-2 duration-300 max-h-[75vh] overflow-y-auto scrollbar-none">
             {/* Header Placard */}
-            <div className="flex items-center justify-between text-[9px] font-mono text-zinc-500 uppercase tracking-widest pb-1 border-b border-white/[0.04]">
+            <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 uppercase tracking-widest pb-1 border-b border-white/[0.04]">
               <span>Atelier Catalog Index</span>
               <span>Vol. XXIV</span>
             </div>
@@ -235,14 +235,14 @@ export default function Navbar() {
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
                     className={cn(
-                      "py-3.5 px-1 flex items-center justify-between text-xs font-mono uppercase tracking-widest transition-colors",
+                      "py-3.5 px-1 flex items-center justify-between text-xs sm:text-sm font-mono uppercase tracking-widest transition-colors",
                       isActive
                         ? "text-amber-300 font-semibold"
                         : "text-zinc-300 hover:text-white"
                     )}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] text-amber-400/80 font-normal">
+                      <span className="text-xs sm:text-sm text-amber-400/80 font-normal">
                         {item.number}
                       </span>
                       <span>{item.name}</span>
@@ -258,14 +258,14 @@ export default function Navbar() {
               <Link
                 href="/login"
                 onClick={() => setMobileOpen(false)}
-                className="py-3 px-4 min-h-[44px] flex items-center justify-center rounded-full text-[11px] font-mono uppercase tracking-wider text-zinc-300 hover:text-white border border-white/15 w-1/2 text-center transition-colors"
+                className="py-3 px-4 min-h-[44px] flex items-center justify-center rounded-full text-xs sm:text-sm font-mono uppercase tracking-wider text-zinc-300 hover:text-white border border-white/15 w-1/2 text-center transition-colors"
               >
                 Sign In
               </Link>
               <Link
                 href="/signup"
                 onClick={() => setMobileOpen(false)}
-                className="py-3 px-4 min-h-[44px] flex items-center justify-center rounded-full text-[11px] font-mono uppercase tracking-wider text-black bg-gradient-to-r from-amber-200 via-amber-300 to-amber-400 font-semibold w-1/2 text-center shadow-md shadow-amber-400/15 transition-all"
+                className="py-3 px-4 min-h-[44px] flex items-center justify-center rounded-full text-xs sm:text-sm font-mono uppercase tracking-wider text-black bg-gradient-to-r from-amber-200 via-amber-300 to-amber-400 font-semibold w-1/2 text-center shadow-md shadow-amber-400/15 transition-all"
               >
                 Workspace
               </Link>

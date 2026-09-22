@@ -19,7 +19,7 @@ export default function FullWidthBreakout() {
       {/* 2. Full-Width Edge-to-Edge Architectural Spread */}
       <div className="relative z-10 w-full">
         {/* Top Film Frame Border & Rebate Marking */}
-        <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 mb-6 flex items-center justify-between text-[10px] font-mono text-zinc-500 uppercase tracking-widest border-b border-white/[0.08] pb-4">
+        <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 mb-6 flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 uppercase tracking-widest border-b border-white/[0.08] pb-4">
           <div className="flex items-center gap-3">
             <span className="text-amber-400 font-bold">PLATE REF. // 08-B</span>
             <span className="text-zinc-600">•</span>
@@ -32,7 +32,7 @@ export default function FullWidthBreakout() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCropMode(cropMode === "master" ? "uncropped" : "master")}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/20 hover:border-amber-400/80 text-zinc-300 hover:text-amber-300 transition-colors cursor-pointer text-[10px]"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/20 hover:border-amber-400/80 text-zinc-300 hover:text-amber-300 transition-colors cursor-pointer text-xs sm:text-sm"
             >
               <SlidersHorizontal className="w-3 h-3 text-amber-400" />
               <span>{cropMode === "master" ? "View Full Negative" : "View Archival Crop"}</span>
@@ -66,7 +66,7 @@ export default function FullWidthBreakout() {
           {/* Photographers Contact Sheet Grease Pencil Crop Annotation (Clear of headline) */}
           {cropMode === "master" && (
             <div className="absolute inset-x-4 sm:inset-x-16 lg:inset-x-24 top-6 sm:top-16 lg:top-24 bottom-52 sm:bottom-44 lg:bottom-52 pointer-events-none border border-amber-400/35 rounded-sm flex flex-col justify-between p-3 sm:p-4 transition-opacity duration-500 animate-in fade-in">
-              <div className="flex justify-between items-start text-[9px] sm:text-[10px] font-mono text-amber-400/80">
+              <div className="flex justify-between items-start text-xs sm:text-sm sm:text-xs sm:text-sm font-mono text-amber-400/80">
                 <span className="bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm border border-amber-400/30">
                   ✓ CROP 16:9<span className="hidden sm:inline"> // MASTER PRINT</span>
                 </span>
@@ -74,7 +74,7 @@ export default function FullWidthBreakout() {
                   BURNING -0.5 EV
                 </span>
               </div>
-              <div className="flex justify-between items-end text-[9px] sm:text-[10px] font-mono text-amber-400/80">
+              <div className="flex justify-between items-end text-xs sm:text-sm sm:text-xs sm:text-sm font-mono text-amber-400/80">
                 <span className="bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm border border-amber-400/30">
                   FRAME 14A • SELECTED
                 </span>
@@ -88,7 +88,7 @@ export default function FullWidthBreakout() {
           {/* Overlapping Typography cutting across the bottom edge of the image */}
           <div className="absolute bottom-6 sm:bottom-12 left-6 sm:left-12 lg:left-16 right-6 sm:right-12 lg:right-16 z-20 flex flex-col sm:flex-row sm:items-end justify-between gap-6 pointer-events-none">
             <div>
-              <span className="text-xs font-mono tracking-[0.25em] text-amber-400/90 block mb-2">
+              <span className="text-sm sm:text-base font-mono tracking-[0.25em] text-amber-400/90 block mb-2">
                 Field Monograph 04 — The Volcanic Horizon
               </span>
               <h2 className="text-3xl sm:text-5xl lg:text-7xl font-serif font-bold text-white tracking-tight drop-shadow-lg leading-tight">
@@ -98,7 +98,7 @@ export default function FullWidthBreakout() {
 
             <div className="pointer-events-auto">
               <MagneticButton href="/contact" strength={0.3}>
-                <div className="inline-flex items-center gap-2 py-3 px-6 rounded-full bg-white/10 hover:bg-white text-white hover:text-black backdrop-blur-md border border-white/20 text-xs font-mono tracking-wider transition-all shadow-xl font-medium">
+                <div className="inline-flex items-center gap-2 py-3 px-6 rounded-full bg-white/10 hover:bg-white text-white hover:text-black backdrop-blur-md border border-white/20 text-sm sm:text-base font-mono tracking-wider transition-all shadow-xl font-medium">
                   <span>Inquire Plate Print</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>
@@ -108,9 +108,9 @@ export default function FullWidthBreakout() {
         </div>
 
         {/* Museum Placard Footnote / Curatorial Commentary */}
-        <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 mt-8 grid grid-cols-1 md:grid-cols-12 gap-8 text-xs font-light text-zinc-400">
+        <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 mt-8 grid grid-cols-1 md:grid-cols-12 gap-8 text-sm sm:text-base font-light text-zinc-400">
           <div className="md:col-span-4 space-y-1">
-            <span className="text-[10px] font-mono tracking-wider text-zinc-500 block">
+            <span className="text-xs sm:text-sm font-mono tracking-wider text-zinc-500 block">
               Curatorial Commentary
             </span>
             <p className="leading-relaxed">
@@ -119,19 +119,19 @@ export default function FullWidthBreakout() {
           </div>
 
           <div className="md:col-span-4 space-y-1">
-            <span className="text-[10px] font-mono tracking-wider text-zinc-500 block">
+            <span className="text-xs sm:text-sm font-mono tracking-wider text-zinc-500 block">
               Exposure Telemetry
             </span>
-            <p className="font-mono text-[11px] text-zinc-300">
+            <p className="font-mono text-xs sm:text-sm text-zinc-300">
               Schneider Apo-Digitar 47mm XL • f/11 • 45s Long Exposure • Lee 0.9 Soft ND Grad filter.
             </p>
           </div>
 
           <div className="md:col-span-4 space-y-1">
-            <span className="text-[10px] font-mono tracking-wider text-zinc-500 block">
+            <span className="text-xs sm:text-sm font-mono tracking-wider text-zinc-500 block">
               Archival Specifications
             </span>
-            <p className="font-mono text-[11px] text-amber-300/90">
+            <p className="font-mono text-xs sm:text-sm text-amber-300/90">
               Limited Edition of 7 Worldwide • Signed &amp; blind-embossed by principal photographer.
             </p>
           </div>

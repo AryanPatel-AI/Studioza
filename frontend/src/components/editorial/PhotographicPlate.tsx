@@ -68,7 +68,7 @@ export default function PhotographicPlate({
     >
       {/* 1. Film Frame Header (Negative Rebate Markings) */}
       {showRebate && (formattedPlate || emulsion || location) && (
-        <div className="flex items-center justify-between text-[10px] font-mono text-zinc-500 tracking-wider mb-3 uppercase">
+        <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-wider mb-3 uppercase">
           <div className="flex items-center gap-2">
             {formattedPlate && (
               <span className="text-amber-400/90 font-semibold">{formattedPlate}</span>
@@ -112,7 +112,7 @@ export default function PhotographicPlate({
         {/* Interactive Inspection Badge on Hover */}
         {onClick && (
           <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0 pointer-events-none">
-            <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[10px] font-mono tracking-wider text-amber-300 border border-amber-400/40 flex items-center gap-1.5 shadow-xl">
+            <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-xs sm:text-sm font-mono tracking-wider text-amber-300 border border-amber-400/40 flex items-center gap-1.5 shadow-xl">
               <Scan className="w-3 h-3 text-amber-400" />
               <span>Inspect Plate</span>
             </span>
@@ -130,7 +130,7 @@ export default function PhotographicPlate({
               </h3>
             )}
             {client && (
-              <span className="text-xs font-mono text-zinc-500 shrink-0 uppercase tracking-wider">
+              <span className="text-sm sm:text-base font-mono text-zinc-500 shrink-0 uppercase tracking-wider">
                 {client}
               </span>
             )}
@@ -143,7 +143,7 @@ export default function PhotographicPlate({
           )}
 
           {telemetry && (
-            <div className="pt-1 text-[10px] font-mono text-zinc-500 tracking-wider">
+            <div className="pt-1 text-xs sm:text-sm font-mono text-zinc-500 tracking-wider">
               {telemetry}
             </div>
           )}

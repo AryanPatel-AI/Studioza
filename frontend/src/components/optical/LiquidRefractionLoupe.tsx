@@ -120,7 +120,7 @@ export default function LiquidRefractionLoupe({
         </div>
 
       {/* 4. Film Rebate Frame Marking (Top Edge) */}
-      <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-[9px] font-mono text-zinc-400 tracking-wider z-20 pointer-events-none">
+      <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-400 tracking-wider z-20 pointer-events-none">
         <span className="bg-black/40 backdrop-blur-md px-2 py-0.5 rounded border border-white/[0.08] text-amber-300/90">
           {plateTitle}
         </span>
@@ -132,11 +132,11 @@ export default function LiquidRefractionLoupe({
       {/* 5. Subtle Guidance Tooltip (Fades out when interacting) */}
       {!isActive && (
         <>
-          <div className="absolute bottom-4 right-4 z-20 pointer-events-none hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-[10px] font-mono text-zinc-300">
+          <div className="absolute bottom-4 right-4 z-20 pointer-events-none hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-xs sm:text-sm font-mono text-zinc-300">
             <Eye className="w-3 h-3 text-amber-400" />
             <span>Hover to examine with optical loupe</span>
           </div>
-          <div className="absolute bottom-4 right-4 z-20 pointer-events-none sm:hidden flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[9px] font-mono text-zinc-300">
+          <div className="absolute bottom-4 right-4 z-20 pointer-events-none sm:hidden flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-xs sm:text-sm font-mono text-zinc-300">
             <Eye className="w-3 h-3 text-amber-400" />
             <span>Touch to magnify</span>
           </div>

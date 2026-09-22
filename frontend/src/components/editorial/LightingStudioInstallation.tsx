@@ -14,7 +14,7 @@ const StudioLightingStage3D = dynamic(
     loading: () => (
       <div className="w-full h-[460px] sm:h-[540px] rounded-3xl border border-white/[0.08] bg-[#090807]/80 backdrop-blur-xl flex flex-col items-center justify-center gap-3">
         <div className="w-6 h-6 rounded-full border-2 border-amber-400/40 border-t-amber-400 animate-spin" />
-        <span className="font-mono text-[10px] text-zinc-500 tracking-[0.25em] uppercase">
+        <span className="font-mono text-xs sm:text-sm text-zinc-500 tracking-[0.25em] uppercase">
           Initializing Lighting Stage...
         </span>
       </div>
@@ -112,13 +112,13 @@ export default function LightingStudioInstallation() {
         {/* ========================================================================= */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-12 border-b border-white/[0.08]">
           <div className="space-y-4 max-w-3xl">
-            <div className="flex items-center gap-3 text-xs font-mono tracking-[0.3em] text-amber-400 uppercase">
+            <div className="flex items-center gap-3 text-sm sm:text-base font-mono tracking-[0.3em] text-amber-400 uppercase">
               <span className="w-2 h-2 rounded-full bg-amber-400" />
               <span>Exhibit No. 08 • The Chiaroscuro Stage</span>
             </div>
 
             <div className="space-y-2">
-              <span className="text-xs font-mono text-zinc-500 tracking-[0.25em] uppercase block">
+              <span className="text-sm sm:text-base font-mono text-zinc-500 tracking-[0.25em] uppercase block">
                 Sculpting Light &amp; Shadow
               </span>
               <h2 className="text-5xl sm:text-7xl lg:text-8xl font-serif font-bold text-white tracking-tight leading-none">
@@ -131,14 +131,14 @@ export default function LightingStudioInstallation() {
                 <span className="text-2xl sm:text-4xl font-mono font-light text-zinc-300">
                   {scheme.ratio}
                 </span>
-                <span className="text-xs font-mono text-amber-400/90 tracking-widest uppercase border-l border-white/20 pl-4 py-1">
+                <span className="text-sm sm:text-base font-mono text-amber-400/90 tracking-widest uppercase border-l border-white/20 pl-4 py-1">
                   Continuous Tungsten &amp; Daylight Modeling Bench
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="max-w-md space-y-2 text-xs font-mono text-zinc-400">
+          <div className="max-w-md space-y-2 text-sm sm:text-base font-mono text-zinc-400">
             <div className="flex items-center gap-2 text-amber-300">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Profoto Pro-11 High-Speed Strobe Engine</span>
@@ -155,10 +155,10 @@ export default function LightingStudioInstallation() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Column: Interactive 3D Lighting Stage */}
           <div className="lg:col-span-7 relative">
-            <div className="absolute top-4 left-4 z-20 pointer-events-none text-zinc-500 font-mono text-[9px] tracking-widest uppercase">
+            <div className="absolute top-4 left-4 z-20 pointer-events-none text-zinc-500 font-mono text-xs sm:text-sm tracking-widest uppercase">
               STUDIO CYCLORAMA • 3D SHADOW SIMULATOR
             </div>
-            <div className="absolute bottom-4 right-4 z-20 pointer-events-none text-zinc-500 font-mono text-[9px] tracking-widest uppercase">
+            <div className="absolute bottom-4 right-4 z-20 pointer-events-none text-zinc-500 font-mono text-xs sm:text-sm tracking-widest uppercase">
               KEY OCTABOX • RIM STRIPBOX
             </div>
 
@@ -179,7 +179,7 @@ export default function LightingStudioInstallation() {
               {/* Active Scheme Header */}
               <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 block mb-1">
+                  <span className="text-xs sm:text-sm font-mono uppercase tracking-widest text-amber-400 block mb-1">
                     Active Lighting Scheme
                   </span>
                   <div className="flex items-baseline gap-2">
@@ -187,7 +187,7 @@ export default function LightingStudioInstallation() {
                       {scheme.name}
                     </span>
                   </div>
-                  <span className="text-xs font-mono text-zinc-400">
+                  <span className="text-sm sm:text-base font-mono text-zinc-400">
                     {scheme.subtitle}
                   </span>
                 </div>
@@ -223,35 +223,35 @@ export default function LightingStudioInstallation() {
               </div>
 
               {/* Curatorial Commentary */}
-              <p className="text-xs font-light text-zinc-300 leading-relaxed italic font-serif text-sm">
+              <p className="text-sm sm:text-base font-light text-zinc-300 leading-relaxed italic font-serif text-sm">
                 &ldquo;{scheme.character}&rdquo;
               </p>
 
               {/* Technical Telemetry Grid */}
-              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/[0.06] text-xs font-mono">
+              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/[0.06] text-sm sm:text-base font-mono">
                 <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
-                  <span className="text-[9px] uppercase tracking-wider text-zinc-500 block">
+                  <span className="text-xs sm:text-sm uppercase tracking-wider text-zinc-500 block">
                     Key Strobe
                   </span>
                   <span className="text-sky-300 font-medium block">
                     {scheme.keyKelvin}
                   </span>
-                  <span className="text-[10px] text-zinc-400">Soft Octabox Key</span>
+                  <span className="text-xs sm:text-sm text-zinc-400">Soft Octabox Key</span>
                 </div>
 
                 <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
-                  <span className="text-[9px] uppercase tracking-wider text-zinc-500 block">
+                  <span className="text-xs sm:text-sm uppercase tracking-wider text-zinc-500 block">
                     Rim Strobe
                   </span>
                   <span className="text-amber-300 font-medium block">
                     {scheme.rimKelvin}
                   </span>
-                  <span className="text-[10px] text-zinc-400">Tungsten Stripbox</span>
+                  <span className="text-xs sm:text-sm text-zinc-400">Tungsten Stripbox</span>
                 </div>
               </div>
 
               {/* Historical Reference Footnote */}
-              <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-zinc-500">
+              <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500">
                 <span>REFERENCE CANON</span>
                 <span className="text-zinc-400 truncate max-w-[200px]">{scheme.historicalReference}</span>
               </div>
@@ -259,7 +259,7 @@ export default function LightingStudioInstallation() {
 
             {/* Stepped Lighting Scheme Selector */}
             <div className="space-y-3">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">
+              <span className="text-xs sm:text-sm font-mono uppercase tracking-widest text-zinc-500 block">
                 Select Master Lighting Scheme
               </span>
 
@@ -278,12 +278,12 @@ export default function LightingStudioInstallation() {
                       )}
                     >
                       <div className="flex items-center justify-between">
-                        <span className={cn("text-xs font-medium font-serif", isSelected ? "text-amber-300 font-bold" : "text-zinc-200")}>
+                        <span className={cn("text-sm sm:text-base font-medium font-serif", isSelected ? "text-amber-300 font-bold" : "text-zinc-200")}>
                           {item.name}
                         </span>
                         {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />}
                       </div>
-                      <span className="text-[10px] font-mono text-zinc-500 truncate">
+                      <span className="text-xs sm:text-sm font-mono text-zinc-500 truncate">
                         {item.ratio}
                       </span>
                     </button>
@@ -300,7 +300,7 @@ export default function LightingStudioInstallation() {
                 href="#contact"
                 icon="arrow-up-right"
                 strength={0.2}
-                className="w-full text-xs"
+                className="w-full text-sm sm:text-base"
               >
                 Inquire for Bespoke Lighting Direction
               </StudioButton>

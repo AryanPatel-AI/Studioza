@@ -25,7 +25,7 @@ export default function ContactPage() {
       <Navbar />
       <Suspense
         fallback={
-          <div className="flex-1 py-40 text-center text-zinc-500 font-mono text-xs">
+          <div className="flex-1 py-40 text-center text-zinc-500 font-mono text-xs sm:text-sm">
             Connecting to Atelier Dispatch...
           </div>
         }

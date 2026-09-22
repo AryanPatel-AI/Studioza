@@ -70,8 +70,8 @@ export default function StudioButton({
 
   // 1. Size Specs
   const sizeClasses = {
-    sm: "py-2 px-4 text-[11px] gap-1.5",
-    md: "py-2.5 px-6 text-xs gap-2",
+    sm: "py-2 px-4 text-xs sm:text-sm gap-1.5",
+    md: "py-2.5 px-6 text-xs sm:text-sm gap-2",
     lg: "py-3.5 px-8 text-xs sm:text-sm gap-2.5",
   }[size];
 

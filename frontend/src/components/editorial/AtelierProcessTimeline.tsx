@@ -174,7 +174,7 @@ export default function AtelierProcessTimeline() {
         {/* ========================================================================= */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-white/[0.08]">
           <div className="space-y-4 max-w-3xl">
-            <div className="flex items-center gap-3 text-xs font-mono tracking-[0.3em] text-amber-400 uppercase">
+            <div className="flex items-center gap-3 text-sm sm:text-base font-mono tracking-[0.3em] text-amber-400 uppercase">
               <span className="w-2 h-2 rounded-full bg-amber-400" />
               <span>Creative Methodology • The Atelier Path</span>
             </div>
@@ -187,15 +187,15 @@ export default function AtelierProcessTimeline() {
           </div>
 
           {/* Technical Telemetry Counter */}
-          <div className="flex items-center gap-6 text-xs font-mono text-zinc-400">
+          <div className="flex items-center gap-6 text-sm sm:text-base font-mono text-zinc-400">
             <div className="border-l border-white/20 pl-4 py-1">
-              <span className="text-zinc-500 block text-[10px] uppercase tracking-wider">
+              <span className="text-zinc-500 block text-xs sm:text-sm uppercase tracking-wider">
                 Methodology
               </span>
               <span className="text-zinc-200 font-semibold">4 Sequenced Disciplines</span>
             </div>
             <div className="border-l border-white/20 pl-4 py-1">
-              <span className="text-zinc-500 block text-[10px] uppercase tracking-wider">
+              <span className="text-zinc-500 block text-xs sm:text-sm uppercase tracking-wider">
                 Tolerances
               </span>
               <span className="text-amber-300 font-semibold">Single-Micron Precision</span>
@@ -208,7 +208,7 @@ export default function AtelierProcessTimeline() {
         {/* ========================================================================= */}
         <div className="space-y-6">
           {/* Timeline Rail Header */}
-          <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500 tracking-widest uppercase">
+          <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-widest uppercase">
             <span>Progressive Light Path • Phase {current.number} of 04</span>
             <span className="text-amber-400 font-bold">{current.title}</span>
           </div>
@@ -263,14 +263,14 @@ export default function AtelierProcessTimeline() {
                         />
                         <span
                           className={cn(
-                            "text-xs font-mono tracking-widest uppercase transition-colors duration-300",
+                            "text-sm sm:text-base font-mono tracking-widest uppercase transition-colors duration-300",
                             isActive ? "text-amber-400 font-bold" : "text-zinc-500"
                           )}
                         >
                           PHASE {step.number}
                         </span>
                       </div>
-                      <span className="text-[10px] font-mono text-zinc-600">
+                      <span className="text-xs sm:text-sm font-mono text-zinc-600">
                         [{step.roman}]
                       </span>
                     </div>
@@ -304,7 +304,7 @@ export default function AtelierProcessTimeline() {
           {/* Left Column: Rich Typography, Methodology & Telemetry */}
           <div className="lg:col-span-6 space-y-8">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/25 text-[10px] font-mono uppercase tracking-[0.2em] text-amber-300">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/25 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-amber-300">
                 <Sparkles className="w-3 h-3 text-amber-400" />
                 <span>Phase {current.number} Methodology</span>
               </div>
@@ -327,9 +327,9 @@ export default function AtelierProcessTimeline() {
               tint="obsidian"
               intensity="medium"
               depth={8}
-              contentClassName="p-6 sm:p-7 space-y-4 text-xs font-mono"
+              contentClassName="p-6 sm:p-7 space-y-4 text-sm sm:text-base font-mono"
             >
-              <div className="flex items-center justify-between text-[10px] font-mono text-zinc-500 pb-2 border-b border-white/[0.08] uppercase tracking-wider">
+              <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 pb-2 border-b border-white/[0.08] uppercase tracking-wider">
                 <span className="text-amber-400 font-medium">Stage Deliverables</span>
                 <span>Atelier Protocol</span>
               </div>
@@ -343,7 +343,7 @@ export default function AtelierProcessTimeline() {
                 ))}
               </div>
 
-              <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between text-[11px]">
+              <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between text-xs sm:text-sm">
                 <span className="text-zinc-500">Output:</span>
                 <span className="text-amber-300 font-semibold">{current.deliverables}</span>
               </div>
@@ -364,7 +364,7 @@ export default function AtelierProcessTimeline() {
               {activeStep < 3 ? (
                 <button
                   onClick={() => handleStepClick(activeStep + 1)}
-                  className="px-5 py-3 rounded-full border border-white/20 hover:border-amber-400/60 text-xs font-mono uppercase tracking-wider text-zinc-300 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="px-5 py-3 rounded-full border border-white/20 hover:border-amber-400/60 text-sm sm:text-base font-mono uppercase tracking-wider text-zinc-300 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer"
                 >
                   <span>Next: Phase 0{activeStep + 2}</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -372,7 +372,7 @@ export default function AtelierProcessTimeline() {
               ) : (
                 <button
                   onClick={() => handleStepClick(0)}
-                  className="px-5 py-3 rounded-full border border-white/20 hover:border-amber-400/60 text-xs font-mono uppercase tracking-wider text-zinc-300 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="px-5 py-3 rounded-full border border-white/20 hover:border-amber-400/60 text-sm sm:text-base font-mono uppercase tracking-wider text-zinc-300 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer"
                 >
                   <span>Review from Beginning</span>
                 </button>
@@ -392,13 +392,13 @@ export default function AtelierProcessTimeline() {
               />
 
               {/* Viewfinder Reticle Corners */}
-              <div className="absolute top-4 left-4 text-white/30 pointer-events-none font-mono text-[10px]">
+              <div className="absolute top-4 left-4 text-white/30 pointer-events-none font-mono text-xs sm:text-sm">
                 PHASE {current.number} • {current.camera}
               </div>
               <div className="absolute top-4 right-4 text-white/20 pointer-events-none">
                 <Scan className="w-4 h-4" />
               </div>
-              <div className="absolute bottom-4 right-4 text-white/30 pointer-events-none font-mono text-[10px]">
+              <div className="absolute bottom-4 right-4 text-white/30 pointer-events-none font-mono text-xs sm:text-sm">
                 {current.lens}
               </div>
 
@@ -406,7 +406,7 @@ export default function AtelierProcessTimeline() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20 pointer-events-none" />
 
               {/* Bottom Negative Film Rebate Stamp */}
-              <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black via-black/80 to-transparent flex items-center justify-between text-[10px] font-mono text-zinc-400">
+              <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black via-black/80 to-transparent flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-400">
                 <div className="flex items-center gap-2">
                   <span className="text-amber-400 font-bold">ATELIER {current.number}</span>
                   <span>•</span>
@@ -422,13 +422,13 @@ export default function AtelierProcessTimeline() {
                 tint="champagne"
                 intensity="medium"
                 depth={10}
-                contentClassName="p-4 space-y-2 text-[10px] font-mono text-zinc-400"
+                contentClassName="p-4 space-y-2 text-xs sm:text-sm font-mono text-zinc-400"
               >
                 <div className="flex items-center justify-between text-amber-400 font-bold pb-1 border-b border-white/[0.08]">
                   <span>TECHNICAL TELEMETRY</span>
                   <span>PHASE {current.number}</span>
                 </div>
-                <p className="text-zinc-300 leading-relaxed font-sans text-xs">
+                <p className="text-zinc-300 leading-relaxed font-sans text-sm sm:text-base">
                   {current.deliverables}
                 </p>
                 <div className="pt-1 text-zinc-500 flex items-center gap-1.5">

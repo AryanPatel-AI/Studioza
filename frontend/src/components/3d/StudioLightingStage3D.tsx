@@ -433,12 +433,12 @@ export default function StudioLightingStage3D({
       {/* Top Telemetry Header */}
       <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1 rounded-full text-[10px] font-mono tracking-wider bg-white/[0.05] border border-white/[0.1] text-amber-300 backdrop-blur-md flex items-center gap-1.5 shadow-md">
+          <span className="px-3 py-1 rounded-full text-xs sm:text-sm font-mono tracking-wider bg-white/[0.05] border border-white/[0.1] text-amber-300 backdrop-blur-md flex items-center gap-1.5 shadow-md">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
             3D Studio Lighting Simulator
           </span>
           {photoTitle && (
-            <span className="hidden sm:inline-block px-2.5 py-1 rounded-full text-[10px] font-mono bg-black/60 border border-white/10 text-zinc-300 backdrop-blur-md">
+            <span className="hidden sm:inline-block px-2.5 py-1 rounded-full text-xs sm:text-sm font-mono bg-black/60 border border-white/10 text-zinc-300 backdrop-blur-md">
               Plate Target: {photoTitle}
             </span>
           )}
@@ -446,10 +446,10 @@ export default function StudioLightingStage3D({
 
         {/* Live Strobe Power Indicators */}
         <div className="flex items-center gap-2">
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-white/[0.05] border border-white/[0.1] text-zinc-200 backdrop-blur-md">
+          <span className="px-2.5 py-0.5 rounded-full text-xs sm:text-sm font-mono bg-white/[0.05] border border-white/[0.1] text-zinc-200 backdrop-blur-md">
             Key: 5200K Daylight
           </span>
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-amber-950/40 border border-amber-400/30 text-amber-300 backdrop-blur-md">
+          <span className="px-2.5 py-0.5 rounded-full text-xs sm:text-sm font-mono bg-amber-950/40 border border-amber-400/30 text-amber-300 backdrop-blur-md">
             Rim: 2800K Tungsten
           </span>
         </div>
@@ -458,11 +458,11 @@ export default function StudioLightingStage3D({
       {/* Lighting Schematic Presets */}
       <div className="absolute bottom-4 left-4 right-4 p-3.5 rounded-2xl bg-[#141210]/90 border border-white/[0.1] backdrop-blur-xl flex flex-col gap-2.5">
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-mono tracking-wider text-zinc-200 font-semibold flex items-center gap-1.5">
+          <span className="text-xs sm:text-sm font-mono tracking-wider text-zinc-200 font-semibold flex items-center gap-1.5">
             <Sliders className="w-3 h-3 text-amber-400" />
             Active Schematic: {PRESETS[activePreset]?.name}
           </span>
-          <span className="text-[10px] font-mono text-zinc-400 hidden sm:inline">
+          <span className="text-xs sm:text-sm font-mono text-zinc-400 hidden sm:inline">
             {PRESETS[activePreset]?.description}
           </span>
         </div>
@@ -472,7 +472,7 @@ export default function StudioLightingStage3D({
             <button
               key={key}
               onClick={() => selectPreset(key)}
-              className={`px-3 py-2 rounded-xl text-xs font-mono transition-all text-left flex flex-col cursor-pointer ${
+              className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-mono transition-all text-left flex flex-col cursor-pointer ${
                 activePreset === key
                   ? "bg-amber-400 text-black font-semibold shadow-md shadow-amber-500/20"
                   : "bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 border border-white/[0.08]"
@@ -480,7 +480,7 @@ export default function StudioLightingStage3D({
             >
               <span className="truncate">{preset.name}</span>
               <span
-                className={`text-[9px] ${
+                className={`text-xs sm:text-sm ${
                   activePreset === key ? "text-zinc-900 font-medium" : "text-zinc-400"
                 }`}
               >

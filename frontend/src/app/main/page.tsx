@@ -298,7 +298,7 @@ export default function MainStudioArchivePage() {
         <section className="pt-32 sm:pt-40 pb-16 sm:pb-24 border-b border-white/[0.08] relative px-6 sm:px-12 lg:px-16">
           <div className="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div className="space-y-4 max-w-3xl">
-              <div className="flex items-center gap-3 text-xs font-mono tracking-[0.25em] text-amber-400/90">
+              <div className="flex items-center gap-3 text-xs sm:text-sm font-mono tracking-[0.25em] text-amber-400/90">
                 <span className="w-2 h-2 rounded-full bg-amber-400" />
                 <span>Atelier Archive — Monograph Vol. XXIV</span>
               </div>
@@ -314,7 +314,7 @@ export default function MainStudioArchivePage() {
             <div className="flex flex-wrap items-center gap-4">
               <ApertureShutter3D label="Test Shutter" />
               <MagneticButton href="/contact" strength={0.3}>
-                <div className="px-6 py-3 rounded-full text-xs font-mono font-medium text-black bg-amber-400 hover:bg-amber-300 transition-all uppercase tracking-wider font-semibold">
+                <div className="px-6 py-3 rounded-full text-xs sm:text-sm font-mono font-medium text-black bg-amber-400 hover:bg-amber-300 transition-all uppercase tracking-wider font-semibold">
                   Book Session
                 </div>
               </MagneticButton>
@@ -323,7 +323,7 @@ export default function MainStudioArchivePage() {
 
           {/* Curatorial Salon Labels (NOT UI Buttons) */}
           <div className="max-w-7xl mx-auto mt-12 sm:mt-16">
-            <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500 tracking-widest uppercase mb-3">
+            <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-widest uppercase mb-3">
               <span>Curatorial Index Directory</span>
               <span className="hidden sm:inline">Select Room to Filter</span>
             </div>
@@ -338,7 +338,7 @@ export default function MainStudioArchivePage() {
                     key={cat.key}
                     onClick={() => setActiveCategory(cat.match)}
                     className={cn(
-                      "group relative px-3 sm:px-4 py-2 text-xs font-mono tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 select-none",
+                      "group relative px-3 sm:px-4 py-2 text-xs sm:text-sm font-mono tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 select-none",
                       isActive
                         ? "text-amber-300 font-semibold"
                         : "text-zinc-400 hover:text-white"
@@ -346,7 +346,7 @@ export default function MainStudioArchivePage() {
                   >
                     <span
                       className={cn(
-                        "text-[10px] transition-colors",
+                        "text-xs sm:text-sm transition-colors",
                         isActive ? "text-amber-400" : "text-zinc-600 group-hover:text-zinc-400"
                       )}
                     >
@@ -369,7 +369,7 @@ export default function MainStudioArchivePage() {
         {/* ========================================================================= */}
         <section className="py-20 sm:py-32 px-6 sm:px-12 lg:px-16">
           <div className="max-w-7xl mx-auto space-y-12">
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-500 tracking-wider pb-6 border-b border-white/[0.08]">
+            <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-wider pb-6 border-b border-white/[0.08]">
               <span>Sequence 02 — {filteredPhotos.length} Master Plates in &ldquo;{activeCategory}&rdquo;</span>
               <span className="hidden sm:inline-flex items-center gap-2 text-amber-400/90">
                 <Info className="w-3.5 h-3.5" />
@@ -389,7 +389,7 @@ export default function MainStudioArchivePage() {
                   }}
                 >
                   {/* Film Frame Header: Negative Film Rebate Markings */}
-                  <div className="flex items-center justify-between text-[10px] font-mono text-zinc-500 tracking-wider mb-3">
+                  <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-wider mb-3">
                     <span className="text-amber-400/90 font-semibold">PL. 0{idx + 1}</span>
                     <span className="uppercase tracking-[0.25em]">ILFORD HP5 PLUS • {20 + idx}A</span>
                     <span className="hidden sm:inline-block">{photo.location}</span>
@@ -413,7 +413,7 @@ export default function MainStudioArchivePage() {
 
                     {/* Grease-Pencil Selection Mark on Hover */}
                     <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0">
-                      <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[10px] font-mono tracking-wider text-amber-300 border border-amber-400/40 flex items-center gap-1.5 shadow-xl">
+                      <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-xs sm:text-sm font-mono tracking-wider text-amber-300 border border-amber-400/40 flex items-center gap-1.5 shadow-xl">
                         <Scan className="w-3 h-3 text-amber-400" />
                         Inspect Telemetry &amp; 3D Rig
                       </span>
@@ -426,14 +426,14 @@ export default function MainStudioArchivePage() {
                       <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight group-hover:text-amber-300 transition-colors">
                         {photo.title}
                       </h3>
-                      <span className="text-xs font-mono text-zinc-500 shrink-0">
+                      <span className="text-xs sm:text-sm font-mono text-zinc-500 shrink-0">
                         {photo.client}
                       </span>
                     </div>
                     <p className="text-xs sm:text-sm font-light text-zinc-400 leading-relaxed max-w-2xl">
                       {photo.description}
                     </p>
-                    <div className="pt-2 flex flex-wrap items-center gap-4 text-[10px] font-mono text-zinc-500 tracking-wider border-t border-white/[0.06]">
+                    <div className="pt-2 flex flex-wrap items-center gap-4 text-xs sm:text-sm font-mono text-zinc-500 tracking-wider border-t border-white/[0.06]">
                       <span className="text-zinc-300">{photo.camera}</span>
                       <span>•</span>
                       <span className="text-amber-300/90 font-medium">{photo.settings}</span>
@@ -473,7 +473,7 @@ export default function MainStudioArchivePage() {
                   <div className="inline-flex p-1 rounded-full bg-zinc-900/90 border border-white/10 backdrop-blur-md shadow-lg">
                     <button
                       onClick={() => setModalView("photo")}
-                      className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer ${
+                      className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-mono transition-all cursor-pointer ${
                         modalView === "photo"
                           ? "bg-amber-400 text-black font-semibold shadow-md"
                           : "text-zinc-400 hover:text-white"
@@ -483,7 +483,7 @@ export default function MainStudioArchivePage() {
                     </button>
                     <button
                       onClick={() => setModalView("lighting")}
-                      className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
+                      className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
                         modalView === "lighting"
                           ? "bg-amber-400 text-black font-semibold shadow-md"
                           : "text-zinc-400 hover:text-white"
@@ -515,10 +515,10 @@ export default function MainStudioArchivePage() {
               <div className="md:w-2/5 p-6 sm:p-8 flex flex-col justify-between border-t md:border-t-0 md:border-l border-white/[0.08] bg-[#0c0d12]">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-amber-400/10 border border-amber-400/30 text-amber-300">
+                    <span className="px-2.5 py-1 rounded-full text-xs sm:text-sm font-mono uppercase tracking-wider bg-amber-400/10 border border-amber-400/30 text-amber-300">
                       {inspectedPhoto.category}
                     </span>
-                    <span className="text-xs text-zinc-400 font-mono">
+                    <span className="text-xs sm:text-sm text-zinc-400 font-mono">
                       Client: {inspectedPhoto.client}
                     </span>
                   </div>
@@ -527,18 +527,18 @@ export default function MainStudioArchivePage() {
                     {inspectedPhoto.title}
                   </h3>
 
-                  <p className="text-xs text-zinc-300 mt-3 leading-relaxed font-light">
+                  <p className="text-xs sm:text-sm text-zinc-300 mt-3 leading-relaxed font-light">
                     {inspectedPhoto.description}
                   </p>
 
                   {/* Technical Telemetry Section */}
                   <div className="mt-6 pt-6 border-t border-white/[0.08] space-y-3.5">
-                    <h4 className="text-xs uppercase font-mono tracking-widest text-amber-400 font-semibold flex items-center gap-2">
+                    <h4 className="text-xs sm:text-sm uppercase font-mono tracking-widest text-amber-400 font-semibold flex items-center gap-2">
                       <Sliders className="w-3.5 h-3.5" />
                       Optical &amp; Exposure Telemetry
                     </h4>
 
-                    <div className="space-y-2 text-xs font-mono">
+                    <div className="space-y-2 text-xs sm:text-sm font-mono">
                       <div className="flex justify-between p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06]">
                         <span className="text-zinc-500">Camera Body:</span>
                         <span className="text-zinc-200 font-medium">{inspectedPhoto.camera}</span>
@@ -558,21 +558,21 @@ export default function MainStudioArchivePage() {
                     </div>
 
                     {/* Lighting Notes with 3D Simulation Trigger */}
-                    <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs">
+                    <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs sm:text-sm">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-mono text-[10px] text-amber-400 uppercase tracking-wider font-semibold">
+                        <span className="font-mono text-xs sm:text-sm text-amber-400 uppercase tracking-wider font-semibold">
                           Lighting Schematic
                         </span>
-                        <span className="text-[10px] font-mono text-zinc-400">
+                        <span className="text-xs sm:text-sm font-mono text-zinc-400">
                           Profoto Pro-11
                         </span>
                       </div>
-                      <p className="text-amber-100/90 text-[11px] leading-relaxed font-light">
+                      <p className="text-amber-100/90 text-xs sm:text-sm leading-relaxed font-light">
                         {inspectedPhoto.lighting}
                       </p>
                       <button
                         onClick={() => setModalView("lighting")}
-                        className="mt-2.5 w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/30 text-[11px] font-mono text-amber-300 font-medium transition-colors cursor-pointer"
+                        className="mt-2.5 w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/30 text-xs sm:text-sm font-mono text-amber-300 font-medium transition-colors cursor-pointer"
                       >
                         <Sparkles className="w-3 h-3 text-amber-400" />
                         Launch 3D Studio Lighting Simulator
@@ -586,7 +586,7 @@ export default function MainStudioArchivePage() {
                   <Link
                     href={`/contact?style=${encodeURIComponent(inspectedPhoto.title)}`}
                     onClick={() => setInspectedPhoto(null)}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-xs font-semibold text-black bg-amber-400 hover:bg-amber-300 transition-all shadow-lg"
+                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-black bg-amber-400 hover:bg-amber-300 transition-all shadow-lg"
                   >
                     Inquire Regarding This Shoot Style <ArrowRight className="w-4 h-4" />
                   </Link>
@@ -604,7 +604,7 @@ export default function MainStudioArchivePage() {
             {/* Section Typographic Header */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-white/[0.08]">
               <div className="space-y-3">
-                <span className="text-xs font-mono tracking-[0.25em] text-amber-400/90">
+                <span className="text-xs sm:text-sm font-mono tracking-[0.25em] text-amber-400/90">
                   Commission Ledger — Season 2026
                 </span>
                 <h2 className="text-4xl sm:text-6xl font-serif font-bold text-white tracking-tight">
@@ -629,10 +629,10 @@ export default function MainStudioArchivePage() {
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-baseline">
                     {/* Roman Numeral & Title */}
                     <div className="lg:col-span-4 space-y-2">
-                      <div className="flex items-center gap-3 text-xs font-mono text-amber-400">
+                      <div className="flex items-center gap-3 text-xs sm:text-sm font-mono text-amber-400">
                         <span>COMMISSION {tier.roman}</span>
                         {tier.featured && (
-                          <span className="px-2 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-[9px] uppercase tracking-wider">
+                          <span className="px-2 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-xs sm:text-sm uppercase tracking-wider">
                             Atelier Master Suite
                           </span>
                         )}
@@ -640,18 +640,18 @@ export default function MainStudioArchivePage() {
                       <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white group-hover:text-amber-300 transition-colors">
                         {tier.name}
                       </h3>
-                      <p className="text-xs font-light text-zinc-400">
+                      <p className="text-xs sm:text-sm font-light text-zinc-400">
                         {tier.subtitle}
                       </p>
                     </div>
 
                     {/* Deliverables Editorial Footnote */}
                     <div className="lg:col-span-5 space-y-4">
-                      <div className="text-xs font-mono text-zinc-300">
+                      <div className="text-xs sm:text-sm font-mono text-zinc-300">
                         <span className="text-zinc-500 block mb-1">OPTICAL SPECIFICATION:</span>
                         {tier.format} • {tier.duration}
                       </div>
-                      <div className="space-y-1.5 text-xs font-light text-zinc-400">
+                      <div className="space-y-1.5 text-xs sm:text-sm font-light text-zinc-400">
                         {tier.deliverables.map((item, i) => (
                           <div key={i} className="flex items-start gap-2">
                             <span className="text-amber-400 select-none">•</span>
@@ -664,7 +664,7 @@ export default function MainStudioArchivePage() {
                     {/* Price & Action */}
                     <div className="lg:col-span-3 flex flex-col items-start lg:items-end justify-between gap-4">
                       <div>
-                        <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block">
+                        <span className="text-xs sm:text-sm font-mono text-zinc-500 uppercase tracking-widest block">
                           Investment
                         </span>
                         <span className="text-4xl sm:text-5xl font-serif font-bold text-white">
@@ -699,7 +699,7 @@ export default function MainStudioArchivePage() {
         {/* ========================================================================= */}
         <section id="gear" className="py-20 sm:py-32 px-6 sm:px-12 lg:px-16 border-t border-white/[0.08] bg-[#050507]">
           <div className="max-w-7xl mx-auto space-y-12">
-            <div className="flex items-center justify-between pb-6 border-b border-white/[0.08] text-xs font-mono text-zinc-500 tracking-wider">
+            <div className="flex items-center justify-between pb-6 border-b border-white/[0.08] text-xs sm:text-sm font-mono text-zinc-500 tracking-wider">
               <span>Extended Optics Portfolio</span>
               <span>Hasselblad • Leica • Zeiss • Profoto</span>
             </div>
@@ -711,7 +711,7 @@ export default function MainStudioArchivePage() {
                   className="py-10 grid grid-cols-1 md:grid-cols-12 gap-6 items-center group hover:bg-white/[0.015] px-4 -mx-4 transition-colors"
                 >
                   <div className="md:col-span-3">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block mb-1">
+                    <span className="text-xs sm:text-sm font-mono uppercase tracking-widest text-zinc-500 block mb-1">
                       {item.category}
                     </span>
                     <h3 className="text-2xl font-serif font-bold text-white group-hover:text-amber-300 transition-colors">
@@ -719,14 +719,14 @@ export default function MainStudioArchivePage() {
                     </h3>
                   </div>
 
-                  <div className="md:col-span-4 font-mono text-xs text-amber-400/90">
-                    <span className="text-zinc-500 block text-[10px] uppercase tracking-widest mb-1">
+                  <div className="md:col-span-4 font-mono text-xs sm:text-sm text-amber-400/90">
+                    <span className="text-zinc-500 block text-xs sm:text-sm uppercase tracking-widest mb-1">
                       Sensor &amp; Optical Formula
                     </span>
                     {item.spec}
                   </div>
 
-                  <div className="md:col-span-5 text-xs font-light text-zinc-400 leading-relaxed">
+                  <div className="md:col-span-5 text-xs sm:text-sm font-light text-zinc-400 leading-relaxed">
                     <span className="text-zinc-300 font-medium block mb-1">{item.role}</span>
                     {item.note}
                   </div>
@@ -742,7 +742,7 @@ export default function MainStudioArchivePage() {
         <section id="publications" className="py-28 sm:py-40 px-6 sm:px-12 lg:px-16 border-t border-white/[0.08] bg-[#050507]">
           <div className="max-w-7xl mx-auto space-y-20">
             <div className="text-center max-w-2xl mx-auto space-y-3">
-              <span className="text-xs font-mono tracking-[0.25em] text-amber-400/90">
+              <span className="text-xs sm:text-sm font-mono tracking-[0.25em] text-amber-400/90">
                 Editorial Acclaim — Patronage &amp; Monograph Reviews
               </span>
               <h2 className="text-3xl sm:text-5xl font-serif font-bold text-white">
@@ -758,7 +758,7 @@ export default function MainStudioArchivePage() {
                 </blockquote>
                 <div className="pt-4 border-t border-white/[0.08]">
                   <h4 className="text-sm font-serif font-bold text-white">Camille Laurent</h4>
-                  <p className="text-xs text-amber-400/80 font-mono mt-0.5">Creative Director, Maison de Soie (Paris)</p>
+                  <p className="text-xs sm:text-sm text-amber-400/80 font-mono mt-0.5">Creative Director, Maison de Soie (Paris)</p>
                 </div>
               </div>
 
@@ -769,7 +769,7 @@ export default function MainStudioArchivePage() {
                 </blockquote>
                 <div className="pt-4 border-t border-white/[0.08]">
                   <h4 className="text-sm font-serif font-bold text-white">Kenzo Takahashi</h4>
-                  <p className="text-xs text-amber-400/80 font-mono mt-0.5">Principal Architect, KXA Architects (Tokyo)</p>
+                  <p className="text-xs sm:text-sm text-amber-400/80 font-mono mt-0.5">Principal Architect, KXA Architects (Tokyo)</p>
                 </div>
               </div>
 
@@ -780,7 +780,7 @@ export default function MainStudioArchivePage() {
                 </blockquote>
                 <div className="pt-4 border-t border-white/[0.08]">
                   <h4 className="text-sm font-serif font-bold text-white">Julianne Ross</h4>
-                  <p className="text-xs text-amber-400/80 font-mono mt-0.5">Art Collector &amp; Patron (New York)</p>
+                  <p className="text-xs sm:text-sm text-amber-400/80 font-mono mt-0.5">Art Collector &amp; Patron (New York)</p>
                 </div>
               </div>
             </div>
@@ -792,7 +792,7 @@ export default function MainStudioArchivePage() {
         {/* ========================================================================= */}
         <section className="py-32 sm:py-44 px-6 sm:px-12 lg:px-16 border-t border-white/[0.08] text-center relative overflow-hidden">
           <div className="max-w-3xl mx-auto space-y-8 relative z-10">
-            <span className="text-xs font-mono tracking-[0.25em] text-amber-400/90">
+            <span className="text-xs sm:text-sm font-mono tracking-[0.25em] text-amber-400/90">
               Limited Seasonal Calendar — Atelier Sessions
             </span>
             <h2 className="text-4xl sm:text-6xl font-serif font-bold text-white tracking-tight">
@@ -803,7 +803,7 @@ export default function MainStudioArchivePage() {
             </p>
             <div className="pt-6 flex justify-center">
               <MagneticButton href="/contact" strength={0.4}>
-                <div className="inline-flex items-center gap-3 py-4 px-9 rounded-full bg-white text-black font-semibold text-xs font-mono uppercase tracking-widest hover:bg-amber-300 transition-all shadow-2xl">
+                <div className="inline-flex items-center gap-3 py-4 px-9 rounded-full bg-white text-black font-semibold text-xs sm:text-sm font-mono uppercase tracking-widest hover:bg-amber-300 transition-all shadow-2xl">
                   <span>Inquire Regarding Shoot Dates</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>

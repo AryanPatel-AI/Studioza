@@ -100,7 +100,7 @@ export default function HorizontalGallery() {
       {/* Section Typography Header: Editorial Layout */}
       <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 mb-10 sm:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-8">
         <div>
-          <span className="text-[11px] font-mono tracking-[0.3em] text-amber-400/90 block mb-3">
+          <span className="text-xs sm:text-sm font-mono tracking-[0.3em] text-amber-400/90 block mb-3">
             Sequence 01 — The Horizontal Anthology
           </span>
           <h2 className="text-4xl sm:text-6xl md:text-7xl font-serif font-bold text-white tracking-tight leading-none">
@@ -111,7 +111,7 @@ export default function HorizontalGallery() {
         {/* Navigation Arrows, Mobile Counter & Progress Bar */}
         <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-6 w-full md:w-auto">
           {/* Mobile Current Plate Badge */}
-          <div className="sm:hidden flex items-center gap-2 font-mono text-[11px] text-amber-300/90 tracking-widest bg-white/[0.04] border border-white/10 px-3 py-1.5 rounded-full">
+          <div className="sm:hidden flex items-center gap-2 font-mono text-xs sm:text-sm text-amber-300/90 tracking-widest bg-white/[0.04] border border-white/10 px-3 py-1.5 rounded-full">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
             <span>PLATE 0{activeItem + 1}</span>
             <span className="text-zinc-600">/</span>
@@ -125,7 +125,7 @@ export default function HorizontalGallery() {
                 style={{ width: `${Math.max(15, scrollProgress * 100)}%` }}
               />
             </div>
-            <div className="flex justify-between text-[9px] font-mono text-zinc-500 tracking-wider">
+            <div className="flex justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-wider">
               <span>01</span>
               <span>Scroll or Drag</span>
               <span>05</span>
@@ -164,7 +164,7 @@ export default function HorizontalGallery() {
             className={`shrink-0 ${item.widthClass} flex flex-col justify-between group transition-all duration-500 snap-center sm:snap-align-none`}
           >
             {/* Film Frame Header: Negative Film Rebate Markings (Intentional Imperfection) */}
-            <div className="flex items-center justify-between text-[10px] font-mono text-zinc-500 tracking-wider mb-3">
+            <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-wider mb-3">
               <span className="text-amber-400/90 font-semibold">{item.plateNumber}</span>
               <span className="uppercase tracking-[0.25em]">ILFORD HP5 PLUS • {20 + idx}A</span>
               <span className="hidden sm:inline-block">{item.location}</span>
@@ -197,7 +197,7 @@ export default function HorizontalGallery() {
               <p className="text-xs sm:text-sm font-light text-zinc-400 leading-relaxed max-w-lg">
                 {item.caption}
               </p>
-              <div className="pt-2 text-[10px] font-mono text-zinc-500 tracking-wider">
+              <div className="pt-2 text-xs sm:text-sm font-mono text-zinc-500 tracking-wider">
                 {item.medium}
               </div>
             </div>

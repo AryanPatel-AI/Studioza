@@ -77,7 +77,7 @@ export default async function ActivityPage() {
           <div className="p-12 rounded-2xl border border-dashed border-white/[0.1] bg-[#101014]/40 text-center space-y-3">
             <ActivityIcon className="w-8 h-8 text-zinc-500 mx-auto" />
             <h3 className="text-sm font-semibold text-white">No activity recorded yet</h3>
-            <p className="text-xs text-zinc-400 max-w-sm mx-auto">
+            <p className="text-xs sm:text-sm text-zinc-400 max-w-sm mx-auto">
               Actions you take in Studio will be automatically audited and displayed here.
             </p>
           </div>
@@ -94,12 +94,12 @@ export default async function ActivityPage() {
               return (
                 <div
                   key={act.id}
-                  className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+                  className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span
-                        className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border ${getBadgeStyle(
+                        className={`text-xs sm:text-sm font-mono uppercase px-2 py-0.5 rounded-full border ${getBadgeStyle(
                           act.type
                         )}`}
                       >
@@ -117,23 +117,23 @@ export default async function ActivityPage() {
                     </div>
 
                     {parsedMeta.name && !act.project && (
-                      <p className="text-zinc-400 text-[11px]">
+                      <p className="text-zinc-400 text-xs sm:text-sm">
                         Target: <span className="font-mono text-zinc-300">{parsedMeta.name}</span>
                       </p>
                     )}
 
                     {parsedMeta.slug && (
-                      <p className="text-zinc-400 text-[11px] font-mono">
+                      <p className="text-zinc-400 text-xs sm:text-sm font-mono">
                         Slug: /p/{parsedMeta.slug}
                       </p>
                     )}
                   </div>
 
                   <div className="text-right shrink-0">
-                    <span className="text-zinc-400 font-mono text-[11px]">
+                    <span className="text-zinc-400 font-mono text-xs sm:text-sm">
                       {formatTimeAgo(act.createdAt)}
                     </span>
-                    <p className="text-zinc-400 text-[10px]">{formatDate(act.createdAt)}</p>
+                    <p className="text-zinc-400 text-xs sm:text-sm">{formatDate(act.createdAt)}</p>
                   </div>
                 </div>
               );

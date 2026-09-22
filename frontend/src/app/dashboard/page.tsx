@@ -63,7 +63,7 @@ export default async function DashboardPage() {
           <div className="flex items-center gap-2.5">
             <Link
               href="/projects?create=true"
-              className="inline-flex items-center gap-2 py-2 px-3.5 rounded-xl font-medium text-xs text-black bg-amber-400 hover:bg-amber-300 shadow-md shadow-amber-500/20 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 py-2 px-3.5 rounded-xl font-medium text-xs sm:text-sm text-black bg-amber-400 hover:bg-amber-300 shadow-md shadow-amber-500/20 transition-all cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Create Project</span>
@@ -75,40 +75,40 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014] shadow-sm">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-zinc-400 font-medium">Total Projects</span>
+              <span className="text-xs sm:text-sm text-zinc-400 font-medium">Total Projects</span>
               <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
                 <FolderKanban className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-white mt-2">{totalProjects}</p>
-            <p className="text-[11px] text-zinc-500 mt-1">Across all workspaces</p>
+            <p className="text-xs sm:text-sm text-zinc-500 mt-1">Across all workspaces</p>
           </div>
 
           <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014] shadow-sm">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-zinc-400 font-medium">Published Live</span>
+              <span className="text-xs sm:text-sm text-zinc-400 font-medium">Published Live</span>
               <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
                 <Globe className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-white mt-2">{publishedCount}</p>
-            <p className="text-[11px] text-zinc-500 mt-1">Publicly accessible</p>
+            <p className="text-xs sm:text-sm text-zinc-500 mt-1">Publicly accessible</p>
           </div>
 
           <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014] shadow-sm">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-zinc-400 font-medium">Drafts in Progress</span>
+              <span className="text-xs sm:text-sm text-zinc-400 font-medium">Drafts in Progress</span>
               <div className="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center">
                 <FileEdit className="w-4 h-4" />
               </div>
             </div>
             <p className="text-2xl font-bold text-white mt-2">{draftCount}</p>
-            <p className="text-[11px] text-zinc-500 mt-1">In active development</p>
+            <p className="text-xs sm:text-sm text-zinc-500 mt-1">In active development</p>
           </div>
 
           <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014] shadow-sm">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-zinc-400 font-medium">System Status</span>
+              <span className="text-xs sm:text-sm text-zinc-400 font-medium">System Status</span>
               <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
                 <Sparkles className="w-4 h-4" />
               </div>
@@ -117,7 +117,7 @@ export default async function DashboardPage() {
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               Operational
             </p>
-            <p className="text-[11px] text-zinc-500 mt-1">Edge publishing ready</p>
+            <p className="text-xs sm:text-sm text-zinc-500 mt-1">Edge publishing ready</p>
           </div>
         </div>
 
@@ -132,7 +132,7 @@ export default async function DashboardPage() {
             {totalProjects > 0 && (
               <Link
                 href="/projects"
-                className="text-xs text-amber-400 hover:text-amber-300 font-medium flex items-center gap-1 transition-colors"
+                className="text-xs sm:text-sm text-amber-400 hover:text-amber-300 font-medium flex items-center gap-1 transition-colors"
               >
                 <span>View all projects ({totalProjects})</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -157,7 +157,7 @@ export default async function DashboardPage() {
               <div>
                 <Link
                   href="/projects?create=true"
-                  className="inline-flex items-center gap-2 py-2.5 px-4 rounded-xl text-xs font-semibold text-black bg-amber-400 hover:bg-amber-300 shadow-md shadow-amber-500/20 transition-all"
+                  className="inline-flex items-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-black bg-amber-400 hover:bg-amber-300 shadow-md shadow-amber-500/20 transition-all"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Create Your First Project</span>
@@ -177,7 +177,7 @@ export default async function DashboardPage() {
                         {project.name}
                       </h3>
                       <span
-                        className={`text-[10px] uppercase font-mono px-2 py-0.5 rounded-full border shrink-0 ${
+                        className={`text-xs sm:text-sm uppercase font-mono px-2 py-0.5 rounded-full border shrink-0 ${
                           project.status === "published"
                             ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
                             : project.status === "archived"
@@ -189,13 +189,13 @@ export default async function DashboardPage() {
                       </span>
                     </div>
 
-                    <p className="text-xs text-zinc-400 mt-2 line-clamp-2 min-h-[32px]">
+                    <p className="text-xs sm:text-sm text-zinc-400 mt-2 line-clamp-2 min-h-[32px]">
                       {project.description || "No description provided."}
                     </p>
                   </div>
 
-                  <div className="pt-4 mt-4 border-t border-white/[0.06] flex items-center justify-between text-xs">
-                    <span className="text-[11px] text-zinc-500 flex items-center gap-1 font-mono">
+                  <div className="pt-4 mt-4 border-t border-white/[0.06] flex items-center justify-between text-xs sm:text-sm">
+                    <span className="text-xs sm:text-sm text-zinc-500 flex items-center gap-1 font-mono">
                       <Clock className="w-3 h-3" />
                       {formatTimeAgo(project.updatedAt)}
                     </span>
@@ -220,7 +220,7 @@ export default async function DashboardPage() {
                       </Link>
                       <Link
                         href={`/projects/${project.id}`}
-                        className="py-1 px-2.5 rounded-lg text-xs font-medium text-black bg-amber-400 hover:bg-amber-300 transition-all flex items-center gap-1"
+                        className="py-1 px-2.5 rounded-lg text-xs sm:text-sm font-medium text-black bg-amber-400 hover:bg-amber-300 transition-all flex items-center gap-1"
                       >
                         <span>Workspace</span>
                         <ArrowRight className="w-3 h-3" />
@@ -243,7 +243,7 @@ export default async function DashboardPage() {
               </h2>
               <Link
                 href="/activity"
-                className="text-xs text-zinc-400 hover:text-white transition-colors"
+                className="text-xs sm:text-sm text-zinc-400 hover:text-white transition-colors"
               >
                 View all
               </Link>
@@ -253,7 +253,7 @@ export default async function DashboardPage() {
               {recentActivities.map((act) => (
                 <div
                   key={act.id}
-                  className="flex items-center justify-between text-xs py-1.5 border-b border-white/[0.04] last:border-0"
+                  className="flex items-center justify-between text-xs sm:text-sm py-1.5 border-b border-white/[0.04] last:border-0"
                 >
                   <div className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
@@ -261,12 +261,12 @@ export default async function DashboardPage() {
                       {act.type.replace(/_/g, " ").toLowerCase()}
                     </span>
                     {act.project && (
-                      <span className="text-zinc-400 font-mono text-[11px]">
+                      <span className="text-zinc-400 font-mono text-xs sm:text-sm">
                         in &ldquo;{act.project.name}&rdquo;
                       </span>
                     )}
                   </div>
-                  <span className="text-[11px] text-zinc-400 font-mono">
+                  <span className="text-xs sm:text-sm text-zinc-400 font-mono">
                     {formatTimeAgo(act.createdAt)}
                   </span>
                 </div>

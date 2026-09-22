@@ -54,7 +54,7 @@ export default function SignupPage() {
             <span className="font-semibold text-xl tracking-tight text-white block">
               Studio
             </span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-mono block">
+            <span className="text-xs sm:text-sm uppercase tracking-[0.2em] text-zinc-400 font-mono block">
               Digital Workspace
             </span>
           </div>
@@ -72,7 +72,7 @@ export default function SignupPage() {
         <div className="p-8 sm:p-10 rounded-2xl border border-white/[0.08] bg-[#101014] shadow-2xl">
           <form className="space-y-5" onSubmit={handleSubmit}>
             {error && (
-              <div className="bg-rose-950/50 border border-rose-500/30 text-rose-300 text-xs p-3.5 rounded-xl text-center">
+              <div className="bg-rose-950/50 border border-rose-500/30 text-rose-300 text-xs sm:text-sm p-3.5 rounded-xl text-center">
                 {error}
               </div>
             )}
@@ -80,7 +80,7 @@ export default function SignupPage() {
             <div>
               <label
                 htmlFor="name"
-                className="block text-xs font-medium text-zinc-300 mb-1.5"
+                className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5"
               >
                 Full Name
               </label>
@@ -99,7 +99,7 @@ export default function SignupPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-xs font-medium text-zinc-300 mb-1.5"
+                className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5"
               >
                 Email Address
               </label>
@@ -119,7 +119,7 @@ export default function SignupPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-xs font-medium text-zinc-300 mb-1.5"
+                className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5"
               >
                 Password
               </label>
@@ -149,7 +149,7 @@ export default function SignupPage() {
             </div>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-white/[0.08] text-center text-xs text-zinc-400">
+          <div className="mt-6 pt-6 border-t border-white/[0.08] text-center text-xs sm:text-sm text-zinc-400">
             Already have an account?{" "}
             <Link
               href="/login"
@@ -160,7 +160,7 @@ export default function SignupPage() {
           </div>
         </div>
 
-        <div className="mt-8 flex items-center justify-center gap-2 text-xs text-zinc-500">
+        <div className="mt-8 flex items-center justify-center gap-2 text-xs sm:text-sm text-zinc-500">
           <ShieldCheck className="w-3.5 h-3.5" />
           <span>Server-authoritative authentication &amp; encrypted sessions</span>
         </div>

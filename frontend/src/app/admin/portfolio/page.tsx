@@ -72,7 +72,7 @@ export default function AdminPortfolioPage() {
           />
           <button
             type="submit"
-            className="px-6 py-3 rounded-xl text-xs font-semibold text-black bg-gradient-to-r from-amber-300 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-md shadow-amber-500/20 transition-all whitespace-nowrap cursor-pointer"
+            className="px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold text-black bg-gradient-to-r from-amber-300 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-md shadow-amber-500/20 transition-all whitespace-nowrap cursor-pointer"
           >
             Create Category
           </button>
@@ -87,11 +87,11 @@ export default function AdminPortfolioPage() {
             className="rounded-3xl border border-blue-400/20 bg-[#0c162e]/85 p-6 backdrop-blur-md shadow-xl shadow-blue-950/30"
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-mono uppercase tracking-wider text-sky-400 font-semibold flex items-center gap-1.5">
+              <span className="text-xs sm:text-sm font-mono uppercase tracking-wider text-sky-400 font-semibold flex items-center gap-1.5">
                 <Camera className="w-3.5 h-3.5 text-amber-400" />
                 {cat.name}
               </span>
-              <span className="text-xs font-mono text-neutral-400">
+              <span className="text-xs sm:text-sm font-mono text-neutral-400">
                 {cat.items?.length || 0} Plates
               </span>
             </div>
@@ -100,14 +100,14 @@ export default function AdminPortfolioPage() {
               {(cat.items || []).map((item: any) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between p-3 rounded-xl bg-blue-950/40 border border-blue-400/10 text-xs"
+                  className="flex items-center justify-between p-3 rounded-xl bg-blue-950/40 border border-blue-400/10 text-xs sm:text-sm"
                 >
                   <span className="font-medium text-white">{item.title}</span>
-                  <span className="text-[10px] font-mono text-amber-300">Curated</span>
+                  <span className="text-xs sm:text-sm font-mono text-amber-300">Curated</span>
                 </div>
               ))}
               {(!cat.items || cat.items.length === 0) && (
-                <p className="text-xs text-neutral-400 py-3 italic">
+                <p className="text-xs sm:text-sm text-neutral-400 py-3 italic">
                   No plates uploaded under this category yet.
                 </p>
               )}

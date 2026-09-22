@@ -61,7 +61,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 
       {message && (
         <div
-          className={`p-3.5 rounded-xl border text-xs flex items-center gap-2 ${
+          className={`p-3.5 rounded-xl border text-xs sm:text-sm flex items-center gap-2 ${
             message.type === "success"
               ? "bg-emerald-950/60 border-emerald-500/40 text-emerald-300"
               : "bg-rose-950/60 border-rose-500/40 text-rose-300"
@@ -84,13 +84,13 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           </div>
           <div>
             <h2 className="text-base font-semibold text-white">{name || "Studio User"}</h2>
-            <p className="text-xs text-zinc-400">{user.email}</p>
+            <p className="text-xs sm:text-sm text-zinc-400">{user.email}</p>
             <div className="flex items-center gap-2 mt-2">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono uppercase bg-amber-500/10 text-amber-300 border border-amber-500/30">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs sm:text-sm font-mono uppercase bg-amber-500/10 text-amber-300 border border-amber-500/30">
                 <Shield className="w-3 h-3" />
                 {user.role}
               </span>
-              <span className="text-[11px] text-zinc-500 flex items-center gap-1">
+              <span className="text-xs sm:text-sm text-zinc-500 flex items-center gap-1">
                 <Clock className="w-3 h-3" />
                 Joined {formatDate(user.createdAt)}
               </span>
@@ -101,7 +101,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
         <form onSubmit={handleSubmit} className="space-y-4 pt-4 border-t border-white/[0.06]">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+              <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5">
                 Display Name
               </label>
               <input
@@ -113,7 +113,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+              <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5">
                 Email Address (Read-only)
               </label>
               <input
@@ -126,7 +126,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+            <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5">
               Avatar Image URL
             </label>
             <input
@@ -142,7 +142,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
             <button
               type="submit"
               disabled={isSaving}
-              className="py-2.5 px-4 rounded-xl text-xs font-semibold text-black bg-amber-400 hover:bg-amber-300 shadow transition-all cursor-pointer disabled:opacity-50"
+              className="py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-black bg-amber-400 hover:bg-amber-300 shadow transition-all cursor-pointer disabled:opacity-50"
             >
               {isSaving ? "Saving..." : "Save Changes"}
             </button>
@@ -156,10 +156,10 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           <KeyRound className="w-4 h-4 text-amber-400" />
           <span>Security &amp; Authorization</span>
         </h3>
-        <p className="text-xs text-zinc-400">
+        <p className="text-xs sm:text-sm text-zinc-400">
           Your session is protected with server-authoritative authentication tokens and encrypted HTTP-only cookies.
         </p>
-        <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.05] text-xs text-zinc-300 flex items-center gap-2">
+        <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.05] text-xs sm:text-sm text-zinc-300 flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
           <span>Server-side verification active for all queries and mutations.</span>
         </div>

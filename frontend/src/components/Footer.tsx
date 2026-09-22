@@ -19,7 +19,7 @@ export default function Footer() {
         <div className="border-b border-white/[0.06] pb-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div>
-              <span className="text-[10px] font-mono tracking-[0.35em] text-zinc-500 uppercase block mb-3">
+              <span className="text-xs sm:text-sm font-mono tracking-[0.35em] text-zinc-500 uppercase block mb-3">
                 Colophon &amp; Monograph Index
               </span>
               <h1 className="text-6xl sm:text-8xl lg:text-9xl font-serif font-light text-zinc-200 tracking-tight leading-none">
@@ -27,7 +27,7 @@ export default function Footer() {
               </h1>
             </div>
 
-            <div className="max-w-xs space-y-2 text-xs font-mono text-zinc-500">
+            <div className="max-w-xs space-y-2 text-xs sm:text-sm font-mono text-zinc-500">
               <span className="text-amber-400/90 font-medium block">
                 Atelier Standards
               </span>
@@ -41,17 +41,17 @@ export default function Footer() {
         {/* ========================================================================= */}
         {/* ATELIER COLOPHON GRID (4 MINIMALIST COLUMNS)                              */}
         {/* ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 text-xs">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 text-xs sm:text-sm">
           {/* Column 1: Premise & Direction */}
           <div className="space-y-4">
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-300">
+            <h4 className="font-mono text-xs sm:text-sm uppercase tracking-[0.25em] text-zinc-300">
               01 / Atelier Direction
             </h4>
             <p className="text-zinc-400 font-light leading-relaxed">
               A private photography atelier dedicated to the deliberate arrest of light, form, and human gesture. Operating globally for selective luxury commissions, architectural archives, and private monographs.
             </p>
             <div className="pt-1">
-              <span className="inline-flex items-center gap-2 text-[10px] font-mono text-amber-400/80">
+              <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono text-amber-400/80">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80" />
                 Annual Commission Quota: 12 Projects
               </span>
@@ -60,10 +60,10 @@ export default function Footer() {
 
           {/* Column 2: Permanent Studios */}
           <div className="space-y-4">
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-300">
+            <h4 className="font-mono text-xs sm:text-sm uppercase tracking-[0.25em] text-zinc-300">
               02 / Production Bases
             </h4>
-            <ul className="space-y-3 font-mono text-[11px] text-zinc-400">
+            <ul className="space-y-3 font-mono text-xs sm:text-sm text-zinc-400">
               <li className="flex items-center justify-between border-b border-white/[0.04] pb-2">
                 <span className="text-zinc-300">New York</span>
                 <span className="text-zinc-500">SoHo • 40.72° N</span>
@@ -85,10 +85,10 @@ export default function Footer() {
 
           {/* Column 3: Navigation Index */}
           <div className="space-y-4">
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-300">
+            <h4 className="font-mono text-xs sm:text-sm uppercase tracking-[0.25em] text-zinc-300">
               03 / Index &amp; Works
             </h4>
-            <ul className="space-y-2.5 font-mono text-[11px]">
+            <ul className="space-y-2.5 font-mono text-xs sm:text-sm">
               <li>
                 <Link
                   href="/main"
@@ -130,13 +130,13 @@ export default function Footer() {
 
           {/* Column 4: Curatorial Contact & Vault */}
           <div className="space-y-4">
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-300">
+            <h4 className="font-mono text-xs sm:text-sm uppercase tracking-[0.25em] text-zinc-300">
               04 / Direct Line
             </h4>
             <p className="text-zinc-400 font-light leading-relaxed">
               Inquire regarding editorial monographs, private portraiture sittings, or museum-grade baryta prints.
             </p>
-            <div className="space-y-2 pt-1 font-mono text-[11px]">
+            <div className="space-y-2 pt-1 font-mono text-xs sm:text-sm">
               <a
                 href="mailto:commissions@studioza.com"
                 className="text-amber-300 hover:text-amber-200 transition-colors block border-b border-amber-400/30 pb-1 w-fit"
@@ -156,7 +156,7 @@ export default function Footer() {
         {/* ========================================================================= */}
         {/* COLOPHON BAR & MANDATORY ARYAN PATEL CREDIT                               */}
         {/* ========================================================================= */}
-        <div className="pt-10 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-zinc-500 gap-4">
+        <div className="pt-10 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 gap-4">
           <p>© {new Date().getFullYear()} Studioza Atelier Inc. All rights reserved.</p>
 
           {/* Aryan Patel Atelier Credit */}
@@ -165,7 +165,7 @@ export default function Footer() {
             <span className="text-amber-400 font-medium tracking-wide">Aryan Patel</span>
           </div>
 
-          <p className="text-zinc-600 text-[10px]">
+          <p className="text-zinc-600 text-xs sm:text-sm">
             Hahnemühle 310gsm • Phase One IQ4 • Profoto Pro-11
           </p>
         </div>

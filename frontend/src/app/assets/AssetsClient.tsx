@@ -93,7 +93,7 @@ export default function AssetsClient({ assets }: AssetsClientProps) {
         </div>
 
         {/* Upload Button */}
-        <label className="inline-flex items-center gap-2 py-2 px-3.5 rounded-xl font-medium text-xs text-black bg-amber-400 hover:bg-amber-300 shadow-md shadow-amber-500/20 transition-all cursor-pointer w-fit">
+        <label className="inline-flex items-center gap-2 py-2 px-3.5 rounded-xl font-medium text-xs sm:text-sm text-black bg-amber-400 hover:bg-amber-300 shadow-md shadow-amber-500/20 transition-all cursor-pointer w-fit">
           <UploadCloud className="w-4 h-4" />
           <span>{isUploading ? "Uploading file..." : "Upload New Asset"}</span>
           <input
@@ -107,7 +107,7 @@ export default function AssetsClient({ assets }: AssetsClientProps) {
       </div>
 
       {error && (
-        <div className="p-3.5 rounded-xl bg-rose-950/50 border border-rose-500/30 text-rose-300 text-xs">
+        <div className="p-3.5 rounded-xl bg-rose-950/50 border border-rose-500/30 text-rose-300 text-xs sm:text-sm">
           {error}
         </div>
       )}
@@ -116,7 +116,7 @@ export default function AssetsClient({ assets }: AssetsClientProps) {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-4 rounded-2xl border border-white/[0.08] bg-[#101014] flex items-center justify-between">
           <div>
-            <p className="text-xs text-zinc-400">Total Assets</p>
+            <p className="text-xs sm:text-sm text-zinc-400">Total Assets</p>
             <p className="text-xl font-bold text-white mt-1">{assets.length}</p>
           </div>
           <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
@@ -126,7 +126,7 @@ export default function AssetsClient({ assets }: AssetsClientProps) {
 
         <div className="p-4 rounded-2xl border border-white/[0.08] bg-[#101014] flex items-center justify-between">
           <div>
-            <p className="text-xs text-zinc-400">Storage Used</p>
+            <p className="text-xs sm:text-sm text-zinc-400">Storage Used</p>
             <p className="text-xl font-bold text-white mt-1">{formatBytes(totalSize)}</p>
           </div>
           <div className="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center">
@@ -136,8 +136,8 @@ export default function AssetsClient({ assets }: AssetsClientProps) {
 
         <div className="p-4 rounded-2xl border border-white/[0.08] bg-[#101014] flex items-center justify-between">
           <div>
-            <p className="text-xs text-zinc-400">Supported Formats</p>
-            <p className="text-xs font-mono text-zinc-300 mt-1">PNG, JPG, WEBP, SVG, PDF</p>
+            <p className="text-xs sm:text-sm text-zinc-400">Supported Formats</p>
+            <p className="text-xs sm:text-sm font-mono text-zinc-300 mt-1">PNG, JPG, WEBP, SVG, PDF</p>
           </div>
           <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
             <Sparkles className="w-4 h-4" />
@@ -150,7 +150,7 @@ export default function AssetsClient({ assets }: AssetsClientProps) {
         <div className="p-12 rounded-2xl border border-dashed border-white/[0.1] bg-[#101014]/40 text-center space-y-3">
           <FileBox className="w-8 h-8 text-zinc-500 mx-auto" />
           <h3 className="text-sm font-semibold text-white">No assets stored yet</h3>
-          <p className="text-xs text-zinc-400 max-w-sm mx-auto">
+          <p className="text-xs sm:text-sm text-zinc-400 max-w-sm mx-auto">
             Upload images and project documents to use across your workspace.
           </p>
         </div>
@@ -173,15 +173,15 @@ export default function AssetsClient({ assets }: AssetsClientProps) {
                   ) : (
                     <div className="text-zinc-500 flex flex-col items-center gap-1">
                       <FileBox className="w-8 h-8 text-zinc-400" />
-                      <span className="text-[9px] uppercase font-mono">{asset.mimeType.split("/")[1]}</span>
+                      <span className="text-xs sm:text-sm uppercase font-mono">{asset.mimeType.split("/")[1]}</span>
                     </div>
                   )}
                 </div>
 
-                <p className="text-xs font-medium text-white truncate mt-2.5" title={asset.name}>
+                <p className="text-xs sm:text-sm font-medium text-white truncate mt-2.5" title={asset.name}>
                   {asset.name}
                 </p>
-                <div className="flex items-center justify-between text-[10px] text-zinc-500 font-mono mt-1">
+                <div className="flex items-center justify-between text-xs sm:text-sm text-zinc-500 font-mono mt-1">
                   <span>{formatBytes(asset.size)}</span>
                   <span>{formatDate(asset.createdAt)}</span>
                 </div>
@@ -191,7 +191,7 @@ export default function AssetsClient({ assets }: AssetsClientProps) {
               <div className="pt-2.5 mt-2.5 border-t border-white/[0.06] flex items-center justify-between">
                 <button
                   onClick={() => handleCopyUrl(asset.url, asset.id)}
-                  className="p-1 rounded-lg text-zinc-400 hover:text-white flex items-center gap-1 text-[11px]"
+                  className="p-1 rounded-lg text-zinc-400 hover:text-white flex items-center gap-1 text-xs sm:text-sm"
                   title="Copy URL"
                 >
                   {copiedId === asset.id ? (
@@ -199,7 +199,7 @@ export default function AssetsClient({ assets }: AssetsClientProps) {
                   ) : (
                     <Copy className="w-3.5 h-3.5" />
                   )}
-                  <span className="text-[10px]">{copiedId === asset.id ? "Copied" : "Copy"}</span>
+                  <span className="text-xs sm:text-sm">{copiedId === asset.id ? "Copied" : "Copy"}</span>
                 </button>
 
                 <div className="flex items-center gap-1">

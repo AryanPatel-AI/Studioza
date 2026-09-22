@@ -58,7 +58,7 @@ export default function AtelierEntrancePage() {
 
           <div className="max-w-7xl mx-auto relative z-10 space-y-16">
             {/* Monograph Chapter Telemetry Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-white/[0.06] text-[10px] font-mono tracking-[0.3em] uppercase text-zinc-500">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-white/[0.06] text-xs sm:text-sm font-mono tracking-[0.3em] uppercase text-zinc-500">
               <div className="flex items-center gap-2 text-amber-400/90">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                 <span>Chapter 02 • Atelier Philosophy</span>
@@ -77,7 +77,7 @@ export default function AtelierEntrancePage() {
                   Studioza operates not as a content factory, but as a classical darkroom and optical laboratory. We balance medium-format digital capture with silver halide discipline, creating imagery meant to outlast the ephemeral feeds of the present day.
                 </p>
 
-                <div className="pt-4 flex items-center gap-4 text-xs font-mono text-zinc-400">
+                <div className="pt-4 flex items-center gap-4 text-sm sm:text-base font-mono text-zinc-400">
                   <div className="w-8 h-[1px] bg-amber-400/50" />
                   <span className="text-amber-300 font-medium tracking-wider">
                     Aryan Patel — Atelier Founder &amp; Art Director
@@ -87,14 +87,14 @@ export default function AtelierEntrancePage() {
 
               {/* Right Column: The Three Archival Tenets (5 cols) */}
               <div className="lg:col-span-5 p-8 rounded-3xl border border-white/[0.08] bg-black/40 backdrop-blur-md space-y-8">
-                <div className="border-b border-white/[0.06] pb-4 flex items-center justify-between text-[10px] font-mono tracking-widest text-zinc-500 uppercase">
+                <div className="border-b border-white/[0.06] pb-4 flex items-center justify-between text-xs sm:text-sm font-mono tracking-widest text-zinc-500 uppercase">
                   <span>Atelier Codes</span>
                   <span className="text-amber-400/80">Discipline</span>
                 </div>
 
-                <div className="space-y-6 text-xs font-light">
+                <div className="space-y-6 text-sm sm:text-base font-light">
                   <div className="space-y-1.5">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-amber-400 block">
+                    <span className="font-mono text-xs sm:text-sm uppercase tracking-widest text-amber-400 block">
                       01 / Material Authenticity
                     </span>
                     <p className="text-zinc-300 leading-relaxed">
@@ -103,7 +103,7 @@ export default function AtelierEntrancePage() {
                   </div>
 
                   <div className="space-y-1.5 border-t border-white/[0.04] pt-4">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-amber-400 block">
+                    <span className="font-mono text-xs sm:text-sm uppercase tracking-widest text-amber-400 block">
                       02 / Optical Chiaroscuro
                     </span>
                     <p className="text-zinc-300 leading-relaxed">
@@ -112,7 +112,7 @@ export default function AtelierEntrancePage() {
                   </div>
 
                   <div className="space-y-1.5 border-t border-white/[0.04] pt-4">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-amber-400 block">
+                    <span className="font-mono text-xs sm:text-sm uppercase tracking-widest text-amber-400 block">
                       03 / Archival Permanence
                     </span>
                     <p className="text-zinc-300 leading-relaxed">
@@ -121,7 +121,7 @@ export default function AtelierEntrancePage() {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-zinc-500">
+                <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500">
                   <span>DARKROOM SPECIFICATION</span>
                   <span className="text-zinc-400">BENCH VERIFIED</span>
                 </div>

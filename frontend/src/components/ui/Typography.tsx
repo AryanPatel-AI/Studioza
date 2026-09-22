@@ -83,7 +83,7 @@ export function EditorialQuote({
         &ldquo;{children}&rdquo;
       </p>
       {(attribution || role) && (
-        <footer className="pt-2 text-xs font-mono tracking-wider">
+        <footer className="pt-2 text-xs sm:text-sm font-mono tracking-wider">
           {attribution && <cite className="text-amber-400/90 font-medium not-italic">{attribution}</cite>}
           {attribution && role && <span className="text-zinc-600 mx-2">—</span>}
           {role && <span className="text-zinc-500 font-light">{role}</span>}
@@ -120,7 +120,7 @@ export function TechnicalSpec({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.2em] uppercase select-none",
+        "inline-flex items-center gap-2 text-xs sm:text-sm font-mono tracking-[0.2em] uppercase select-none",
         toneClasses,
         className
       )}
@@ -157,7 +157,7 @@ export function PlateLabel({
   return (
     <div
       className={cn(
-        "flex items-center justify-between text-[10px] font-mono text-zinc-500 tracking-wider uppercase select-none",
+        "flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-wider uppercase select-none",
         className
       )}
       {...props}
@@ -196,7 +196,7 @@ export function BodyText({
   const sizeClasses = {
     base: "text-sm sm:text-base leading-relaxed",
     sm: "text-xs sm:text-sm leading-relaxed",
-    xs: "text-xs leading-normal",
+    xs: "text-xs sm:text-sm leading-normal",
   }[size];
 
   const toneClasses = {

@@ -220,12 +220,12 @@ export default function HeroOpticalInstallation() {
           loadStage >= 1 ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"
         )}
       >
-        <div className="inline-flex items-center gap-2.5 text-[11px] font-mono text-amber-300/90 tracking-wider">
+        <div className="inline-flex items-center gap-2.5 text-xs sm:text-sm font-mono text-amber-300/90 tracking-wider">
           <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
           <span>Studio Atelier • Monograph Vol. XXIV</span>
         </div>
 
-        <span className="hidden sm:inline-block text-[10px] font-mono text-zinc-400 tracking-widest uppercase">
+        <span className="hidden sm:inline-block text-xs sm:text-sm font-mono text-zinc-400 tracking-widest uppercase">
           Fine art photography &amp; digital works
         </span>
       </div>
@@ -315,7 +315,7 @@ export default function HeroOpticalInstallation() {
             {/* Telemetry Monograph Badge */}
             <div
               className={cn(
-                "inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-mono text-amber-300 tracking-[0.2em] uppercase transition-all duration-700",
+                "inline-flex items-center gap-2 text-xs sm:text-sm sm:text-xs sm:text-sm font-mono text-amber-300 tracking-[0.2em] uppercase transition-all duration-700",
                 loadStage >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
               )}
             >
@@ -338,7 +338,7 @@ export default function HeroOpticalInstallation() {
             {/* Curatorial Thesis */}
             <p
               className={cn(
-                "text-xs sm:text-[13px] font-light text-zinc-300 leading-relaxed max-w-md mx-auto transition-all duration-1000",
+                "text-xs sm:text-sm sm:text-[13px] font-light text-zinc-300 leading-relaxed max-w-md mx-auto transition-all duration-1000",
                 loadStage >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
               )}
             >
@@ -382,7 +382,7 @@ export default function HeroOpticalInstallation() {
       {/* ========================================================================= */}
       <div
         className={cn(
-          "relative z-20 max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-5 border-t border-white/[0.08] text-xs font-mono text-zinc-400 transition-all duration-700",
+          "relative z-20 max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-5 border-t border-white/[0.08] text-sm sm:text-base font-mono text-zinc-400 transition-all duration-700",
           loadStage >= 4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
         )}
       >
@@ -392,7 +392,7 @@ export default function HeroOpticalInstallation() {
           <span>Medium Format Digital Archive</span>
         </div>
 
-        <div className="flex items-center gap-6 text-[11px] text-zinc-500">
+        <div className="flex items-center gap-6 text-xs sm:text-sm text-zinc-500">
           <span>Hasselblad H6D • Schneider 80mm</span>
           <span className="hidden sm:inline-block">Scroll to explore plates ↓</span>
         </div>

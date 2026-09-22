@@ -260,7 +260,7 @@ export default function VisualArchiveExhibition() {
         <div className="space-y-12 pb-10 border-b border-white/[0.08]">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div className="space-y-4 max-w-3xl">
-              <div className="flex items-center gap-3 text-xs font-mono tracking-[0.3em] text-amber-400 uppercase">
+              <div className="flex items-center gap-3 text-sm sm:text-base font-mono tracking-[0.3em] text-amber-400 uppercase">
                 <span className="w-2 h-2 rounded-full bg-amber-400" />
                 <span>Exhibition Room I • The Permanent Archive</span>
               </div>
@@ -273,15 +273,15 @@ export default function VisualArchiveExhibition() {
             </div>
 
             {/* Curatorial Ledger Telemetry */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 text-xs font-mono text-zinc-400">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 text-sm sm:text-base font-mono text-zinc-400">
               <div className="border-l sm:border-l-0 sm:border-r border-white/10 pl-4 sm:pl-0 sm:pr-6 py-1">
-                <span className="text-zinc-500 block text-[10px] uppercase tracking-wider">
+                <span className="text-zinc-500 block text-xs sm:text-sm uppercase tracking-wider">
                   Archive Volume
                 </span>
                 <span className="text-zinc-200 font-semibold">Vol. XXIV — 2026</span>
               </div>
               <div>
-                <span className="text-zinc-500 block text-[10px] uppercase tracking-wider">
+                <span className="text-zinc-500 block text-xs sm:text-sm uppercase tracking-wider">
                   Print Classification
                 </span>
                 <span className="text-amber-300 font-semibold">Silver Gelatin &amp; Baryta</span>
@@ -293,7 +293,7 @@ export default function VisualArchiveExhibition() {
           {/* CURATORIAL LABELS (NOT UI BUTTONS)                                        */}
           {/* ========================================================================= */}
           <div className="pt-6">
-            <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500 tracking-widest uppercase mb-4">
+            <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-widest uppercase mb-4">
               <span>Curatorial Index Directory</span>
               <span className="hidden sm:inline">Select Room to Filter</span>
             </div>
@@ -309,7 +309,7 @@ export default function VisualArchiveExhibition() {
                     key={cat.key}
                     onClick={() => setActiveCategory(cat.key)}
                     className={cn(
-                      "group relative shrink-0 sm:shrink px-3 sm:px-4 py-2 text-xs font-mono tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 select-none",
+                      "group relative shrink-0 sm:shrink px-3 sm:px-4 py-2 text-sm sm:text-base font-mono tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 select-none",
                       isActive
                         ? "text-amber-300 font-semibold"
                         : "text-zinc-400 hover:text-white"
@@ -317,7 +317,7 @@ export default function VisualArchiveExhibition() {
                   >
                     <span
                       className={cn(
-                        "text-[10px] transition-colors",
+                        "text-xs sm:text-sm transition-colors",
                         isActive ? "text-amber-400" : "text-zinc-600 group-hover:text-zinc-400"
                       )}
                     >
@@ -358,7 +358,7 @@ export default function VisualArchiveExhibition() {
                 className="relative space-y-12"
               >
                 {/* Suite Header Room Identifier */}
-                <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500 tracking-[0.25em] uppercase pb-4 border-b border-white/[0.06]">
+                <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-[0.25em] uppercase pb-4 border-b border-white/[0.06]">
                   <div className="flex items-center gap-3">
                     <span className="text-amber-400 font-bold">ROOM {plate.roomNumber}</span>
                     <span className="text-zinc-600">—</span>
@@ -418,19 +418,19 @@ export default function VisualArchiveExhibition() {
 
                           {/* Interactive Reticle Corner Guides */}
                           <div className="absolute top-5 left-5 text-white/30 group-hover:text-amber-400/90 transition-colors pointer-events-none">
-                            <span className="font-mono text-[10px] tracking-widest block">
+                            <span className="font-mono text-xs sm:text-sm tracking-widest block">
                               EXP. {plate.primaryImage.exposure}
                             </span>
                           </div>
                           <div className="absolute bottom-5 right-5 text-white/30 group-hover:text-amber-400/90 transition-colors pointer-events-none">
-                            <span className="font-mono text-[10px] tracking-widest block">
+                            <span className="font-mono text-xs sm:text-sm tracking-widest block">
                               {plate.primaryImage.camera}
                             </span>
                           </div>
 
                           {/* Hover Zoom & Inspection Pill */}
                           <div className="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                            <span className="py-1 px-3 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/30 text-[10px] font-mono text-amber-300 flex items-center gap-1.5 shadow-xl">
+                            <span className="py-1 px-3 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/30 text-xs sm:text-sm font-mono text-amber-300 flex items-center gap-1.5 shadow-xl">
                               <Scan className="w-3 h-3 text-amber-400" />
                               Inspect Negative
                             </span>
@@ -439,7 +439,7 @@ export default function VisualArchiveExhibition() {
                       )}
 
                       {/* Negative Rebate Film Footer */}
-                      <div className="px-5 py-3 bg-[#0a0807] border-t border-white/[0.08] flex items-center justify-between text-[10px] font-mono text-zinc-500">
+                      <div className="px-5 py-3 bg-[#0a0807] border-t border-white/[0.08] flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500">
                         <div className="flex items-center gap-2">
                           <span className="text-amber-400 font-bold">PL. {plate.roomNumber}</span>
                           <span>•</span>
@@ -483,11 +483,11 @@ export default function VisualArchiveExhibition() {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
 
                           {/* Grease-Pencil Contact Sheet Annotation */}
-                          <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-white/10 text-[9px] font-mono text-amber-300">
+                          <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-white/10 text-xs sm:text-sm font-mono text-amber-300">
                             {plate.overlappingImage.label}
                           </div>
 
-                          <div className="absolute bottom-2 left-2 right-2 text-[9px] font-mono text-zinc-300 truncate">
+                          <div className="absolute bottom-2 left-2 right-2 text-xs sm:text-sm font-mono text-zinc-300 truncate">
                             {plate.overlappingImage.camera}
                           </div>
                         </div>
@@ -508,7 +508,7 @@ export default function VisualArchiveExhibition() {
                     }}
                   >
                     <div className="space-y-3">
-                      <span className="text-xs font-mono text-amber-400 tracking-widest uppercase block">
+                      <span className="text-sm sm:text-base font-mono text-amber-400 tracking-widest uppercase block">
                         Monograph Retrospective
                       </span>
                       <h3 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white tracking-tight leading-tight">
@@ -525,14 +525,14 @@ export default function VisualArchiveExhibition() {
                       tint="obsidian"
                       intensity="medium"
                       depth={8}
-                      contentClassName="p-5 sm:p-6 space-y-3 text-xs font-mono"
+                      contentClassName="p-5 sm:p-6 space-y-3 text-sm sm:text-base font-mono"
                     >
-                      <div className="flex items-center justify-between text-[10px] text-zinc-500 pb-2 border-b border-white/[0.08]">
+                      <div className="flex items-center justify-between text-xs sm:text-sm text-zinc-500 pb-2 border-b border-white/[0.08]">
                         <span className="text-amber-400 font-medium">CURATORIAL SPEC.</span>
                         <span>{plate.year} ARCHIVE</span>
                       </div>
 
-                      <div className="space-y-1.5 text-zinc-400 text-[11px]">
+                      <div className="space-y-1.5 text-zinc-400 text-xs sm:text-sm">
                         <div className="flex justify-between">
                           <span className="text-zinc-500">Edition:</span>
                           <span className="text-zinc-200 text-right">{plate.edition}</span>
@@ -554,7 +554,7 @@ export default function VisualArchiveExhibition() {
                           size="sm"
                           icon="arrow-up-right"
                           strength={0.2}
-                          className="w-full justify-between text-zinc-300 hover:text-white text-xs"
+                          className="w-full justify-between text-zinc-300 hover:text-white text-sm sm:text-base"
                         >
                           Inquire for Master Print
                         </StudioButton>

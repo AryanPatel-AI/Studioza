@@ -48,14 +48,14 @@ export default async function AdminLayout({
               <span className="font-semibold text-sm text-white tracking-tight block">
                 Studio Admin
               </span>
-              <span className="text-[9px] uppercase tracking-wider text-amber-400 font-mono block -mt-0.5">
+              <span className="text-xs sm:text-sm uppercase tracking-wider text-amber-400 font-mono block -mt-0.5">
                 System Oversight
               </span>
             </div>
           </div>
 
           {/* Navigation */}
-          <nav className="p-3 space-y-1 text-xs font-medium">
+          <nav className="p-3 space-y-1 text-xs sm:text-sm font-medium">
             <Link
               href="/admin"
               className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/[0.08] text-amber-400 border border-amber-500/20 transition-all"
@@ -77,19 +77,19 @@ export default async function AdminLayout({
         {/* User Footer Profile & Sign Out */}
         <div className="p-3 border-t border-white/[0.08]">
           <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.05] mb-2 flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center font-bold text-xs shrink-0">
+            <div className="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">
               {user.name ? user.name[0].toUpperCase() : "A"}
             </div>
             <div className="overflow-hidden">
-              <p className="text-xs font-medium text-white truncate">{user.name}</p>
-              <p className="text-[10px] text-amber-400 font-mono uppercase">Admin Authority</p>
+              <p className="text-xs sm:text-sm font-medium text-white truncate">{user.name}</p>
+              <p className="text-xs sm:text-sm text-amber-400 font-mono uppercase">Admin Authority</p>
             </div>
           </div>
 
           <form action={logoutUser}>
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs text-rose-300 hover:text-rose-100 hover:bg-rose-950/40 border border-rose-500/20 transition-colors cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs sm:text-sm text-rose-300 hover:text-rose-100 hover:bg-rose-950/40 border border-rose-500/20 transition-colors cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Sign Out</span>

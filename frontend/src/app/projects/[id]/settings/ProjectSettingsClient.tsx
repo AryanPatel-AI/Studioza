@@ -102,7 +102,7 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
       <div className="flex items-center justify-between">
         <Link
           href={`/projects/${project.id}`}
-          className="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-zinc-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Return to Workspace</span>
@@ -112,7 +112,7 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
           <Link
             href={`/p/${project.slug}`}
             target="_blank"
-            className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 font-medium"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-emerald-400 hover:text-emerald-300 font-medium"
           >
             <span>View Public Page</span>
             <ExternalLink className="w-3 h-3" />
@@ -131,7 +131,7 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
 
       {message && (
         <div
-          className={`p-3.5 rounded-xl border text-xs flex items-center gap-2 ${
+          className={`p-3.5 rounded-xl border text-xs sm:text-sm flex items-center gap-2 ${
             message.type === "success"
               ? "bg-emerald-950/60 border-emerald-500/40 text-emerald-300"
               : "bg-rose-950/60 border-rose-500/40 text-rose-300"
@@ -148,7 +148,7 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
 
         <form onSubmit={handleSave} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+            <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5">
               Project Name *
             </label>
             <input
@@ -161,11 +161,11 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+            <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5">
               URL Slug * (Used for public route `/p/[slug]`)
             </label>
             <div className="flex items-center">
-              <span className="px-3 py-2.5 rounded-l-xl border border-r-0 border-white/[0.1] bg-white/[0.02] text-xs text-zinc-500 font-mono">
+              <span className="px-3 py-2.5 rounded-l-xl border border-r-0 border-white/[0.1] bg-white/[0.02] text-xs sm:text-sm text-zinc-500 font-mono">
                 /p/
               </span>
               <input
@@ -179,7 +179,7 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+            <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5">
               Description
             </label>
             <textarea
@@ -187,34 +187,34 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Brief summary of this project..."
-              className="w-full px-3.5 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.03] text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-xs"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.03] text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-xs sm:text-sm"
             />
           </div>
 
           <div className="pt-4 border-t border-white/[0.06] space-y-4">
-            <h3 className="text-xs font-semibold text-white">SEO &amp; Social Metadata</h3>
+            <h3 className="text-xs sm:text-sm font-semibold text-white">SEO &amp; Social Metadata</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5">
                   Meta Title
                 </label>
                 <input
                   type="text"
                   value={seoTitle}
                   onChange={(e) => setSeoTitle(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl border border-white/[0.1] bg-white/[0.03] text-white text-xs"
+                  className="w-full px-3.5 py-2 rounded-xl border border-white/[0.1] bg-white/[0.03] text-white text-xs sm:text-sm"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5">
                   Meta Description
                 </label>
                 <input
                   type="text"
                   value={seoDescription}
                   onChange={(e) => setSeoDescription(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl border border-white/[0.1] bg-white/[0.03] text-white text-xs"
+                  className="w-full px-3.5 py-2 rounded-xl border border-white/[0.1] bg-white/[0.03] text-white text-xs sm:text-sm"
                 />
               </div>
             </div>
@@ -224,7 +224,7 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
             <button
               type="submit"
               disabled={isSaving}
-              className="py-2.5 px-4 rounded-xl text-xs font-semibold text-black bg-amber-400 hover:bg-amber-300 shadow transition-all cursor-pointer disabled:opacity-50"
+              className="py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-black bg-amber-400 hover:bg-amber-300 shadow transition-all cursor-pointer disabled:opacity-50"
             >
               {isSaving ? "Saving..." : "Save Settings"}
             </button>
@@ -242,10 +242,10 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border border-white/[0.06] bg-[#101014]">
             <div>
-              <p className="text-xs font-semibold text-white">
+              <p className="text-xs sm:text-sm font-semibold text-white">
                 {project.status === "archived" ? "Restore Project" : "Archive Project"}
               </p>
-              <p className="text-[11px] text-zinc-400">
+              <p className="text-xs sm:text-sm text-zinc-400">
                 {project.status === "archived"
                   ? "Restore this project back to active workspace drafts."
                   : "Archiving hides the project from active views without deleting your data."}
@@ -255,7 +255,7 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
             <button
               type="button"
               onClick={handleArchiveToggle}
-              className="py-2 px-3.5 rounded-xl text-xs font-medium text-amber-400 border border-amber-500/30 hover:bg-amber-500/10 transition-all flex items-center gap-1.5 cursor-pointer"
+              className="py-2 px-3.5 rounded-xl text-xs sm:text-sm font-medium text-amber-400 border border-amber-500/30 hover:bg-amber-500/10 transition-all flex items-center gap-1.5 cursor-pointer"
             >
               {project.status === "archived" ? (
                 <>
@@ -273,8 +273,8 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border border-rose-500/20 bg-[#101014]">
             <div>
-              <p className="text-xs font-semibold text-rose-400">Delete Project</p>
-              <p className="text-[11px] text-zinc-400">
+              <p className="text-xs sm:text-sm font-semibold text-rose-400">Delete Project</p>
+              <p className="text-xs sm:text-sm text-zinc-400">
                 Permanently delete this project and all of its content. This action is irreversible.
               </p>
             </div>
@@ -282,7 +282,7 @@ export default function ProjectSettingsClient({ project }: ProjectSettingsClient
             <button
               type="button"
               onClick={handleDelete}
-              className="py-2 px-3.5 rounded-xl text-xs font-medium text-rose-400 border border-rose-500/30 hover:bg-rose-500/10 transition-all flex items-center gap-1.5 cursor-pointer"
+              className="py-2 px-3.5 rounded-xl text-xs sm:text-sm font-medium text-rose-400 border border-rose-500/30 hover:bg-rose-500/10 transition-all flex items-center gap-1.5 cursor-pointer"
             >
               <Trash2 className="w-3.5 h-3.5" />
               <span>Delete Permanently</span>

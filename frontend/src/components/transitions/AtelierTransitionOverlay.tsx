@@ -30,7 +30,7 @@ export default function AtelierTransitionOverlay({
           isClosing ? "opacity-100" : "opacity-0"
         )}
       >
-        <div className="text-center font-mono text-xs text-amber-400">
+        <div className="text-center font-mono text-xs sm:text-sm text-amber-400">
           <span>{targetRoom.number} — {targetRoom.title}</span>
         </div>
       </div>
@@ -85,7 +85,7 @@ export default function AtelierTransitionOverlay({
         {/* ===================================================================== */}
         {/* 2. TOP & BOTTOM 35MM FILM REBATE RAILS                                */}
         {/* ===================================================================== */}
-        <div className="absolute top-0 inset-x-0 h-10 border-b border-white/[0.08] flex items-center justify-between px-6 sm:px-12 text-[9px] font-mono text-zinc-500 tracking-[0.25em] uppercase">
+        <div className="absolute top-0 inset-x-0 h-10 border-b border-white/[0.08] flex items-center justify-between px-6 sm:px-12 text-xs sm:text-sm font-mono text-zinc-500 tracking-[0.25em] uppercase">
           <div className="flex items-center gap-3">
             <span className="text-amber-400/90 font-bold">STZ • EMULSION 400</span>
             <span>•</span>
@@ -99,7 +99,7 @@ export default function AtelierTransitionOverlay({
           <span className="text-amber-400 font-bold">24A</span>
         </div>
 
-        <div className="absolute bottom-0 inset-x-0 h-10 border-t border-white/[0.08] flex items-center justify-between px-6 sm:px-12 text-[9px] font-mono text-zinc-500 tracking-[0.25em] uppercase">
+        <div className="absolute bottom-0 inset-x-0 h-10 border-t border-white/[0.08] flex items-center justify-between px-6 sm:px-12 text-xs sm:text-sm font-mono text-zinc-500 tracking-[0.25em] uppercase">
           <span>EXHIBITION TRANSITION ENGINE</span>
           <span className="text-zinc-600 hidden sm:inline">LEICA / PHASE ONE / HASSELBLAD BENCH</span>
           <span className="text-amber-400/80 font-bold">ATELIER</span>
@@ -111,13 +111,13 @@ export default function AtelierTransitionOverlay({
         <div className="absolute inset-0 flex items-center justify-center p-6">
           <div className="max-w-xl w-full text-center space-y-6 relative">
             {/* Viewfinder Reticle Framing */}
-            <div className="absolute -top-10 left-0 text-white/30 font-mono text-[9px] tracking-widest uppercase">
+            <div className="absolute -top-10 left-0 text-white/30 font-mono text-xs sm:text-sm tracking-widest uppercase">
               {targetRoom.number}
             </div>
             <div className="absolute -top-10 right-0 text-white/30">
               <Scan className="w-3.5 h-3.5" />
             </div>
-            <div className="absolute -bottom-10 right-0 text-white/30 font-mono text-[9px] tracking-widest uppercase">
+            <div className="absolute -bottom-10 right-0 text-white/30 font-mono text-xs sm:text-sm tracking-widest uppercase">
               OPTICAL BENCH
             </div>
 
@@ -135,7 +135,7 @@ export default function AtelierTransitionOverlay({
 
             {/* Curatorial Room Badge */}
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.1] text-[10px] font-mono tracking-[0.3em] uppercase text-amber-300">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.1] text-xs sm:text-sm font-mono tracking-[0.3em] uppercase text-amber-300">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                 <span>Exhibition Transition • {targetRoom.number}</span>
               </div>
@@ -152,7 +152,7 @@ export default function AtelierTransitionOverlay({
             </div>
 
             {/* Technical Optical Specification */}
-            <div className="pt-2 flex items-center justify-center gap-2 text-[10px] font-mono text-zinc-400">
+            <div className="pt-2 flex items-center justify-center gap-2 text-xs sm:text-sm font-mono text-zinc-400">
               <Compass className="w-3.5 h-3.5 text-amber-400" />
               <span>Optics: {targetRoom.optics}</span>
             </div>

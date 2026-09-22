@@ -29,7 +29,7 @@ export default function ApertureShutter3D({
   return (
     <button
       onClick={triggerSnap}
-      className={`relative group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.12] hover:border-amber-400/50 text-xs font-mono tracking-wider text-zinc-300 hover:text-white backdrop-blur-md transition-all cursor-pointer overflow-hidden shadow-lg select-none active:scale-95 ${className}`}
+      className={`relative group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.12] hover:border-amber-400/50 text-xs sm:text-sm font-mono tracking-wider text-zinc-300 hover:text-white backdrop-blur-md transition-all cursor-pointer overflow-hidden shadow-lg select-none active:scale-95 ${className}`}
       aria-label={label}
     >
       {/* 3D Iris Shutter Icon */}

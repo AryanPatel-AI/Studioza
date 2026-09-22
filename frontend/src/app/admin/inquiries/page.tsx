@@ -53,7 +53,7 @@ export default function AdminInquiriesPage() {
         <button
           onClick={loadInquiries}
           disabled={isLoading}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-black bg-gradient-to-r from-amber-300 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-md shadow-amber-500/20 transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-black bg-gradient-to-r from-amber-300 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-md shadow-amber-500/20 transition-all cursor-pointer"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin" : ""}`} />
           Refresh Registry
@@ -63,7 +63,7 @@ export default function AdminInquiriesPage() {
       <div className="bg-[#0c162e]/90 border border-blue-400/20 rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/40">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-blue-500/20 text-left">
-            <thead className="bg-[#091024]/80 text-xs font-mono font-semibold uppercase tracking-wider text-sky-300">
+            <thead className="bg-[#091024]/80 text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider text-sky-300">
               <tr>
                 <th className="px-6 py-4">Date</th>
                 <th className="px-6 py-4">Patron Name</th>
@@ -83,21 +83,21 @@ export default function AdminInquiriesPage() {
               ) : (
                 inquiries.map((inq) => (
                   <tr key={inq.id} className="hover:bg-blue-900/20 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap text-xs font-mono text-neutral-400">
+                    <td className="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-mono text-neutral-400">
                       {new Date(inq.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap font-medium text-white">
                       {inq.name}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-xs font-mono text-sky-300">
+                    <td className="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-mono text-sky-300">
                       {inq.email}
                     </td>
-                    <td className="px-6 py-4 text-xs text-neutral-300 max-w-xs truncate">
+                    <td className="px-6 py-4 text-xs sm:text-sm text-neutral-300 max-w-xs truncate">
                       {inq.message}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
-                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider ${
+                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider ${
                           inq.status === "NEW"
                             ? "bg-amber-400/15 text-amber-300 border border-amber-400/30"
                             : "bg-emerald-400/15 text-emerald-300 border border-emerald-400/30"
@@ -111,10 +111,10 @@ export default function AdminInquiriesPage() {
                         {inq.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-xs">
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-xs sm:text-sm">
                       <button
                         onClick={() => updateStatus(inq.id, inq.status)}
-                        className="px-3 py-1.5 rounded-lg font-mono text-xs text-sky-300 hover:text-white bg-blue-950/60 hover:bg-blue-900/60 border border-blue-400/20 transition-colors cursor-pointer"
+                        className="px-3 py-1.5 rounded-lg font-mono text-xs sm:text-sm text-sky-300 hover:text-white bg-blue-950/60 hover:bg-blue-900/60 border border-blue-400/20 transition-colors cursor-pointer"
                       >
                         Mark as {inq.status === "NEW" ? "Contacted" : "New"}
                       </button>
