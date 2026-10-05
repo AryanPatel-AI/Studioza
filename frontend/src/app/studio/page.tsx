@@ -137,7 +137,7 @@ export default function StudioPage() {
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {/* Plate 1: Portrait */}
             <div className="group space-y-4">
               <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
@@ -150,12 +150,29 @@ export default function StudioPage() {
               </div>
               <div>
                 <span className="type-meta text-[var(--accent-dark-bronze)] block">DIRECTOR // 01</span>
-                <h4 className="type-display-statement text-lg text-[var(--ink-primary)]">Aryan Patel</h4>
-                <p className="type-meta text-[var(--ink-muted)] mt-0.5">Creative Director &amp; Photographer</p>
+                <h4 className="type-display-statement text-base text-[var(--ink-primary)]">Aryan Patel</h4>
+                <p className="type-meta text-[var(--ink-muted)] text-[11px] mt-0.5">Creative Director &amp; Photographer</p>
               </div>
             </div>
 
-            {/* Plate 2: Archway Field Study */}
+            {/* Plate 2: Colonnade Perspective */}
+            <div className="group space-y-4">
+              <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
+                <Image
+                  src="/images/aryan-patel-pillared-court.jpg"
+                  alt="Aryan Patel — Diwan-i-Aam Pillared Colonnade Study"
+                  fill
+                  className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                />
+              </div>
+              <div>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">COLONNADE // 02</span>
+                <h4 className="type-display-statement text-base text-[var(--ink-primary)]">Pillared Court</h4>
+                <p className="type-meta text-[var(--ink-muted)] text-[11px] mt-0.5">Sandstone Bracket Geometry</p>
+              </div>
+            </div>
+
+            {/* Plate 3: Archway Field Study */}
             <div className="group space-y-4">
               <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
                 <Image
@@ -166,13 +183,13 @@ export default function StudioPage() {
                 />
               </div>
               <div>
-                <span className="type-meta text-[var(--accent-dark-bronze)] block">EXPEDITION // 02</span>
-                <h4 className="type-display-statement text-lg text-[var(--ink-primary)]">Palace Arch Void</h4>
-                <p className="type-meta text-[var(--ink-muted)] mt-0.5">Scale &amp; Monolithic Framing</p>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">EXPEDITION // 03</span>
+                <h4 className="type-display-statement text-base text-[var(--ink-primary)]">Palace Arch Void</h4>
+                <p className="type-meta text-[var(--ink-muted)] text-[11px] mt-0.5">Scale &amp; Monolithic Framing</p>
               </div>
             </div>
 
-            {/* Plate 3: Mosaic Glass Wall */}
+            {/* Plate 4: Mosaic Glass Wall */}
             <div className="group space-y-4">
               <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
                 <Image
@@ -183,13 +200,13 @@ export default function StudioPage() {
                 />
               </div>
               <div>
-                <span className="type-meta text-[var(--accent-dark-bronze)] block">MATERIAL // 03</span>
-                <h4 className="type-display-statement text-lg text-[var(--ink-primary)]">Mirror Mosaic Hall</h4>
-                <p className="type-meta text-[var(--ink-muted)] mt-0.5">Convex Glass &amp; Light Refraction</p>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">MATERIAL // 04</span>
+                <h4 className="type-display-statement text-base text-[var(--ink-primary)]">Mirror Mosaic</h4>
+                <p className="type-meta text-[var(--ink-muted)] text-[11px] mt-0.5">Convex Glass Inlay Studies</p>
               </div>
             </div>
 
-            {/* Plate 4: Monochrome Temple Shikhara */}
+            {/* Plate 5: Monochrome Temple Shikhara */}
             <div className="group space-y-4">
               <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
                 <Image
@@ -200,16 +217,38 @@ export default function StudioPage() {
                 />
               </div>
               <div>
-                <span className="type-meta text-[var(--accent-dark-bronze)] block">EPIGRAPHY // 04</span>
-                <h4 className="type-display-statement text-lg text-[var(--ink-primary)]">Stone Temple Spire</h4>
-                <p className="type-meta text-[var(--ink-muted)] mt-0.5">Monochrome Tactility &amp; Weathering</p>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">EPIGRAPHY // 05</span>
+                <h4 className="type-display-statement text-base text-[var(--ink-primary)]">Stone Temple Spire</h4>
+                <p className="type-meta text-[var(--ink-muted)] text-[11px] mt-0.5">Monochrome Relief &amp; Erosion</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* VISUAL BREAK 02 — FORTRESS BATTLEMENTS */}
+        {/* VISUAL BREAK 02 — MOUNTAIN CITADEL ESCARPMENT */}
         <section className="w-full py-12">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1 }}
+            className="aspect-video lg:aspect-[21/9] w-full bg-[var(--bg-deep-night)] overflow-hidden relative"
+          >
+            <Image
+              src="/images/hilltop-fortress-crest.jpg"
+              alt="Jaigarh Mountain Citadel Crest — Studioza Topographical Archive"
+              fill
+              className="object-cover opacity-95 contrast-[1.08]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep-night)]/80 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-6 left-6 lg:left-12 z-10 type-meta text-[var(--bg-warm-ivory)]/90 tracking-widest uppercase text-xs">
+              ARAVALLI ESCARPMENT // JAIGARH CITADEL COMMANDING AMBER BASIN • 648M
+            </div>
+          </motion.div>
+        </section>
+
+        {/* VISUAL BREAK 03 — FORTRESS BATTLEMENTS */}
+        <section className="w-full py-6">
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}

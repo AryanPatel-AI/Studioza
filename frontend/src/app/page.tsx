@@ -194,6 +194,49 @@ export default function AtelierHomepage() {
 
             {/* Asymmetric Curated Gallery of Real Works */}
             <div className="space-y-32">
+              {/* Monograph 00: Monumental Mountain Citadel (Topographic Architecture Feature) */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={fadeIn}
+                className="space-y-8"
+              >
+                <Link href="/work/hilltop-citadel" className="group block">
+                  <div className="aspect-[16/9] lg:aspect-[21/9] bg-[var(--bg-slate)] relative overflow-hidden">
+                    <Image
+                      src="/images/hilltop-fortress-crest.jpg"
+                      alt="Jaigarh Mountain Citadel — Aravalli Escarpment & Diwa Burj"
+                      fill
+                      priority
+                      className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep-night)]/70 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-6 left-6 lg:left-12 z-10 type-meta text-[var(--bg-warm-ivory)]/90 tracking-widest uppercase text-xs">
+                      CHEEL KA TEELA // 648M ELEVATION • OVERCAST MONSOON TRANSITION
+                    </div>
+                  </div>
+                </Link>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-2 border-t border-[var(--border-light)]">
+                  <div>
+                    <span className="type-meta text-[var(--accent-dark-bronze)] block mb-1">PLATE 00 • TOPOGRAPHICAL CITADEL</span>
+                    <h3 className="type-display-title text-[var(--ink-primary)]">
+                      Jaigarh Mountain Citadel
+                    </h3>
+                    <p className="type-body-base text-[var(--ink-muted)] mt-1 max-w-xl">
+                      Massive stone bastions and the Diwa Burj watchtower crowning the rugged Aravalli ridge, capturing raw geological elevation under brooding skies.
+                    </p>
+                  </div>
+                  <Link
+                    href="/work/hilltop-citadel"
+                    className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors inline-flex items-center gap-1.5 uppercase tracking-widest shrink-0"
+                  >
+                    <span>Inspect Monograph</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </motion.div>
+
               {/* Monograph 01: Amer Citadel Archway (Large Feature) */}
               <motion.div
                 initial="hidden"
@@ -209,7 +252,6 @@ export default function AtelierHomepage() {
                         src="/images/palace-arch-courtyard.jpg"
                         alt="Amer Citadel — Chiaroscuro Archway & Courtyard"
                         fill
-                        priority
                         className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
                       />
                     </div>
@@ -235,9 +277,9 @@ export default function AtelierHomepage() {
                 </div>
               </motion.div>
 
-              {/* Monograph 02 & 03: Split Asymmetric Composition (Pelicans + Aerial City) */}
+              {/* Split Monograph: Shikhara Temple & Courtyard Living Heritage */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-20 items-start">
-                {/* Monograph 02: Sagar Lake Pelicans */}
+                {/* Temple Shikhara & Oleander */}
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -245,28 +287,29 @@ export default function AtelierHomepage() {
                   variants={fadeIn}
                   className="md:col-span-6 flex flex-col gap-6"
                 >
-                  <Link href="/work/pelican-solitude" className="group block">
+                  <Link href="/work/temple-shikhara" className="group block">
                     <div className="aspect-[3/4] bg-[var(--bg-slate)] relative overflow-hidden">
                       <Image
-                        src="/images/pelicans-lake.jpg"
-                        alt="Sagar Lake Pelican Study — Quietude & Natural Form"
+                        src="/images/temple-shikhara-oleander.jpg"
+                        alt="Shikhara & Oleander Bloom — Nagara Architecture and Flora"
                         fill
                         className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
                       />
                     </div>
                     <div className="flex justify-between items-start mt-6">
                       <div>
+                        <span className="type-meta text-[var(--accent-dark-bronze)] block mb-1">PLATE 02 • SACRED FLORA</span>
                         <h3 className="type-display-statement mb-1 group-hover:text-[var(--accent-dark-bronze)] transition-colors">
-                          Sagar Lake Pelicans
+                          Shikhara &amp; Oleander
                         </h3>
-                        <p className="type-body-base text-[var(--ink-muted)]">Wildlife Form &amp; Riparian Stillness</p>
+                        <p className="type-body-base text-[var(--ink-muted)]">Carved stone spire softened by wild blooming oleander.</p>
                       </div>
                       <span className="type-meta">2026</span>
                     </div>
                   </Link>
                 </motion.div>
 
-                {/* Monograph 03: Dense Masonry Aerial (Staggered Down) */}
+                {/* Ochre Palace Courtyard Scale */}
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -274,29 +317,30 @@ export default function AtelierHomepage() {
                   variants={fadeIn}
                   className="md:col-span-6 flex flex-col gap-6 md:mt-24"
                 >
-                  <Link href="/work/jaipur-aerial" className="group block">
+                  <Link href="/work/courtyard-scale" className="group block">
                     <div className="aspect-[3/4] bg-[var(--bg-slate)] relative overflow-hidden">
                       <Image
-                        src="/images/city-aerial-overview.jpg"
-                        alt="Historic City Aerial — Dense Masonry"
+                        src="/images/ochre-palace-courtyard-scale.jpg"
+                        alt="Ochre Palace Courtyard Scale — Living Architectural Heritage"
                         fill
                         className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
                       />
                     </div>
                     <div className="flex justify-between items-start mt-6">
                       <div>
+                        <span className="type-meta text-[var(--accent-dark-bronze)] block mb-1">PLATE 03 • LIVING HERITAGE</span>
                         <h3 className="type-display-statement mb-1 group-hover:text-[var(--accent-dark-bronze)] transition-colors">
-                          Dense Masonry Aerial
+                          Courtyard Scale
                         </h3>
-                        <p className="type-body-base text-[var(--ink-muted)]">High-Vantage Urban Cartography &amp; Atmosphere</p>
+                        <p className="type-body-base text-[var(--ink-muted)]">Terracotta facades &amp; human volume under sunlight.</p>
                       </div>
-                      <span className="type-meta">2025</span>
+                      <span className="type-meta">2026</span>
                     </div>
                   </Link>
                 </motion.div>
               </div>
 
-              {/* Monograph 04: Panoramic Sandstone Palace Domes (Full Bleed Editorial Spread) */}
+              {/* Monograph: Panoramic Sandstone Palace Domes */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -334,7 +378,7 @@ export default function AtelierHomepage() {
                 </div>
               </motion.div>
 
-              {/* Monograph 05: Fort Ramparts & High Ridge */}
+              {/* Monograph: Fort Ramparts & High Ridge */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -412,7 +456,7 @@ export default function AtelierHomepage() {
                   Aryan Patel
                 </h2>
                 <p className="type-body-lead text-[var(--ink-inverse-muted)] leading-relaxed">
-                  Founder, art director, and photographer at Studioza. Blending traditional large-format discipline, heritage architectural observation, and modern digital engineering.
+                  Founder, art director, and photographer at Studioza. Blending traditional large-format discipline, heritage architectural observation, and modern digital engineering across Rajasthan.
                 </p>
                 <blockquote className="border-l-2 border-[var(--accent-muted-gold)] pl-6 text-lg sm:text-xl font-serif italic text-[var(--bg-warm-ivory)]">
                   &ldquo;Every plate is an unhurried encounter with space, scale, and natural illumination.&rdquo;
@@ -428,14 +472,30 @@ export default function AtelierHomepage() {
               </motion.div>
             </div>
 
-            {/* Field Expedition Studies Diptych */}
+            {/* Field Expedition Studies 4-Plate Series */}
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeIn}
-              className="border-t border-[rgba(247,245,240,0.12)] pt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
+              className="border-t border-[rgba(247,245,240,0.12)] pt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
             >
+              <div className="space-y-4 group">
+                <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-deep-night)] border border-[rgba(247,245,240,0.1)]">
+                  <Image
+                    src="/images/aryan-patel-pillared-court.jpg"
+                    alt="Field Study — Diwan-i-Aam Pillared Colonnade"
+                    fill
+                    className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                  />
+                </div>
+                <div>
+                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 01 • PROPORTION</span>
+                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Pillared Colonnade</h4>
+                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Diwan-i-Aam sandstone brackets &amp; perspective.</p>
+                </div>
+              </div>
+
               <div className="space-y-4 group">
                 <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-deep-night)] border border-[rgba(247,245,240,0.1)]">
                   <Image
@@ -446,8 +506,9 @@ export default function AtelierHomepage() {
                   />
                 </div>
                 <div>
-                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 01 • SPATIAL VOID</span>
-                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Palace Archway Chiaroscuro</h4>
+                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 02 • SPATIAL VOID</span>
+                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Palace Archway</h4>
+                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Receding chambers &amp; chiaroscuro shadow.</p>
                 </div>
               </div>
 
@@ -461,8 +522,9 @@ export default function AtelierHomepage() {
                   />
                 </div>
                 <div>
-                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 02 • MATERIALITY</span>
-                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Glass Mosaic Inlay Geometry</h4>
+                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 03 • MATERIALITY</span>
+                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Mirror Mosaic Hall</h4>
+                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Convex glass inlays catching ambient light.</p>
                 </div>
               </div>
 
@@ -476,8 +538,9 @@ export default function AtelierHomepage() {
                   />
                 </div>
                 <div>
-                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 03 • MONOCHROME</span>
-                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Stone Shikhara Monolith</h4>
+                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 04 • MONOCHROME</span>
+                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Stone Temple Spire</h4>
+                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Monolithic Nagara carving &amp; weathering.</p>
                 </div>
               </div>
             </motion.div>

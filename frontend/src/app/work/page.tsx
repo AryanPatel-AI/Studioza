@@ -10,10 +10,44 @@ import Link from "next/link";
 
 const projects = [
   {
+    slug: "hilltop-citadel",
+    title: "Jaigarh Mountain Citadel",
+    category: "Topographical Military Architecture",
+    year: "2026",
+    location: "Cheel ka Teela, Amber • 648m Elevation",
+    img: "/images/hilltop-fortress-crest.jpg",
+    desc: "Massive stone bastions and the Diwa Burj watchtower crowning the rugged Aravalli ridge under brooding atmospheric skies.",
+    aspect: "aspect-[16/10]",
+    layout: "left-dominant",
+  },
+  {
+    slug: "temple-shikhara",
+    title: "Shikhara & Oleander Bloom",
+    category: "Sacred Epigraphy & Living Flora",
+    year: "2026",
+    location: "Rajasthan Heritage Corridor • High-Key Illumination",
+    img: "/images/temple-shikhara-oleander.jpg",
+    desc: "Ancient carved stone Nagara temple spire framed through wild blooming oleander branches and fluttering saffron flag.",
+    aspect: "aspect-[3/4]",
+    layout: "left-portrait",
+  },
+  {
+    slug: "courtyard-scale",
+    title: "Courtyard Scale & Living Heritage",
+    category: "Cultural Space & Architectural Scale",
+    year: "2026",
+    location: "Amber Palace Complex • Terracotta Lime Plaster",
+    img: "/images/ochre-palace-courtyard-scale.jpg",
+    desc: "Sun-drenched terracotta and mineral ochre walls framing human movement and centuries of architectural volume.",
+    aspect: "aspect-[3/4]",
+    layout: "right-portrait",
+  },
+  {
     slug: "amer-citadel",
     title: "Amer Citadel Study",
     category: "Architectural Chiaroscuro",
     year: "2026",
+    location: "Amer, Rajasthan • 80mm Medium Format",
     img: "/images/palace-arch-courtyard.jpg",
     desc: "A study in deep spatial shadow, historic Rajasthani masonry, and monumental courtyard geometry.",
     aspect: "aspect-[16/10]",
@@ -24,6 +58,7 @@ const projects = [
     title: "Sandstone Palace Domes",
     category: "Heritage Geometry & Sky",
     year: "2026",
+    location: "Amber Fort • Bangaldar Eaves & Turquoise Sky",
     img: "/images/sandstone-palace-domes.jpg",
     desc: "Curvilinear Bangaldar pavilions and carved sandstone chhatris set against atmospheric turquoise heavens.",
     aspect: "aspect-[16/9]",
@@ -34,6 +69,7 @@ const projects = [
     title: "Sagar Lake Pelicans",
     category: "Wildlife & Natural Form",
     year: "2026",
+    location: "Sagar Lake Basin • Riparian Stillness",
     img: "/images/pelicans-lake.jpg",
     desc: "Two pelicans perched on a stone pedestal in calm turquoise water, framed against fortified mountain ridges.",
     aspect: "aspect-[3/4]",
@@ -44,6 +80,7 @@ const projects = [
     title: "Dense Masonry Aerial",
     category: "Urban Cartography",
     year: "2025",
+    location: "Nahargarh Ridge • Morning Mist & Aerial Kites",
     img: "/images/city-aerial-overview.jpg",
     desc: "High-vantage panoramic study of historic urban density, rooftops, and soaring birds in misty morning light.",
     aspect: "aspect-[16/10]",
@@ -54,6 +91,7 @@ const projects = [
     title: "Fort Ramparts & High Ridge",
     category: "Territorial Architecture",
     year: "2026",
+    location: "Jaigarh Western Wall • Taanka Rainwater Basin",
     img: "/images/fort-ramparts-overlook.jpg",
     desc: "Ancient stepped ramparts and historic rainwater harvesting infrastructure snaking across rugged mountain ridges.",
     aspect: "aspect-[21/9]",
@@ -64,6 +102,7 @@ const projects = [
     title: "Monolithic Shikhara Expedition",
     category: "Epigraphical Heritage & Form",
     year: "2025",
+    location: "Rajasthan Heritage Corridor • Silver Gelatin Emulsion",
     img: "/images/aryan-patel-temple-monochrome.jpg",
     desc: "Black and white study of an ancient carved stone temple spire, exploring tactile masonry and human scale.",
     aspect: "aspect-[3/4]",
@@ -89,7 +128,7 @@ export default function PortfolioPage() {
           </span>
           <h1 className="type-display-hero">Archive</h1>
           <p className="type-body-lead text-[var(--ink-muted)] mt-6 max-w-2xl">
-            A curated selection of photographic monographs capturing monumentality, wildlife silence, and architectural chiaroscuro.
+            A curated selection of photographic monographs capturing monumentality, wildlife silence, and architectural chiaroscuro across the heritage topography of Rajasthan.
           </p>
         </motion.div>
 
@@ -126,9 +165,14 @@ export default function PortfolioPage() {
                     transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
                     className="w-full md:w-1/3 flex flex-col pb-8"
                   >
-                    <div className="flex items-center gap-4 mb-6">
-                      <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
-                      <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                    <div className="flex flex-col gap-1 mb-6">
+                      <div className="flex items-center gap-4">
+                        <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
+                        <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                      </div>
+                      <span className="text-[11px] font-mono tracking-wider text-[var(--ink-muted)] uppercase">
+                        {proj.location}
+                      </span>
                     </div>
                     <Link href={`/work/${proj.slug}`} className="group inline-block w-max">
                       <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
@@ -159,9 +203,14 @@ export default function PortfolioPage() {
                     transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
                     className="w-full md:w-5/12 flex flex-col pt-12 lg:pt-32"
                   >
-                    <div className="flex items-center gap-4 mb-6">
-                      <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
-                      <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                    <div className="flex flex-col gap-1 mb-6">
+                      <div className="flex items-center gap-4">
+                        <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
+                        <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                      </div>
+                      <span className="text-[11px] font-mono tracking-wider text-[var(--ink-muted)] uppercase">
+                        {proj.location}
+                      </span>
                     </div>
                     <Link href={`/work/${proj.slug}`} className="group inline-block">
                       <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
@@ -228,9 +277,14 @@ export default function PortfolioPage() {
                     transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
                     className="w-full md:w-5/12 flex flex-col pt-12 lg:pt-32"
                   >
-                    <div className="flex items-center gap-4 mb-6">
-                      <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
-                      <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                    <div className="flex flex-col gap-1 mb-6">
+                      <div className="flex items-center gap-4">
+                        <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
+                        <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                      </div>
+                      <span className="text-[11px] font-mono tracking-wider text-[var(--ink-muted)] uppercase">
+                        {proj.location}
+                      </span>
                     </div>
                     <Link href={`/work/${proj.slug}`} className="group inline-block">
                       <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
@@ -279,9 +333,14 @@ export default function PortfolioPage() {
                   transition={{ duration: 0.8, delay: 0.2 }}
                   className="w-full md:w-1/2 md:ml-auto flex flex-col border-t border-[var(--border-medium)] pt-8"
                 >
-                  <div className="flex items-center gap-4 mb-6">
-                    <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
-                    <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                  <div className="flex flex-col gap-1 mb-6">
+                    <div className="flex items-center gap-4">
+                      <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
+                      <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                    </div>
+                    <span className="text-[11px] font-mono tracking-wider text-[var(--ink-muted)] uppercase">
+                      {proj.location}
+                    </span>
                   </div>
                   <Link href={`/work/${proj.slug}`} className="group inline-block w-max">
                     <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
