@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Navbar from "@/components/core/Navbar";
 import Footer from "@/components/core/Footer";
@@ -13,27 +14,27 @@ const services = [
     num: "01",
     title: "Digital Experiences",
     desc: "We construct kinetic web architectures and interactive platforms that feel physical. By leveraging WebGL and strict computational motion, we create environments that reject synthetic smoothing in favor of raw digital performance.",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1600",
-    workLink: "/work/monolith-tech",
-    workTitle: "Monolith"
+    image: "/images/sandstone-palace-domes.jpg",
+    workLink: "/work/sandstone-domes",
+    workTitle: "Sandstone Palace Domes"
   },
   {
     id: "brand",
     num: "02",
     title: "Brand Systems",
     desc: "Rigorous typographical hierarchies and symbol systems rooted in classical graphic design. We treat brand identity as an architectural foundation—monumental, scalable, and resistant to ephemeral trends.",
-    image: "https://images.unsplash.com/photo-1543886566-cb500e303493?auto=format&fit=crop&q=80&w=1200",
-    workLink: "/work/vessel-brand",
-    workTitle: "Vessel"
+    image: "/images/palace-arch-courtyard.jpg",
+    workLink: "/work/amer-citadel",
+    workTitle: "Amer Citadel Study"
   },
   {
     id: "photo",
     num: "03",
     title: "Photography",
     desc: "A discipline of light and time. We balance medium-format digital capture with silver halide methodology, producing archival-grade imagery that focuses on structural chiaroscuro rather than flat illumination.",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1600",
-    workLink: "/work/aura-residence",
-    workTitle: "Aura Residence"
+    image: "/images/fort-ramparts-overlook.jpg",
+    workLink: "/work/fort-ramparts",
+    workTitle: "Fort Ramparts & High Ridge"
   }
 ];
 
@@ -96,8 +97,12 @@ export default function ServicesPage() {
                   className="lg:col-span-7 aspect-[16/9] overflow-hidden relative bg-[var(--bg-midnight-blue)]"
                 >
                   <div className="absolute inset-0 bg-[var(--bg-deep-night)] mix-blend-multiply opacity-40 transition-opacity duration-700 group-hover:opacity-0 z-10" />
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={service.image} alt={service.title} className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)] grayscale group-hover:grayscale-0" />
+                  <Image 
+                    src={service.image} 
+                    alt={service.title} 
+                    fill 
+                    className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)] grayscale group-hover:grayscale-0" 
+                  />
                 </motion.div>
                 
               </div>

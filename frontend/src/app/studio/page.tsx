@@ -62,7 +62,7 @@ export default function StudioPage() {
           </motion.div>
         </section>
 
-        {/* VISUAL BREAK */}
+        {/* VISUAL BREAK 01 — ARCHITECTURAL GEOMETRY */}
         <section className="w-full py-12">
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
@@ -72,11 +72,14 @@ export default function StudioPage() {
             className="aspect-video lg:aspect-[21/9] w-full bg-[var(--bg-deep-night)] overflow-hidden relative"
           >
             <Image
-              src="/images/city-aerial-overview.jpg"
-              alt="Historic City Panoramic View — Studioza Archive"
+              src="/images/sandstone-palace-domes.jpg"
+              alt="Sandstone Palace Domes & Turquoise Sky — Studioza Heritage Archive"
               fill
-              className="object-cover opacity-90 contrast-[1.05]"
+              className="object-cover opacity-95 contrast-[1.05]"
             />
+            <div className="absolute bottom-6 left-6 lg:left-12 z-10 type-meta text-[var(--bg-warm-ivory)]/80 tracking-widest uppercase text-xs">
+              AMBER PALACE // BANGALDAR PAVILION &amp; SKY HORIZON
+            </div>
           </motion.div>
         </section>
 
@@ -118,22 +121,26 @@ export default function StudioPage() {
           </motion.div>
         </section>
 
-        {/* PEOPLE */}
+        {/* THE ATELIER & FIELD OBSERVATION ARCHIVE */}
         <section className="px-6 lg:px-12 max-w-[100rem] mx-auto py-24 border-t border-[var(--border-medium)]">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-24"
+            className="text-center mb-20"
           >
-            <h2 className="type-meta text-[var(--ink-muted)] mb-6">03 / The Atelier</h2>
-            <h3 className="type-display-statement">A lean collective of digital architects.</h3>
+            <h2 className="type-meta text-[var(--ink-muted)] mb-4">03 / The Atelier</h2>
+            <h3 className="type-display-statement">Creative Leadership &amp; Field Studies</h3>
+            <p className="type-body-base text-[var(--ink-muted)] mt-4 max-w-xl mx-auto">
+              Photographic monographs and structural design conducted directly on-site across historic architectural landscapes.
+            </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            <div className="text-center group">
-              <div className="aspect-[3/4] mb-8 overflow-hidden bg-[var(--bg-slate)] mx-auto max-w-sm relative border border-[var(--border-medium)]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Plate 1: Portrait */}
+            <div className="group space-y-4">
+              <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
                 <Image
                   src="/images/aryan-patel-portrait.jpg"
                   alt="Aryan Patel — Creative Director & Photographer"
@@ -141,10 +148,85 @@ export default function StudioPage() {
                   className="object-cover object-top scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
                 />
               </div>
-              <h4 className="type-display-statement text-[var(--ink-primary)] mb-2">Aryan Patel</h4>
-              <p className="type-meta text-[var(--ink-muted)]">Creative Director &amp; Photographer</p>
+              <div>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">DIRECTOR // 01</span>
+                <h4 className="type-display-statement text-lg text-[var(--ink-primary)]">Aryan Patel</h4>
+                <p className="type-meta text-[var(--ink-muted)] mt-0.5">Creative Director &amp; Photographer</p>
+              </div>
+            </div>
+
+            {/* Plate 2: Archway Field Study */}
+            <div className="group space-y-4">
+              <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
+                <Image
+                  src="/images/aryan-patel-archway.jpg"
+                  alt="Aryan Patel — Palace Archway Field Observation"
+                  fill
+                  className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                />
+              </div>
+              <div>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">EXPEDITION // 02</span>
+                <h4 className="type-display-statement text-lg text-[var(--ink-primary)]">Palace Arch Void</h4>
+                <p className="type-meta text-[var(--ink-muted)] mt-0.5">Scale &amp; Monolithic Framing</p>
+              </div>
+            </div>
+
+            {/* Plate 3: Mosaic Glass Wall */}
+            <div className="group space-y-4">
+              <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
+                <Image
+                  src="/images/aryan-patel-sheesh-mahal.jpg"
+                  alt="Aryan Patel — Sheesh Mahal Glass Mosaic Study"
+                  fill
+                  className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                />
+              </div>
+              <div>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">MATERIAL // 03</span>
+                <h4 className="type-display-statement text-lg text-[var(--ink-primary)]">Mirror Mosaic Hall</h4>
+                <p className="type-meta text-[var(--ink-muted)] mt-0.5">Convex Glass &amp; Light Refraction</p>
+              </div>
+            </div>
+
+            {/* Plate 4: Monochrome Temple Shikhara */}
+            <div className="group space-y-4">
+              <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
+                <Image
+                  src="/images/aryan-patel-temple-monochrome.jpg"
+                  alt="Aryan Patel — Monolithic Shikhara Temple Study in Monochrome"
+                  fill
+                  className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)] grayscale"
+                />
+              </div>
+              <div>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">EPIGRAPHY // 04</span>
+                <h4 className="type-display-statement text-lg text-[var(--ink-primary)]">Stone Temple Spire</h4>
+                <p className="type-meta text-[var(--ink-muted)] mt-0.5">Monochrome Tactility &amp; Weathering</p>
+              </div>
             </div>
           </div>
+        </section>
+
+        {/* VISUAL BREAK 02 — FORTRESS BATTLEMENTS */}
+        <section className="w-full py-12">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1 }}
+            className="aspect-video lg:aspect-[21/9] w-full bg-[var(--bg-deep-night)] overflow-hidden relative"
+          >
+            <Image
+              src="/images/fort-ramparts-overlook.jpg"
+              alt="Jaigarh Fort Ramparts & Valley Overlook — Studioza Archive"
+              fill
+              className="object-cover opacity-90 contrast-[1.05]"
+            />
+            <div className="absolute bottom-6 left-6 lg:left-12 z-10 type-meta text-[var(--bg-warm-ivory)]/80 tracking-widest uppercase text-xs">
+              JAIGARH RIDGE // STEPPED RAMPARTS &amp; RAINWATER HARVESTING BASIN
+            </div>
+          </motion.div>
         </section>
 
       </main>

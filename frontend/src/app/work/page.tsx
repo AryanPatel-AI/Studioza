@@ -16,6 +16,18 @@ const projects = [
     year: "2026",
     img: "/images/palace-arch-courtyard.jpg",
     desc: "A study in deep spatial shadow, historic Rajasthani masonry, and monumental courtyard geometry.",
+    aspect: "aspect-[16/10]",
+    layout: "left-dominant",
+  },
+  {
+    slug: "sandstone-domes",
+    title: "Sandstone Palace Domes",
+    category: "Heritage Geometry & Sky",
+    year: "2026",
+    img: "/images/sandstone-palace-domes.jpg",
+    desc: "Curvilinear Bangaldar pavilions and carved sandstone chhatris set against atmospheric turquoise heavens.",
+    aspect: "aspect-[16/9]",
+    layout: "full-bleed",
   },
   {
     slug: "pelican-solitude",
@@ -24,6 +36,8 @@ const projects = [
     year: "2026",
     img: "/images/pelicans-lake.jpg",
     desc: "Two pelicans perched on a stone pedestal in calm turquoise water, framed against fortified mountain ridges.",
+    aspect: "aspect-[3/4]",
+    layout: "right-portrait",
   },
   {
     slug: "jaipur-aerial",
@@ -32,6 +46,28 @@ const projects = [
     year: "2025",
     img: "/images/city-aerial-overview.jpg",
     desc: "High-vantage panoramic study of historic urban density, rooftops, and soaring birds in misty morning light.",
+    aspect: "aspect-[16/10]",
+    layout: "left-dominant",
+  },
+  {
+    slug: "fort-ramparts",
+    title: "Fort Ramparts & High Ridge",
+    category: "Territorial Architecture",
+    year: "2026",
+    img: "/images/fort-ramparts-overlook.jpg",
+    desc: "Ancient stepped ramparts and historic rainwater harvesting infrastructure snaking across rugged mountain ridges.",
+    aspect: "aspect-[21/9]",
+    layout: "full-bleed",
+  },
+  {
+    slug: "monochrome-temple",
+    title: "Monolithic Shikhara Expedition",
+    category: "Epigraphical Heritage & Form",
+    year: "2025",
+    img: "/images/aryan-patel-temple-monochrome.jpg",
+    desc: "Black and white study of an ancient carved stone temple spire, exploring tactile masonry and human scale.",
+    aspect: "aspect-[3/4]",
+    layout: "left-portrait",
   },
 ];
 
@@ -58,150 +94,213 @@ export default function PortfolioPage() {
         </motion.div>
 
         <div className="flex flex-col gap-32 lg:gap-48">
-          {/* Project 1: Dominant Left Image */}
-          <div className="flex flex-col md:flex-row items-end gap-8 lg:gap-16">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
-              className="w-full md:w-2/3"
-            >
-              <Link href={`/work/${projects[0].slug}`} className="block relative aspect-[16/10] overflow-hidden group bg-[var(--bg-slate)]">
-                <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-10 transition-opacity duration-500 group-hover:opacity-0 z-10" />
-                <Image
-                  src={projects[0].img}
-                  alt={projects[0].title}
-                  fill
-                  priority
-                  className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                />
-              </Link>
-            </motion.div>
+          {projects.map((proj, idx) => {
+            const num = String(idx + 1).padStart(2, "0");
 
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
-              className="w-full md:w-1/3 flex flex-col pb-8"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <span className="type-meta text-[var(--accent-dark-bronze)]">01 / {projects[0].category}</span>
-                <span className="type-meta text-[var(--ink-muted)]">• {projects[0].year}</span>
+            if (proj.layout === "left-dominant") {
+              return (
+                <div key={proj.slug} className="flex flex-col md:flex-row items-end gap-8 lg:gap-16">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
+                    className="w-full md:w-2/3"
+                  >
+                    <Link href={`/work/${proj.slug}`} className={`block relative ${proj.aspect} overflow-hidden group bg-[var(--bg-slate)]`}>
+                      <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-10 transition-opacity duration-500 group-hover:opacity-0 z-10" />
+                      <Image
+                        src={proj.img}
+                        alt={proj.title}
+                        fill
+                        priority={idx < 2}
+                        className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                      />
+                    </Link>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
+                    className="w-full md:w-1/3 flex flex-col pb-8"
+                  >
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
+                      <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                    </div>
+                    <Link href={`/work/${proj.slug}`} className="group inline-block w-max">
+                      <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
+                        {proj.title}
+                      </h2>
+                    </Link>
+                    <p className="type-body-base text-[var(--ink-muted)] mb-8">
+                      {proj.desc}
+                    </p>
+                    <Link
+                      href={`/work/${proj.slug}`}
+                      className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
+                    >
+                      <span>Inspect Plate &rarr;</span>
+                    </Link>
+                  </motion.div>
+                </div>
+              );
+            }
+
+            if (proj.layout === "right-portrait") {
+              return (
+                <div key={proj.slug} className="flex flex-col-reverse md:flex-row justify-between items-start gap-8 lg:gap-16">
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
+                    className="w-full md:w-5/12 flex flex-col pt-12 lg:pt-32"
+                  >
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
+                      <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                    </div>
+                    <Link href={`/work/${proj.slug}`} className="group inline-block">
+                      <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
+                        {proj.title}
+                      </h2>
+                    </Link>
+                    <p className="type-body-base text-[var(--ink-muted)] mb-8 max-w-sm">
+                      {proj.desc}
+                    </p>
+                    <Link
+                      href={`/work/${proj.slug}`}
+                      className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
+                    >
+                      <span>Inspect Plate &rarr;</span>
+                    </Link>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
+                    className="w-full md:w-5/12"
+                  >
+                    <Link href={`/work/${proj.slug}`} className={`block relative ${proj.aspect} overflow-hidden group bg-[var(--bg-slate)]`}>
+                      <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-10 transition-opacity duration-500 group-hover:opacity-0 z-10" />
+                      <Image
+                        src={proj.img}
+                        alt={proj.title}
+                        fill
+                        className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                      />
+                    </Link>
+                  </motion.div>
+                </div>
+              );
+            }
+
+            if (proj.layout === "left-portrait") {
+              return (
+                <div key={proj.slug} className="flex flex-col md:flex-row justify-between items-start gap-8 lg:gap-16">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
+                    className="w-full md:w-5/12"
+                  >
+                    <Link href={`/work/${proj.slug}`} className={`block relative ${proj.aspect} overflow-hidden group bg-[var(--bg-slate)]`}>
+                      <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-10 transition-opacity duration-500 group-hover:opacity-0 z-10" />
+                      <Image
+                        src={proj.img}
+                        alt={proj.title}
+                        fill
+                        className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                      />
+                    </Link>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
+                    className="w-full md:w-5/12 flex flex-col pt-12 lg:pt-32"
+                  >
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
+                      <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                    </div>
+                    <Link href={`/work/${proj.slug}`} className="group inline-block">
+                      <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
+                        {proj.title}
+                      </h2>
+                    </Link>
+                    <p className="type-body-base text-[var(--ink-muted)] mb-8 max-w-sm">
+                      {proj.desc}
+                    </p>
+                    <Link
+                      href={`/work/${proj.slug}`}
+                      className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
+                    >
+                      <span>Inspect Plate &rarr;</span>
+                    </Link>
+                  </motion.div>
+                </div>
+              );
+            }
+
+            // full-bleed
+            return (
+              <div key={proj.slug} className="flex flex-col gap-12">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
+                  className="w-full"
+                >
+                  <Link href={`/work/${proj.slug}`} className={`block relative ${proj.aspect} overflow-hidden group bg-[var(--bg-slate)]`}>
+                    <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-10 transition-opacity duration-500 group-hover:opacity-0 z-10" />
+                    <Image
+                      src={proj.img}
+                      alt={proj.title}
+                      fill
+                      className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                    />
+                  </Link>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="w-full md:w-1/2 md:ml-auto flex flex-col border-t border-[var(--border-medium)] pt-8"
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
+                    <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                  </div>
+                  <Link href={`/work/${proj.slug}`} className="group inline-block w-max">
+                    <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
+                      {proj.title}
+                    </h2>
+                  </Link>
+                  <p className="type-body-base text-[var(--ink-muted)] mb-8">
+                    {proj.desc}
+                  </p>
+                  <Link
+                    href={`/work/${proj.slug}`}
+                    className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
+                  >
+                    <span>Inspect Plate &rarr;</span>
+                  </Link>
+                </motion.div>
               </div>
-              <Link href={`/work/${projects[0].slug}`} className="group inline-block w-max">
-                <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
-                  {projects[0].title}
-                </h2>
-              </Link>
-              <p className="type-body-base text-[var(--ink-muted)] mb-8">
-                {projects[0].desc}
-              </p>
-              <Link
-                href={`/work/${projects[0].slug}`}
-                className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
-              >
-                <span>Inspect Plate &rarr;</span>
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Project 2: Portrait Right, Text Left Top */}
-          <div className="flex flex-col-reverse md:flex-row justify-between items-start gap-8 lg:gap-16">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
-              className="w-full md:w-5/12 flex flex-col pt-12 lg:pt-32"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <span className="type-meta text-[var(--accent-dark-bronze)]">02 / {projects[1].category}</span>
-                <span className="type-meta text-[var(--ink-muted)]">• {projects[1].year}</span>
-              </div>
-              <Link href={`/work/${projects[1].slug}`} className="group inline-block">
-                <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
-                  {projects[1].title}
-                </h2>
-              </Link>
-              <p className="type-body-base text-[var(--ink-muted)] mb-8 max-w-sm">
-                {projects[1].desc}
-              </p>
-              <Link
-                href={`/work/${projects[1].slug}`}
-                className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
-              >
-                <span>Inspect Plate &rarr;</span>
-              </Link>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
-              className="w-full md:w-5/12"
-            >
-              <Link href={`/work/${projects[1].slug}`} className="block relative aspect-[3/4] overflow-hidden group bg-[var(--bg-slate)]">
-                <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-10 transition-opacity duration-500 group-hover:opacity-0 z-10" />
-                <Image
-                  src={projects[1].img}
-                  alt={projects[1].title}
-                  fill
-                  className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                />
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Project 3: Full Width Bleed, Offset Text Below */}
-          <div className="flex flex-col gap-12">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
-              className="w-full"
-            >
-              <Link href={`/work/${projects[2].slug}`} className="block relative aspect-[21/9] overflow-hidden group bg-[var(--bg-slate)]">
-                <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-10 transition-opacity duration-500 group-hover:opacity-0 z-10" />
-                <Image
-                  src={projects[2].img}
-                  alt={projects[2].title}
-                  fill
-                  className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                />
-              </Link>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="w-full md:w-1/2 md:ml-auto flex flex-col border-t border-[var(--border-medium)] pt-8"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <span className="type-meta text-[var(--accent-dark-bronze)]">03 / {projects[2].category}</span>
-                <span className="type-meta text-[var(--ink-muted)]">• {projects[2].year}</span>
-              </div>
-              <Link href={`/work/${projects[2].slug}`} className="group inline-block w-max">
-                <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
-                  {projects[2].title}
-                </h2>
-              </Link>
-              <p className="type-body-base text-[var(--ink-muted)] mb-8">
-                {projects[2].desc}
-              </p>
-              <Link
-                href={`/work/${projects[2].slug}`}
-                className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
-              >
-                <span>Inspect Plate &rarr;</span>
-              </Link>
-            </motion.div>
-          </div>
+            );
+          })}
         </div>
       </main>
 

@@ -34,9 +34,28 @@ const PROJECT_DETAILS: Record<
       "Captured under natural high-noon illumination, this monograph explores the dramatic transition between dark monolithic corridors and the blazing light of the palace courtyard.",
     discipline: "Medium Format • 80mm • Archival Mineral Pigment",
     images: [
-      { src: "/images/palace-arch-courtyard.jpg", caption: "Monolithic Archway Framing" },
-      { src: "/images/aryan-patel-portrait.jpg", caption: "Artist in Residence — Sheesh Mahal" },
-      { src: "/images/city-aerial-overview.jpg", caption: "Fortress Ramparts & Surrounding Landscape" },
+      { src: "/images/palace-arch-courtyard.jpg", caption: "Plate 01 — Monolithic Archway Framing" },
+      { src: "/images/aryan-patel-archway.jpg", caption: "Plate 02 — Spatial Recess & Scale Study" },
+      { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 03 — Sandstone Pavilion Roofline" },
+      { src: "/images/aryan-patel-sheesh-mahal.jpg", caption: "Plate 04 — Glass Inlay Hall Interior" },
+    ],
+  },
+  "sandstone-domes": {
+    title: "Sandstone Palace Domes",
+    category: "Heritage Geometry & Sky",
+    year: "2026",
+    location: "Amber Fort, Rajasthan",
+    heroImage: "/images/sandstone-palace-domes.jpg",
+    statement:
+      "Curvilinear Bangaldar pavilions and carved sandstone chhatris set against atmospheric turquoise heavens.",
+    context:
+      "Focusing on the golden yellow stone masonry that has endured centuries of desert monsoon cycles. Captured as high cirrus clouds soften the sky into a rich cyan canvas, with swallows darting between finials.",
+    discipline: "Medium Format • 65mm • Natural Tungsten & Sky Illumination",
+    images: [
+      { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 01 — Curvilinear Eaves & Finial Symmetry" },
+      { src: "/images/palace-arch-courtyard.jpg", caption: "Plate 02 — Lower Corridor Chiaroscuro" },
+      { src: "/images/fort-ramparts-overlook.jpg", caption: "Plate 03 — Ridge Wall Bastion Axis" },
+      { src: "/images/city-aerial-overview.jpg", caption: "Plate 04 — Terraced Valley Settlement Below" },
     ],
   },
   "pelican-solitude": {
@@ -51,9 +70,9 @@ const PROJECT_DETAILS: Record<
       "An unhurried telephoto capture emphasizing stillness and organic form against the blurred monumental ramparts of the fort behind.",
     discipline: "Medium Format • 210mm • Natural Illumination",
     images: [
-      { src: "/images/pelicans-lake.jpg", caption: "Pelicans on Submerged Stone Block" },
-      { src: "/images/city-aerial-overview.jpg", caption: "Historic Valley & Lake Basin" },
-      { src: "/images/palace-arch-courtyard.jpg", caption: "Adjacent Palace Fortifications" },
+      { src: "/images/pelicans-lake.jpg", caption: "Plate 01 — Pelicans on Submerged Stone Block" },
+      { src: "/images/city-aerial-overview.jpg", caption: "Plate 02 — Sagar Valley Basin & Morning Mist" },
+      { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 03 — Fort Crest Silhouetted Against Horizon" },
     ],
   },
   "jaipur-aerial": {
@@ -68,9 +87,43 @@ const PROJECT_DETAILS: Record<
       "Looking down from the hill forts over centuries of contiguous stone architecture, captured during morning mist with black kites wheeling in the thermal currents.",
     discipline: "Medium Format • 45mm • ISO 100",
     images: [
-      { src: "/images/city-aerial-overview.jpg", caption: "Dense Urban Fabric & Roof Terraces" },
-      { src: "/images/palace-arch-courtyard.jpg", caption: "Courtyard Scale & Interior Volume" },
-      { src: "/images/pelicans-lake.jpg", caption: "Perimeter Water Reservoir" },
+      { src: "/images/city-aerial-overview.jpg", caption: "Plate 01 — Dense Urban Fabric & Roof Terraces" },
+      { src: "/images/fort-ramparts-overlook.jpg", caption: "Plate 02 — Watchtower Bastion Viewpoint" },
+      { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 03 — Pavilion Shading Above Settlement" },
+    ],
+  },
+  "fort-ramparts": {
+    title: "Fort Ramparts & High Ridge",
+    category: "Territorial Architecture & Bastions",
+    year: "2026",
+    location: "Jaigarh Fort, Rajasthan",
+    heroImage: "/images/fort-ramparts-overlook.jpg",
+    statement:
+      "Ancient stepped ramparts and historic rainwater harvesting infrastructure snaking across rugged mountain ridges.",
+    context:
+      "Commissioned to document how ancient civil defense and water engineering formed a unified topological system. The crenellated parapets follow the steep contours of the Aravalli range with monolithic gravitas.",
+    discipline: "Medium Format • 50mm • Natural Ambient Light",
+    images: [
+      { src: "/images/fort-ramparts-overlook.jpg", caption: "Plate 01 — Crenellated Parapets & Harvesting Tank" },
+      { src: "/images/city-aerial-overview.jpg", caption: "Plate 02 — Valley Settlement Cartography" },
+      { src: "/images/palace-arch-courtyard.jpg", caption: "Plate 03 — Interior Bastion Gateways" },
+    ],
+  },
+  "monochrome-temple": {
+    title: "Monolithic Shikhara Expedition",
+    category: "Epigraphical Heritage & Form",
+    year: "2025",
+    location: "Rajasthan Heritage Corridor",
+    heroImage: "/images/aryan-patel-temple-monochrome.jpg",
+    statement:
+      "Black and white study of an ancient carved stone temple spire, exploring tactile masonry, weathering, and human scale.",
+    context:
+      "Captured on silver gelatin film emulation, stripping all color to isolate the intricate rhythms of stone carving, multi-tiered shikhara spires, and the quiet presence of the expeditioner.",
+    discipline: "Monochrome Silver Gelatin Emulsion • 90mm • High Contrast",
+    images: [
+      { src: "/images/aryan-patel-temple-monochrome.jpg", caption: "Plate 01 — Temple Spire & Expeditioner Scale" },
+      { src: "/images/aryan-patel-sheesh-mahal.jpg", caption: "Plate 02 — Sheesh Mahal Glass Mosaic Study" },
+      { src: "/images/palace-arch-courtyard.jpg", caption: "Plate 03 — Palace Archway Light Study" },
     ],
   },
 };
