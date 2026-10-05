@@ -8,7 +8,7 @@ import Navbar from "@/components/core/Navbar";
 import Footer from "@/components/core/Footer";
 import FilmGrain from "@/components/film/FilmGrain";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { ArrowDownRight, Camera } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Camera } from "lucide-react";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -59,7 +59,7 @@ export default function AtelierHomepage() {
           ref={heroRef}
           className="relative h-screen min-h-[720px] w-full flex flex-col justify-between overflow-hidden px-6 lg:px-12 select-none"
         >
-          {/* 1. Master Photography Background Layer (Photographer on Rocky Ridge with Mountain Ranges) */}
+          {/* Master Photography Background Layer */}
           <motion.div
             style={{ y: imageY, scale: imageScale }}
             className="absolute inset-0 w-full h-full z-0 overflow-hidden"
@@ -76,16 +76,13 @@ export default function AtelierHomepage() {
               />
             </div>
 
-            {/* Darkroom Cinematic Vignette & Atmospheric Contrast Balancing */}
-            {/* Top gradient for navbar clarity */}
+            {/* Darkroom Vignette & Atmospheric Contrast Overlays */}
             <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-near-black)]/75 via-transparent to-[var(--bg-deep-night)] pointer-events-none" />
-            {/* Subtle warm amber/golden hour bottom gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep-night)] via-[var(--bg-deep-night)]/40 to-transparent pointer-events-none" />
-            {/* Side feathering for wide monitors */}
             <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-deep-night)]/40 via-transparent to-[var(--bg-deep-night)]/40 pointer-events-none" />
           </motion.div>
 
-          {/* 2. Top Archival Telemetry Strip */}
+          {/* Top Archival Telemetry Strip */}
           <div className="relative z-10 w-full max-w-7xl mx-auto pt-32 sm:pt-36 flex items-center justify-between border-b border-[rgba(247,245,240,0.12)] pb-4 type-meta text-[var(--ink-inverse-muted)]">
             <div className="flex items-center gap-3">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-muted-gold)] animate-pulse" />
@@ -101,7 +98,7 @@ export default function AtelierHomepage() {
             </div>
           </div>
 
-          {/* 3. Hero Centerpiece Typography */}
+          {/* Hero Centerpiece Typography */}
           <motion.div
             style={{ y: heroY, opacity: heroOpacity }}
             className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col justify-center items-center text-center my-auto px-4"
@@ -149,7 +146,7 @@ export default function AtelierHomepage() {
             </motion.div>
           </motion.div>
 
-          {/* 4. Bottom Hero Baseline Telemetry & Scroll Cue */}
+          {/* Bottom Hero Baseline Telemetry & Scroll Cue */}
           <div className="relative z-10 w-full max-w-7xl mx-auto pb-8 sm:pb-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[rgba(247,245,240,0.12)] pt-4 type-meta text-[var(--ink-inverse-muted)]">
             <div className="flex items-center gap-2">
               <Camera className="w-3.5 h-3.5 text-[var(--accent-muted-gold)]" />
@@ -171,7 +168,7 @@ export default function AtelierHomepage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SELECTED WORK SECTION                                                     */}
+        {/* SELECTED WORK SECTION — AUTHENTIC ATELIER MONOGRAPHS                      */}
         {/* ========================================================================= */}
         <section
           id="work"
@@ -185,80 +182,178 @@ export default function AtelierHomepage() {
               variants={fadeIn}
               className="mb-20 flex justify-between items-end border-b border-[var(--border-light)] pb-6"
             >
-              <h2 className="type-display-title">Selected Work</h2>
-              <span className="type-meta text-[var(--ink-muted)]">01 / Archival Series</span>
+              <div>
+                <span className="type-meta text-[var(--ink-muted)] block mb-2">01 / Curated Monograph Series</span>
+                <h2 className="type-display-title">Selected Work</h2>
+              </div>
+              <Link href="/work" className="type-meta text-[var(--ink-muted)] hover:text-[var(--accent-dark-bronze)] transition-colors flex items-center gap-1">
+                <span>View Complete Index</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </Link>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-24">
-              {/* Left Column Image (Asymmetric Curated Monograph) */}
+            {/* Asymmetric Curated Gallery of Real Works */}
+            <div className="space-y-32">
+              {/* Monograph 01: Amer Citadel Archway (Large Feature) */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
                 variants={fadeIn}
-                className="md:col-span-7 flex flex-col gap-6"
+                className="grid grid-cols-1 md:grid-cols-12 gap-10 items-end"
               >
-                <Link href="/work/aura-residence" className="group block">
-                  <div className="aspect-[4/5] bg-[var(--bg-slate)] relative overflow-hidden">
-                    <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-20 transition-opacity duration-500 group-hover:opacity-0 z-10" />
-                    <Image
-                      src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1600"
-                      alt="Aura Residence Architecture"
-                      fill
-                      unoptimized
-                      className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                    />
-                  </div>
-                  <div className="flex justify-between items-start mt-6">
-                    <div>
-                      <h3 className="type-display-statement mb-1 group-hover:text-[var(--accent-dark-bronze)] transition-colors">
-                        Aura Residence
-                      </h3>
-                      <p className="type-body-base text-[var(--ink-muted)]">Architectural Photography &amp; Spatial Studies</p>
+                <div className="md:col-span-8">
+                  <Link href="/work/amer-citadel" className="group block">
+                    <div className="aspect-[4/5] sm:aspect-[16/11] bg-[var(--bg-slate)] relative overflow-hidden">
+                      <Image
+                        src="/images/palace-arch-courtyard.jpg"
+                        alt="Amer Citadel — Chiaroscuro Archway & Courtyard"
+                        fill
+                        priority
+                        className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                      />
                     </div>
-                    <span className="type-meta">2026</span>
+                  </Link>
+                </div>
+                <div className="md:col-span-4 space-y-4">
+                  <span className="type-meta text-[var(--accent-dark-bronze)]">PLATE 01 • JAIPUR</span>
+                  <h3 className="type-display-statement text-[var(--ink-primary)]">
+                    Amer Citadel Study
+                  </h3>
+                  <p className="type-body-base text-[var(--ink-muted)]">
+                    A deep chiaroscuro framing through monumental Rajasthani masonry, capturing courtyard geometry under natural high-noon tungsten light.
+                  </p>
+                  <div className="pt-2">
+                    <Link
+                      href="/work/amer-citadel"
+                      className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors inline-flex items-center gap-1.5 uppercase"
+                    >
+                      <span>Inspect Plate</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </Link>
                   </div>
-                </Link>
+                </div>
               </motion.div>
 
-              {/* Right Column Image (Asymmetric Stagger) */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeIn}
-                className="md:col-span-5 flex flex-col gap-6 md:mt-48"
-              >
-                <Link href="/work/vessel" className="group block">
-                  <div className="aspect-[3/4] bg-[var(--bg-slate)] relative overflow-hidden">
-                    <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-20 transition-opacity duration-500 group-hover:opacity-0 z-10" />
-                    <Image
-                      src="https://images.unsplash.com/photo-1543886566-cb500e303493?auto=format&fit=crop&q=80&w=1200"
-                      alt="Vessel Brand Monograph"
-                      fill
-                      unoptimized
-                      className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                    />
-                  </div>
-                  <div className="flex justify-between items-start mt-6">
-                    <div>
-                      <h3 className="type-display-statement mb-1 group-hover:text-[var(--accent-dark-bronze)] transition-colors">
-                        Vessel
-                      </h3>
-                      <p className="type-body-base text-[var(--ink-muted)]">Brand Architecture &amp; Identity System</p>
+              {/* Monograph 02 & 03: Split Asymmetric Composition (Pelicans + Aerial City) */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-20 items-start">
+                {/* Monograph 02: Sagar Lake Pelicans */}
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={fadeIn}
+                  className="md:col-span-6 flex flex-col gap-6"
+                >
+                  <Link href="/work/pelican-solitude" className="group block">
+                    <div className="aspect-[3/4] bg-[var(--bg-slate)] relative overflow-hidden">
+                      <Image
+                        src="/images/pelicans-lake.jpg"
+                        alt="Sagar Lake Pelican Study — Quietude & Natural Form"
+                        fill
+                        className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                      />
                     </div>
-                    <span className="type-meta">2025</span>
-                  </div>
-                </Link>
-              </motion.div>
+                    <div className="flex justify-between items-start mt-6">
+                      <div>
+                        <h3 className="type-display-statement mb-1 group-hover:text-[var(--accent-dark-bronze)] transition-colors">
+                          Sagar Lake Pelicans
+                        </h3>
+                        <p className="type-body-base text-[var(--ink-muted)]">Wildlife Form &amp; Riparian Stillness</p>
+                      </div>
+                      <span className="type-meta">2026</span>
+                    </div>
+                  </Link>
+                </motion.div>
+
+                {/* Monograph 03: Dense Masonry Aerial (Staggered Down) */}
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={fadeIn}
+                  className="md:col-span-6 flex flex-col gap-6 md:mt-24"
+                >
+                  <Link href="/work/jaipur-aerial" className="group block">
+                    <div className="aspect-[3/4] bg-[var(--bg-slate)] relative overflow-hidden">
+                      <Image
+                        src="/images/city-aerial-overview.jpg"
+                        alt="Historic City Aerial — Dense Masonry"
+                        fill
+                        className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                      />
+                    </div>
+                    <div className="flex justify-between items-start mt-6">
+                      <div>
+                        <h3 className="type-display-statement mb-1 group-hover:text-[var(--accent-dark-bronze)] transition-colors">
+                          Dense Masonry Aerial
+                        </h3>
+                        <p className="type-body-base text-[var(--ink-muted)]">High-Vantage Urban Cartography &amp; Atmosphere</p>
+                      </div>
+                      <span className="type-meta">2025</span>
+                    </div>
+                  </Link>
+                </motion.div>
+              </div>
             </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* ATELIER FOUNDER SPOTLIGHT                                                 */}
+        {/* ========================================================================= */}
+        <section className="py-32 px-6 lg:px-12 bg-[var(--bg-midnight-blue)] text-[var(--ink-inverse)] border-t border-[rgba(247,245,240,0.1)]">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="lg:col-span-5"
+            >
+              <div className="aspect-[3/4] relative overflow-hidden border border-[rgba(247,245,240,0.15)] shadow-2xl">
+                <Image
+                  src="/images/aryan-patel-portrait.jpg"
+                  alt="Aryan Patel — Creative Director & Photographer"
+                  fill
+                  className="object-cover object-top w-full h-full filter contrast-[1.04]"
+                />
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="lg:col-span-7 space-y-8 lg:pl-12"
+            >
+              <span className="type-meta text-[var(--accent-muted-gold)]">02 / Behind the Lens</span>
+              <h2 className="type-display-title text-[var(--bg-warm-ivory)]">
+                Aryan Patel
+              </h2>
+              <p className="type-body-lead text-[var(--ink-inverse-muted)] leading-relaxed">
+                Founder, art director, and photographer at Studioza. Blending traditional large-format discipline, heritage architectural observation, and modern digital engineering.
+              </p>
+              <blockquote className="border-l-2 border-[var(--accent-muted-gold)] pl-6 text-lg sm:text-xl font-serif italic text-[var(--bg-warm-ivory)]">
+                &ldquo;Every plate is an unhurried encounter with space, scale, and natural illumination.&rdquo;
+              </blockquote>
+              <div className="pt-4 flex items-center gap-6">
+                <Link href="/studio">
+                  <MagneticButton variant="dark">Read Atelier Story</MagneticButton>
+                </Link>
+                <Link href="/contact" className="type-meta text-[var(--accent-muted-gold)] hover:underline uppercase tracking-widest">
+                  Commission Direct →
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </section>
 
         {/* ========================================================================= */}
         {/* DISCIPLINES SECTION                                                       */}
         {/* ========================================================================= */}
-        <section className="py-32 px-6 lg:px-12 bg-[var(--bg-midnight-blue)] text-[var(--ink-inverse)] border-t border-[rgba(247,245,240,0.1)]">
+        <section className="py-32 px-6 lg:px-12 bg-[var(--bg-slate)] text-[var(--ink-inverse)] border-t border-[rgba(247,245,240,0.1)]">
           <div className="max-w-7xl mx-auto">
             <motion.div
               initial="hidden"
@@ -268,7 +363,7 @@ export default function AtelierHomepage() {
               className="mb-20 flex justify-between items-end border-b border-[rgba(247,245,240,0.15)] pb-6"
             >
               <h2 className="type-display-title text-[var(--bg-warm-ivory)]">Disciplines</h2>
-              <span className="type-meta text-[var(--ink-inverse-muted)]">02 / Services &amp; Capabilities</span>
+              <span className="type-meta text-[var(--ink-inverse-muted)]">03 / Services &amp; Capabilities</span>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">

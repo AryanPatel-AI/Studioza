@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Navbar from "@/components/core/Navbar";
 import Footer from "@/components/core/Footer";
@@ -68,10 +69,14 @@ export default function StudioPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1 }}
-            className="aspect-video lg:aspect-[21/9] w-full bg-[var(--bg-deep-night)] overflow-hidden"
+            className="aspect-video lg:aspect-[21/9] w-full bg-[var(--bg-deep-night)] overflow-hidden relative"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=2000" alt="Studio Space" className="w-full h-full object-cover opacity-80 mix-blend-luminosity" />
+            <Image
+              src="/images/city-aerial-overview.jpg"
+              alt="Historic City Panoramic View — Studioza Archive"
+              fill
+              className="object-cover opacity-90 contrast-[1.05]"
+            />
           </motion.div>
         </section>
 
@@ -128,11 +133,16 @@ export default function StudioPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             <div className="text-center group">
-              <div className="aspect-[3/4] mb-8 overflow-hidden bg-[var(--bg-slate)] mx-auto max-w-sm">
-                <div className="w-full h-full bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-20 transition-opacity duration-500 group-hover:opacity-0" />
+              <div className="aspect-[3/4] mb-8 overflow-hidden bg-[var(--bg-slate)] mx-auto max-w-sm relative border border-[var(--border-medium)]">
+                <Image
+                  src="/images/aryan-patel-portrait.jpg"
+                  alt="Aryan Patel — Creative Director & Photographer"
+                  fill
+                  className="object-cover object-top scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                />
               </div>
               <h4 className="type-display-statement text-[var(--ink-primary)] mb-2">Aryan Patel</h4>
-              <p className="type-meta text-[var(--ink-muted)]">Creative Director / Engineer</p>
+              <p className="type-meta text-[var(--ink-muted)]">Creative Director &amp; Photographer</p>
             </div>
           </div>
         </section>
