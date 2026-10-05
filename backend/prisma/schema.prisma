@@ -32,6 +32,9 @@ model Project {
   status      String     @default("draft") // "draft" | "published" | "archived"
   content     String     @default("[]") // JSON string of sections/blocks
   settings    String?    @default("{}") // JSON string of settings (SEO, theme, visibility)
+  category    String?
+  gallery     String?    @default("[]")
+  credits     String?    @default("[]")
   assets      Asset[]
   activities  Activity[]
   publishedAt DateTime?
@@ -98,30 +101,18 @@ model Package {
   updatedAt   DateTime @updatedAt
 }
 
-model PortfolioCategory {
-  id          String           @id @default(cuid())
-  name        String
-  items       PortfolioItem[]
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-}
 
-model PortfolioItem {
-  id          String            @id @default(cuid())
-  title       String
-  imageUrl    String
-  categoryId  String
-  category    PortfolioCategory @relation(fields: [categoryId], references: [id])
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-}
 
 model Inquiry {
   id        String   @id @default(cuid())
   name      String
   email     String
+  company   String?
+  budget    String?
+  timeline  String?
+  reference String?
   message   String
-  status    String   @default("NEW")
+  status    String   @default("NEW") // NEW, CONTACTED, IN PROGRESS, COMPLETED, ARCHIVED
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

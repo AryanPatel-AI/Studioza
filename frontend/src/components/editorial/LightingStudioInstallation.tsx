@@ -2,8 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
-import { Sliders, Sparkles, Sun, Moon, Eye, ShieldCheck, ArrowRight } from "lucide-react";
-import FluidOpticalGlass from "@/components/optical/FluidOpticalGlass";
+import { Sliders, Sun, Moon, Eye, ShieldCheck, ArrowRight } from "lucide-react";
 import StudioButton from "@/components/ui/StudioButton";
 import { cn } from "@/lib/utils";
 
@@ -12,10 +11,10 @@ const StudioLightingStage3D = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="w-full h-[460px] sm:h-[540px] rounded-3xl border border-white/[0.08] bg-[#090807]/80 backdrop-blur-xl flex flex-col items-center justify-center gap-3">
-        <div className="w-6 h-6 rounded-full border-2 border-amber-400/40 border-t-amber-400 animate-spin" />
-        <span className="font-mono text-xs sm:text-sm text-zinc-500 tracking-[0.25em] uppercase">
-          Initializing Lighting Stage...
+      <div className="w-full h-[460px] sm:h-[520px] bg-white/5 flex flex-col items-center justify-center gap-3">
+        <div className="w-5 h-5 rounded-full border-2 border-white/20 border-t-copper-500 animate-spin" />
+        <span className="text-[10px] text-ink-muted uppercase">
+          Calibrating Optical Stage...
         </span>
       </div>
     ),
@@ -46,7 +45,7 @@ const SCHEMES: Record<string, LightingSchemeProfile> = {
     keyKelvin: "5200K Daylight Key",
     rimKelvin: "2800K Tungsten Rim",
     character:
-      "Deep dimensional shadow rolloff with soft feathered cheek wrap. Light carves physical mass from dark room obsidian.",
+      "Deep dimensional shadow rolloff with soft feathered cheek wrap. Light carves physical mass from darkness.",
     historicalReference: "Caravaggio • The Calling of Saint Matthew (1600)",
   },
   rembrandt: {
@@ -59,7 +58,7 @@ const SCHEMES: Record<string, LightingSchemeProfile> = {
     keyKelvin: "4800K Neutral Studio",
     rimKelvin: "3000K Warm Fill",
     character:
-      "Signature triangular patch of light under the shadowed eye, creating timeless psychological intimacy and anatomical depth.",
+      "Signature triangular patch of light under the shadowed eye, creating psychological intimacy and anatomical depth.",
     historicalReference: "Rembrandt van Rijn • Self-Portrait (1659)",
   },
   split: {
@@ -97,53 +96,42 @@ export default function LightingStudioInstallation() {
   return (
     <section
       id="stage"
-      className="py-28 sm:py-40 px-6 sm:px-12 lg:px-16 border-t border-white/[0.08] relative bg-[#070605] text-neutral-100 selection:bg-amber-400 selection:text-black overflow-hidden"
+      className="py-24 sm:py-36 px-6 sm:px-12 lg:px-16 border-t border-hairline relative bg-background text-foreground overflow-hidden"
     >
-      {/* Background Architectural Ambient Tone */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_50%_35%,rgba(229,154,36,0.03)_0%,rgba(16,185,129,0.02)_50%,transparent_75%)]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[720px] rounded-full border border-white/[0.02] pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full border border-white/[0.03] pointer-events-none" />
-      </div>
-
-      <div className="max-w-7xl mx-auto space-y-20 sm:space-y-28 relative z-10">
+      <div className="max-w-7xl mx-auto space-y-16 sm:space-y-24 relative z-10">
         {/* ========================================================================= */}
         {/* EXHIBIT HEADER & EDITORIAL TYPOGRAPHY                                     */}
         {/* ========================================================================= */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-12 border-b border-white/[0.08]">
-          <div className="space-y-4 max-w-3xl">
-            <div className="flex items-center gap-3 text-sm sm:text-base font-mono tracking-[0.3em] text-amber-400 uppercase">
-              <span className="w-2 h-2 rounded-full bg-amber-400" />
-              <span>Exhibit No. 08 • The Chiaroscuro Stage</span>
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-hairline">
+          <div className="space-y-3 max-w-3xl">
+            <div className="flex items-center gap-2 type-meta">
+              <span className="w-1.5 h-1.5 rounded-full bg-copper-500" />
+              <span>Exhibit 08 • The Optical Stage</span>
             </div>
 
-            <div className="space-y-2">
-              <span className="text-sm sm:text-base font-mono text-zinc-500 tracking-[0.25em] uppercase block">
-                Sculpting Light &amp; Shadow
+            <h2 className="type-display-section text-ink-primary">
+              The Chiaroscuro Stage
+            </h2>
+
+            <div className="flex flex-wrap items-baseline gap-4 sm:gap-6 pt-2">
+              <span className="type-display-project italic text-copper-600">
+                5200K / 2800K
               </span>
-              <h2 className="text-5xl sm:text-7xl lg:text-8xl font-serif font-bold text-white tracking-tight leading-none">
-                THE ATELIER STAGE
-              </h2>
-              <div className="flex flex-wrap items-baseline gap-4 sm:gap-6 pt-3">
-                <span className="text-3xl sm:text-5xl font-serif italic text-amber-300">
-                  5200K / 2800K
-                </span>
-                <span className="text-2xl sm:text-4xl font-mono font-light text-zinc-300">
-                  {scheme.ratio}
-                </span>
-                <span className="text-sm sm:text-base font-mono text-amber-400/90 tracking-widest uppercase border-l border-white/20 pl-4 py-1">
-                  Continuous Tungsten &amp; Daylight Modeling Bench
-                </span>
-              </div>
+              <span className="type-display-project text-ink-primary">
+                {scheme.ratio}
+              </span>
+              <span className="type-meta border-l border-hairline pl-4 py-0.5">
+                Continuous Modeling Bench
+              </span>
             </div>
           </div>
 
-          <div className="max-w-md space-y-2 text-sm sm:text-base font-mono text-zinc-400">
-            <div className="flex items-center gap-2 text-amber-300">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Profoto Pro-11 High-Speed Strobe Engine</span>
+          <div className="max-w-md space-y-2 type-meta text-ink-muted">
+            <div className="flex items-center gap-2 text-copper-600 uppercase text-[10px]">
+              <span className="w-1 h-1 rounded-full bg-copper-500" />
+              <span>Profoto Pro-11 Strobe Engine</span>
             </div>
-            <p className="font-sans font-light text-zinc-300 text-sm leading-relaxed">
+            <p className="text-ink-body type-body-base">
               Photography is the deliberate arrest of light. On the Studioza stage, light is treated as a physical substance that carves mass, mood, and architectural form from darkness.
             </p>
           </div>
@@ -152,158 +140,116 @@ export default function LightingStudioInstallation() {
         {/* ========================================================================= */}
         {/* CENTRAL INSTALLATION CHAMBER: 3D LIGHTING STAGE + SCHEMATIC BLUEPRINT     */}
         {/* ========================================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Interactive 3D Lighting Stage */}
           <div className="lg:col-span-7 relative">
-            <div className="absolute top-4 left-4 z-20 pointer-events-none text-zinc-500 font-mono text-xs sm:text-sm tracking-widest uppercase">
+            <div className="absolute top-3.5 left-4 z-20 pointer-events-none text-stone-400 text-[10px] uppercase">
               STUDIO CYCLORAMA • 3D SHADOW SIMULATOR
             </div>
-            <div className="absolute bottom-4 right-4 z-20 pointer-events-none text-zinc-500 font-mono text-xs sm:text-sm tracking-widest uppercase">
+            <div className="absolute bottom-3.5 right-4 z-20 pointer-events-none text-stone-400 text-[10px] uppercase">
               KEY OCTABOX • RIM STRIPBOX
             </div>
 
-            <StudioLightingStage3D
-              initialPreset={activePreset as any}
-              className="w-full h-[460px] sm:h-[540px] border-white/[0.12]"
-            />
+            <div className="rounded-[2px] overflow-hidden border border-hairline bg-black/50">
+              <StudioLightingStage3D
+                initialPreset={activePreset as any}
+                className="w-full h-[440px] sm:h-[500px]"
+              />
+            </div>
           </div>
 
           {/* Right Column: Curatorial Console & 2D Overhead Blueprint */}
-          <div className="lg:col-span-5 space-y-8">
-            <FluidOpticalGlass
-              tint="obsidian"
-              intensity="deep"
-              depth={10}
-              contentClassName="p-6 sm:p-8 space-y-6"
-            >
+          <div className="lg:col-span-5 space-y-6">
+            <div className="p-6 sm:p-7 bg-background border border-hairline space-y-6">
               {/* Active Scheme Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
+              <div className="flex items-center justify-between pb-4 border-b border-hairline">
                 <div>
-                  <span className="text-xs sm:text-sm font-mono uppercase tracking-widest text-amber-400 block mb-1">
-                    Active Lighting Scheme
+                  <span className="type-meta text-copper-600 block mb-1">
+                    Selected Setup
                   </span>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl sm:text-3xl font-serif font-bold text-white">
+                    <span className="type-display-project text-ink-primary">
                       {scheme.name}
                     </span>
                   </div>
-                  <span className="text-sm sm:text-base font-mono text-zinc-400">
+                  <span className="type-meta text-ink-muted">
                     {scheme.subtitle}
                   </span>
                 </div>
 
                 {/* Overhead 2D Stage Lighting Blueprint SVG */}
-                <div className="relative w-20 h-20 rounded-full border border-white/15 bg-black/70 flex items-center justify-center overflow-hidden shadow-inner">
-                  {/* Subject Center Dot */}
-                  <div className="w-3 h-3 rounded-full bg-zinc-200 border border-amber-400/80 shadow-[0_0_8px_rgba(245,158,11,0.5)] z-10" />
+                <div className="relative w-16 h-16 border border-hairline bg-transparent flex items-center justify-center overflow-hidden">
+                  <div className="w-2.5 h-2.5 rounded-full bg-stone-200 border border-copper-500 z-10" />
 
-                  {/* SVG Orbit Lines & Light Heads */}
                   <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full pointer-events-none">
-                    <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(255,255,255,0.08)" strokeDasharray="3 3" />
+                    <circle cx="50" cy="50" r="32" fill="none" stroke="rgba(20,20,19,0.12)" strokeDasharray="2 2" />
 
-                    {/* Key Light Position (Daylight) */}
+                    {/* Key Light Position */}
                     <circle
-                      cx={50 + Math.cos((scheme.keyAngleDeg * Math.PI) / 180) * 36}
-                      cy={50 + Math.sin((scheme.keyAngleDeg * Math.PI) / 180) * 36}
-                      r="4"
-                      fill="#38bdf8"
+                      cx={50 + Math.cos((scheme.keyAngleDeg * Math.PI) / 180) * 32}
+                      cy={50 + Math.sin((scheme.keyAngleDeg * Math.PI) / 180) * 32}
+                      r="3.5"
+                      fill="#C85A17"
                       className="transition-all duration-500 ease-out"
                     />
 
-                    {/* Rim Light Position (Amber) */}
+                    {/* Rim Light Position */}
                     <circle
-                      cx={50 + Math.cos((scheme.rimAngleDeg * Math.PI) / 180) * 36}
-                      cy={50 + Math.sin((scheme.rimAngleDeg * Math.PI) / 180) * 36}
-                      r="4"
-                      fill="#f59e0b"
+                      cx={50 + Math.cos((scheme.rimAngleDeg * Math.PI) / 180) * 32}
+                      cy={50 + Math.sin((scheme.rimAngleDeg * Math.PI) / 180) * 32}
+                      r="3"
+                      fill="#8F9E82"
                       className="transition-all duration-500 ease-out"
                     />
                   </svg>
                 </div>
               </div>
 
-              {/* Curatorial Commentary */}
-              <p className="text-sm sm:text-base font-light text-zinc-300 leading-relaxed italic font-serif text-sm">
-                &ldquo;{scheme.character}&rdquo;
-              </p>
-
               {/* Technical Telemetry Grid */}
-              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/[0.06] text-sm sm:text-base font-mono">
-                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
-                  <span className="text-xs sm:text-sm uppercase tracking-wider text-zinc-500 block">
-                    Key Strobe
-                  </span>
-                  <span className="text-sky-300 font-medium block">
-                    {scheme.keyKelvin}
-                  </span>
-                  <span className="text-xs sm:text-sm text-zinc-400">Soft Octabox Key</span>
+              <div className="grid grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 border border-hairline bg-transparent">
+                  <span className="text-stone-400 block text-[9px] uppercase mb-0.5">Key Light</span>
+                  <span className="text-ink-primary">{scheme.keyKelvin}</span>
                 </div>
-
-                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
-                  <span className="text-xs sm:text-sm uppercase tracking-wider text-zinc-500 block">
-                    Rim Strobe
-                  </span>
-                  <span className="text-amber-300 font-medium block">
-                    {scheme.rimKelvin}
-                  </span>
-                  <span className="text-xs sm:text-sm text-zinc-400">Tungsten Stripbox</span>
+                <div className="p-3 border border-hairline bg-transparent">
+                  <span className="text-stone-400 block text-[9px] uppercase mb-0.5">Rim Contour</span>
+                  <span className="text-copper-600">{scheme.rimKelvin}</span>
                 </div>
               </div>
 
-              {/* Historical Reference Footnote */}
-              <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500">
-                <span>REFERENCE CANON</span>
-                <span className="text-zinc-400 truncate max-w-[200px]">{scheme.historicalReference}</span>
+              {/* Character & Historical Reference */}
+              <div className="space-y-2 text-xs">
+                <p className="text-ink-body">
+                  {scheme.character}
+                </p>
+                <div className="pt-2 border-t border-hairline text-[10px] text-ink-muted">
+                  <span className="text-stone-400">HISTORICAL REF: </span>
+                  <span className="text-ink-primary">{scheme.historicalReference}</span>
+                </div>
               </div>
-            </FluidOpticalGlass>
 
-            {/* Stepped Lighting Scheme Selector */}
-            <div className="space-y-3">
-              <span className="text-xs sm:text-sm font-mono uppercase tracking-widest text-zinc-500 block">
-                Select Master Lighting Scheme
-              </span>
-
-              <div className="grid grid-cols-2 gap-2.5">
-                {Object.values(SCHEMES).map((item) => {
-                  const isSelected = activePreset === item.id;
-                  return (
+              {/* 4 Preset Buttons */}
+              <div className="pt-2 border-t border-hairline space-y-2">
+                <span className="type-meta text-ink-muted block mb-2">
+                  Select Stage Configuration:
+                </span>
+                <div className="grid grid-cols-2 gap-2">
+                  {Object.values(SCHEMES).map((item) => (
                     <button
                       key={item.id}
                       onClick={() => setActivePreset(item.id)}
                       className={cn(
-                        "p-3 rounded-2xl border text-left transition-all duration-300 flex flex-col gap-1 cursor-pointer select-none",
-                        isSelected
-                          ? "bg-amber-400/10 border-amber-400/70 text-white shadow-[0_0_20px_rgba(245,158,11,0.15)]"
-                          : "bg-black/40 border-white/[0.08] text-zinc-400 hover:text-zinc-200 hover:border-white/20"
+                        "py-2 px-3 text-left  text-[10px] uppercase  rounded-[2px] border transition-colors cursor-pointer",
+                        activePreset === item.id
+                          ? "border-copper-500 bg-white/10 text-copper-500 font-semibold"
+                          : "border-hairline bg-background text-ink-muted hover:border-white/20 hover:text-ink-primary"
                       )}
                     >
-                      <div className="flex items-center justify-between">
-                        <span className={cn("text-sm sm:text-base font-medium font-serif", isSelected ? "text-amber-300 font-bold" : "text-zinc-200")}>
-                          {item.name}
-                        </span>
-                        {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />}
-                      </div>
-                      <span className="text-xs sm:text-sm font-mono text-zinc-500 truncate">
-                        {item.ratio}
-                      </span>
+                      {item.name}
                     </button>
-                  );
-                })}
+                  ))}
+                </div>
               </div>
-            </div>
-
-            {/* Studio Action Button */}
-            <div className="pt-2 flex items-center justify-between gap-4">
-              <StudioButton
-                variant="crystal"
-                size="md"
-                href="#contact"
-                icon="arrow-up-right"
-                strength={0.2}
-                className="w-full text-sm sm:text-base"
-              >
-                Inquire for Bespoke Lighting Direction
-              </StudioButton>
             </div>
           </div>
         </div>

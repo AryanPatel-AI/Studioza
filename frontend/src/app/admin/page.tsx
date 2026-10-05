@@ -62,92 +62,92 @@ export default async function AdminDashboardPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs sm:text-sm font-mono text-amber-400 mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-copper-500/10 border border-copper-500/30 type-body-base text-copper-600 mb-3">
           <ShieldAlert className="w-3.5 h-3.5" />
           <span>Server-Protected Admin Suite</span>
         </div>
-        <h1 className="text-3xl font-bold text-white tracking-tight">Platform Telemetry</h1>
-        <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+        <h1 className="text-3xl font-bold text-foreground">Platform Telemetry</h1>
+        <p className="type-body-base text-foreground-muted mt-1">
           Cross-platform user accounts, digital projects, and storage assets recorded in PostgreSQL.
         </p>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
+        <div className="p-5 rounded-2xl border border-sage-300/40 bg-sage-50">
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-sm text-zinc-400 font-medium">Registered Creators</span>
-            <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
+            <span className="type-body-base text-foreground-muted">Registered Creators</span>
+            <div className="w-8 h-8 rounded-lg bg-copper-500/10 text-copper-600 flex items-center justify-center">
               <Users className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-3xl font-bold text-white mt-2 font-mono">{totalUsers}</p>
-          <p className="text-xs sm:text-sm text-zinc-500 mt-1">Authenticated accounts</p>
+          <p className="text-3xl font-bold text-foreground mt-2">{totalUsers}</p>
+          <p className="type-body-base text-foreground-muted mt-1">Authenticated accounts</p>
         </div>
 
-        <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
+        <div className="p-5 rounded-2xl border border-sage-300/40 bg-sage-50">
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-sm text-zinc-400 font-medium">Platform Projects</span>
+            <span className="type-body-base text-foreground-muted">Platform Projects</span>
             <div className="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center">
               <FolderKanban className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-3xl font-bold text-white mt-2 font-mono">{totalProjects}</p>
-          <p className="text-xs sm:text-sm text-zinc-500 mt-1">Across all users</p>
+          <p className="text-3xl font-bold text-foreground mt-2">{totalProjects}</p>
+          <p className="type-body-base text-foreground-muted mt-1">Across all users</p>
         </div>
 
-        <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
+        <div className="p-5 rounded-2xl border border-sage-300/40 bg-sage-50">
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-sm text-zinc-400 font-medium">Live Published</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+            <span className="type-body-base text-foreground-muted">Live Published</span>
+            <div className="w-8 h-8 rounded-lg bg-sage-500/10 text-sage-400 flex items-center justify-center">
               <Globe className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-3xl font-bold text-white mt-2 font-mono">{publishedProjects}</p>
-          <p className="text-xs sm:text-sm text-zinc-500 mt-1">Publicly routed</p>
+          <p className="text-3xl font-bold text-foreground mt-2">{publishedProjects}</p>
+          <p className="type-body-base text-foreground-muted mt-1">Publicly routed</p>
         </div>
 
-        <div className="p-5 rounded-2xl border border-white/[0.08] bg-[#101014]">
+        <div className="p-5 rounded-2xl border border-sage-300/40 bg-sage-50">
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-sm text-zinc-400 font-medium">Stored Assets</span>
-            <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
+            <span className="type-body-base text-foreground-muted">Stored Assets</span>
+            <div className="w-8 h-8 rounded-lg bg-stone-500/10 text-stone-400 flex items-center justify-center">
               <FileBox className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-3xl font-bold text-white mt-2 font-mono">{totalAssets}</p>
-          <p className="text-xs sm:text-sm text-zinc-500 mt-1">Images and media files</p>
+          <p className="text-3xl font-bold text-foreground mt-2">{totalAssets}</p>
+          <p className="type-body-base text-foreground-muted mt-1">Images and media files</p>
         </div>
       </div>
 
       {/* Two Column Layout: Users & Projects */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* User Directory */}
-        <div className="p-6 rounded-2xl border border-white/[0.08] bg-[#101014] space-y-4">
+        <div className="p-6 rounded-2xl border border-sage-300/40 bg-sage-50 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-white tracking-tight flex items-center gap-2">
-              <Users className="w-4 h-4 text-amber-400" />
+            <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+              <Users className="w-4 h-4 text-copper-600" />
               <span>User Directory</span>
             </h2>
-            <span className="text-xs sm:text-sm text-zinc-500 font-mono">{usersList.length} users</span>
+            <span className="type-body-base text-foreground-muted">{usersList.length} users</span>
           </div>
 
           <div className="divide-y divide-white/[0.06]">
             {usersList.map((u) => (
-              <div key={u.id} className="py-3 flex items-center justify-between text-xs sm:text-sm">
+              <div key={u.id} className="py-3 flex items-center justify-between type-body-base">
                 <div>
-                  <p className="font-medium text-white">{u.name || "Unnamed User"}</p>
-                  <p className="text-xs sm:text-sm text-zinc-400">{u.email}</p>
+                  <p className="text-foreground">{u.name || "Unnamed User"}</p>
+                  <p className="type-body-base text-foreground-muted">{u.email}</p>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-xs sm:text-sm font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-zinc-300 border border-white/[0.08]">
+                  <span className="type-body-base px-2 py-0.5 rounded-full bg-sage-50/50 text-foreground border border-sage-300/40">
                     {u._count.projects} projects
                   </span>
                   <span
-                    className={`text-xs sm:text-sm font-mono uppercase px-2 py-0.5 rounded-full border ${
+                    className={`type-body-base  uppercase px-2 py-0.5 rounded-full border ${
                       u.role === "admin"
-                        ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
-                        : "bg-zinc-500/10 text-zinc-400 border-zinc-500/30"
+                        ? "bg-copper-500/10 text-copper-600 border-copper-500/30"
+                        : "bg-stone-500/10 text-foreground-muted border-stone-500/30"
                     }`}
                   >
                     {u.role}
@@ -159,36 +159,36 @@ export default async function AdminDashboardPage() {
         </div>
 
         {/* Global Projects Overview */}
-        <div className="p-6 rounded-2xl border border-white/[0.08] bg-[#101014] space-y-4">
+        <div className="p-6 rounded-2xl border border-sage-300/40 bg-sage-50 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-white tracking-tight flex items-center gap-2">
-              <FolderKanban className="w-4 h-4 text-amber-400" />
+            <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+              <FolderKanban className="w-4 h-4 text-copper-600" />
               <span>Platform Projects</span>
             </h2>
-            <span className="text-xs sm:text-sm text-zinc-500 font-mono">{projectsList.length} recent</span>
+            <span className="type-body-base text-foreground-muted">{projectsList.length} recent</span>
           </div>
 
           <div className="divide-y divide-white/[0.06]">
             {projectsList.map((p) => (
-              <div key={p.id} className="py-3 flex items-center justify-between text-xs sm:text-sm">
+              <div key={p.id} className="py-3 flex items-center justify-between type-body-base">
                 <div>
                   <Link
                     href={`/projects/${p.id}`}
-                    className="font-medium text-white hover:text-amber-400 transition-colors"
+                    className="text-foreground hover:text-copper-600 transition-colors"
                   >
                     {p.name}
                   </Link>
-                  <p className="text-xs sm:text-sm text-zinc-400">
+                  <p className="type-body-base text-foreground-muted">
                     By {p.owner.name || p.owner.email}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <span
-                    className={`text-xs sm:text-sm font-mono uppercase px-2 py-0.5 rounded-full border ${
+                    className={`type-body-base  uppercase px-2 py-0.5 rounded-full border ${
                       p.status === "published"
-                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
-                        : "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                        ? "bg-sage-500/10 text-sage-400 border-sage-500/30"
+                        : "bg-copper-500/10 text-copper-600 border-copper-500/30"
                     }`}
                   >
                     {p.status}
@@ -198,7 +198,7 @@ export default async function AdminDashboardPage() {
                     <Link
                       href={`/p/${p.slug}`}
                       target="_blank"
-                      className="p-1 rounded text-zinc-400 hover:text-white"
+                      className="p-1 rounded text-foreground-muted hover:text-foreground"
                       title="View live"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -212,9 +212,9 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Global Activity Stream */}
-      <div className="p-6 rounded-2xl border border-white/[0.08] bg-[#101014] space-y-4">
-        <h2 className="text-sm font-semibold text-white tracking-tight flex items-center gap-2">
-          <Activity className="w-4 h-4 text-amber-400" />
+      <div className="p-6 rounded-2xl border border-sage-300/40 bg-sage-50 space-y-4">
+        <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+          <Activity className="w-4 h-4 text-copper-600" />
           <span>Global Activity Audit Stream</span>
         </h2>
 
@@ -222,26 +222,26 @@ export default async function AdminDashboardPage() {
           {recentActivities.map((act) => (
             <div
               key={act.id}
-              className="py-3 flex items-center justify-between text-xs sm:text-sm"
+              className="py-3 flex items-center justify-between type-body-base"
             >
               <div className="flex items-center gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                <span className="font-mono text-xs sm:text-sm text-zinc-300">
+                <span className="w-1.5 h-1.5 rounded-full bg-copper-500" />
+                <span className="type-body-base text-foreground">
                   {act.type.replace(/_/g, " ")}
                 </span>
                 {act.user && (
-                  <span className="text-zinc-400 text-xs sm:text-sm">
+                  <span className="text-foreground-muted type-body-base">
                     by {act.user.name || act.user.email}
                   </span>
                 )}
                 {act.project && (
-                  <span className="text-amber-400 text-xs sm:text-sm font-mono">
+                  <span className="text-copper-600 type-body-base">
                     [{act.project.name}]
                   </span>
                 )}
               </div>
 
-              <span className="text-zinc-500 font-mono text-xs sm:text-sm">
+              <span className="text-foreground-muted type-body-base">
                 {formatTimeAgo(act.createdAt)}
               </span>
             </div>

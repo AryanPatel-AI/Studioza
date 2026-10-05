@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MessageSquare, RefreshCw, Mail, Calendar, CheckCircle2, Clock } from "lucide-react";
+import { RefreshCw, CheckCircle2, Clock, Inbox, PlayCircle, Archive } from "lucide-react";
 
 export default function AdminInquiriesPage() {
   const [inquiries, setInquiries] = useState<any[]>([]);
@@ -22,8 +22,7 @@ export default function AdminInquiriesPage() {
     loadInquiries();
   }, []);
 
-  const updateStatus = async (id: string, currentStatus: string) => {
-    const newStatus = currentStatus === "NEW" ? "CONTACTED" : "NEW";
+  const updateStatus = async (id: string, newStatus: string) => {
     const res = await fetch(`/api/admin/inquiries/${id}/status`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -39,85 +38,102 @@ export default function AdminInquiriesPage() {
     }
   };
 
+  const getStatusIcon = (status: string) => {
+    switch(status) {
+      case "NEW": return <Clock className="w-3 h-3" />;
+      case "CONTACTED": return <Inbox className="w-3 h-3" />;
+      case "IN PROGRESS": return <PlayCircle className="w-3 h-3" />;
+      case "COMPLETED": return <CheckCircle2 className="w-3 h-3" />;
+      case "ARCHIVED": return <Archive className="w-3 h-3" />;
+      default: return <Clock className="w-3 h-3" />;
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-serif font-bold text-white tracking-tight">
+          <h1 className="text-3xl font-bold text-white">
             Client Shoot Inquiries
           </h1>
-          <p className="text-sm text-blue-200/80 mt-1">
+          <p className="text-sm text-stone-200/80 mt-1">
             Review incoming commission requests and update outreach status.
           </p>
         </div>
         <button
           onClick={loadInquiries}
           disabled={isLoading}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-black bg-gradient-to-r from-amber-300 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-md shadow-amber-500/20 transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-none type-body-base font-semibold text-copper-50 bg-gradient-to-r from-copper-300 to-copper-500 hover:from-copper-400 hover:to-copper-600 shadow-md shadow-copper-500/20 transition-all cursor-pointer"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin" : ""}`} />
           Refresh Registry
         </button>
       </div>
 
-      <div className="bg-[#0c162e]/90 border border-blue-400/20 rounded-3xl overflow-hidden shadow-2xl shadow-blue-950/40">
+      <div className="bg-black border border-stone-800 rounded-none overflow-hidden shadow-2xl shadow-stone-950/40">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-blue-500/20 text-left">
-            <thead className="bg-[#091024]/80 text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider text-sky-300">
+          <table className="min-w-full divide-y divide-stone-500/20 text-left">
+            <thead className="bg-black type-body-base font-semibold text-[var(--accent-muted-gold)]">
               <tr>
                 <th className="px-6 py-4">Date</th>
-                <th className="px-6 py-4">Patron Name</th>
-                <th className="px-6 py-4">Email Address</th>
+                <th className="px-6 py-4">Patron Details</th>
+                <th className="px-6 py-4">Project Info</th>
                 <th className="px-6 py-4">Commission Brief</th>
                 <th className="px-6 py-4">Status</th>
                 <th className="px-6 py-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-blue-500/10 text-sm">
+            <tbody className="divide-y divide-stone-500/10 text-sm">
               {inquiries.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-neutral-400 font-light">
+                  <td colSpan={6} className="px-6 py-12 text-center text-stone-500">
                     {isLoading ? "Loading inquiries from database..." : "No commission inquiries recorded yet."}
                   </td>
                 </tr>
               ) : (
                 inquiries.map((inq) => (
-                  <tr key={inq.id} className="hover:bg-blue-900/20 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-mono text-neutral-400">
+                  <tr key={inq.id} className="hover:bg-stone-900/20 transition-colors">
+                    <td className="px-6 py-4 whitespace-nowrap type-body-base text-stone-500 align-top">
                       {new Date(inq.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap font-medium text-white">
-                      {inq.name}
+                    <td className="px-6 py-4 whitespace-nowrap align-top">
+                      <div className="text-white font-medium">{inq.name}</div>
+                      <div className="type-body-base text-[var(--accent-muted-gold)]">{inq.email}</div>
+                      {inq.company && <div className="text-stone-400 text-xs mt-1">Company: {inq.company}</div>}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-mono text-sky-300">
-                      {inq.email}
+                    <td className="px-6 py-4 whitespace-nowrap align-top text-stone-400 text-xs space-y-1">
+                      <div>Budget: {inq.budget || "N/A"}</div>
+                      <div>Timeline: {inq.timeline || "N/A"}</div>
+                      <div>Ref: {inq.reference || "N/A"}</div>
                     </td>
-                    <td className="px-6 py-4 text-xs sm:text-sm text-neutral-300 max-w-xs truncate">
+                    <td className="px-6 py-4 type-body-base text-white max-w-xs truncate align-top whitespace-pre-wrap">
                       {inq.message}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-4 whitespace-nowrap align-top">
                       <span
-                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider ${
-                          inq.status === "NEW"
-                            ? "bg-amber-400/15 text-amber-300 border border-amber-400/30"
-                            : "bg-emerald-400/15 text-emerald-300 border border-emerald-400/30"
+                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full type-body-base font-semibold uppercase ${
+                          inq.status === "NEW" ? "bg-copper-500/15 text-copper-600 border border-copper-500/30" :
+                          inq.status === "COMPLETED" ? "bg-green-950 text-green-500 border border-green-900" :
+                          inq.status === "ARCHIVED" ? "bg-stone-900 text-stone-500 border border-stone-800" :
+                          "bg-blue-950 text-blue-500 border border-blue-900"
                         }`}
                       >
-                        {inq.status === "NEW" ? (
-                          <Clock className="w-3 h-3" />
-                        ) : (
-                          <CheckCircle2 className="w-3 h-3" />
-                        )}
+                        {getStatusIcon(inq.status)}
                         {inq.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-xs sm:text-sm">
-                      <button
-                        onClick={() => updateStatus(inq.id, inq.status)}
-                        className="px-3 py-1.5 rounded-lg font-mono text-xs sm:text-sm text-sky-300 hover:text-white bg-blue-950/60 hover:bg-blue-900/60 border border-blue-400/20 transition-colors cursor-pointer"
+                    <td className="px-6 py-4 whitespace-nowrap text-right type-body-base align-top">
+                      <select 
+                        className="px-3 py-1.5 rounded-lg type-body-base text-white bg-stone-950 border border-stone-800 focus:outline-none"
+                        value={inq.status}
+                        onChange={(e) => updateStatus(inq.id, e.target.value)}
                       >
-                        Mark as {inq.status === "NEW" ? "Contacted" : "New"}
-                      </button>
+                        <option value="NEW">New</option>
+                        <option value="CONTACTED">Contacted</option>
+                        <option value="IN PROGRESS">In Progress</option>
+                        <option value="COMPLETED">Completed</option>
+                        <option value="ARCHIVED">Archived</option>
+                      </select>
                     </td>
                   </tr>
                 ))

@@ -73,3 +73,9 @@ frontend/.env*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+frontend/public/uploads/
+
+# Temporary patch scripts & scratch files
+/*.js
+/*.sh
+frontend/page.txt

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export interface StudioButtonProps {
   children: React.ReactNode;
-  variant?: "primary" | "crystal" | "outline" | "minimal";
+  variant?: "primary" | "crystal" | "outline" | "minimal" | "dark";
   size?: "sm" | "md" | "lg";
   href?: string;
   onClick?: () => void;
@@ -25,14 +25,13 @@ export default function StudioButton({
   href,
   onClick,
   icon = "none",
-  strength = 0.28,
+  strength = 0.20,
   className = "",
   type = "button",
   disabled = false,
 }: StudioButtonProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [specular, setSpecular] = useState({ x: 50, y: 50 });
   const [isHovered, setIsHovered] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
@@ -50,11 +49,6 @@ export default function StudioButton({
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
-    const px = (e.clientX - rect.left) / rect.width;
-    const py = (e.clientY - rect.top) / rect.height;
-
-    setSpecular({ x: px * 100, y: py * 100 });
-
     if (!prefersReducedMotion) {
       setPosition({
         x: (e.clientX - centerX) * strength,
@@ -68,23 +62,25 @@ export default function StudioButton({
     setPosition({ x: 0, y: 0 });
   };
 
-  // 1. Size Specs
+  // 1. Proportional Editorial Sizes
   const sizeClasses = {
-    sm: "py-2 px-4 text-xs sm:text-sm gap-1.5",
-    md: "py-2.5 px-6 text-xs sm:text-sm gap-2",
-    lg: "py-3.5 px-8 text-xs sm:text-sm gap-2.5",
+    sm: "py-2 px-4 text-[11px] gap-1.5",
+    md: "py-2.5 px-6 text-[11px] sm:text-xs gap-2",
+    lg: "py-3.5 px-8 text-xs gap-2.5",
   }[size];
 
-  // 2. Variant Visuals
+  // 2. Architectural Editorial Visuals (Restrained, no neon glows, crisp radii)
   const variantClasses = {
     primary:
-      "bg-gradient-to-r from-amber-200 via-amber-300 to-amber-400 text-black font-semibold shadow-md shadow-amber-400/10 hover:shadow-lg hover:shadow-amber-400/20 active:scale-[0.98]",
+      "bg-sage-500 text-[#151515] border border-sage-500 hover:bg-sage-600 hover:border-sage-600 transition-colors duration-200 active:scale-[0.99]",
     crystal:
-      "backdrop-blur-xl bg-[#18130e]/40 text-ivory-100 border border-white/[0.12] hover:border-amber-400/60 shadow-[inset_0_1px_1px_rgba(255,235,210,0.2)] active:scale-[0.98]",
+      "bg-transparent text-[#151515] border border-stone-200 hover:border-amber-500 hover:text-amber-600 transition-colors duration-200 active:scale-[0.99]",
     outline:
-      "border border-white/20 text-zinc-200 hover:text-white hover:border-amber-400/60 bg-white/[0.02] hover:bg-white/[0.05] active:scale-[0.98]",
+      "bg-transparent text-[#151515] border border-[#151515]/20 hover:border-[#151515] transition-colors duration-200 active:scale-[0.99]",
+    dark:
+      "bg-stone-900 text-[#F2F0E9] border border-stone-800 hover:border-stone-500 transition-colors duration-200 active:scale-[0.99]",
     minimal:
-      "text-zinc-300 hover:text-amber-300 bg-transparent px-0 py-1 font-medium hover:underline underline-offset-8 decoration-amber-400/40",
+      "text-[#151515] hover:text-amber-500 bg-transparent px-0 py-1 hover:underline underline-offset-4 decoration-amber-500/30 transition-colors",
   }[variant];
 
   // 3. Render Icon
@@ -95,7 +91,7 @@ export default function StudioButton({
         <ArrowUpRight
           className={cn(
             "w-3.5 h-3.5 transition-transform duration-300",
-            isHovered && "translate-x-0.5 -translate-y-0.5"
+            isHovered && "transtone-x-0.5 -transtone-y-0.5"
           )}
         />
       );
@@ -105,7 +101,7 @@ export default function StudioButton({
         <ArrowRight
           className={cn(
             "w-3.5 h-3.5 transition-transform duration-300",
-            isHovered && "translate-x-1"
+            isHovered && "transtone-x-1"
           )}
         />
       );
@@ -120,37 +116,26 @@ export default function StudioButton({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative select-none inline-flex items-center justify-center rounded-full font-mono uppercase tracking-wider transition-all duration-300 cursor-pointer overflow-hidden",
+        "relative select-none inline-flex items-center justify-center rounded-[2px] type-ui-nav tracking-widest uppercase transition-all duration-300 cursor-pointer overflow-hidden",
         sizeClasses,
         variantClasses,
-        disabled && "opacity-50 pointer-events-none",
+        disabled && "opacity-40 pointer-events-none",
         className
       )}
       style={{
         transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
         transition: isHovered
           ? "transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)"
-          : "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+          : "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
     >
-      {/* Specular Edge Highlight for Crystal & Primary */}
-      {variant === "crystal" && (
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-300"
-          style={{
-            opacity: isHovered ? 0.9 : 0.3,
-            background: `radial-gradient(circle 120px at ${specular.x}% ${specular.y}%, rgba(255, 235, 205, 0.25), transparent 70%)`,
-          }}
-        />
-      )}
-
       <span
         className="relative z-10 flex items-center gap-2"
         style={{
-          transform: `translate3d(${position.x * 0.3}px, ${position.y * 0.3}px, 0)`,
+          transform: `translate3d(${position.x * 0.25}px, ${position.y * 0.25}px, 0)`,
           transition: isHovered
             ? "transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)"
-            : "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+            : "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
         <span>{children}</span>

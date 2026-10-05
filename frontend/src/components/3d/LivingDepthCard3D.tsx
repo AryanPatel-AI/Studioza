@@ -72,8 +72,8 @@ export default function LivingDepthCard3D({
   // Tone-specific border glow styling
   const glowStyles = {
     blue: "hover:border-sky-400/50 hover:shadow-sky-500/15",
-    amber: "hover:border-amber-400/50 hover:shadow-amber-500/15",
-    dual: "hover:border-amber-400/40 hover:shadow-2xl hover:shadow-blue-500/10",
+    amber: "hover:border-copper-500/50 hover:shadow-copper-500/15",
+    dual: "hover:border-copper-500/40 hover:shadow-2xl hover:shadow-stone-500/10",
   }[glowTone];
 
   return (

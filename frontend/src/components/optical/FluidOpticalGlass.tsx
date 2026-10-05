@@ -258,24 +258,24 @@ export default function FluidOpticalGlass({
   // Tint and blur styling
   const tintClasses = {
     champagne: {
-      subtle: "backdrop-blur-md bg-[#16120e]/30",
-      medium: "backdrop-blur-2xl bg-[#14100c]/45",
-      deep: "backdrop-blur-3xl bg-[#0f0c09]/65",
+      subtle: "backdrop-blur-md bg-sage-50/30",
+      medium: "backdrop-blur-2xl bg-sage-50/45",
+      deep: "backdrop-blur-3xl bg-sage-50/65",
     },
     obsidian: {
-      subtle: "backdrop-blur-md bg-[#0a0807]/45",
-      medium: "backdrop-blur-2xl bg-[#080706]/70",
-      deep: "backdrop-blur-3xl bg-[#050403]/85",
+      subtle: "backdrop-blur-md bg-background",
+      medium: "backdrop-blur-2xl bg-background",
+      deep: "backdrop-blur-3xl bg-sage-400",
     },
     navy: {
-      subtle: "backdrop-blur-md bg-[#090d16]/35",
-      medium: "backdrop-blur-2xl bg-[#070a12]/55",
-      deep: "backdrop-blur-3xl bg-[#05070d]/80",
+      subtle: "backdrop-blur-md bg-sage-50/35",
+      medium: "backdrop-blur-2xl bg-sage-50/55",
+      deep: "backdrop-blur-3xl bg-sage-50/80",
     },
     clear: {
-      subtle: "backdrop-blur-md bg-white/[0.04]",
-      medium: "backdrop-blur-2xl bg-white/[0.07]",
-      deep: "backdrop-blur-3xl bg-white/[0.12]",
+      subtle: "backdrop-blur-md bg-sage-50/50",
+      medium: "backdrop-blur-2xl bg-sage-50/50",
+      deep: "backdrop-blur-3xl bg-sage-50",
     },
   }[tint][intensity];
 
@@ -293,7 +293,7 @@ export default function FluidOpticalGlass({
       <div
         data-glass-shadow
         className={cn(
-          "absolute inset-5 rounded-3xl bg-black/65 blur-2xl pointer-events-none transition-opacity duration-500 ease-out z-0",
+          "absolute inset-5 rounded-3xl bg-sage-100 blur-2xl pointer-events-none transition-opacity duration-500 ease-out z-0",
           isHovered ? "opacity-85" : "opacity-45"
         )}
       />
@@ -302,7 +302,7 @@ export default function FluidOpticalGlass({
       <div
         data-glass-slab
         className={cn(
-          "relative z-10 overflow-hidden rounded-2xl sm:rounded-3xl border border-white/[0.10] will-change-transform",
+          "relative z-10 overflow-hidden rounded-2xl sm:rounded-3xl border border-sage-300/40 will-change-transform",
           tintClasses,
           innerClassName
         )}
@@ -346,7 +346,7 @@ export default function FluidOpticalGlass({
         />
 
         {/* Subtle Darkroom Gradient Wash */}
-        <div className="absolute inset-0 bg-gradient-to-b from-amber-500/[0.02] via-transparent to-black/[0.20] pointer-events-none z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-copper-500/[0.02] via-transparent to-black/[0.20] pointer-events-none z-10" />
 
         {/* Interior Surface Content */}
         <div className={cn("relative z-30", contentClassName)}>{children}</div>

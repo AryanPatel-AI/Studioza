@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { Sparkles, Scan, Eye } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface LiquidRefractionLoupeProps {
   imageSrc: string;
@@ -50,7 +51,7 @@ export default function LiquidRefractionLoupe({
       onTouchStart={() => setIsActive(true)}
       onTouchMove={handleTouchMove}
       onTouchEnd={() => setIsActive(false)}
-      className={`relative overflow-hidden group select-none touch-pan-y ${aspectRatio} ${className} bg-[#0a0807]`}
+      className={`relative overflow-hidden group select-none touch-pan-y ${aspectRatio} ${className} bg-background`}
     >
       {/* 1. Underlying Base Master Photograph */}
       <img
@@ -61,7 +62,7 @@ export default function LiquidRefractionLoupe({
 
       {/* 2. Warm Cinematic Darkroom Light Grading (Tungsten & Amber ambient wash) */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#090705] via-transparent to-[#090705]/40 pointer-events-none opacity-80 group-hover:opacity-50 transition-opacity duration-700" />
-      <div className="absolute inset-0 bg-gradient-to-r from-amber-900/10 via-transparent to-orange-950/15 pointer-events-none mix-blend-color-dodge" />
+      <div className="absolute inset-0 bg-gradient-to-r from-copper-900/10 via-transparent to-orange-950/15 pointer-events-none mix-blend-color-dodge" />
 
       {/* 3. Floating Translucent Crystal Loupe (Liquid Refraction & Optical Magnification) */}
       <div
@@ -75,7 +76,7 @@ export default function LiquidRefractionLoupe({
       >
           {/* Circular Ground-Glass Beveled Rim with Warm Caustic Grazing Highlight */}
           <div
-            className="w-full h-full rounded-full relative overflow-hidden backdrop-blur-[2px] shadow-2xl shadow-black/80"
+            className="w-full h-full rounded-full relative overflow-hidden backdrop-blur-[2px] shadow-2xl shadow-sage-900/80"
             style={{
               border: "1.5px solid rgba(255, 235, 205, 0.35)",
               boxShadow:
@@ -105,43 +106,48 @@ export default function LiquidRefractionLoupe({
             />
 
             {/* Viewfinder Micro Crosshair & Telemetry */}
-            <div className="absolute inset-0 flex flex-col items-center justify-between p-2.5 sm:p-3 pointer-events-none text-white/70">
-              <span className="text-[7px] sm:text-[8px] font-mono tracking-widest uppercase bg-black/50 px-1.5 py-0.5 rounded backdrop-blur-sm border border-white/10">
-                LOUPE 8X • REFRACT
+            <div className="absolute inset-0 flex flex-col items-center justify-between p-3 pointer-events-none text-foreground">
+              <span className="type-mono-micro text-[8px] text-white/70 border-b border-white/20 pb-0.5">
+                LOUPE 8X
               </span>
-              <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 border border-white/40 rounded-full flex items-center justify-center">
-                <div className="w-0.5 h-0.5 bg-amber-400 rounded-full" />
+              <div className="w-3 h-3 border border-white/30 flex items-center justify-center">
+                <div className="w-1 h-1 bg-white/60" />
               </div>
-              <span className="text-[6.5px] sm:text-[7px] font-mono tracking-wider text-amber-300/90 bg-black/50 px-1.5 py-0.5 rounded">
+              <span className="type-mono-micro text-[8px] text-white/70 border-t border-white/20 pt-0.5">
                 {telemetry.split("•")[0]}
               </span>
             </div>
           </div>
         </div>
 
-      {/* 4. Film Rebate Frame Marking (Top Edge) */}
-      <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-400 tracking-wider z-20 pointer-events-none">
-        <span className="bg-black/40 backdrop-blur-md px-2 py-0.5 rounded border border-white/[0.08] text-amber-300/90">
-          {plateTitle}
-        </span>
-        <span className="hidden sm:inline-block bg-black/40 backdrop-blur-md px-2 py-0.5 rounded border border-white/[0.08] uppercase tracking-[0.2em]">
+      {/* 4. Editorial Annotation (Top Edge) - Museum Catalogue Style */}
+      <div className="absolute top-4 left-4 flex flex-col gap-1 z-20 pointer-events-none">
+        <div className="flex items-center gap-2">
+          <span className="w-4 h-px bg-white/40" />
+          <span className="type-mono-micro text-white/90">
+            {plateTitle}
+          </span>
+        </div>
+        <span className="pl-6 type-mono-micro text-white/50">
           OPTICAL DISPERSION 1.58
         </span>
       </div>
 
-      {/* 5. Subtle Guidance Tooltip (Fades out when interacting) */}
-      {!isActive && (
-        <>
-          <div className="absolute bottom-4 right-4 z-20 pointer-events-none hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-xs sm:text-sm font-mono text-zinc-300">
-            <Eye className="w-3 h-3 text-amber-400" />
-            <span>Hover to examine with optical loupe</span>
+      {/* 5. Architectural Guidance Note (Bottom Right) */}
+      <div 
+        className={cn(
+          "absolute bottom-4 right-4 z-20 pointer-events-none transition-opacity duration-700",
+          isActive ? "opacity-0" : "opacity-100"
+        )}
+      >
+        <div className="flex flex-col items-end gap-1">
+          <span className="type-mono-micro text-white/50">INTERACTIVE</span>
+          <div className="flex items-center gap-2">
+            <span className="type-mono-micro text-white/90">EXAMINE WITH LOUPE</span>
+            <span className="w-4 h-px bg-white/40" />
           </div>
-          <div className="absolute bottom-4 right-4 z-20 pointer-events-none sm:hidden flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-xs sm:text-sm font-mono text-zinc-300">
-            <Eye className="w-3 h-3 text-amber-400" />
-            <span>Touch to magnify</span>
-          </div>
-        </>
-      )}
+        </div>
+      </div>
     </div>
   );
 }

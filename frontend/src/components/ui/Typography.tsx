@@ -2,13 +2,13 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 /* ========================================================================= */
-/* 1. DISPLAY HEADLINE (Cormorant Garamond Serif)                            */
+/* 1. DISPLAY HEADLINE (Cormorant Garamond Serif — Art Book Editorial)      */
 /* ========================================================================= */
 
 export interface DisplayHeadlineProps extends React.HTMLAttributes<HTMLHeadingElement> {
   as?: "h1" | "h2" | "h3" | "h4";
   size?: "hero" | "2xl" | "xl" | "lg" | "md" | "sm";
-  tone?: "ivory" | "gold" | "selenium";
+  tone?: "ivory" | "copper" | "charcoal" | "light";
   children: React.ReactNode;
   className?: string;
 }
@@ -16,30 +16,31 @@ export interface DisplayHeadlineProps extends React.HTMLAttributes<HTMLHeadingEl
 export function DisplayHeadline({
   as: Component = "h2",
   size = "lg",
-  tone = "ivory",
+  tone = "charcoal",
   children,
   className = "",
   ...props
 }: DisplayHeadlineProps) {
   const sizeClasses = {
-    hero: "text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] tracking-tight leading-none",
-    "2xl": "text-5xl sm:text-7xl lg:text-8xl tracking-tight leading-none",
-    xl: "text-4xl sm:text-6xl lg:text-7xl tracking-tight leading-tight",
-    lg: "text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-snug",
-    md: "text-2xl sm:text-3xl tracking-tight leading-snug",
+    hero: "text-6xl sm:text-8xl md:text-9xl lg:text-[10rem]  ",
+    "2xl": "text-5xl sm:text-7xl lg:text-8xl  ",
+    xl: "text-4xl sm:text-6xl lg:text-7xl  leading-tight",
+    lg: "text-3xl sm:text-4xl lg:text-5xl  ",
+    md: "text-2xl sm:text-3xl  ",
     sm: "text-xl sm:text-2xl tracking-normal leading-normal",
   }[size];
 
   const toneClasses = {
-    ivory: "text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-white/35 drop-shadow-2xl",
-    gold: "text-transparent bg-clip-text bg-gradient-to-b from-amber-100 via-amber-300 to-amber-500/80 drop-shadow-xl",
-    selenium: "text-zinc-300",
+    charcoal: "text-ink-primary ",
+    ivory: "text-ink-primary ",
+    copper: "text-copper-500 ",
+    light: "text-ink-inverse ",
   }[tone];
 
   return (
     <Component
       className={cn(
-        "font-serif font-bold select-none",
+        " select-none",
         sizeClasses,
         toneClasses,
         className
@@ -79,14 +80,14 @@ export function EditorialQuote({
 
   return (
     <blockquote className={cn("space-y-4", className)} {...props}>
-      <p className={cn("font-serif font-normal italic text-zinc-200 leading-relaxed", sizeClasses)}>
+      <p className={cn("  italic text-ink-primary ", sizeClasses)}>
         &ldquo;{children}&rdquo;
       </p>
       {(attribution || role) && (
-        <footer className="pt-2 text-xs sm:text-sm font-mono tracking-wider">
-          {attribution && <cite className="text-amber-400/90 font-medium not-italic">{attribution}</cite>}
-          {attribution && role && <span className="text-zinc-600 mx-2">—</span>}
-          {role && <span className="text-zinc-500 font-light">{role}</span>}
+        <footer className="pt-2 type-meta">
+          {attribution && <cite className="text-copper-500 not-italic">{attribution}</cite>}
+          {attribution && role && <span className="text-stone-400 mx-2">—</span>}
+          {role && <span className="text-ink-muted">{role}</span>}
         </footer>
       )}
     </blockquote>
@@ -99,34 +100,34 @@ export function EditorialQuote({
 
 export interface TechnicalSpecProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode;
-  tone?: "amber" | "zinc" | "white";
+  tone?: "copper" | "stone" | "light";
   dot?: boolean;
   className?: string;
 }
 
 export function TechnicalSpec({
   children,
-  tone = "amber",
+  tone = "copper",
   dot = false,
   className = "",
   ...props
 }: TechnicalSpecProps) {
   const toneClasses = {
-    amber: "text-amber-300/90",
-    zinc: "text-zinc-400",
-    white: "text-zinc-200",
+    copper: "text-copper-500",
+    stone: "text-ink-muted",
+    light: "text-stone-300",
   }[tone];
 
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 text-xs sm:text-sm font-mono tracking-[0.2em] uppercase select-none",
+        "inline-flex items-center gap-2 type-meta select-none",
         toneClasses,
         className
       )}
       {...props}
     >
-      {dot && <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />}
+      {dot && <span className="w-1.5 h-1.5 rounded-full bg-copper-500 shrink-0" />}
       <span>{children}</span>
     </span>
   );
@@ -157,19 +158,19 @@ export function PlateLabel({
   return (
     <div
       className={cn(
-        "flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-wider uppercase select-none",
+        "flex items-center justify-between type-meta select-none",
         className
       )}
       {...props}
     >
       <div className="flex items-center gap-3">
-        <span className="text-amber-400 font-semibold">{formattedNumber}</span>
-        {label && <span className="text-zinc-400">— {label}</span>}
+        <span className="text-copper-500 font-semibold">{formattedNumber}</span>
+        {label && <span className="text-ink-muted">— {label}</span>}
       </div>
 
       <div className="flex items-center gap-4">
-        {stock && <span className="hidden sm:inline-block tracking-[0.25em]">{stock}</span>}
-        {location && <span className="text-zinc-400">{location}</span>}
+        {stock && <span className="hidden sm:inline-block">{stock}</span>}
+        {location && <span className="text-ink-muted">{location}</span>}
       </div>
     </div>
   );
@@ -194,15 +195,15 @@ export function BodyText({
   ...props
 }: BodyTextProps) {
   const sizeClasses = {
-    base: "text-sm sm:text-base leading-relaxed",
-    sm: "text-xs sm:text-sm leading-relaxed",
-    xs: "text-xs sm:text-sm leading-normal",
+    base: "type-body-base ",
+    sm: "type-body-base ",
+    xs: "text-xs leading-normal",
   }[size];
 
   const toneClasses = {
-    light: "text-zinc-300 font-light",
-    muted: "text-zinc-400 font-light",
-    subtle: "text-zinc-500 font-normal",
+    light: "text-ink-body ",
+    muted: "text-ink-muted ",
+    subtle: "text-ink-muted ",
   }[tone];
 
   return (

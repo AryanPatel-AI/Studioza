@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Lock, ArrowRight, Layers, ShieldCheck } from "lucide-react";
+import { Lock, Layers, ShieldCheck } from "lucide-react";
 import { loginUser } from "@/app/actions/auth";
 
 export default function LoginPage() {
@@ -29,11 +29,7 @@ export default function LoginPage() {
         return;
       }
 
-      if (result.role === "admin") {
-        router.push("/dashboard");
-      } else {
-        router.push("/dashboard");
-      }
+      router.push("/dashboard");
       router.refresh();
     } catch (err: any) {
       setError("An unexpected error occurred. Please try again.");
@@ -43,46 +39,44 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#08080a] text-zinc-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 selection:bg-amber-500 selection:text-black">
+    <div className="min-h-screen bg-background text-foreground flex flex-col justify-center py-14 px-4 sm:px-6 lg:px-8 selection:bg-copper-500 selection:text-white">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         {/* Brand Mark */}
         <Link href="/" className="inline-flex items-center gap-3 group mb-6">
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 via-amber-600 to-amber-300 p-0.5 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
-            <div className="w-full h-full bg-[#08080a] rounded-[14px] flex items-center justify-center text-amber-400">
-              <Layers className="w-5 h-5" />
-            </div>
+          <div className="w-8 h-8 rounded-[2px] border border-stone-300 bg-white flex items-center justify-center text-copper-600 transition-colors group-hover:border-copper-500">
+            <span className="italic font-semibold text-sm">S</span>
           </div>
           <div className="text-left">
-            <span className="font-semibold text-xl tracking-tight text-white block">
-              Studio
+            <span className="text-lg text-ink-primary block">
+              Studioza
             </span>
-            <span className="text-xs sm:text-sm uppercase tracking-[0.2em] text-zinc-400 font-mono block">
-              Digital Workspace
+            <span className="text-[9px] uppercase text-ink-muted block mt-0.5">
+              Atelier Vault
             </span>
           </div>
         </Link>
 
-        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-          Welcome back
+        <h1 className="text-2xl sm:text-3xl text-ink-primary">
+          Client Workspace Access
         </h1>
-        <p className="mt-2 text-sm text-zinc-400 font-normal">
-          Enter your credentials to access your Studio workspace.
+        <p className="mt-2 type-meta text-ink-muted">
+          Archival Proofing &amp; High-Resolution Vault
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="p-8 sm:p-10 rounded-2xl border border-white/[0.08] bg-[#101014] shadow-2xl">
+        <div className="p-8 sm:p-10 rounded-[2px] border border-stone-200 bg-white shadow-sm">
           <form className="space-y-5" onSubmit={handleSubmit}>
             {error && (
-              <div className="bg-rose-950/50 border border-rose-500/30 text-rose-300 text-xs sm:text-sm p-3.5 rounded-xl text-center">
+              <div className="bg-stone-100 border border-stone-300 text-stone-800 type-meta p-3 rounded-[2px] text-center">
                 {error}
               </div>
             )}
 
-            <div>
+            <div className="space-y-1">
               <label
                 htmlFor="email"
-                className="block text-xs sm:text-sm font-medium text-zinc-300 mb-1.5"
+                className="block type-meta text-ink-primary"
               >
                 Email Address
               </label>
@@ -94,20 +88,18 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.03] text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 text-sm transition-all"
-                placeholder="you@example.com"
+                className="w-full px-3.5 py-2.5 rounded-[2px] border border-stone-200 bg-stone-50/80 text-ink-primary placeholder:text-stone-400 focus:outline-none focus:border-copper-500 focus:bg-white text-sm transition-colors"
+                placeholder="patron@domain.com"
               />
             </div>
 
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label
-                  htmlFor="password"
-                  className="block text-xs sm:text-sm font-medium text-zinc-300"
-                >
-                  Password
-                </label>
-              </div>
+            <div className="space-y-1">
+              <label
+                htmlFor="password"
+                className="block type-meta text-ink-primary"
+              >
+                Password
+              </label>
               <input
                 id="password"
                 name="password"
@@ -116,37 +108,37 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.03] text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 text-sm transition-all"
+                className="w-full px-3.5 py-2.5 rounded-[2px] border border-stone-200 bg-stone-50/80 text-ink-primary placeholder:text-stone-400 focus:outline-none focus:border-copper-500 focus:bg-white text-sm transition-colors"
                 placeholder="••••••••"
               />
             </div>
 
-            <div>
+            <div className="pt-2">
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-semibold text-sm text-black bg-amber-400 hover:bg-amber-300 shadow-lg shadow-amber-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="w-full btn-editorial-primary text-[10px]"
               >
-                <Lock className="w-4 h-4" />
-                {isLoading ? "Authenticating..." : "Sign In"}
+                <Lock className="w-3.5 h-3.5" />
+                <span>{isLoading ? "Authenticating..." : "Sign In to Vault"}</span>
               </button>
             </div>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-white/[0.08] text-center text-xs sm:text-sm text-zinc-400">
-            Don&apos;t have an account yet?{" "}
+          <div className="mt-6 pt-5 border-t border-hairline text-center type-meta text-ink-muted">
+            New client or collaborator?{" "}
             <Link
               href="/signup"
-              className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
+              className="text-copper-600 hover:text-copper-700 transition-colors"
             >
               Create an account
             </Link>
           </div>
         </div>
 
-        <div className="mt-8 flex items-center justify-center gap-2 text-xs sm:text-sm text-zinc-500">
-          <ShieldCheck className="w-3.5 h-3.5" />
-          <span>Server-authoritative authentication &amp; encrypted sessions</span>
+        <div className="mt-6 flex items-center justify-center gap-2 type-meta">
+          <ShieldCheck className="w-3 h-3 text-copper-500" />
+          <span>Server-authoritative encrypted session</span>
         </div>
       </div>
     </div>

@@ -1,85 +1,24 @@
-"use client";
+import React from 'react';
+import { cn } from '@/lib/utils';
 
-import { useRef, useState, useEffect } from "react";
-import Link from "next/link";
-
-interface MagneticButtonProps {
+interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  className?: string;
-  href?: string;
-  onClick?: () => void;
-  strength?: number;
+  variant?: 'primary' | 'secondary' | 'dark';
 }
 
-export default function MagneticButton({
-  children,
-  className = "",
-  href,
-  onClick,
-  strength = 0.35,
-}: MagneticButtonProps) {
-  const buttonRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!buttonRef.current) return;
-    const rect = buttonRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    const distanceX = e.clientX - centerX;
-    const distanceY = e.clientY - centerY;
-
-    setPosition({
-      x: distanceX * strength,
-      y: distanceY * strength,
-    });
+export function MagneticButton({ children, className, variant = 'primary', ...props }: MagneticButtonProps) {
+  // Simple styling for now, mapping to our new global architectural buttons
+  const baseStyles = "inline-flex items-center justify-center gap-2 type-meta px-6 py-3 border transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer uppercase";
+  
+  const variants = {
+    primary: "bg-[var(--bg-deep-night)] text-[var(--bg-warm-ivory)] border-[var(--bg-deep-night)] hover:bg-[var(--bg-near-black)]",
+    secondary: "bg-transparent text-[var(--bg-near-black)] border-[var(--border-medium)] hover:border-[var(--accent-muted-gold)] hover:text-[var(--accent-dark-bronze)]",
+    dark: "bg-[rgba(247,245,240,0.05)] text-[var(--ink-inverse)] border-[var(--border-dark)] hover:bg-[rgba(247,245,240,0.1)]",
   };
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setPosition({ x: 0, y: 0 });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const content = (
-    <div
-      ref={buttonRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-        transition: isHovered
-          ? "transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)"
-          : "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-      }}
-      className={`inline-block select-none cursor-pointer ${className}`}
-    >
-      <div
-        style={{
-          transform: `translate3d(${position.x * 0.4}px, ${position.y * 0.4}px, 0)`,
-          transition: isHovered
-            ? "transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)"
-            : "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
-      >
-        {children}
-      </div>
-    </div>
+  return (
+    <button className={cn(baseStyles, variants[variant], className)} {...props}>
+      {children}
+    </button>
   );
-
-  if (href) {
-    return (
-      <Link href={href} onClick={onClick}>
-        {content}
-      </Link>
-    );
-  }
-
-  return <div onClick={onClick}>{content}</div>;
 }

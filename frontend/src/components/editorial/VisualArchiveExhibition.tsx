@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Scan, ArrowUpRight } from "lucide-react";
-import FluidOpticalGlass from "@/components/optical/FluidOpticalGlass";
 import LiquidRefractionLoupe from "@/components/optical/LiquidRefractionLoupe";
 import StudioButton from "@/components/ui/StudioButton";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 export type CuratorialCategory =
   | "ALL"
@@ -81,92 +81,92 @@ const EXHIBITION_DATA: ExhibitionPlate[] = [
     category: "PORTRAIT",
     title: "Soul in Silver",
     curatorialThesis:
-      "An intimate chiaroscuro monochrome study capturing micro-expressions and authentic human stillness. Recorded on whisper-quiet mechanical rangefinder systems without studio artificiality.",
-    location: "Le Marais Studio, Paris",
+      "Intimate medium format portraiture recording unrepeatable facial cadence and emotional stillness. Shot under uncorrected north studio skylight with zero post-capture smoothing.",
+    location: "Le Marais Atelier, Paris",
     year: "2026",
-    edition: "Edition of 12 • Silver Gelatin Master Print",
-    paperStock: "Ilford Galerie Prestige Warmtone 310gsm",
+    edition: "Edition of 5 • Signed Master Baryta",
+    paperStock: "Ilford Galerie Gold Fibre Silk 310gsm",
     primaryImage: {
-      src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1400&q=85",
-      alt: "Monochrome Portrait Paris",
-      camera: "Leica M11 Rangefinder",
+      src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1600&q=85",
+      alt: "Monochrome Chiaroscuro Portrait Study",
+      camera: "Leica M11 Monochrom",
       lens: "Summilux-M 35mm f/1.4 ASPH",
       exposure: "1/500s • f/1.4 • ISO 100",
       aspect: "aspect-[3/4]",
     },
     overlappingImage: {
       src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=80",
-      alt: "Quiet Geometry Shadow Study",
-      label: "Plate 02-B • Negative Space Form",
-      camera: "Leica Monochrom",
-      exposure: "1/250s • f/4.0",
-      aspect: "aspect-[4/3]",
-    },
-  },
-  {
-    id: "suite-editorial",
-    suite: "Kinetic Fluidity & Haute Couture",
-    roomNumber: "03",
-    category: "EDITORIAL",
-    title: "Haute Chiaroscuro & Velvet Movement",
-    curatorialThesis:
-      "Capturing the fluid suspension of draped silk textiles in athletic haute couture choreography. Twin high-speed sync studio packs arrest fabric in flight with sculptural precision.",
-    location: "Studioza Atelier SoHo, New York",
-    year: "2026",
-    edition: "Permanent Atelier Archive • Maison Commission",
-    paperStock: "Canson Infinity Platine Fibre Rag 310gsm",
-    primaryImage: {
-      src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=85",
-      alt: "Haute Chiaroscuro Fashion Study",
-      camera: "Hasselblad H6D-100c",
-      lens: "HC 100mm f/2.2 Orange Dot",
-      exposure: "1/800s • f/2.8 • ISO 64",
-      aspect: "aspect-[16/9]",
-    },
-    overlappingImage: {
-      src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1400&q=85",
-      alt: "Velvet Movement Crimson Silk",
-      label: "Plate 03-B • Kinetic Suspension",
-      camera: "Phase One IQ4",
-      exposure: "1/1600s • f/4.0",
-      aspect: "aspect-[4/5]",
-    },
-  },
-  {
-    id: "suite-fineart",
-    suite: "Stillness & Darkroom Atmospheric Form",
-    roomNumber: "04",
-    category: "FINE ART",
-    title: "Quiet Shadows & Volcanic Horizon",
-    curatorialThesis:
-      "A meditation on shadow gradients and twilight tonal transitions. Sunlight glancing across volcanic sand, printed on traditional baryta silver rag with selenium toning.",
-    location: "Reykjavík, Iceland & Traditional Kyoto",
-    year: "2026",
-    edition: "Edition of 6 • Platinum-Palladium Print",
-    paperStock: "Handmade Arches Platine 310gsm",
-    primaryImage: {
-      src: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1800&q=85",
-      alt: "Atmospheric Light Still Life",
-      camera: "Phase One XF IQ4 150MP",
-      lens: "Schneider Kreuznach 80mm LS f/2.8",
-      exposure: "1/1600s • f/4.0 • ISO 100",
-      aspect: "aspect-[16/10]",
-    },
-    overlappingImage: {
-      src: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80",
-      alt: "Monochrome Form Still Life",
-      label: "Plate 04-B • Darkroom Still Life",
-      camera: "Leica Monochrom",
-      exposure: "1/60s • f/8.0",
+      alt: "Micro-Expression Skin Texture Plate",
+      label: "Plate 02-B • Raw Negative Crop",
+      camera: "Hasselblad H6D",
+      exposure: "1/250s • f/2.8",
       aspect: "aspect-[1/1]",
     },
   },
   {
+    id: "suite-fine-art",
+    suite: "Choreography of Drapery & Kinetic Wool",
+    roomNumber: "03",
+    category: "FINE ART",
+    title: "Choreography in Shadow",
+    curatorialThesis:
+      "A meditation on tactile gravity and sculptured fabric in mid-suspension. Single overhead modeling lamp carving pure physical mass from dark room obsidian.",
+    location: "Studioza Atelier SoHo, New York",
+    year: "2026",
+    edition: "Edition of 3 • Archival Baryta Master",
+    paperStock: "Canson Infinity Platine Fibre Rag 310gsm",
+    primaryImage: {
+      src: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=85",
+      alt: "Fine Art Kinetic Wool Drapery Study",
+      camera: "Phase One IQ4 150MP",
+      lens: "Schneider Kreuznach 80mm LS f/2.8",
+      exposure: "1/800s • f/2.8 • ISO 64",
+      aspect: "aspect-[16/10]",
+    },
+    overlappingImage: {
+      src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=80",
+      alt: "Duchess Satin Kinetic High-Speed Plate",
+      label: "Plate 03-B • 1/1600s Strobe",
+      camera: "Phase One IQ4",
+      exposure: "1/1600s • f/4.0",
+      aspect: "aspect-[3/4]",
+    },
+  },
+  {
+    id: "suite-editorial",
+    suite: "Haute Chiaroscuro & Textile Architecture",
+    roomNumber: "04",
+    category: "EDITORIAL",
+    title: "Haute Chiaroscuro",
+    curatorialThesis:
+      "An exploration of monumental high fashion drapery and architectural lighting. Sculptural chiaroscuro modeling balancing directional tungsten with soft natural fill.",
+    location: "Studioza Atelier, Milan",
+    year: "2026",
+    edition: "Commission Archive • Vogue Monograph",
+    paperStock: "Hahnemühle Photo Rag Baryta 315gsm",
+    primaryImage: {
+      src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=85",
+      alt: "Haute Couture Textile Study",
+      camera: "Hasselblad H6D-100c",
+      lens: "HC 100mm f/2.2 Orange Dot",
+      exposure: "1/800s • f/2.8 • ISO 64",
+      aspect: "aspect-[16/10]",
+    },
+    overlappingImage: {
+      src: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=80",
+      alt: "Textile Texture Macro",
+      label: "Plate 04-B • Fiber Detail",
+      camera: "Hasselblad H6D",
+      exposure: "1/500s • f/4.0",
+      aspect: "aspect-[4/5]",
+    },
+  },
+  {
     id: "suite-objects",
-    suite: "Tactile Artifacts & Material Relics",
+    suite: "Curated Artifacts & Optical Instruments",
     roomNumber: "05",
     category: "OBJECTS",
-    title: "Curated Relics & Pure Glass",
+    title: "Instruments of Light",
     curatorialThesis:
       "Physical examination of optical instruments, raw glass blanks, and vintage shutter assemblies. Highlighting the tactile mechanics that precede digital capture.",
     location: "Studioza Optical Laboratory, Zurich",
@@ -205,10 +205,8 @@ export default function VisualArchiveExhibition() {
   const [activeCategory, setActiveCategory] = useState<CuratorialCategory>("ALL");
   const [scrollY, setScrollY] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [hoveredPlateId, setHoveredPlateId] = useState<string | null>(null);
   const containerRef = useRef<HTMLElement>(null);
 
-  // Check reduced motion
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
@@ -217,7 +215,6 @@ export default function VisualArchiveExhibition() {
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  // Smooth scroll tracker for multi-depth physical parallax
   useEffect(() => {
     if (prefersReducedMotion) return;
 
@@ -238,7 +235,6 @@ export default function VisualArchiveExhibition() {
     };
   }, [prefersReducedMotion]);
 
-  // Filter plates based on selected curatorial label
   const displayedPlates =
     activeCategory === "ALL"
       ? EXHIBITION_DATA
@@ -248,59 +244,56 @@ export default function VisualArchiveExhibition() {
     <section
       id="anthology"
       ref={containerRef}
-      className="py-28 sm:py-40 px-6 sm:px-12 lg:px-16 border-t border-white/[0.08] relative bg-[#080706] text-neutral-100 selection:bg-amber-400 selection:text-black overflow-hidden"
+      className="py-24 sm:py-36 px-6 sm:px-12 lg:px-16 border-t border-hairline relative bg-background text-foreground overflow-hidden"
     >
-      {/* Background Architectural Ambient Tone */}
-      <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(229,154,36,0.03)_0%,transparent_75%)]" />
-
-      <div className="max-w-7xl mx-auto space-y-24 sm:space-y-36 relative z-10">
+      <div className="max-w-7xl mx-auto space-y-20 sm:space-y-32 relative z-10">
         {/* ========================================================================= */}
-        {/* EXHIBITION HEADER & CURATORIAL SALON LABELS                                */}
+        {/* EXHIBITION HEADER & CURATORIAL DIRECTORY                                   */}
         {/* ========================================================================= */}
-        <div className="space-y-12 pb-10 border-b border-white/[0.08]">
+        <div className="space-y-10 pb-8 border-b border-hairline">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-            <div className="space-y-4 max-w-3xl">
-              <div className="flex items-center gap-3 text-sm sm:text-base font-mono tracking-[0.3em] text-amber-400 uppercase">
-                <span className="w-2 h-2 rounded-full bg-amber-400" />
+            <div className="space-y-3 max-w-3xl">
+              <div className="flex items-center gap-2 type-meta">
+                <span className="w-1.5 h-1.5 rounded-full bg-copper-500" />
                 <span>Exhibition Room I • The Permanent Archive</span>
               </div>
-              <h2 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold text-white tracking-tight leading-none">
+              <h2 className="type-display-section text-ink-primary">
                 Curated Visual Archive
               </h2>
-              <p className="text-zinc-300 text-sm sm:text-base font-light leading-relaxed max-w-2xl pt-2">
+              <p className="text-ink-body type-body-base max-w-2xl pt-2">
                 A physical retrospective of medium format master negatives, archival selenium prints, and architectural chiaroscuro. Exploring light density and tactile form across four continents.
               </p>
             </div>
 
             {/* Curatorial Ledger Telemetry */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 text-sm sm:text-base font-mono text-zinc-400">
-              <div className="border-l sm:border-l-0 sm:border-r border-white/10 pl-4 sm:pl-0 sm:pr-6 py-1">
-                <span className="text-zinc-500 block text-xs sm:text-sm uppercase tracking-wider">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 type-meta text-ink-muted">
+              <div className="border-l sm:border-l-0 sm:border-r border-hairline pl-4 sm:pl-0 sm:pr-6 py-1">
+                <span className="text-stone-400 block text-[10px] uppercase">
                   Archive Volume
                 </span>
-                <span className="text-zinc-200 font-semibold">Vol. XXIV — 2026</span>
+                <span className="text-ink-primary">Vol. XXIV — 2026</span>
               </div>
               <div>
-                <span className="text-zinc-500 block text-xs sm:text-sm uppercase tracking-wider">
+                <span className="text-stone-400 block text-[10px] uppercase">
                   Print Classification
                 </span>
-                <span className="text-amber-300 font-semibold">Silver Gelatin &amp; Baryta</span>
+                <span className="text-copper-600">Silver Gelatin &amp; Baryta</span>
               </div>
             </div>
           </div>
 
           {/* ========================================================================= */}
-          {/* CURATORIAL LABELS (NOT UI BUTTONS)                                        */}
+          {/* CURATORIAL SALON DIRECTORY TABS                                           */}
           {/* ========================================================================= */}
-          <div className="pt-6">
-            <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-widest uppercase mb-4">
+          <div className="pt-4">
+            <div className="flex items-center justify-between type-meta mb-3">
               <span>Curatorial Index Directory</span>
               <span className="hidden sm:inline">Select Room to Filter</span>
             </div>
 
             <nav
               aria-label="Exhibition curatorial index"
-              className="flex items-center gap-1 sm:gap-3 flex-nowrap sm:flex-wrap border-t border-b border-white/[0.08] py-3 -mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto scrollbar-none touch-pan-x"
+              className="flex items-center gap-1 sm:gap-2 flex-nowrap sm:flex-wrap border-t border-b border-hairline py-2.5 -mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto scrollbar-none"
             >
               {CURATORIAL_CATEGORIES.map((cat) => {
                 const isActive = activeCategory === cat.key;
@@ -309,25 +302,24 @@ export default function VisualArchiveExhibition() {
                     key={cat.key}
                     onClick={() => setActiveCategory(cat.key)}
                     className={cn(
-                      "group relative shrink-0 sm:shrink px-3 sm:px-4 py-2 text-sm sm:text-base font-mono tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 select-none",
+                      "group relative shrink-0 sm:shrink px-3 py-1.5 type-meta transition-colors cursor-pointer flex items-center gap-2 select-none",
                       isActive
-                        ? "text-amber-300 font-semibold"
-                        : "text-zinc-400 hover:text-white"
+                        ? "text-copper-600 "
+                        : "text-ink-muted hover:text-ink-primary"
                     )}
                   >
                     <span
                       className={cn(
-                        "text-xs sm:text-sm transition-colors",
-                        isActive ? "text-amber-400" : "text-zinc-600 group-hover:text-zinc-400"
+                        "text-[10px] transition-colors",
+                        isActive ? "text-copper-600" : "text-stone-400 group-hover:text-ink-muted"
                       )}
                     >
                       [{cat.index}]
                     </span>
                     <span>{cat.label}</span>
 
-                    {/* Subtle Curatorial Hairline Accent */}
                     {isActive && (
-                      <span className="absolute bottom-0 left-3 right-3 h-[1.5px] bg-amber-400 rounded-full" />
+                      <span className="absolute -bottom-2.5 left-2 right-2 h-px bg-copper-500" />
                     )}
                   </button>
                 );
@@ -337,232 +329,141 @@ export default function VisualArchiveExhibition() {
         </div>
 
         {/* ========================================================================= */}
-        {/* PHYSICAL EXHIBITION SUITES: ASYMMETRIC, OVERLAPPING & MULTI-DEPTH         */}
+        {/* EXHIBITION SUITES: ASYMMETRIC ARCHITECTURAL LAYOUT                        */}
         {/* ========================================================================= */}
-        <div className="space-y-36 sm:space-y-48 lg:space-y-64">
+        <div className="space-y-32 sm:space-y-44 lg:space-y-56">
           {displayedPlates.map((plate, index) => {
             const isReversed = index % 2 === 1;
 
-            // Parallax displacements based on scroll position (subtle, physical)
-            const primaryParallax = prefersReducedMotion ? 0 : (index * 30 - scrollY * 0.035);
-            const overlappingParallax = prefersReducedMotion
-              ? 0
-              : (index * 60 - scrollY * 0.08);
-            const textParallax = prefersReducedMotion ? 0 : (index * 15 - scrollY * 0.018);
-
             return (
-              <article
+              <motion.article
                 key={plate.id}
-                onMouseEnter={() => setHoveredPlateId(plate.id)}
-                onMouseLeave={() => setHoveredPlateId(null)}
-                className="relative space-y-12"
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="relative flex flex-col space-y-12 sm:space-y-16 pb-16 sm:pb-24 border-b border-hairline last:border-0"
               >
-                {/* Suite Header Room Identifier */}
-                <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-[0.25em] uppercase pb-4 border-b border-white/[0.06]">
-                  <div className="flex items-center gap-3">
-                    <span className="text-amber-400 font-bold">ROOM {plate.roomNumber}</span>
-                    <span className="text-zinc-600">—</span>
-                    <span className="text-zinc-300">{plate.category}</span>
-                  </div>
-                  <span className="hidden sm:inline text-zinc-500">{plate.location}</span>
-                </div>
-
-                {/* Main Asymmetric Composition Grid */}
-                <div
+                {/* 1. Metadata Block (Top) */}
+                <motion.div
+                  initial={{ opacity: 0, x: isReversed ? 30 : -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
                   className={cn(
-                    "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start",
-                    isReversed && "lg:grid-flow-dense"
+                    "w-full flex flex-col",
+                    isReversed ? "items-end text-right" : "items-start text-left"
                   )}
                 >
-                  {/* ================================================================= */}
-                  {/* IMAGERY CLUSTER: PRIMARY EXPANSIVE PLATE + OVERLAPPING INSET     */}
-                  {/* ================================================================= */}
-                  <div
-                    className={cn(
-                      "lg:col-span-8 relative",
-                      isReversed && "lg:col-start-5"
-                    )}
+                  <span className="type-mono-meta text-ink-muted block mb-4 sm:mb-6">{plate.roomNumber}</span>
+                  
+                  <h3 className="type-display-hero text-ink-primary leading-[1.05] tracking-tight max-w-4xl mb-6 sm:mb-10">
+                    {plate.title}
+                  </h3>
+                  
+                  <div className="type-mono-micro text-ink-muted space-y-1 mb-6 sm:mb-8">
+                    <p>{plate.location}</p>
+                    <p>{plate.year}</p>
+                  </div>
+                  
+                  <div className="type-mono-micro text-copper-600 uppercase tracking-widest pt-4 border-t border-hairline min-w-[200px]">
+                    {plate.category} / PHOTOGRAPHY
+                  </div>
+                </motion.div>
+
+                {/* 2. Massive Photography Block */}
+                <div
+                  className={cn(
+                    "w-full lg:w-[85%] relative",
+                    isReversed ? "self-start" : "self-end"
+                  )}
+                >
+                  <motion.div
+                    initial={{ clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)" }}
+                    whileInView={{ clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0% 100%)" }}
+                    viewport={{ once: true, margin: "-10%" }}
+                    transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative w-full border border-hairline p-2 sm:p-4 bg-white"
                   >
-                    {/* Primary Massive Photographic Plate */}
-                    <div
-                      className="group relative overflow-hidden rounded-sm bg-zinc-950 border border-white/[0.10] shadow-2xl transition-all duration-700 ease-out will-change-transform"
-                      style={{
-                        transform: `translate3d(0, ${primaryParallax.toFixed(1)}px, 0)`,
-                      }}
-                    >
-                      {/* Interactive Liquid Refraction Loupe on Suite 1, or High-Resolution Plate */}
-                      {plate.id === "suite-architecture" ? (
-                        <LiquidRefractionLoupe
-                          imageSrc={plate.primaryImage.src}
-                          imageAlt={plate.primaryImage.alt}
-                          plateTitle={`${plate.title} — ${plate.location}`}
-                          telemetry={plate.primaryImage.camera}
-                          aspectRatio={plate.primaryImage.aspect as "16/10"}
-                        />
-                      ) : (
-                        <div
+                    {plate.id === "suite-architecture" ? (
+                      <LiquidRefractionLoupe
+                        imageSrc={plate.primaryImage.src}
+                        imageAlt={plate.primaryImage.alt}
+                        plateTitle={plate.title}
+                        telemetry={plate.primaryImage.camera}
+                        aspectRatio={plate.primaryImage.aspect as "16/10"}
+                      />
+                    ) : (
+                      <div className="relative group overflow-hidden">
+                        <motion.img
+                          whileHover={{ scale: 1.02 }}
+                          transition={{ duration: 1.5, ease: "easeOut" }}
+                          src={plate.primaryImage.src}
+                          alt={plate.primaryImage.alt}
+                          loading="lazy"
                           className={cn(
-                            "relative overflow-hidden cursor-pointer",
+                            "w-full h-auto object-cover",
                             plate.primaryImage.aspect
                           )}
-                        >
-                          <img
-                            src={plate.primaryImage.src}
-                            alt={plate.primaryImage.alt}
-                            loading="lazy"
-                            className="w-full h-full object-cover filter brightness-[0.93] contrast-[1.06] transition-all duration-1000 ease-out group-hover:scale-[1.04] group-hover:brightness-100"
-                          />
-
-                          {/* Atmospheric Vignette & Viewfinder Framing */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 opacity-60 group-hover:opacity-30 transition-opacity duration-700 pointer-events-none" />
-
-                          {/* Interactive Reticle Corner Guides */}
-                          <div className="absolute top-5 left-5 text-white/30 group-hover:text-amber-400/90 transition-colors pointer-events-none">
-                            <span className="font-mono text-xs sm:text-sm tracking-widest block">
-                              EXP. {plate.primaryImage.exposure}
-                            </span>
-                          </div>
-                          <div className="absolute bottom-5 right-5 text-white/30 group-hover:text-amber-400/90 transition-colors pointer-events-none">
-                            <span className="font-mono text-xs sm:text-sm tracking-widest block">
-                              {plate.primaryImage.camera}
-                            </span>
-                          </div>
-
-                          {/* Hover Zoom & Inspection Pill */}
-                          <div className="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                            <span className="py-1 px-3 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/30 text-xs sm:text-sm font-mono text-amber-300 flex items-center gap-1.5 shadow-xl">
-                              <Scan className="w-3 h-3 text-amber-400" />
-                              Inspect Negative
-                            </span>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Negative Rebate Film Footer */}
-                      <div className="px-5 py-3 bg-[#0a0807] border-t border-white/[0.08] flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500">
-                        <div className="flex items-center gap-2">
-                          <span className="text-amber-400 font-bold">PL. {plate.roomNumber}</span>
-                          <span>•</span>
-                          <span className="uppercase tracking-widest">
-                            {plate.primaryImage.lens}
-                          </span>
-                        </div>
-                        <span className="text-zinc-400">{plate.primaryImage.exposure}</span>
+                        />
                       </div>
-                    </div>
+                    )}
 
-                    {/* Overlapping Inset Plate (Physical Exhibition Multi-Plane Layering) */}
+                    {/* Archival Inset */}
                     {plate.overlappingImage && (
-                      <div
+                      <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
                         className={cn(
-                          "absolute z-20 shadow-2xl rounded-sm overflow-hidden border border-white/20 bg-black will-change-transform group/inset cursor-pointer transition-all duration-700",
-                          // On mobile (< lg): anchor inside bottom corner so it never occludes text below!
-                          // On desktop (>= lg): multi-depth expansive offset overlapping outside the frame
-                          "bottom-3 right-3 w-36 sm:bottom-4 sm:right-4 sm:w-52 lg:bottom-auto lg:right-auto lg:-bottom-16 lg:w-72",
-                          isReversed
-                            ? "lg:-left-16"
-                            : "lg:-right-16"
+                          "absolute z-20 flex flex-col p-1.5 sm:p-2 bg-white border border-hairline shadow-2xl",
+                          "bottom-6 right-6 w-32 sm:w-40 lg:-bottom-12 lg:-right-12 lg:w-56",
+                          isReversed ? "lg:left-auto lg:-left-12" : ""
                         )}
-                        style={{
-                          transform: `translate3d(0, ${overlappingParallax.toFixed(1)}px, 0)`,
-                          boxShadow: "0 30px 60px -15px rgba(0,0,0,0.9)",
-                        }}
                       >
-                        <div
-                          className={cn(
-                            "relative overflow-hidden",
-                            plate.overlappingImage.aspect
-                          )}
-                        >
-                          <img
+                        <div className={cn(
+                          "relative overflow-hidden group/inset",
+                          plate.overlappingImage.aspect
+                        )}>
+                          <motion.img
+                            whileHover={{ scale: 1.1, filter: "grayscale(0%)" }}
+                            initial={{ filter: "grayscale(100%)" }}
+                            transition={{ duration: 1.2, ease: "easeOut" }}
                             src={plate.overlappingImage.src}
                             alt={plate.overlappingImage.alt}
                             loading="lazy"
-                            className="w-full h-full object-cover filter brightness-95 group-hover/inset:scale-105 transition-transform duration-700"
+                            className="w-full h-full object-cover"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                        </div>
 
-                          {/* Grease-Pencil Contact Sheet Annotation */}
-                          <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-white/10 text-xs sm:text-sm font-mono text-amber-300">
+                        {/* Connected Metadata */}
+                        <div className="pt-2">
+                          <span className="type-mono-micro text-[10px] text-ink-muted">
                             {plate.overlappingImage.label}
-                          </div>
-
-                          <div className="absolute bottom-2 left-2 right-2 text-xs sm:text-sm font-mono text-zinc-300 truncate">
-                            {plate.overlappingImage.camera}
-                          </div>
+                          </span>
                         </div>
-                      </div>
+                      </motion.div>
                     )}
-                  </div>
-
-                  {/* ================================================================= */}
-                  {/* EDITORIAL METADATA & CURATORIAL THESIS (INDEPENDENT PARALLAX)     */}
-                  {/* ================================================================= */}
-                  <div
-                    className={cn(
-                      "lg:col-span-4 space-y-6 pt-4 lg:pt-8",
-                      isReversed && "lg:col-start-1"
-                    )}
-                    style={{
-                      transform: `translate3d(0, ${textParallax.toFixed(1)}px, 0)`,
-                    }}
-                  >
-                    <div className="space-y-3">
-                      <span className="text-sm sm:text-base font-mono text-amber-400 tracking-widest uppercase block">
-                        Monograph Retrospective
-                      </span>
-                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white tracking-tight leading-tight">
-                        {plate.title}
-                      </h3>
-                    </div>
-
-                    <p className="text-sm font-light text-zinc-300 leading-relaxed">
-                      {plate.curatorialThesis}
-                    </p>
-
-                    {/* Subtle Optical Glass Inspection Placard */}
-                    <FluidOpticalGlass
-                      tint="obsidian"
-                      intensity="medium"
-                      depth={8}
-                      contentClassName="p-5 sm:p-6 space-y-3 text-sm sm:text-base font-mono"
-                    >
-                      <div className="flex items-center justify-between text-xs sm:text-sm text-zinc-500 pb-2 border-b border-white/[0.08]">
-                        <span className="text-amber-400 font-medium">CURATORIAL SPEC.</span>
-                        <span>{plate.year} ARCHIVE</span>
-                      </div>
-
-                      <div className="space-y-1.5 text-zinc-400 text-xs sm:text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-zinc-500">Edition:</span>
-                          <span className="text-zinc-200 text-right">{plate.edition}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-zinc-500">Paper:</span>
-                          <span className="text-amber-300 text-right">{plate.paperStock}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-zinc-500">Optics:</span>
-                          <span className="text-zinc-200 text-right">{plate.primaryImage.camera}</span>
-                        </div>
-                      </div>
-
-                      <div className="pt-2 border-t border-white/[0.08]">
-                        <StudioButton
-                          href={`/contact?inquiry=${encodeURIComponent(plate.title)}`}
-                          variant="minimal"
-                          size="sm"
-                          icon="arrow-up-right"
-                          strength={0.2}
-                          className="w-full justify-between text-zinc-300 hover:text-white text-sm sm:text-base"
-                        >
-                          Inquire for Master Print
-                        </StudioButton>
-                      </div>
-                    </FluidOpticalGlass>
-                  </div>
+                  </motion.div>
                 </div>
-              </article>
+
+                {/* 3. The Thesis (Bottom Description) */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-5%" }}
+                  transition={{ duration: 1, delay: 0.4 }}
+                  className={cn(
+                    "w-full pt-8 sm:pt-16 max-w-2xl",
+                    isReversed ? "self-end lg:pr-12" : "self-start lg:pl-12"
+                  )}
+                >
+                  <p className="type-body-lead text-ink-primary leading-relaxed">
+                    {plate.curatorialThesis}
+                  </p>
+                </motion.div>
+              </motion.article>
             );
           })}
         </div>

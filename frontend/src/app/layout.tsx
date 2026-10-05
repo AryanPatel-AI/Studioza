@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 const cormorant = Cormorant_Garamond({
-  variable: "--font-serif",
+  variable: "--",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
@@ -26,6 +26,7 @@ export const metadata: Metadata = {
 };
 
 import { AtelierTransitionProvider } from "@/components/transitions";
+import LenisProvider from "@/components/ui/LenisProvider";
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -34,7 +35,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <AtelierTransitionProvider>{children}</AtelierTransitionProvider>
+        <LenisProvider>
+          <AtelierTransitionProvider>{children}</AtelierTransitionProvider>
+        </LenisProvider>
       </body>
     </html>
   );

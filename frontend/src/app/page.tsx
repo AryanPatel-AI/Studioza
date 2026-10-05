@@ -1,149 +1,345 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FilmGrain from "@/components/film/FilmGrain";
-import {
-  HeroOpticalInstallation,
-  HorizontalGallery,
-  FullWidthBreakout,
-  VisualArchiveExhibition,
-  LightingStudioInstallation,
-  AtelierProcessTimeline,
-  EditorialContactSection,
-} from "@/components/editorial";
+"use client";
 
-export default function AtelierEntrancePage() {
+import React, { useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Navbar from "@/components/core/Navbar";
+import Footer from "@/components/core/Footer";
+import FilmGrain from "@/components/film/FilmGrain";
+import { MagneticButton } from "@/components/ui/MagneticButton";
+import { ArrowDownRight, Camera } from "lucide-react";
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any } },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const letterVariant = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any } },
+};
+
+export default function AtelierHomepage() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Cinematic Parallax Physics
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.02, 1.15]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+
+  const headline = "WE MAKE THINGS WORTH REMEMBERING".split(" ");
 
   return (
-    <div className="min-h-screen bg-[#080706] text-white selection:bg-amber-400 selection:text-black font-sans relative overflow-x-hidden">
-      {/* 1. Subtle Analog Film Grain & Optical Light Leak Texture */}
+    <div className="min-h-screen bg-[var(--bg-deep-night)] text-[var(--ink-inverse)] selection:bg-[var(--accent-muted-gold)] selection:text-[var(--bg-near-black)] relative overflow-x-hidden font-sans">
       <FilmGrain />
-
-      {/* 2. Floating Crystal Glass Ribbon Navigation */}
       <Navbar />
 
       <main>
         {/* ========================================================================= */}
-        {/* HERO: CINEMATIC PHOTOGRAPHY INSTALLATION WITH LAYERED CRYSTAL OPTICS      */}
+        {/* HERO SECTION — SIGNATURE PHOTOGRAPHER & MOUNTAIN RANGES VISUAL            */}
         {/* ========================================================================= */}
-        <HeroOpticalInstallation />
-
-        {/* ========================================================================= */}
-        {/* SECTION 2: CURATED VISUAL ARCHIVE (PHYSICAL PHOTOGRAPHY EXHIBITION)       */}
-        {/* ========================================================================= */}
-        <VisualArchiveExhibition />
-
-        {/* ========================================================================= */}
-        {/* SECTION 3: CONTINUOUS HORIZONTAL FILM ROLL GALLERY                        */}
-        {/* ========================================================================= */}
-        <section id="roll" className="border-t border-white/[0.08] bg-[#040406]">
-          <HorizontalGallery />
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 4: FULL-WIDTH BREAKOUT (100VW MONOLITH & ANALOG IMPERFECTIONS)    */}
-        {/* ========================================================================= */}
-        <FullWidthBreakout />
-
-        {/* ========================================================================= */}
-        {/* SECTION 5: EDITORIAL MANIFESTO (ASYMMETRIC MONOGRAPH SPREAD)              */}
-        {/* ========================================================================= */}
-        <section id="curation" className="py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[#060609] border-t border-white/[0.08] relative overflow-hidden">
-          {/* Subtle Ambient Radial Light */}
-          <div
-            className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 blur-[140px] pointer-events-none opacity-10"
-            style={{
-              background: "radial-gradient(circle, rgba(245, 158, 11, 0.4), transparent 70%)",
-            }}
-          />
-
-          <div className="max-w-7xl mx-auto relative z-10 space-y-16">
-            {/* Monograph Chapter Telemetry Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-white/[0.06] text-xs sm:text-sm font-mono tracking-[0.3em] uppercase text-zinc-500">
-              <div className="flex items-center gap-2 text-amber-400/90">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                <span>Chapter 02 • Atelier Philosophy</span>
-              </div>
-              <span>The Archival Codes • Vol. XXIV</span>
+        <section
+          ref={heroRef}
+          className="relative h-screen min-h-[720px] w-full flex flex-col justify-between overflow-hidden px-6 lg:px-12 select-none"
+        >
+          {/* 1. Master Photography Background Layer (Photographer on Rocky Ridge with Mountain Ranges) */}
+          <motion.div
+            style={{ y: imageY, scale: imageScale }}
+            className="absolute inset-0 w-full h-full z-0 overflow-hidden"
+          >
+            <div className="relative w-full h-full">
+              <Image
+                src="/images/hero-photographer-mountains.jpg"
+                alt="Studioza Signature Optical Archive — Photographer on Mountain Summit"
+                fill
+                priority
+                sizes="100vw"
+                quality={90}
+                className="object-cover object-[center_32%] sm:object-center w-full h-full filter brightness-[0.72] contrast-[1.08] saturate-[1.08]"
+              />
             </div>
 
-            {/* Asymmetric Monograph Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-              {/* Left Column: Monumental Editorial Thesis (7 cols) */}
-              <div className="lg:col-span-7 space-y-8">
-                <blockquote className="text-3xl sm:text-5xl lg:text-6xl font-serif font-light text-zinc-100 leading-[1.12] tracking-tight">
-                  &ldquo;We eliminate noise to let light and structure speak. Every photograph is a deliberate arrest of time.&rdquo;
-                </blockquote>
-                <p className="text-zinc-400 font-light text-base sm:text-lg leading-relaxed max-w-2xl">
-                  Studioza operates not as a content factory, but as a classical darkroom and optical laboratory. We balance medium-format digital capture with silver halide discipline, creating imagery meant to outlast the ephemeral feeds of the present day.
-                </p>
+            {/* Darkroom Cinematic Vignette & Atmospheric Contrast Balancing */}
+            {/* Top gradient for navbar clarity */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-near-black)]/75 via-transparent to-[var(--bg-deep-night)] pointer-events-none" />
+            {/* Subtle warm amber/golden hour bottom gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep-night)] via-[var(--bg-deep-night)]/40 to-transparent pointer-events-none" />
+            {/* Side feathering for wide monitors */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-deep-night)]/40 via-transparent to-[var(--bg-deep-night)]/40 pointer-events-none" />
+          </motion.div>
 
-                <div className="pt-4 flex items-center gap-4 text-sm sm:text-base font-mono text-zinc-400">
-                  <div className="w-8 h-[1px] bg-amber-400/50" />
-                  <span className="text-amber-300 font-medium tracking-wider">
-                    Aryan Patel — Atelier Founder &amp; Art Director
-                  </span>
-                </div>
-              </div>
+          {/* 2. Top Archival Telemetry Strip */}
+          <div className="relative z-10 w-full max-w-7xl mx-auto pt-32 sm:pt-36 flex items-center justify-between border-b border-[rgba(247,245,240,0.12)] pb-4 type-meta text-[var(--ink-inverse-muted)]">
+            <div className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-muted-gold)] animate-pulse" />
+              <span className="tracking-widest uppercase">VOL. XXVI // 40.7228° N, 74.0015° W</span>
+            </div>
+            <div className="hidden md:flex items-center gap-6 tracking-widest uppercase text-[11px]">
+              <span>MEDIUM FORMAT ARCHIVAL</span>
+              <span>•</span>
+              <span>SILVER HALIDE DISCIPLINE</span>
+            </div>
+            <div className="text-right tracking-widest uppercase text-[11px] text-[var(--accent-muted-gold)]">
+              EST. MMXVIII
+            </div>
+          </div>
 
-              {/* Right Column: The Three Archival Tenets (5 cols) */}
-              <div className="lg:col-span-5 p-8 rounded-3xl border border-white/[0.08] bg-black/40 backdrop-blur-md space-y-8">
-                <div className="border-b border-white/[0.06] pb-4 flex items-center justify-between text-xs sm:text-sm font-mono tracking-widest text-zinc-500 uppercase">
-                  <span>Atelier Codes</span>
-                  <span className="text-amber-400/80">Discipline</span>
-                </div>
+          {/* 3. Hero Centerpiece Typography */}
+          <motion.div
+            style={{ y: heroY, opacity: heroOpacity }}
+            className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col justify-center items-center text-center my-auto px-4"
+          >
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              className="flex flex-wrap justify-center gap-x-3.5 sm:gap-x-5 gap-y-2 mb-8 max-w-5xl"
+            >
+              {headline.map((word, i) => (
+                <motion.span
+                  key={i}
+                  variants={letterVariant}
+                  className="type-display-hero text-[var(--bg-warm-ivory)] drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] tracking-[-0.02em]"
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </motion.div>
 
-                <div className="space-y-6 text-sm sm:text-base font-light">
-                  <div className="space-y-1.5">
-                    <span className="font-mono text-xs sm:text-sm uppercase tracking-widest text-amber-400 block">
-                      01 / Material Authenticity
-                    </span>
-                    <p className="text-zinc-300 leading-relaxed">
-                      Zero synthetic smoothing or generative hallucination. We preserve skin pores, linen weave, and concrete texture in uncompressed 16-bit tonal depth.
-                    </p>
-                  </div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
+              className="text-[var(--bg-warm-ivory)]/90 max-w-2xl text-center type-body-lead mb-10 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]"
+            >
+              An independent creative studio operating at the intersection of cinematic design, digital architecture, and analog photographic discipline.
+            </motion.p>
 
-                  <div className="space-y-1.5 border-t border-white/[0.04] pt-4">
-                    <span className="font-mono text-xs sm:text-sm uppercase tracking-widest text-amber-400 block">
-                      02 / Optical Chiaroscuro
-                    </span>
-                    <p className="text-zinc-300 leading-relaxed">
-                      Single-point tungsten and sculpting bounce. Light is treated as a physical substance that carves mass from shadow rather than flat illumination.
-                    </p>
-                  </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+              className="flex items-center gap-4"
+            >
+              <Link href="#work">
+                <MagneticButton
+                  variant="primary"
+                  className="bg-[var(--accent-muted-gold)] text-[var(--bg-near-black)] border-[var(--accent-muted-gold)] hover:bg-[var(--accent-dark-bronze)] hover:border-[var(--accent-dark-bronze)] px-8 py-3.5 shadow-[0_8px_32px_rgba(207,165,112,0.25)]"
+                >
+                  Explore Selected Work
+                </MagneticButton>
+              </Link>
+            </motion.div>
+          </motion.div>
 
-                  <div className="space-y-1.5 border-t border-white/[0.04] pt-4">
-                    <span className="font-mono text-xs sm:text-sm uppercase tracking-widest text-amber-400 block">
-                      03 / Archival Permanence
-                    </span>
-                    <p className="text-zinc-300 leading-relaxed">
-                      Master negatives certified and printed on 310gsm Hahnemühle Photo Rag Baryta with archival mineral pigment inks rated for 150+ years.
-                    </p>
-                  </div>
-                </div>
+          {/* 4. Bottom Hero Baseline Telemetry & Scroll Cue */}
+          <div className="relative z-10 w-full max-w-7xl mx-auto pb-8 sm:pb-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[rgba(247,245,240,0.12)] pt-4 type-meta text-[var(--ink-inverse-muted)]">
+            <div className="flex items-center gap-2">
+              <Camera className="w-3.5 h-3.5 text-[var(--accent-muted-gold)]" />
+              <span className="tracking-widest uppercase">PLATE 01 // ALPINE SUMMIT OBSERVATORY</span>
+            </div>
 
-                <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500">
-                  <span>DARKROOM SPECIFICATION</span>
-                  <span className="text-zinc-400">BENCH VERIFIED</span>
-                </div>
-              </div>
+            <Link
+              href="#work"
+              className="group flex items-center gap-2 tracking-widest uppercase hover:text-[var(--bg-warm-ivory)] transition-colors text-[11px]"
+            >
+              <span>Scroll to explore</span>
+              <ArrowDownRight className="w-3.5 h-3.5 text-[var(--accent-muted-gold)] transition-transform duration-500 group-hover:translate-y-0.5 group-hover:translate-x-0.5" />
+            </Link>
+
+            <div className="hidden sm:block tracking-widest uppercase text-[11px]">
+              MILAN • NEW YORK • TOKYO
             </div>
           </div>
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 6: THE CREATIVE PROCESS & ATELIER METHODOLOGY (LIGHT PATH RAIL)   */}
+        {/* SELECTED WORK SECTION                                                     */}
         {/* ========================================================================= */}
-        <AtelierProcessTimeline />
+        <section
+          id="work"
+          className="py-32 px-6 lg:px-12 bg-[var(--bg-warm-ivory)] text-[var(--ink-primary)] relative border-t border-[var(--border-medium)]"
+        >
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="mb-20 flex justify-between items-end border-b border-[var(--border-light)] pb-6"
+            >
+              <h2 className="type-display-title">Selected Work</h2>
+              <span className="type-meta text-[var(--ink-muted)]">01 / Archival Series</span>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-24">
+              {/* Left Column Image (Asymmetric Curated Monograph) */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={fadeIn}
+                className="md:col-span-7 flex flex-col gap-6"
+              >
+                <Link href="/work/aura-residence" className="group block">
+                  <div className="aspect-[4/5] bg-[var(--bg-slate)] relative overflow-hidden">
+                    <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-20 transition-opacity duration-500 group-hover:opacity-0 z-10" />
+                    <Image
+                      src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1600"
+                      alt="Aura Residence Architecture"
+                      fill
+                      unoptimized
+                      className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                    />
+                  </div>
+                  <div className="flex justify-between items-start mt-6">
+                    <div>
+                      <h3 className="type-display-statement mb-1 group-hover:text-[var(--accent-dark-bronze)] transition-colors">
+                        Aura Residence
+                      </h3>
+                      <p className="type-body-base text-[var(--ink-muted)]">Architectural Photography &amp; Spatial Studies</p>
+                    </div>
+                    <span className="type-meta">2026</span>
+                  </div>
+                </Link>
+              </motion.div>
+
+              {/* Right Column Image (Asymmetric Stagger) */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={fadeIn}
+                className="md:col-span-5 flex flex-col gap-6 md:mt-48"
+              >
+                <Link href="/work/vessel" className="group block">
+                  <div className="aspect-[3/4] bg-[var(--bg-slate)] relative overflow-hidden">
+                    <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-20 transition-opacity duration-500 group-hover:opacity-0 z-10" />
+                    <Image
+                      src="https://images.unsplash.com/photo-1543886566-cb500e303493?auto=format&fit=crop&q=80&w=1200"
+                      alt="Vessel Brand Monograph"
+                      fill
+                      unoptimized
+                      className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                    />
+                  </div>
+                  <div className="flex justify-between items-start mt-6">
+                    <div>
+                      <h3 className="type-display-statement mb-1 group-hover:text-[var(--accent-dark-bronze)] transition-colors">
+                        Vessel
+                      </h3>
+                      <p className="type-body-base text-[var(--ink-muted)]">Brand Architecture &amp; Identity System</p>
+                    </div>
+                    <span className="type-meta">2025</span>
+                  </div>
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+        </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 6.5: SIGNATURE 3D CHIAROSCURO STAGE (SCULPTING LIGHT & SHADOW)    */}
+        {/* DISCIPLINES SECTION                                                       */}
         {/* ========================================================================= */}
-        <LightingStudioInstallation />
+        <section className="py-32 px-6 lg:px-12 bg-[var(--bg-midnight-blue)] text-[var(--ink-inverse)] border-t border-[rgba(247,245,240,0.1)]">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="mb-20 flex justify-between items-end border-b border-[rgba(247,245,240,0.15)] pb-6"
+            >
+              <h2 className="type-display-title text-[var(--bg-warm-ivory)]">Disciplines</h2>
+              <span className="type-meta text-[var(--ink-inverse-muted)]">02 / Services &amp; Capabilities</span>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+              {[
+                {
+                  title: "Digital Experiences",
+                  desc: "Interactive web installations, digital monographs, and online platforms engineered with responsive spatial kinetics and zero synthetic smoothing.",
+                },
+                {
+                  title: "Brand Systems",
+                  desc: "Comprehensive visual identities, editorial publications, and typography guidelines anchored in deep historical and architectural research.",
+                },
+                {
+                  title: "Creative Tech",
+                  desc: "Custom high-performance software frameworks, WebGL visualizers, and digital archives designed for longevity, speed, and sensory poise.",
+                },
+                {
+                  title: "Photography",
+                  desc: "Classical darkroom discipline, medium-format digital capture (100MP+), and archival pigment mastery for landmark cultural and commercial commissions.",
+                },
+              ].map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-50px" }}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: index * 0.1 } },
+                  }}
+                  className="group cursor-default"
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    <span className="text-[var(--accent-muted-gold)] type-meta">0{index + 1}</span>
+                    <h3 className="type-display-statement text-[var(--bg-warm-ivory)] group-hover:text-[var(--accent-muted-gold)] transition-colors duration-400">
+                      {service.title}
+                    </h3>
+                  </div>
+                  <p className="type-body-base text-[var(--ink-inverse-muted)] max-w-sm ml-8">
+                    {service.desc}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 7: ATELIER COMMISSIONS & EDITORIAL INVITATION (THE FINALE)        */}
+        {/* COMMISSION / CONTACT CTA SECTION                                          */}
         {/* ========================================================================= */}
-        <EditorialContactSection id="contact" />
+        <section className="py-40 px-6 lg:px-12 bg-[var(--bg-deep-night)] text-[var(--ink-inverse)] text-center relative overflow-hidden">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="max-w-3xl mx-auto relative z-10"
+          >
+            <motion.h2 variants={fadeIn} className="type-display-title text-[var(--bg-warm-ivory)] mb-8">
+              COMMISSION AN INQUIRY
+            </motion.h2>
+            <motion.p variants={fadeIn} className="type-body-lead text-[var(--ink-inverse-muted)] mb-12">
+              We collaborate with institutions, cultural brands, and visionaries who understand that enduring quality requires patience and uncompromising discipline.
+            </motion.p>
+            <motion.div variants={fadeIn}>
+              <Link href="/contact">
+                <MagneticButton variant="dark">Initiate Dialogue</MagneticButton>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </section>
       </main>
 
       <Footer />

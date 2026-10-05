@@ -68,22 +68,22 @@ export default function PhotographicPlate({
     >
       {/* 1. Film Frame Header (Negative Rebate Markings) */}
       {showRebate && (formattedPlate || emulsion || location) && (
-        <div className="flex items-center justify-between text-xs sm:text-sm font-mono text-zinc-500 tracking-wider mb-3 uppercase">
+        <div className="flex items-center justify-between type-body-base text-foreground-muted mb-3">
           <div className="flex items-center gap-2">
             {formattedPlate && (
-              <span className="text-amber-400/90 font-semibold">{formattedPlate}</span>
+              <span className="text-copper-600/90 font-semibold">{formattedPlate}</span>
             )}
-            {formattedPlate && emulsion && <span className="text-zinc-700">•</span>}
-            {emulsion && <span className="tracking-[0.2em]">{emulsion}</span>}
+            {formattedPlate && emulsion && <span className="text-concrete-700">•</span>}
+            {emulsion && <span className="">{emulsion}</span>}
           </div>
-          {location && <span className="hidden sm:inline-block text-zinc-400">{location}</span>}
+          {location && <span className="hidden sm:inline-block text-foreground-muted">{location}</span>}
         </div>
       )}
 
       {/* 2. Main Photographic Canvas Container */}
       <div
         className={cn(
-          "relative overflow-hidden bg-zinc-950 rounded-sm cursor-pointer border border-white/[0.06]",
+          "relative overflow-hidden bg-sage-950 rounded-sm cursor-pointer border border-sage-300/40",
           aspectClasses
         )}
       >
@@ -101,19 +101,19 @@ export default function PhotographicPlate({
 
         {/* Viewfinder Corner Reticle Brackets */}
         {showReticle && (
-          <div className="absolute top-4 right-4 text-white/30 group-hover:text-amber-400 transition-colors duration-300 pointer-events-none">
+          <div className="absolute top-4 right-4 text-foreground group-hover:text-copper-600 transition-colors duration-300 pointer-events-none">
             <Scan className="w-4 h-4" />
           </div>
         )}
 
         {/* Subtle Anamorphic Edge Flare (Warm light leak on left rim) */}
-        <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-amber-500/10 to-transparent pointer-events-none mix-blend-screen opacity-50 group-hover:opacity-80 transition-opacity" />
+        <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-copper-500/10 to-transparent pointer-events-none mix-blend-screen opacity-50 group-hover:opacity-80 transition-opacity" />
 
         {/* Interactive Inspection Badge on Hover */}
         {onClick && (
-          <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0 pointer-events-none">
-            <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-xs sm:text-sm font-mono tracking-wider text-amber-300 border border-amber-400/40 flex items-center gap-1.5 shadow-xl">
-              <Scan className="w-3 h-3 text-amber-400" />
+          <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transtone-y-1 group-hover:transtone-y-0 pointer-events-none">
+            <span className="px-3 py-1 rounded-full bg-sage-100 backdrop-blur-md type-body-base text-copper-600 border border-copper-500/40 flex items-center gap-1.5 shadow-xl">
+              <Scan className="w-3 h-3 text-copper-600" />
               <span>Inspect Plate</span>
             </span>
           </div>
@@ -125,25 +125,25 @@ export default function PhotographicPlate({
         <div className="pt-4 space-y-1.5">
           <div className="flex items-baseline justify-between gap-4">
             {title && (
-              <h3 className="text-xl sm:text-2xl font-serif font-bold text-white tracking-tight group-hover:text-amber-300 transition-colors">
+              <h3 className="text-xl sm:text-2xl font-bold text-foreground group-hover:text-copper-600 transition-colors">
                 {title}
               </h3>
             )}
             {client && (
-              <span className="text-sm sm:text-base font-mono text-zinc-500 shrink-0 uppercase tracking-wider">
+              <span className="type-body-base text-foreground-muted shrink-0">
                 {client}
               </span>
             )}
           </div>
 
           {subtitle && (
-            <p className="text-xs sm:text-sm font-light text-zinc-400 leading-relaxed max-w-xl">
+            <p className="type-body-base text-foreground-muted max-w-xl">
               {subtitle}
             </p>
           )}
 
           {telemetry && (
-            <div className="pt-1 text-xs sm:text-sm font-mono text-zinc-500 tracking-wider">
+            <div className="pt-1 type-body-base text-foreground-muted">
               {telemetry}
             </div>
           )}
