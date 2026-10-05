@@ -436,7 +436,7 @@ export default function AtelierHomepage() {
               >
                 <div className="aspect-[3/4] relative overflow-hidden border border-[rgba(247,245,240,0.15)] shadow-2xl">
                   <Image
-                    src="/images/aryan-patel-portrait.jpg"
+                    src="/images/aryan-patel-pillared-court.jpg"
                     alt="Aryan Patel — Creative Director & Photographer"
                     fill
                     className="object-cover object-top w-full h-full filter contrast-[1.04]"
@@ -483,38 +483,6 @@ export default function AtelierHomepage() {
               <div className="space-y-4 group">
                 <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-deep-night)] border border-[rgba(247,245,240,0.1)]">
                   <Image
-                    src="/images/aryan-patel-pillared-court.jpg"
-                    alt="Field Study — Diwan-i-Aam Pillared Colonnade"
-                    fill
-                    className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                  />
-                </div>
-                <div>
-                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 01 • PROPORTION</span>
-                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Pillared Colonnade</h4>
-                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Diwan-i-Aam sandstone brackets &amp; perspective.</p>
-                </div>
-              </div>
-
-              <div className="space-y-4 group">
-                <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-deep-night)] border border-[rgba(247,245,240,0.1)]">
-                  <Image
-                    src="/images/aryan-patel-archway.jpg"
-                    alt="Field Study — Palace Archway Perspective"
-                    fill
-                    className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                  />
-                </div>
-                <div>
-                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 02 • SPATIAL VOID</span>
-                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Palace Archway</h4>
-                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Receding chambers &amp; chiaroscuro shadow.</p>
-                </div>
-              </div>
-
-              <div className="space-y-4 group">
-                <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-deep-night)] border border-[rgba(247,245,240,0.1)]">
-                  <Image
                     src="/images/aryan-patel-sheesh-mahal.jpg"
                     alt="Field Study — Sheesh Mahal Convex Mirror Glass"
                     fill
@@ -522,9 +490,9 @@ export default function AtelierHomepage() {
                   />
                 </div>
                 <div>
-                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 03 • MATERIALITY</span>
+                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 01 • MATERIALITY</span>
                   <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Mirror Mosaic Hall</h4>
-                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Convex glass inlays catching ambient light.</p>
+                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Sheesh Mahal glass inlays catching natural light.</p>
                 </div>
               </div>
 
@@ -538,9 +506,41 @@ export default function AtelierHomepage() {
                   />
                 </div>
                 <div>
-                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 04 • MONOCHROME</span>
+                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 02 • MONOCHROME</span>
                   <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Stone Temple Spire</h4>
                   <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Monolithic Nagara carving &amp; weathering.</p>
+                </div>
+              </div>
+
+              <div className="space-y-4 group">
+                <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-deep-night)] border border-[rgba(247,245,240,0.1)]">
+                  <Image
+                    src="/images/temple-shikhara-oleander.jpg"
+                    alt="Field Study — Temple Shikhara & Oleander"
+                    fill
+                    className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                  />
+                </div>
+                <div>
+                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 03 • LIVING FLORA</span>
+                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Shikhara &amp; Oleander</h4>
+                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Sacred spire framed by desert oleander blossoms.</p>
+                </div>
+              </div>
+
+              <div className="space-y-4 group">
+                <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-deep-night)] border border-[rgba(247,245,240,0.1)]">
+                  <Image
+                    src="/images/ochre-palace-courtyard-scale.jpg"
+                    alt="Field Study — Terracotta Courtyard Scale"
+                    fill
+                    className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                  />
+                </div>
+                <div>
+                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 04 • LIVING HERITAGE</span>
+                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Courtyard Volume</h4>
+                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Sunlit terracotta lime plaster &amp; human scale.</p>
                 </div>
               </div>
             </motion.div>

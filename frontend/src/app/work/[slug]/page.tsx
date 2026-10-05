@@ -87,7 +87,7 @@ const PROJECT_DETAILS: Record<
       { src: "/images/ochre-palace-courtyard-scale.jpg", caption: "Plate 01 — Ochre Facades & Strolling Figures" },
       { src: "/images/aryan-patel-pillared-court.jpg", caption: "Plate 02 — Colonnade Perspective & Pillar Geometry" },
       { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 03 — Bangaldar Roofline & Sky Boundary" },
-      { src: "/images/aryan-patel-archway.jpg", caption: "Plate 04 — Monolithic Archway Interior" },
+      { src: "/images/temple-shikhara-oleander.jpg", caption: "Plate 04 — Adjacent Sanctuary & Flora" },
     ],
   },
   "amer-citadel": {
@@ -107,7 +107,7 @@ const PROJECT_DETAILS: Record<
       "The exposure is keyed strictly to the bright exterior courtyard, allowing the monumental inner arches to fall into deep structural darkness that sculpts negative space.",
     images: [
       { src: "/images/palace-arch-courtyard.jpg", caption: "Plate 01 — Monolithic Archway Framing" },
-      { src: "/images/aryan-patel-archway.jpg", caption: "Plate 02 — Spatial Recess & Scale Study" },
+      { src: "/images/aryan-patel-pillared-court.jpg", caption: "Plate 02 — Pillared Colonnade Scale Study" },
       { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 03 — Sandstone Pavilion Roofline" },
       { src: "/images/aryan-patel-sheesh-mahal.jpg", caption: "Plate 04 — Glass Inlay Hall Interior" },
     ],

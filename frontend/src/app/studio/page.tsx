@@ -138,12 +138,12 @@ export default function StudioPage() {
           </motion.div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {/* Plate 1: Portrait */}
+            {/* Plate 1: Portrait in Pillared Court */}
             <div className="group space-y-4">
               <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
                 <Image
-                  src="/images/aryan-patel-portrait.jpg"
-                  alt="Aryan Patel — Creative Director & Photographer"
+                  src="/images/aryan-patel-pillared-court.jpg"
+                  alt="Aryan Patel — Creative Director & Photographer in Pillared Colonnade"
                   fill
                   className="object-cover object-top scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
                 />
@@ -155,41 +155,7 @@ export default function StudioPage() {
               </div>
             </div>
 
-            {/* Plate 2: Colonnade Perspective */}
-            <div className="group space-y-4">
-              <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
-                <Image
-                  src="/images/aryan-patel-pillared-court.jpg"
-                  alt="Aryan Patel — Diwan-i-Aam Pillared Colonnade Study"
-                  fill
-                  className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                />
-              </div>
-              <div>
-                <span className="type-meta text-[var(--accent-dark-bronze)] block">COLONNADE // 02</span>
-                <h4 className="type-display-statement text-base text-[var(--ink-primary)]">Pillared Court</h4>
-                <p className="type-meta text-[var(--ink-muted)] text-[11px] mt-0.5">Sandstone Bracket Geometry</p>
-              </div>
-            </div>
-
-            {/* Plate 3: Archway Field Study */}
-            <div className="group space-y-4">
-              <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
-                <Image
-                  src="/images/aryan-patel-archway.jpg"
-                  alt="Aryan Patel — Palace Archway Field Observation"
-                  fill
-                  className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                />
-              </div>
-              <div>
-                <span className="type-meta text-[var(--accent-dark-bronze)] block">EXPEDITION // 03</span>
-                <h4 className="type-display-statement text-base text-[var(--ink-primary)]">Palace Arch Void</h4>
-                <p className="type-meta text-[var(--ink-muted)] text-[11px] mt-0.5">Scale &amp; Monolithic Framing</p>
-              </div>
-            </div>
-
-            {/* Plate 4: Mosaic Glass Wall */}
+            {/* Plate 2: Sheesh Mahal Mosaic */}
             <div className="group space-y-4">
               <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
                 <Image
@@ -200,13 +166,13 @@ export default function StudioPage() {
                 />
               </div>
               <div>
-                <span className="type-meta text-[var(--accent-dark-bronze)] block">MATERIAL // 04</span>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">MATERIAL // 02</span>
                 <h4 className="type-display-statement text-base text-[var(--ink-primary)]">Mirror Mosaic</h4>
                 <p className="type-meta text-[var(--ink-muted)] text-[11px] mt-0.5">Convex Glass Inlay Studies</p>
               </div>
             </div>
 
-            {/* Plate 5: Monochrome Temple Shikhara */}
+            {/* Plate 3: Monochrome Temple Shikhara */}
             <div className="group space-y-4">
               <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
                 <Image
@@ -217,9 +183,43 @@ export default function StudioPage() {
                 />
               </div>
               <div>
-                <span className="type-meta text-[var(--accent-dark-bronze)] block">EPIGRAPHY // 05</span>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">EPIGRAPHY // 03</span>
                 <h4 className="type-display-statement text-base text-[var(--ink-primary)]">Stone Temple Spire</h4>
                 <p className="type-meta text-[var(--ink-muted)] text-[11px] mt-0.5">Monochrome Relief &amp; Erosion</p>
+              </div>
+            </div>
+
+            {/* Plate 4: Temple Shikhara & Oleander Flora */}
+            <div className="group space-y-4">
+              <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
+                <Image
+                  src="/images/temple-shikhara-oleander.jpg"
+                  alt="Temple Shikhara & Oleander Flora"
+                  fill
+                  className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                />
+              </div>
+              <div>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">BOTANICAL // 04</span>
+                <h4 className="type-display-statement text-base text-[var(--ink-primary)]">Oleander &amp; Spire</h4>
+                <p className="type-meta text-[var(--ink-muted)] text-[11px] mt-0.5">High-Key Epigraphical Study</p>
+              </div>
+            </div>
+
+            {/* Plate 5: Courtyard Scale & Living Heritage */}
+            <div className="group space-y-4">
+              <div className="aspect-[3/4] overflow-hidden bg-[var(--bg-slate)] relative border border-[var(--border-medium)]">
+                <Image
+                  src="/images/ochre-palace-courtyard-scale.jpg"
+                  alt="Ochre Palace Courtyard Scale"
+                  fill
+                  className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
+                />
+              </div>
+              <div>
+                <span className="type-meta text-[var(--accent-dark-bronze)] block">HERITAGE // 05</span>
+                <h4 className="type-display-statement text-base text-[var(--ink-primary)]">Courtyard Volume</h4>
+                <p className="type-meta text-[var(--ink-muted)] text-[11px] mt-0.5">Living Space &amp; Human Presence</p>
               </div>
             </div>
           </div>
