@@ -1,3 +1,7 @@
+/**
+ * Kinetic Editorial Text Reveal
+ * Splits headline text into staggered word spans, sliding up from clipped container masks.
+ */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -20,9 +24,7 @@ export default function TextReveal({
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, delay);
+    const timer = setTimeout(() => setIsVisible(true), delay);
     return () => clearTimeout(timer);
   }, [delay]);
 
@@ -31,10 +33,7 @@ export default function TextReveal({
   return (
     <span className={`inline-block ${className}`}>
       {words.map((word, index) => (
-        <span
-          key={index}
-          className="inline-block overflow-hidden align-top mr-[0.28em] last:mr-0"
-        >
+        <span key={index} className="inline-block overflow-hidden align-top mr-[0.28em] last:mr-0">
           <span
             className={`inline-block transform transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${wordClassName}`}
             style={{

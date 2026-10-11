@@ -1,5 +1,9 @@
-import React from 'react';
-import { cn } from '@/lib/utils';
+/**
+ * Editorial Select Dropdown
+ * Stylized select element featuring custom chevron icon and darkroom theme border styling.
+ */
+import React from "react";
+import { cn } from "@/lib/utils";
 
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: { label: string; value: string }[];
@@ -23,6 +27,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             </option>
           ))}
         </select>
+        {/* Custom minimalist arrow */}
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[var(--ink-primary)]">
           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 9l-7 7-7-7" />

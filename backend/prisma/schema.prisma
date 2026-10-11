@@ -1,3 +1,6 @@
+// Studioza Atelier Database Schema (Prisma ORM)
+// Master Architectural Blueprint: Monograph folios, archival plates, outbox pattern, sessions, and RBAC
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,111 +11,408 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User {
-  id         String     @id @default(cuid())
-  name       String?
-  email      String?    @unique
-  password   String?
-  avatarUrl  String?
-  role       String     @default("user") // "user" or "admin"
-  projects   Project[]
-  assets     Asset[]
-  activities Activity[]
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+enum Role {
+  ADMIN
+  EDITOR
+  PHOTOGRAPHER
 }
 
-model Project {
-  id          String     @id @default(cuid())
-  ownerId     String
-  owner       User       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  name        String
-  slug        String     @unique
-  description String?
-  status      String     @default("draft") // "draft" | "published" | "archived"
-  content     String     @default("[]") // JSON string of sections/blocks
-  settings    String?    @default("{}") // JSON string of settings (SEO, theme, visibility)
-  category    String?
-  gallery     String?    @default("[]")
-  credits     String?    @default("[]")
-  assets      Asset[]
-  activities  Activity[]
-  publishedAt DateTime?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+enum ContentStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
 
-  @@index([ownerId])
-  @@index([status])
+enum StoryKind {
+  STORY
+  JOURNAL
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  IN_PROGRESS
+  BOOKED
+  ARCHIVED
+}
+
+enum BookingStatus {
+  REQUESTED
+  CONFIRMED
+  RESCHEDULE_PROPOSED
+  COMPLETED
+  CANCELLED
+}
+
+enum MediaStatus {
+  PENDING
+  READY
+  FAILED
+}
+
+enum OutboxStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+/// User model represents atelier administrators, editorial curators, and photographers
+model User {
+  id           String              @id @default(cuid())
+  email        String              @unique
+  name         String?
+  passwordHash String
+  role         Role                @default(EDITOR)
+  isActive     Boolean             @default(true)
+  lastLoginAt  DateTime?
+  sessions     Session[]
+  projects     Project[]           @relation("ProjectAuthor")
+  assignments  ProjectAssignment[]
+  stories      Story[]             @relation("StoryAuthor")
+  mediaUploads Media[]             @relation("MediaUploader")
+  activities   Activity[]          @relation("UserActivities")
+  inquiries    Inquiry[]           @relation("AssignedInquiries")
+  bookings     Booking[]           @relation("AssignedBookings")
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  @@index([role, isActive])
+}
+
+/// Session stores SHA-256 hashed 256-bit opaque tokens for httpOnly cookie auth
+model Session {
+  id         String   @id @default(cuid())
+  tokenHash  String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt  DateTime
+  lastSeenAt DateTime @default(now())
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([tokenHash])
+}
+
+/// ReferenceCounter generates collision-free commission reference codes: STZ-YYYY-XXXX
+model ReferenceCounter {
+  year Int @id
+  last Int @default(0)
+}
+
+/// Category model for folio taxonomy (Weddings, Portraits, Fashion, Commercial)
+model Category {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  description String?
+  sortOrder   Int       @default(0)
+  projects    Project[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([sortOrder])
+}
+
+/// Project model represents an editorial monograph folio
+model Project {
+  id             String              @id @default(cuid())
+  slug           String              @unique
+  title          String
+  subtitle       String?
+  categoryId     String
+  category       Category            @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  issueNumber    Int?                @unique
+  intro          String?
+  narrative      Json?               // TipTap / Lexical block JSON
+  credits        Json?               // Team credits JSON
+  shotOn         DateTime?           @db.Date
+  location       String?
+  status         ContentStatus       @default(DRAFT)
+  publishedAt    DateTime?
+  seoTitle       String?
+  seoDescription String?
+  createdById    String
+  createdBy      User                @relation("ProjectAuthor", fields: [createdById], references: [id], onDelete: Restrict)
+  images         ProjectImage[]
+  assignments    ProjectAssignment[]
+  services       ServiceProject[]
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  @@index([status, categoryId, publishedAt])
+  @@index([createdById])
   @@index([slug])
 }
 
-model Asset {
-  id         String   @id @default(cuid())
-  projectId  String?
-  project    Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  ownerId    String
-  owner      User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  name       String
-  storageKey String
-  mimeType   String
-  size       Int
-  url        String
-  createdAt  DateTime @default(now())
-
-  @@index([projectId])
-  @@index([ownerId])
-}
-
-model Activity {
-  id        String   @id @default(cuid())
-  projectId String?
-  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+/// ProjectAssignment powers PHOTOGRAPHER scoping
+model ProjectAssignment {
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type      String   // e.g. PROJECT_CREATED, PROJECT_UPDATED, PROJECT_PUBLISHED, etc.
-  metadata  String?  @default("{}") // JSON string of extra event details
   createdAt DateTime @default(now())
 
-  @@index([projectId])
+  @@id([projectId, userId])
   @@index([userId])
+}
+
+/// ProjectImage represents photographic plates ordered within a monograph
+model ProjectImage {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  mediaId   String
+  media     Media    @relation(fields: [mediaId], references: [id], onDelete: Restrict)
+  sortOrder Int      @default(0)
+  caption   String?
+  altText   String
+  isCover   Boolean  @default(false)
+  layout    String   @default("full") // "full" | "pair"
+  createdAt DateTime @default(now())
+
+  @@index([projectId, sortOrder])
+  @@index([mediaId])
+}
+
+/// Media represents the original negative asset uploaded to storage
+model Media {
+  id            String         @id @default(cuid())
+  storageKey    String         @unique
+  status        MediaStatus    @default(PENDING)
+  mimeType      String
+  sizeBytes     Int
+  width         Int?
+  height        Int?
+  blurDataUrl   String?
+  defaultAlt    String?
+  uploadedById  String
+  uploadedBy    User           @relation("MediaUploader", fields: [uploadedById], references: [id], onDelete: Restrict)
+  assets        Asset[]
+  projectImages ProjectImage[]
+  storyImages   StoryImage[]
+  createdAt     DateTime       @default(now())
+
+  @@index([uploadedById])
+  @@index([storageKey])
+}
+
+/// Asset represents a derived rendition (thumb, 480w, 800w, 1200w, 1600w, 2400w, WebP/AVIF)
+model Asset {
+  id         String   @id @default(cuid())
+  mediaId    String
+  media      Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  variant    String   // "thumb" | "480w" | "800w" | "1200w" | "1600w" | "2400w"
+  width      Int
+  format     String   // "webp" | "avif" | "jpeg"
+  storageKey String   @unique
+  createdAt  DateTime @default(now())
+
+  @@index([mediaId, variant])
+}
+
+/// Booking represents scheduled client photographic commissions
+model Booking {
+  id             String        @id @default(cuid())
+  reference      String        @unique // formatted STZ-YYYY-XXXX
+  idempotencyKey String        @unique
+  serviceId      String
+  service        Service       @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  packageId      String?
+  package        Package?      @relation(fields: [packageId], references: [id], onDelete: SetNull)
+  inquiryId      String?
+  inquiry        Inquiry?      @relation(fields: [inquiryId], references: [id], onDelete: SetNull)
+  preferredDate  DateTime      @db.Date
+  backupDate     DateTime?     @db.Date
+  venue          String
+  city           String
+  accessNotes    String?
+  details        Json          @default("{}")
+  contactName    String
+  contactEmail   String
+  contactPhone   String?
+  consentAt      DateTime
+  status         BookingStatus @default(REQUESTED)
+  assignedToId   String?
+  assignedTo     User?         @relation("AssignedBookings", fields: [assignedToId], references: [id], onDelete: SetNull)
+  dossier        Json?         @default("{}")
+  internalNotes  String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([status, preferredDate])
+  @@index([assignedToId])
+}
+
+/// Inquiry represents incoming commissioning correspondence
+model Inquiry {
+  id            String        @id @default(cuid())
+  serviceId     String?
+  service       Service?      @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  name          String
+  email         String
+  message       String
+  source        String?       @default("website")
+  status        InquiryStatus @default(NEW)
+  internalNotes String?
+  assignedToId  String?
+  assignedTo    User?         @relation("AssignedInquiries", fields: [assignedToId], references: [id], onDelete: SetNull)
+  bookings      Booking[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([status, createdAt])
+  @@index([assignedToId])
+}
+
+/// NotificationOutbox guarantees zero loss of client inquiries & booking alerts
+model NotificationOutbox {
+  id            String       @id @default(cuid())
+  type          String       // "INQUIRY_RECEIVED" | "BOOKING_CONFIRMED"
+  payload       Json
+  status        OutboxStatus @default(PENDING)
+  attempts      Int          @default(0)
+  nextAttemptAt DateTime     @default(now())
+  lastError     String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@index([status, nextAttemptAt])
+}
+
+/// Activity logs atomic operational events for audits
+model Activity {
+  id         String   @id @default(cuid())
+  actorId    String?
+  actor      User?    @relation("UserActivities", fields: [actorId], references: [id], onDelete: Restrict)
+  action     String
+  targetType String
+  targetId   String
+  summary    String
+  createdAt  DateTime @default(now())
+
+  @@index([targetType, targetId])
   @@index([createdAt])
 }
 
+/// SiteSetting stores configuration (colophon, studio timezone, contact addresses)
+model SiteSetting {
+  key       String   @id
+  value     Json
+  isPublic  Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+}
+
+/// Story model for written dispatches, darkroom notes, and photo essays
+model Story {
+  id          String        @id @default(cuid())
+  kind        StoryKind     @default(STORY)
+  slug        String        @unique
+  title       String
+  subtitle    String?
+  excerpt     String?
+  body        Json          // TipTap block JSON
+  heroMediaId String?
+  topics      String[]      @default([])
+  authorId    String?
+  author      User?         @relation("StoryAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  status      ContentStatus @default(DRAFT)
+  publishedAt DateTime?
+  seoTitle    String?
+  seoDescription String?
+  images      StoryImage[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([kind, status, publishedAt])
+  @@index([authorId])
+  @@index([slug])
+}
+
+/// StoryImage connects plates directly into photo essay narratives
+model StoryImage {
+  id        String   @id @default(cuid())
+  storyId   String
+  story     Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  mediaId   String
+  media     Media    @relation(fields: [mediaId], references: [id], onDelete: Restrict)
+  sortOrder Int      @default(0)
+  caption   String?
+  altText   String
+  createdAt DateTime @default(now())
+
+  @@index([storyId, sortOrder])
+  @@index([mediaId])
+}
+
+/// Service defines studio commercial disciplines (Weddings, Portraits, Fashion, Commercial, Events)
 model Service {
+  id           String           @id @default(cuid())
+  slug         String           @unique
+  name         String
+  summary      String
+  philosophy   String?
+  inclusions   Json?
+  process      Json?            // Four-stage process timeline
+  faqs         Json?
+  startingRate Int?
+  currency     String           @default("INR")
+  status       ContentStatus    @default(DRAFT)
+  sortOrder    Int              @default(0)
+  packages     Package[]
+  bookings     Booking[]
+  inquiries    Inquiry[]
+  projects     ServiceProject[]
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@index([sortOrder, status])
+  @@index([slug])
+}
+
+/// ServiceProject links portfolio monographs to services (especially Events)
+model ServiceProject {
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sortOrder Int     @default(0)
+
+  @@id([serviceId, projectId])
+  @@index([projectId])
+}
+
+/// Package defines structured tiers within services
+model Package {
   id          String    @id @default(cuid())
+  serviceId   String
+  service     Service   @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   name        String
-  description String
-  price       Float
-  isActive    Boolean   @default(true)
-  packages    Package[]
+  rate        Int?
+  inclusions  Json?     // Deliverable items
+  sortOrder   Int       @default(0)
+  isVisible   Boolean   @default(true)
+  bookings    Booking[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  @@index([serviceId])
 }
 
-model Package {
-  id          String   @id @default(cuid())
-  name        String
-  description String
-  price       Float
-  features    String   // Store as JSON string or comma-separated list
-  serviceId   String
-  service     Service  @relation(fields: [serviceId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
+/// Testimonial stores client citations and museum/press reviews
+model Testimonial {
+  id             String        @id @default(cuid())
+  quote          String
+  attribution    String
+  sourceLabel    String?
+  consentGivenAt DateTime?
+  status         ContentStatus @default(DRAFT)
+  sortOrder      Int           @default(0)
+  projectId      String?
+  serviceId      String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 
-
-
-model Inquiry {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  company   String?
-  budget    String?
-  timeline  String?
-  reference String?
-  message   String
-  status    String   @default("NEW") // NEW, CONTACTED, IN PROGRESS, COMPLETED, ARCHIVED
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  @@index([status, sortOrder])
 }

@@ -6,6 +6,10 @@ import Link from "next/link";
 import { UserPlus, ShieldCheck } from "lucide-react";
 import { registerUser } from "@/app/actions/auth";
 
+/**
+ * SignupPage - Registration flow for new atelier patrons and collaborators.
+ * Provisions personal client workspace and grants authenticated access.
+ */
 export default function SignupPage() {
   const router = useRouter();
   const [name, setName] = useState("");

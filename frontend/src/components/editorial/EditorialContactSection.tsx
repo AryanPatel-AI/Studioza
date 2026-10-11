@@ -1,9 +1,11 @@
+/**
+ * EditorialContactSection Component
+ * Client inquiry dispatch terminal with commission scope options, form validation, and encrypted dispatch reference confirmation.
+ */
 "use client";
 
 import React, { useState, useEffect, useId } from "react";
 import {
-  Send,
-  CheckCircle2,
   AlertCircle,
   Mail,
   MapPin,
@@ -34,7 +36,6 @@ export default function EditorialContactSection({
 }: EditorialContactSectionProps) {
   const formId = useId();
 
-  // Form State
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -42,12 +43,11 @@ export default function EditorialContactSection({
     message: initialStyle ? `Inquiring regarding aesthetic style: "${initialStyle}"\n\n` : "",
   });
 
-  const [activeField, setActiveField] = useState<string | null>(null);
+  const [, setActiveField] = useState<string | null>(null);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [cipherCode, setCipherCode] = useState("");
 
-  // Update message if initialStyle arrives
   useEffect(() => {
     if (initialStyle && !formData.message.includes(initialStyle)) {
       setFormData((prev) => ({
@@ -80,10 +80,7 @@ export default function EditorialContactSection({
       });
 
       const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to dispatch inquiry");
-      }
+      if (!response.ok) throw new Error(data.error || "Failed to dispatch inquiry");
 
       setCipherCode(`ATELIER-${Math.random().toString(36).substring(2, 8).toUpperCase()}`);
       setStatus("success");
@@ -95,12 +92,7 @@ export default function EditorialContactSection({
   };
 
   const handleResetForm = () => {
-    setFormData({
-      name: "",
-      email: "",
-      scope: "Editorial & Campaign",
-      message: "",
-    });
+    setFormData({ name: "", email: "", scope: "Editorial & Campaign", message: "" });
     setStatus("idle");
     setErrorMessage("");
   };
@@ -115,28 +107,19 @@ export default function EditorialContactSection({
     >
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* ===================================================================== */}
-          {/* LEFT COLUMN: EDITORIAL STATEMENT & CURATORIAL THESIS                  */}
-          {/* ===================================================================== */}
+          {/* Left Column: Studio Direction Statement */}
           <div className="lg:col-span-5 space-y-8 lg:pr-4">
             <div className="space-y-3">
-              <span className="type-meta block">
-                [Correspondence // Season 2026]
-              </span>
-
+              <span className="type-meta block">[Correspondence // Season 2026]</span>
               <h2 className="type-display-section text-ink-primary">
                 Let&apos;s create something <br />
-                <span className="italic text-copper-600">
-                  timeless.
-                </span>
+                <span className="italic text-copper-600">timeless.</span>
               </h2>
-
               <p className="text-ink-body type-body-base pt-2 max-w-lg">
                 Every photograph is an unrepeatable arrest of time. We collaborate with discerning individuals, architects, fashion houses, and cultural institutions who prioritize unhurried art direction, natural light, and archival permanence.
               </p>
             </div>
 
-            {/* Atelier Directives & Telemetry Placard */}
             <div className="pt-4 border-t border-hairline space-y-6 type-body-base text-ink-muted">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
@@ -144,10 +127,7 @@ export default function EditorialContactSection({
                     <Mail className="w-3 h-3 text-copper-500" />
                     <span>Direct Dispatch</span>
                   </div>
-                  <a
-                    href="mailto:commissions@studioza.com"
-                    className="text-ink-primary hover:text-copper-600 transition-colors"
-                  >
+                  <a href="mailto:commissions@studioza.com" className="text-ink-primary hover:text-copper-600 transition-colors">
                     commissions@studioza.com
                   </a>
                 </div>
@@ -179,7 +159,6 @@ export default function EditorialContactSection({
                 </div>
               </div>
 
-              {/* Director Sign-Off Stamp */}
               <div className="pt-2 flex items-center justify-between text-[11px] text-ink-muted border-t border-hairline">
                 <span>ARYAN PATEL — ART DIRECTOR</span>
                 <span className="text-copper-600">REF: 2026-INVITATION</span>
@@ -187,29 +166,19 @@ export default function EditorialContactSection({
             </div>
           </div>
 
-          {/* ===================================================================== */}
-          {/* RIGHT COLUMN: ARCHITECTURAL CONTACT SALON                             */}
-          {/* ===================================================================== */}
+          {/* Right Column: Inquiry Form & Confirmation View */}
           <div className="lg:col-span-7">
             <div className="pt-8">
               {status !== "success" ? (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Form Header */}
                   <div className="pb-4 border-b border-hairline flex items-center justify-between">
                     <div>
-                      <span className="type-meta text-copper-600 block mb-0.5">
-                        Private Correspondence
-                      </span>
-                      <h3 className="type-body-lead text-ink-primary font-medium">
-                        Commission Inquiry Brief
-                      </h3>
+                      <span className="type-meta text-copper-600 block mb-0.5">Private Correspondence</span>
+                      <h3 className="type-body-lead text-ink-primary font-medium">Commission Inquiry Brief</h3>
                     </div>
-                    <span className="type-meta">
-                      Confidential
-                    </span>
+                    <span className="type-meta">Confidential</span>
                   </div>
 
-                  {/* Error Notification */}
                   {status === "error" && (
                     <div role="alert" aria-live="assertive" className="flex items-center gap-3 bg-stone-100 border border-stone-300 text-stone-800 px-4 py-3 rounded-[2px] type-meta">
                       <AlertCircle className="w-4 h-4 text-copper-600 shrink-0" aria-hidden="true" />
@@ -217,7 +186,7 @@ export default function EditorialContactSection({
                     </div>
                   )}
 
-                  {/* Field 1: Name */}
+                  {/* Name Input */}
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between type-meta">
                       <label htmlFor={`${formId}-name`} className="text-ink-primary uppercase">
@@ -234,11 +203,11 @@ export default function EditorialContactSection({
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       onFocus={() => setActiveField("name")}
                       onBlur={() => setActiveField(null)}
-                      className="w-full py-3 type-body-base text-ink-primary placeholder:text-stone-400 bg-transparent border-b border-hairline focus:border-copper-500 outline-none focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-none"
+                      className="w-full py-3 type-body-base text-ink-primary placeholder:text-stone-400 bg-transparent border-b border-hairline focus:border-copper-500 outline-none focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-400 rounded-none"
                     />
                   </div>
 
-                  {/* Field 2: Email */}
+                  {/* Email Input */}
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between type-meta">
                       <label htmlFor={`${formId}-email`} className="text-ink-primary uppercase">
@@ -255,19 +224,17 @@ export default function EditorialContactSection({
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       onFocus={() => setActiveField("email")}
                       onBlur={() => setActiveField(null)}
-                      className="w-full py-3 type-body-base text-ink-primary placeholder:text-stone-400 bg-transparent border-b border-hairline focus:border-copper-500 outline-none focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-none"
+                      className="w-full py-3 type-body-base text-ink-primary placeholder:text-stone-400 bg-transparent border-b border-hairline focus:border-copper-500 outline-none focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-400 rounded-none"
                     />
                   </div>
 
-                  {/* Field 3: Scope */}
+                  {/* Scope Selection */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between type-meta">
                       <span id={`${formId}-scope-label`} className="text-ink-primary uppercase">
                         03 / Commission Scope
                       </span>
-                      <span className="text-copper-600 text-[10px]">
-                        {formData.scope}
-                      </span>
+                      <span className="text-copper-600 text-[10px]">{formData.scope}</span>
                     </div>
                     <div role="radiogroup" aria-labelledby={`${formId}-scope-label`} className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {COMMISSION_SCOPES.map((scope) => {
@@ -280,25 +247,21 @@ export default function EditorialContactSection({
                             aria-checked={isSelected}
                             onClick={() => setFormData({ ...formData, scope: scope.label })}
                             className={cn(
-                              "text-left py-3 px-3 border-b transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer flex flex-col justify-center rounded-none",
+                              "text-left py-3 px-3 border-b transition-all duration-400 cursor-pointer flex flex-col justify-center rounded-none",
                               isSelected
                                 ? "bg-copper-50/60 border-copper-500 text-copper-700"
                                 : "bg-stone-50/50 border-stone-200 hover:border-stone-400 text-ink-primary"
                             )}
                           >
-                            <span className="text-xs block font-medium">
-                              {scope.label}
-                            </span>
-                            <span className="text-[10px] text-stone-500 block mt-0.5">
-                              {scope.spec}
-                            </span>
+                            <span className="text-xs block font-medium">{scope.label}</span>
+                            <span className="text-[10px] text-stone-500 block mt-0.5">{scope.spec}</span>
                           </button>
                         );
                       })}
                     </div>
                   </div>
 
-                  {/* Field 4: Narrative */}
+                  {/* Narrative Textarea */}
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between type-meta">
                       <label htmlFor={`${formId}-message`} className="text-ink-primary uppercase">
@@ -315,11 +278,11 @@ export default function EditorialContactSection({
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       onFocus={() => setActiveField("message")}
                       onBlur={() => setActiveField(null)}
-                      className="w-full py-3 type-body-base text-ink-primary placeholder:text-stone-400 bg-transparent border-b border-hairline focus:border-copper-500 outline-none focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-none resize-none"
+                      className="w-full py-3 type-body-base text-ink-primary placeholder:text-stone-400 bg-transparent border-b border-hairline focus:border-copper-500 outline-none focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-400 rounded-none resize-none"
                     />
                   </div>
 
-                  {/* Submit button */}
+                  {/* Action row */}
                   <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <StudioButton
                       type="submit"
@@ -375,12 +338,7 @@ export default function EditorialContactSection({
                   </div>
 
                   <div className="pt-2">
-                    <StudioButton
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={handleResetForm}
-                    >
+                    <StudioButton type="button" variant="outline" size="sm" onClick={handleResetForm}>
                       Submit Another Note
                     </StudioButton>
                   </div>

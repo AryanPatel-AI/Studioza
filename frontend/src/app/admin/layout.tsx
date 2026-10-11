@@ -1,127 +1,111 @@
-import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getSessionUser } from "@/lib/auth/session";
+import {
+  LayoutDashboard,
+  FolderKanban,
+  Images,
+  BookOpen,
+  Layers,
+  MessageSquareQuote,
+  Inbox,
+  CalendarDays,
+  FileImage,
+  Users,
+  BarChart3,
+  Settings,
+  ArrowUpRight,
+} from "lucide-react";
 
 export const dynamic = "force-dynamic";
-import {
-  Layers,
-  LayoutDashboard,
-  Users,
-  FolderKanban,
-  FileBox,
-  Activity,
-  LogOut,
-  ChevronLeft,
-  ShieldCheck,
-} from "lucide-react";
-import { logoutUser } from "@/app/actions/auth";
 
-export default async function AdminLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getSessionUser();
-
-  if (!user) {
-    redirect("/login");
-  }
-
-  // Strict server-side authorization check
-  if (user.role !== "admin") {
-    redirect("/dashboard");
-  }
+  const navItems = [
+    { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+    { label: "AI Curation", href: "/admin/curation", icon: Images, badge: "Multi-Agent" },
+    { label: "Projects", href: "/admin/projects", icon: FolderKanban },
+    { label: "Galleries", href: "/admin/galleries", icon: Images },
+    { label: "Stories", href: "/admin/stories", icon: BookOpen },
+    { label: "Services", href: "/admin/services", icon: Layers },
+    { label: "Testimonials", href: "/admin/testimonials", icon: MessageSquareQuote },
+    { label: "Inquiries CRM", href: "/admin/inquiries", icon: Inbox, badge: "3 New" },
+    { label: "Bookings", href: "/admin/bookings", icon: CalendarDays },
+    { label: "Clients & Vault", href: "/admin/clients", icon: Users, badge: "Active" },
+    { label: "Media Library", href: "/admin/media", icon: FileImage },
+    { label: "Users & Team", href: "/admin/users", icon: Users },
+    { label: "Analytics", href: "/admin/analytics", icon: BarChart3 },
+    { label: "Settings", href: "/admin/settings", icon: Settings },
+  ];
 
   return (
-    <div className="min-h-screen bg-background flex text-foreground selection:bg-copper-500 selection:text-sage-50">
-      {/* Admin Sidebar */}
-      <aside className="w-64 bg-sage-50 border-r border-sage-300/40 flex flex-col justify-between shrink-0">
+    <div className="min-h-screen bg-[#F4F1EB] text-[#151515] flex">
+      {/* Editorial Admin Sidebar */}
+      <aside className="w-64 bg-[#171717] text-[#F4F1EB] flex flex-col justify-between shrink-0 border-r border-white/10">
         <div>
-          {/* Brand Header */}
-          <div className="h-16 px-5 flex items-center gap-3 border-b border-sage-300/40">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-copper-500 to-copper-300 p-0.5 shadow-md shadow-copper-500/20">
-              <div className="w-full h-full bg-sage-50 rounded-[10px] flex items-center justify-center text-copper-600">
-                <Layers className="w-4 h-4" />
-              </div>
-            </div>
+          {/* Masthead */}
+          <div className="h-20 px-6 flex items-center justify-between border-b border-white/10">
             <div>
-              <span className="font-semibold text-sm text-foreground block">
-                Studio Admin
-              </span>
-              <span className="type-body-base text-copper-600 block -mt-0.5">
-                System Oversight
+              <Link href="/admin/dashboard" className="font-serif text-2xl text-white tracking-tight">
+                STUDIOZA
+              </Link>
+              <span className="type-micro text-[#A39E96] block -mt-1 text-[9px]">
+                STUDIO CMS &amp; CRM
               </span>
             </div>
+            <Link
+              href="/"
+              target="_blank"
+              title="View Public Site"
+              className="text-[#A39E96] hover:text-white transition-colors p-1"
+            >
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
           </div>
 
-          {/* Navigation */}
-          <nav className="p-3 space-y-1 type-body-base">
-            <Link
-              href="/admin"
-              className="flex items-center gap-3 px-3 py-2 rounded-xl text-foreground-muted hover:text-foreground hover:bg-sage-50/50 transition-all"
-            >
-              <LayoutDashboard className="w-4 h-4" />
-              <span>Platform Overview</span>
-            </Link>
-            <Link
-              href="/admin/inquiries"
-              className="flex items-center gap-3 px-3 py-2 rounded-xl text-foreground-muted hover:text-foreground hover:bg-sage-50/50 transition-all"
-            >
-              <Activity className="w-4 h-4" />
-              <span>Inquiries</span>
-            </Link>
-            <Link
-              href="/admin/portfolio"
-              className="flex items-center gap-3 px-3 py-2 rounded-xl text-foreground-muted hover:text-foreground hover:bg-sage-50/50 transition-all"
-            >
-              <FolderKanban className="w-4 h-4" />
-              <span>Portfolio</span>
-            </Link>
-            <Link
-              href="/admin/services"
-              className="flex items-center gap-3 px-3 py-2 rounded-xl text-foreground-muted hover:text-foreground hover:bg-sage-50/50 transition-all"
-            >
-              <Layers className="w-4 h-4" />
-              <span>Services</span>
-            </Link>
-
-            <Link
-              href="/dashboard"
-              className="flex items-center gap-3 px-3 py-2 mt-4 rounded-xl text-foreground-muted hover:text-foreground hover:bg-sage-50/50 transition-all"
-            >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Return to Workspace</span>
-            </Link>
+          {/* Navigation Links */}
+          <nav className="p-4 space-y-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="flex items-center justify-between px-3 py-2.5 text-xs type-meta rounded-xs text-[#A39E96] hover:text-white hover:bg-white/5 transition-colors group"
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon className="w-4 h-4 text-[#A39E96] group-hover:text-[#CC5500] transition-colors" />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.badge && (
+                    <span className="bg-[#CC5500] text-white px-1.5 py-0.5 rounded-xs text-[9px] font-bold">
+                      {item.badge}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
           </nav>
         </div>
 
-        {/* User Footer Profile & Sign Out */}
-        <div className="p-3 border-t border-sage-300/40">
-          <div className="p-2.5 rounded-xl bg-sage-50/50 border border-sage-300/40 mb-2 flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-copper-500/20 border border-copper-500/40 text-copper-600 flex items-center justify-center font-bold type-body-base shrink-0">
-              {user.name ? user.name[0].toUpperCase() : "A"}
+        {/* Footer Profile Status */}
+        <div className="p-4 border-t border-white/10">
+          <div className="flex items-center gap-3 p-2 bg-white/5 border border-white/10">
+            <div className="w-8 h-8 rounded-full bg-[#CC5500] text-white font-bold flex items-center justify-center text-xs">
+              AP
             </div>
             <div className="overflow-hidden">
-              <p className="type-body-base text-foreground truncate">{user.name}</p>
-              <p className="type-body-base text-copper-600">Admin Authority</p>
+              <p className="text-xs font-medium text-white truncate">Aryan Patel</p>
+              <p className="type-micro text-[#A39E96] text-[9px]">Studio Owner / Admin</p>
             </div>
           </div>
-
-          <form action={logoutUser}>
-            <button
-              type="submit"
-              className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl type-body-base text-copper-300 hover:text-copper-100 hover:bg-copper-950/40 border border-copper-500/20 transition-colors cursor-pointer"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
-            </button>
-          </form>
         </div>
       </aside>
 
       {/* Main Content Viewport */}
-      <main className="flex-1 overflow-y-auto p-6 sm:p-8">
-        <div className="max-w-6xl mx-auto">{children}</div>
+      <main className="flex-1 overflow-y-auto">
+        <div className="p-8 lg:p-12 max-w-7xl mx-auto">{children}</div>
       </main>
     </div>
   );

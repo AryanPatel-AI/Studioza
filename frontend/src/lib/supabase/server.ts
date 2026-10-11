@@ -1,6 +1,11 @@
+/**
+ * Supabase Server Client
+ * Instantiates an SSR-compatible client reading and writing Next.js cookies in Server Components and Route Handlers.
+ */
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+/** Creates a Supabase server client wired to Next.js cookie storage */
 export async function createClient() {
   const cookieStore = await cookies();
 
@@ -18,8 +23,7 @@ export async function createClient() {
               cookieStore.set(name, value, options)
             );
           } catch {
-            // The `setAll` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing user sessions.
+            // Ignored if called from a pure Server Component without response cookie writing permissions
           }
         },
       },

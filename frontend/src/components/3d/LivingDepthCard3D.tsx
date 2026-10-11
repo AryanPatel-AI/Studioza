@@ -1,3 +1,7 @@
+/**
+ * LivingDepthCard3D Component
+ * 3D card tilt effect calculating cursor pitch/yaw angles and specular baryta glare highlights.
+ */
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -36,30 +40,18 @@ export default function LivingDepthCard3D({
     return () => mq.removeEventListener("change", handler);
   }, []);
 
+  // Compute 3D rotation angles (-10deg to +10deg) from cursor offset
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (reducedMotion || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    // Calculate rotation (-12deg to +12deg)
-    const rotX = ((y - centerY) / centerY) * -10;
-    const rotY = ((x - centerX) / centerX) * 10;
-
-    setRotateX(rotX);
-    setRotateY(rotY);
-
-    // Calculate glare coordinate in percentage
-    const glareX = (x / rect.width) * 100;
-    const glareY = (y / rect.height) * 100;
-    setGlarePos({ x: glareX, y: glareY, opacity: glareOpacity });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
+    setRotateX(((y - centerY) / centerY) * -10);
+    setRotateY(((x - centerX) / centerX) * 10);
+    setGlarePos({ x: (x / rect.width) * 100, y: (y / rect.height) * 100, opacity: glareOpacity });
   };
 
   const handleMouseLeave = () => {
@@ -69,7 +61,6 @@ export default function LivingDepthCard3D({
     setGlarePos((prev) => ({ ...prev, opacity: 0 }));
   };
 
-  // Tone-specific border glow styling
   const glowStyles = {
     blue: "hover:border-sky-400/50 hover:shadow-sky-500/15",
     amber: "hover:border-copper-500/50 hover:shadow-copper-500/15",
@@ -81,7 +72,7 @@ export default function LivingDepthCard3D({
       style={{ perspective: 1200 }}
       className="relative w-full h-full"
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
+      onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
     >
@@ -100,7 +91,7 @@ export default function LivingDepthCard3D({
         }}
         className={`relative w-full h-full rounded-3xl transition-shadow duration-500 ${glowStyles} ${className}`}
       >
-        {/* Dynamic Baryta Specular Glare Layer */}
+        {/* Dynamic Specular Glare Highlight */}
         <div
           className="absolute inset-0 rounded-3xl pointer-events-none z-30 transition-opacity duration-300 overflow-hidden"
           style={{
@@ -110,7 +101,7 @@ export default function LivingDepthCard3D({
           }}
         />
 
-        {/* Card Content with 3D Layer Elevation */}
+        {/* Elevated 3D Content Container */}
         <div
           style={{
             transform: reducedMotion ? "none" : `translateZ(${depthOffset}px)`,

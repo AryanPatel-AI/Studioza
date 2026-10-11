@@ -1,5 +1,9 @@
-import React from 'react';
-import { cn } from '@/lib/utils';
+/**
+ * Minimalist Editorial Text Input
+ * Forward-ref border-bottom input adhering to the Studioza architectural typography and focus states.
+ */
+import React from "react";
+import { cn } from "@/lib/utils";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 

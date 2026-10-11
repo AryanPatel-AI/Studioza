@@ -1,3 +1,7 @@
+/**
+ * PhotographicPlate Component
+ * Fine-art museum exhibition plate with film negative rebate markings, darkroom vignettes, reticle brackets, and curatorial placard.
+ */
 "use client";
 
 import React, { useState } from "react";
@@ -41,7 +45,7 @@ export default function PhotographicPlate({
   showRebate = true,
   showPlacard = true,
 }: PhotographicPlateProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [, setIsHovered] = useState(false);
 
   const aspectClasses = {
     "16/10": "aspect-[16/10]",
@@ -54,9 +58,7 @@ export default function PhotographicPlate({
 
   const formattedPlate =
     plateNumber !== undefined
-      ? typeof plateNumber === "number"
-        ? `PL. 0${plateNumber}`
-        : plateNumber
+      ? typeof plateNumber === "number" ? `PL. 0${plateNumber}` : plateNumber
       : undefined;
 
   return (
@@ -70,17 +72,15 @@ export default function PhotographicPlate({
       {showRebate && (formattedPlate || emulsion || location) && (
         <div className="flex items-center justify-between type-body-base text-foreground-muted mb-3">
           <div className="flex items-center gap-2">
-            {formattedPlate && (
-              <span className="text-copper-600/90 font-semibold">{formattedPlate}</span>
-            )}
+            {formattedPlate && <span className="text-copper-600/90 font-semibold">{formattedPlate}</span>}
             {formattedPlate && emulsion && <span className="text-concrete-700">•</span>}
-            {emulsion && <span className="">{emulsion}</span>}
+            {emulsion && <span>{emulsion}</span>}
           </div>
           {location && <span className="hidden sm:inline-block text-foreground-muted">{location}</span>}
         </div>
       )}
 
-      {/* 2. Main Photographic Canvas Container */}
+      {/* 2. Photographic Canvas Container */}
       <div
         className={cn(
           "relative overflow-hidden bg-sage-950 rounded-sm cursor-pointer border border-sage-300/40",
@@ -90,11 +90,11 @@ export default function PhotographicPlate({
         <img
           src={imageSrc}
           alt={imageAlt}
-          className="w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.05] transition-all duration-1000 ease-out group-hover:scale-[1.03] group-hover:brightness-100"
+          className="w-full h-full object-contain object-center filter brightness-[0.92] contrast-[1.05] transition-all duration-700 ease-out group-hover:brightness-100 p-2"
           loading="lazy"
         />
 
-        {/* Darkroom Vignette & Ambient Wash */}
+        {/* Darkroom Vignette */}
         {showVignette && (
           <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/20 opacity-70 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none" />
         )}
@@ -106,10 +106,10 @@ export default function PhotographicPlate({
           </div>
         )}
 
-        {/* Subtle Anamorphic Edge Flare (Warm light leak on left rim) */}
+        {/* Anamorphic Light Leak on Edge */}
         <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-copper-500/10 to-transparent pointer-events-none mix-blend-screen opacity-50 group-hover:opacity-80 transition-opacity" />
 
-        {/* Interactive Inspection Badge on Hover */}
+        {/* Inspection CTA Badge */}
         {onClick && (
           <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transtone-y-1 group-hover:transtone-y-0 pointer-events-none">
             <span className="px-3 py-1 rounded-full bg-sage-100 backdrop-blur-md type-body-base text-copper-600 border border-copper-500/40 flex items-center gap-1.5 shadow-xl">
@@ -120,7 +120,7 @@ export default function PhotographicPlate({
         )}
       </div>
 
-      {/* 3. Editorial Museum Placard Footnote (No bordered box!) */}
+      {/* 3. Museum Placard Footnote */}
       {showPlacard && (title || subtitle || telemetry || client) && (
         <div className="pt-4 space-y-1.5">
           <div className="flex items-baseline justify-between gap-4">
@@ -129,24 +129,11 @@ export default function PhotographicPlate({
                 {title}
               </h3>
             )}
-            {client && (
-              <span className="type-body-base text-foreground-muted shrink-0">
-                {client}
-              </span>
-            )}
+            {client && <span className="type-body-base text-foreground-muted shrink-0">{client}</span>}
           </div>
 
-          {subtitle && (
-            <p className="type-body-base text-foreground-muted max-w-xl">
-              {subtitle}
-            </p>
-          )}
-
-          {telemetry && (
-            <div className="pt-1 type-body-base text-foreground-muted">
-              {telemetry}
-            </div>
-          )}
+          {subtitle && <p className="type-body-base text-foreground-muted max-w-xl">{subtitle}</p>}
+          {telemetry && <div className="pt-1 type-body-base text-foreground-muted">{telemetry}</div>}
         </div>
       )}
     </div>

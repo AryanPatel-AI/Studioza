@@ -1,3 +1,7 @@
+/**
+ * Atelier Page Transition Context & Provider
+ * Manages route transitions by coordinating a shutter wipe overlay, View Transitions API, and link click interception.
+ */
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from "react";
@@ -37,7 +41,7 @@ export function AtelierTransitionProvider({ children }: { children: React.ReactN
   const pendingHrefRef = useRef<string | null>(null);
   const safetyTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // 1. Detect reduced motion preference
+  // 1. Detect OS reduced motion preference
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mq.matches);
@@ -46,7 +50,7 @@ export function AtelierTransitionProvider({ children }: { children: React.ReactN
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // 2. Programmatic navigation function
+  // 2. Programmatic navigation executing 3-phase shutter transition
   const navigate = useCallback(
     (href: string) => {
       if (prefersReducedMotion) {
@@ -57,7 +61,6 @@ export function AtelierTransitionProvider({ children }: { children: React.ReactN
       if (isNavigatingRef.current) return;
       isNavigatingRef.current = true;
 
-      // Clean target path without query or hash for room lookup
       const urlPath = href.split("?")[0].split("#")[0] || "/";
       const nextRoom = getRoomInfo(urlPath);
 
@@ -65,12 +68,10 @@ export function AtelierTransitionProvider({ children }: { children: React.ReactN
       setStatus("closing");
       pendingHrefRef.current = href;
 
-      // Clear any prior safety timer
       if (safetyTimerRef.current) clearTimeout(safetyTimerRef.current);
 
       // Phase 1: Shutter Close & Refraction Wipe (~240ms)
       setTimeout(() => {
-        // Native View Transition support if available in browser
         if (typeof document !== "undefined" && "startViewTransition" in document) {
           (document as unknown as { startViewTransition: (cb: () => void) => void }).startViewTransition(() => {
             router.push(href);
@@ -79,11 +80,11 @@ export function AtelierTransitionProvider({ children }: { children: React.ReactN
           router.push(href);
         }
 
-        // Phase 2: Shutter opens on the new room
+        // Phase 2: Shutter reveals next room
         setTimeout(() => {
           setStatus("opening");
 
-          // Phase 3: Transition settles into idle state (~300ms)
+          // Phase 3: Transition settles into idle state (~320ms)
           setTimeout(() => {
             setStatus("idle");
             setTargetRoom(null);
@@ -93,7 +94,7 @@ export function AtelierTransitionProvider({ children }: { children: React.ReactN
         }, 100);
       }, 240);
 
-      // Safety fail-safe timeout in case of aborted navigation (e.g. 1500ms)
+      // Fail-safe timeout preventing UI lockup
       safetyTimerRef.current = setTimeout(() => {
         setStatus("idle");
         setTargetRoom(null);
@@ -104,7 +105,7 @@ export function AtelierTransitionProvider({ children }: { children: React.ReactN
     [router, prefersReducedMotion]
   );
 
-  // 3. Reset transition on pathname change (e.g. browser back/forward buttons)
+  // 3. Reset transition state on pathname changes
   useEffect(() => {
     if (!isNavigatingRef.current && status !== "idle") {
       setStatus("idle");
@@ -112,45 +113,32 @@ export function AtelierTransitionProvider({ children }: { children: React.ReactN
     }
   }, [pathname, status]);
 
-  // 4. Global link click interceptor for seamless internal links
+  // 4. Global click listener to intercept internal link clicks
   useEffect(() => {
     const handleGlobalClick = (e: MouseEvent) => {
-      // Ignore modified clicks (cmd, ctrl, shift, alt)
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      if (e.defaultPrevented) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.defaultPrevented) return;
 
-      // Find closest anchor tag
       const anchor = (e.target as HTMLElement).closest("a");
       if (!anchor) return;
 
       const rawHref = anchor.getAttribute("href");
       if (!rawHref) return;
 
-      // Ignore external links, mailto, tel, downloads, or target="_blank"
-      if (anchor.target === "_blank") return;
-      if (anchor.hasAttribute("download")) return;
+      if (anchor.target === "_blank" || anchor.hasAttribute("download")) return;
       if (rawHref.startsWith("mailto:") || rawHref.startsWith("tel:") || rawHref.startsWith("http")) return;
 
-      // Parse target URL
       try {
         const currentUrl = new URL(window.location.href);
         const targetUrl = new URL(anchor.href, window.location.origin);
 
-        // If link targets the exact same path and only changes hash (in-page jump), do not intercept
-        if (targetUrl.pathname === currentUrl.pathname && targetUrl.hash) {
-          return;
-        }
+        // Do not intercept hash jumps or same-page clicks
+        if (targetUrl.pathname === currentUrl.pathname && targetUrl.hash) return;
+        if (targetUrl.pathname === currentUrl.pathname && !targetUrl.search && !targetUrl.hash) return;
 
-        // If link is exactly the current URL, ignore
-        if (targetUrl.pathname === currentUrl.pathname && !targetUrl.search && !targetUrl.hash) {
-          return;
-        }
-
-        // Internal cross-room link detected: intercept and run exhibition transition
         e.preventDefault();
         navigate(rawHref);
       } catch {
-        // Fallback to default browser action if URL parsing fails
+        // Fallback to default navigation
       }
     };
 
@@ -168,7 +156,6 @@ export function AtelierTransitionProvider({ children }: { children: React.ReactN
         prefersReducedMotion,
       }}
     >
-      {/* Visual Exhibition Transition Overlay */}
       <AtelierTransitionOverlay
         status={status}
         targetRoom={targetRoom}

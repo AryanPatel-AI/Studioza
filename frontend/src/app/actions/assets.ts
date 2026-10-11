@@ -1,9 +1,8 @@
-"use server";
+'use server';
 
-import { prisma } from "@/lib/prisma";
-import { requireAuth } from "@/lib/auth/session";
-import { deleteFile } from "@/lib/storage";
-import { revalidatePath } from "next/cache";
+import { prisma } from '@/lib/prisma';
+import { requireAuth } from '@/lib/auth/session';
+import { revalidatePath } from 'next/cache';
 
 export async function deleteAsset(assetId: string) {
   try {
@@ -11,39 +10,28 @@ export async function deleteAsset(assetId: string) {
 
     const asset = await prisma.asset.findUnique({
       where: { id: assetId },
+      include: { media: true },
     });
+    if (!asset) return { error: 'Asset not found.' };
 
-    if (!asset) {
-      return { error: "Asset not found." };
-    }
+    if (user.role !== 'ADMIN') return { error: 'Unauthorized.' };
 
-    if (asset.ownerId !== user.id && user.role !== "admin") {
-      return { error: "Unauthorized." };
-    }
+    await prisma.asset.delete({ where: { id: assetId } });
 
-    // Delete underlying file
-    await deleteFile(asset.storageKey);
-
-    // Delete database record
-    await prisma.asset.delete({
-      where: { id: assetId },
-    });
-
-    // Record activity
     await prisma.activity.create({
       data: {
-        projectId: asset.projectId,
-        userId: user.id,
-        type: "ASSET_DELETED",
-        metadata: JSON.stringify({ name: asset.name }),
+        actorId: user.id,
+        action: 'ASSET_DELETED',
+        targetType: 'asset',
+        targetId: assetId,
+        summary: `Deleted rendition variant ${asset.variant}`,
       },
     });
 
-    revalidatePath("/assets");
-    revalidatePath("/dashboard");
+    revalidatePath('/admin/media');
     return { success: true };
   } catch (err: any) {
-    console.error("deleteAsset error:", err);
-    return { error: "Failed to delete asset." };
+    console.error('deleteAsset error:', err);
+    return { error: 'Failed to delete asset rendition.' };
   }
 }

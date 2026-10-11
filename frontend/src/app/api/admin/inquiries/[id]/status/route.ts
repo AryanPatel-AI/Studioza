@@ -1,3 +1,7 @@
+/**
+ * Admin Inquiry Status Update Route
+ * Updates the triage status (NEW, CONTACTED, IN PROGRESS, COMPLETED, ARCHIVED) for a given inquiry.
+ */
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSessionUser } from "@/lib/auth/session";
@@ -9,13 +13,12 @@ export async function PATCH(
   try {
     const { id } = await params;
     const user = await getSessionUser();
-    if (!user || user.role !== "admin") {
+    if (!user || (user.role !== "ADMIN" && user.role !== "EDITOR")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await req.json();
     const { status } = body;
-
     if (!status) {
       return NextResponse.json({ error: "Status is required" }, { status: 400 });
     }

@@ -1,54 +1,65 @@
 @import "tailwindcss";
+@import "../styles/print.css";
 
-/* ================================================================
-   STUDIOZA ATELIER — ARCHITECTURAL EDITORIAL DESIGN SYSTEM
-   
-   Visual Direction:
-     - Pure architectural structure with cinematic lighting.
-     - "BLUE HOUR → GOLDEN HOUR" color palette.
-     - Deep Night, Midnight Blue, Slate, Warm Ivory, Muted Gold, Dark Bronze, Near Black.
-     - Strict typography scale: Oversized display, grotesque sans-serif.
-     - No generic SaaS layouts, no excessive gradients.
-   ================================================================ */
+/* ── Studioza Theme & Design System Tokens ── */
 
 :root {
-  /* ── Core Surfaces (Blue Hour to Golden Hour) ── */
-  --bg-deep-night:      #050814;   /* Deep Night - nearly black blue */
-  --bg-midnight-blue:   #0B132B;   /* Midnight Blue */
-  --bg-slate:           #1C2541;   /* Slate */
-  --bg-warm-ivory:      #F7F5F0;   /* Warm Ivory */
-  --bg-near-black:      #02040A;   /* Near Black for deepest shadows */
+  /* ── Core Editorial Surfaces ── */
+  --bg-primary:         #F4F1EB;   /* Editorial Warm Paper */
+  --bg-dark:            #171717;   /* Rich Cinematic Dark Room */
+  --bg-card:            #FFFFFF;   /* White Card Surface */
+  --bg-surface-subtle:   #EAE6DE;   /* Subtle divider tint */
 
-  /* ── Accents (Golden Hour) ── */
-  --accent-muted-gold:  #CFA570;
-  --accent-dark-bronze: #8A6742;
-
-  /* ── Editorial Ink Hierarchy ── */
-  --ink-primary:        var(--bg-near-black);
-  --ink-body:           #333333;
-  --ink-muted:          #71717A;
-  --ink-inverse:        var(--bg-warm-ivory);
-  --ink-inverse-muted:  #A1A1AA;
+  /* ── Ink Hierarchy ── */
+  --text-primary:       #151515;   /* Deep Editorial Charcoal */
+  --text-secondary:     #77736D;   /* Refined Warm Grey */
+  --text-dark:          #F4F1EB;   /* Inverted Text for Dark Sections */
+  --text-dark-muted:    #A7A7A7;   /* Concrete Grey */
 
   /* ── Architectural Borders & Hairlines ── */
-  --border-light:       rgba(2, 4, 10, 0.1);
-  --border-medium:      rgba(2, 4, 10, 0.25);
-  --border-dark:        rgba(247, 245, 240, 0.15);
-  --border-accent:      rgba(207, 165, 112, 0.4);
+  --border-editorial:   #D9D5CE;   /* Fine Framing Border */
+  --border-dark:        rgba(167, 167, 167, 0.2);
+  --border-light:       rgba(21, 21, 21, 0.08);
 
-  /* ── Motion & Physical Easing ── */
-  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-cadence:   cubic-bezier(0.25, 1, 0.5, 1);
+  /* ── Accent & Focus Tokens (Section 04) ── */
+  --accent-gold:        #CFA570;   /* Gold hairlines, markers, progress */
+  --text-meta:          #66625B;   /* Small secondary captions (passes AA on paper) */
+  --focus-on-paper:     #151515;   /* High-contrast focus ring on light surfaces */
+  --focus-on-dark:      #CFA570;   /* Gold focus ring on dark surfaces */
+
+  /* ── Palette Accents ── */
+  --color-sage:         #9CAF88;
+  --color-concrete:     #A7A7A7;
+  --color-amber:        #CC5500;
+
+  /* ── Motion & Easing (Section 06) ── */
+  --ease:               cubic-bezier(.22, 1, .36, 1);
+  --ease-editorial:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-cadence:       cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ── Motion Timing Tokens ── */
+  --duration-fast:      200ms;
+  --duration-standard:  400ms;
+  --duration-editorial: 800ms;
+  --duration-cinematic: 1400ms;
+
+  /* ── Typography Stacks ── */
+  --font-serif:         "Cormorant Garamond", Garamond, Georgia, "Times New Roman", serif;
+  --font-sans:          "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono:          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 @theme inline {
-  /* Enforce Grotesque Sans-Serif for everything (strict typography) */
-  --font-sans:  var(--font-geist-sans), "Helvetica Neue", Arial, sans-serif;
-  --font-mono:  var(--font-geist-mono), monospace;
-  --font-serif: var(--font-geist-sans), "Helvetica Neue", Arial, sans-serif; /* Intentionally mapped to sans for strict grotesque look */
-  
-  --color-background: var(--bg-warm-ivory);
-  --color-foreground: var(--ink-primary);
+  --font-sans:          var(--font-sans);
+  --font-serif:         var(--font-serif);
+  --font-mono:          var(--font-mono);
+
+  --color-background:   var(--bg-primary);
+  --color-foreground:   var(--text-primary);
+  --color-sage:         #9CAF88;
+  --color-concrete:     #A7A7A7;
+  --color-amber:        #CC5500;
+  --color-burnt-amber:  #CC5500;
 }
 
 /* ================================================================
@@ -56,25 +67,23 @@
    ================================================================ */
 
 html {
-  background-color: var(--bg-warm-ivory);
-  color: var(--ink-primary);
-  
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 body {
-  background-color: var(--bg-warm-ivory);
-  color: var(--ink-primary);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   font-family: var(--font-sans);
-  letter-spacing: -0.02em; /* Tight tracking */
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background-color: var(--accent-muted-gold);
-  color: var(--bg-near-black);
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
 }
 
 ::-webkit-scrollbar {
@@ -82,92 +91,255 @@ body {
   height: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-warm-ivory);
+  background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-slate);
-  border-radius: 0;
+  background: var(--text-secondary);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--bg-midnight-blue);
+  background: var(--text-primary);
 }
 
-/* ================================================================
-   EDITORIAL TYPOGRAPHY SYSTEM (Strict Grotesque Sans-serif)
-   ================================================================ */
-
-/* --- OVERSIZED DISPLAY --- */
-.type-display-hero {
-  font-family: var(--font-sans);
-  font-size: clamp(4rem, 8vw, 10rem);
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.04em; /* Very tight tracking */
-  text-transform: uppercase;
+/* ── Photographic Crispness & Rendering ── */
+img {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
 }
 
-.type-display-title {
-  font-family: var(--font-sans);
-  font-size: clamp(2.5rem, 5vw, 5rem);
-  font-weight: 600;
-  line-height: 1;
+/* ── Theme Palette Utilities (Sage Green, Concrete Grey, Burnt Amber) ── */
+.text-burnt-amber { color: #CC5500; }
+.bg-burnt-amber { background-color: #CC5500; }
+.border-burnt-amber { border-color: #CC5500; }
+
+.text-sage-green { color: #9CAF88; }
+.bg-sage-green { background-color: #9CAF88; }
+.border-sage-green { border-color: #9CAF88; }
+
+.text-concrete-grey { color: #A7A7A7; }
+.bg-concrete-grey { background-color: #A7A7A7; }
+.border-concrete-grey { border-color: #A7A7A7; }
+
+/* ── Typography Scale ── */
+
+.type-display-xl {
+  font-family: var(--font-serif);
+  font-size: clamp(3.75rem, 8vw, 6rem); /* up to 96px */
+  line-height: 0.95;
   letter-spacing: -0.03em;
+  font-weight: 400;
 }
 
-.type-display-statement {
-  font-family: var(--font-sans);
-  font-size: 1.75rem;
-  font-weight: 500;
-  line-height: 1.2;
+.type-display-l {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 6vw, 4.5rem); /* up to 72px */
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+}
+
+.type-display-m {
+  font-family: var(--font-serif);
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem); /* up to 56px */
+  line-height: 1.05;
   letter-spacing: -0.02em;
-}
-
-/* --- GROTESQUE SANS-SERIF BODY --- */
-.type-body-lead {
-  font-family: var(--font-sans);
-  font-size: 1.25rem;
   font-weight: 400;
-  line-height: 1.6;
-  letter-spacing: -0.01em;
 }
 
-.type-body-base {
+.type-heading-xl {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.8vw, 3rem); /* up to 48px */
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+.type-heading-l {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3vw, 2.5rem); /* up to 40px */
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+}
+
+.type-heading-m {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.2vw, 2rem); /* up to 32px */
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+
+.type-body-l {
   font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 1.25rem; /* 20px */
   line-height: 1.6;
-  letter-spacing: -0.01em;
+  font-weight: 400;
 }
 
-/* --- METADATA (Small Uppercase) --- */
+.type-body {
+  font-family: var(--font-sans);
+  font-size: 1rem; /* 16px */
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+.type-small {
+  font-family: var(--font-sans);
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.type-micro {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem; /* 11px */
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Metadata tag style */
 .type-meta {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1.5;
-  letter-spacing: 0.05em;
+  font-size: 0.75rem; /* 12px */
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ── Motion & Keyframe Animations ── */
+
+.image-reveal {
+  opacity: 0;
+  transform: scale(1.04);
+  animation: revealImage 1.2s var(--ease-editorial) forwards;
+}
+
+@keyframes revealImage {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.text-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: revealText 0.9s var(--ease-editorial) forwards;
+}
+
+@keyframes revealText {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hover-zoom-img {
+  transition: transform 1.2s var(--ease-editorial);
+}
+.hover-zoom-img:hover {
+  transform: scale(1.03);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ================================================================
-   ARCHITECTURAL FRAMING & HAIRLINE STRUCTURES
+   PHOTOGRAPHIC FRAMING & NATURAL PROPORTIONS
+   Ensures images respect authentic medium-format aspect ratios
    ================================================================ */
 
-.border-hairline {
-  border-color: var(--border-light);
+.aspect-plate-landscape {
+  aspect-ratio: 3 / 2;
 }
 
-.plate-card {
-  background: var(--bg-warm-ivory);
-  border: 1px solid var(--border-light);
-  border-radius: 0; 
-  transition: border-color 0.4s ease;
-}
-.plate-card:hover {
-  border-color: var(--border-medium);
+.aspect-plate-portrait {
+  aspect-ratio: 4 / 5;
 }
 
-.chamber-dark {
-  background-color: var(--bg-deep-night);
-  color: var(--ink-inverse);
+.aspect-plate-panoramic {
+  aspect-ratio: 21 / 9;
 }
+
+.aspect-plate-square {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect-plate-classic {
+  aspect-ratio: 16 / 10;
+}
+
+/* Editorial image containment frame */
+.editorial-mat {
+  background-color: #EAE6DE;
+  position: relative;
+  overflow: hidden;
+}
+
+.editorial-mat-dark {
+  background-color: #1a1a1a;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Accent Color Utilities */
+.bg-sage { background-color: var(--color-sage); }
+.text-sage { color: var(--color-sage); }
+.border-sage { border-color: var(--color-sage); }
+
+.bg-concrete { background-color: var(--color-concrete); }
+.text-concrete { color: var(--color-concrete); }
+.border-concrete { border-color: var(--color-concrete); }
+
+.bg-amber-burnt { background-color: var(--color-amber); }
+.text-amber-burnt { color: var(--color-amber); }
+.border-amber-burnt { border-color: var(--color-amber); }
+
+/* ── Section 06: Editorial Motion & Reveal Engine ── */
+.reveal-img {
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+}
+
+.reveal-text {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+
+.is-in {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.zoomable img {
+  transition: transform 1.2s var(--ease);
+}
+
+.zoomable:hover img {
+  transform: scale(1.03);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-img,
+  .reveal-text {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .zoomable:hover img {
+    transform: none !important;
+  }
+}
+

@@ -1,3 +1,6 @@
+/**
+ * Editorial design system primitives & curated gallery exhibitions.
+ */
 export { default as PhotographicPlate } from "./PhotographicPlate";
 export type { PhotographicPlateProps } from "./PhotographicPlate";
 
@@ -8,3 +11,4 @@ export { default as VisualArchiveExhibition } from "./VisualArchiveExhibition";
 export { default as LightingStudioInstallation } from "./LightingStudioInstallation";
 export { default as AtelierProcessTimeline } from "./AtelierProcessTimeline";
 export { default as EditorialContactSection } from "./EditorialContactSection";
+export { default as SpiralScrollGallery } from "./SpiralScrollGallery";

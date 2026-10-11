@@ -1,369 +1,344 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useMemo, Suspense } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/core/Navbar";
 import Footer from "@/components/core/Footer";
 import FilmGrain from "@/components/film/FilmGrain";
-import Link from "next/link";
+import { ArrowUpRight, SlidersHorizontal } from "lucide-react";
+import { PROJECTS, ProjectData, getImagePlateInfo } from "@/lib/data/studioData";
 
-const projects = [
-  {
-    slug: "hilltop-citadel",
-    title: "Jaigarh Mountain Citadel",
-    category: "Topographical Military Architecture",
-    year: "2026",
-    location: "Cheel ka Teela, Amber • 648m Elevation",
-    img: "/images/hilltop-fortress-crest.jpg",
-    desc: "Massive stone bastions and the Diwa Burj watchtower crowning the rugged Aravalli ridge under brooding atmospheric skies.",
-    aspect: "aspect-[16/10]",
-    layout: "left-dominant",
-  },
-  {
-    slug: "temple-shikhara",
-    title: "Shikhara & Oleander Bloom",
-    category: "Sacred Epigraphy & Living Flora",
-    year: "2026",
-    location: "Rajasthan Heritage Corridor • High-Key Illumination",
-    img: "/images/temple-shikhara-oleander.jpg",
-    desc: "Ancient carved stone Nagara temple spire framed through wild blooming oleander branches and fluttering saffron flag.",
-    aspect: "aspect-[3/4]",
-    layout: "left-portrait",
-  },
-  {
-    slug: "courtyard-scale",
-    title: "Courtyard Scale & Living Heritage",
-    category: "Cultural Space & Architectural Scale",
-    year: "2026",
-    location: "Amber Palace Complex • Terracotta Lime Plaster",
-    img: "/images/ochre-palace-courtyard-scale.jpg",
-    desc: "Sun-drenched terracotta and mineral ochre walls framing human movement and centuries of architectural volume.",
-    aspect: "aspect-[3/4]",
-    layout: "right-portrait",
-  },
-  {
-    slug: "amer-citadel",
-    title: "Amer Citadel Study",
-    category: "Architectural Chiaroscuro",
-    year: "2026",
-    location: "Amer, Rajasthan • 80mm Medium Format",
-    img: "/images/palace-arch-courtyard.jpg",
-    desc: "A study in deep spatial shadow, historic Rajasthani masonry, and monumental courtyard geometry.",
-    aspect: "aspect-[16/10]",
-    layout: "left-dominant",
-  },
-  {
-    slug: "sandstone-domes",
-    title: "Sandstone Palace Domes",
-    category: "Heritage Geometry & Sky",
-    year: "2026",
-    location: "Amber Fort • Bangaldar Eaves & Turquoise Sky",
-    img: "/images/sandstone-palace-domes.jpg",
-    desc: "Curvilinear Bangaldar pavilions and carved sandstone chhatris set against atmospheric turquoise heavens.",
-    aspect: "aspect-[16/9]",
-    layout: "full-bleed",
-  },
-  {
-    slug: "pelican-solitude",
-    title: "Sagar Lake Pelicans",
-    category: "Wildlife & Natural Form",
-    year: "2026",
-    location: "Sagar Lake Basin • Riparian Stillness",
-    img: "/images/pelicans-lake.jpg",
-    desc: "Two pelicans perched on a stone pedestal in calm turquoise water, framed against fortified mountain ridges.",
-    aspect: "aspect-[3/4]",
-    layout: "right-portrait",
-  },
-  {
-    slug: "jaipur-aerial",
-    title: "Dense Masonry Aerial",
-    category: "Urban Cartography",
-    year: "2025",
-    location: "Nahargarh Ridge • Morning Mist & Aerial Kites",
-    img: "/images/city-aerial-overview.jpg",
-    desc: "High-vantage panoramic study of historic urban density, rooftops, and soaring birds in misty morning light.",
-    aspect: "aspect-[16/10]",
-    layout: "left-dominant",
-  },
-  {
-    slug: "fort-ramparts",
-    title: "Fort Ramparts & High Ridge",
-    category: "Territorial Architecture",
-    year: "2026",
-    location: "Jaigarh Western Wall • Taanka Rainwater Basin",
-    img: "/images/fort-ramparts-overlook.jpg",
-    desc: "Ancient stepped ramparts and historic rainwater harvesting infrastructure snaking across rugged mountain ridges.",
-    aspect: "aspect-[21/9]",
-    layout: "full-bleed",
-  },
-  {
-    slug: "monochrome-temple",
-    title: "Monolithic Shikhara Expedition",
-    category: "Epigraphical Heritage & Form",
-    year: "2025",
-    location: "Rajasthan Heritage Corridor • Silver Gelatin Emulsion",
-    img: "/images/aryan-patel-temple-monochrome.jpg",
-    desc: "Black and white study of an ancient carved stone temple spire, exploring tactile masonry and human scale.",
-    aspect: "aspect-[3/4]",
-    layout: "left-portrait",
-  },
+const ARCHIVE_CATEGORIES = [
+  { id: "all", label: "ALL" },
+  { id: "architecture", label: "ARCHITECTURE" },
+  { id: "portraiture", label: "PORTRAITURE" },
+  { id: "editorial", label: "EDITORIAL" },
+  { id: "commercial", label: "COMMERCIAL" },
+  { id: "landscape", label: "LANDSCAPE" },
+  { id: "weddings", label: "WEDDINGS" },
+  { id: "personal", label: "PERSONAL" },
 ];
 
-export default function PortfolioPage() {
+// Helper to map project categories to archive filter tags
+function matchesCategory(project: ProjectData, categoryId: string): boolean {
+  if (categoryId === "all") return true;
+  if (categoryId === "architecture") {
+    return project.slug.includes("citadel") || project.slug.includes("resort") || project.category === "commercial";
+  }
+  if (categoryId === "portraiture") {
+    return project.category === "portraits";
+  }
+  if (categoryId === "editorial") {
+    return project.category === "fashion" || Boolean(project.client?.toLowerCase().includes("vogue"));
+  }
+  if (categoryId === "commercial") {
+    return project.category === "commercial";
+  }
+  if (categoryId === "landscape") {
+    return project.slug.includes("citadel") || project.slug.includes("estate");
+  }
+  if (categoryId === "weddings") {
+    return project.category === "weddings";
+  }
+  if (categoryId === "personal") {
+    return project.slug.includes("sheesh") || project.slug.includes("estate");
+  }
+  return false;
+}
+
+function WorkArchiveContent() {
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams.get("category") || "all";
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
+  const [sortBy, setSortBy] = useState<"featured" | "year" | "title">("featured");
+
+  const filteredProjects = useMemo(() => {
+    let list = PROJECTS.filter((p) => matchesCategory(p, activeCategory));
+
+    if (sortBy === "year") {
+      list = [...list].sort((a, b) => Number(b.year) - Number(a.year));
+    } else if (sortBy === "title") {
+      list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      // featured first
+      list = [...list].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+    }
+
+    return list;
+  }, [activeCategory, sortBy]);
+
+  // Alternate layout between full-width heroes and side-by-side pairs
+  const layoutChunks = useMemo(() => {
+    const chunks: Array<{ type: "large" | "dual"; items: ProjectData[] }> = [];
+    let i = 0;
+    let toggleLarge = true;
+
+    while (i < filteredProjects.length) {
+      if (toggleLarge) {
+        chunks.push({ type: "large", items: [filteredProjects[i]] });
+        i += 1;
+        toggleLarge = false;
+      } else {
+        const dualItems = filteredProjects.slice(i, i + 2);
+        chunks.push({ type: "dual", items: dualItems });
+        i += dualItems.length;
+        toggleLarge = true;
+      }
+    }
+    return chunks;
+  }, [filteredProjects]);
+
   return (
-    <div className="min-h-screen bg-[var(--bg-warm-ivory)] text-[var(--ink-primary)] relative font-sans">
+    <div className="min-h-screen bg-[#F4F1EB] text-[#151515] relative selection:bg-[#151515] selection:text-[#F4F1EB]">
       <FilmGrain />
       <Navbar />
 
-      <main className="pt-40 pb-32 px-6 lg:px-12 max-w-[100rem] mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
-          className="mb-32 border-b border-[var(--border-medium)] pb-12"
-        >
-          <span className="type-meta text-[var(--accent-dark-bronze)] block mb-3 uppercase tracking-widest">
-            MONOGRAPH INDEX // VOL. XXVI
-          </span>
-          <h1 className="type-display-hero">Archive</h1>
-          <p className="type-body-lead text-[var(--ink-muted)] mt-6 max-w-2xl">
-            A curated selection of photographic monographs capturing monumentality, wildlife silence, and architectural chiaroscuro across the heritage topography of Rajasthan.
-          </p>
-        </motion.div>
+      <main className="pt-32 pb-36">
+        {/* Archive Header */}
+        <section className="px-6 lg:px-12 max-w-7xl mx-auto mb-14">
+          <div className="border-b border-[#D9D5CE] pb-10">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div>
+                <span className="type-meta text-[#77736D] block mb-2">
+                  ARCHIVE // MEDIUM FORMAT MONOGRAPHS
+                </span>
+                <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl font-normal tracking-tight text-[#151515]">
+                  Visual Archive
+                </h1>
+              </div>
+              <p className="type-body-l text-[#77736D] max-w-md md:text-right">
+                A permanent catalog of architectural, human, and sartorial studies preserved in medium format.
+              </p>
+            </div>
 
-        <div className="flex flex-col gap-32 lg:gap-48">
-          {projects.map((proj, idx) => {
-            const num = String(idx + 1).padStart(2, "0");
-
-            if (proj.layout === "left-dominant") {
-              return (
-                <div key={proj.slug} className="flex flex-col md:flex-row items-end gap-8 lg:gap-16">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
-                    className="w-full md:w-2/3"
+            {/* Filter Navigation & Sorter */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pt-10 border-t border-[#D9D5CE]/60 mt-8">
+              {/* Category Pills */}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4 type-meta text-[11px] tracking-widest">
+                {ARCHIVE_CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`px-3 py-1.5 transition-all border ${
+                      activeCategory === cat.id
+                        ? "bg-[#151515] text-[#F4F1EB] border-[#151515]"
+                        : "bg-transparent text-[#77736D] border-transparent hover:border-[#D9D5CE] hover:text-[#151515]"
+                    }`}
                   >
-                    <Link href={`/work/${proj.slug}`} className={`block relative ${proj.aspect} overflow-hidden group bg-[var(--bg-slate)]`}>
-                      <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-10 transition-opacity duration-500 group-hover:opacity-0 z-10" />
-                      <Image
-                        src={proj.img}
-                        alt={proj.title}
-                        fill
-                        priority={idx < 2}
-                        className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                      />
-                    </Link>
-                  </motion.div>
+                    [{cat.label}]
+                  </button>
+                ))}
+              </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
-                    className="w-full md:w-1/3 flex flex-col pb-8"
-                  >
-                    <div className="flex flex-col gap-1 mb-6">
-                      <div className="flex items-center gap-4">
-                        <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
-                        <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
-                      </div>
-                      <span className="text-[11px] font-mono tracking-wider text-[var(--ink-muted)] uppercase">
-                        {proj.location}
-                      </span>
-                    </div>
-                    <Link href={`/work/${proj.slug}`} className="group inline-block w-max">
-                      <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
-                        {proj.title}
-                      </h2>
-                    </Link>
-                    <p className="type-body-base text-[var(--ink-muted)] mb-8">
-                      {proj.desc}
-                    </p>
-                    <Link
-                      href={`/work/${proj.slug}`}
-                      className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
-                    >
-                      <span>Inspect Plate &rarr;</span>
-                    </Link>
-                  </motion.div>
-                </div>
-              );
-            }
-
-            if (proj.layout === "right-portrait") {
-              return (
-                <div key={proj.slug} className="flex flex-col-reverse md:flex-row justify-between items-start gap-8 lg:gap-16">
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
-                    className="w-full md:w-5/12 flex flex-col pt-12 lg:pt-32"
-                  >
-                    <div className="flex flex-col gap-1 mb-6">
-                      <div className="flex items-center gap-4">
-                        <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
-                        <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
-                      </div>
-                      <span className="text-[11px] font-mono tracking-wider text-[var(--ink-muted)] uppercase">
-                        {proj.location}
-                      </span>
-                    </div>
-                    <Link href={`/work/${proj.slug}`} className="group inline-block">
-                      <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
-                        {proj.title}
-                      </h2>
-                    </Link>
-                    <p className="type-body-base text-[var(--ink-muted)] mb-8 max-w-sm">
-                      {proj.desc}
-                    </p>
-                    <Link
-                      href={`/work/${proj.slug}`}
-                      className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
-                    >
-                      <span>Inspect Plate &rarr;</span>
-                    </Link>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
-                    className="w-full md:w-5/12"
-                  >
-                    <Link href={`/work/${proj.slug}`} className={`block relative ${proj.aspect} overflow-hidden group bg-[var(--bg-slate)]`}>
-                      <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-10 transition-opacity duration-500 group-hover:opacity-0 z-10" />
-                      <Image
-                        src={proj.img}
-                        alt={proj.title}
-                        fill
-                        className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                      />
-                    </Link>
-                  </motion.div>
-                </div>
-              );
-            }
-
-            if (proj.layout === "left-portrait") {
-              return (
-                <div key={proj.slug} className="flex flex-col md:flex-row justify-between items-start gap-8 lg:gap-16">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
-                    className="w-full md:w-5/12"
-                  >
-                    <Link href={`/work/${proj.slug}`} className={`block relative ${proj.aspect} overflow-hidden group bg-[var(--bg-slate)]`}>
-                      <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-10 transition-opacity duration-500 group-hover:opacity-0 z-10" />
-                      <Image
-                        src={proj.img}
-                        alt={proj.title}
-                        fill
-                        className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                      />
-                    </Link>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as any }}
-                    className="w-full md:w-5/12 flex flex-col pt-12 lg:pt-32"
-                  >
-                    <div className="flex flex-col gap-1 mb-6">
-                      <div className="flex items-center gap-4">
-                        <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
-                        <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
-                      </div>
-                      <span className="text-[11px] font-mono tracking-wider text-[var(--ink-muted)] uppercase">
-                        {proj.location}
-                      </span>
-                    </div>
-                    <Link href={`/work/${proj.slug}`} className="group inline-block">
-                      <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
-                        {proj.title}
-                      </h2>
-                    </Link>
-                    <p className="type-body-base text-[var(--ink-muted)] mb-8 max-w-sm">
-                      {proj.desc}
-                    </p>
-                    <Link
-                      href={`/work/${proj.slug}`}
-                      className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
-                    >
-                      <span>Inspect Plate &rarr;</span>
-                    </Link>
-                  </motion.div>
-                </div>
-              );
-            }
-
-            // full-bleed
-            return (
-              <div key={proj.slug} className="flex flex-col gap-12">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
-                  className="w-full"
+              {/* Sorting Controls */}
+              <div className="flex items-center gap-3 text-xs type-meta text-[#77736D] self-start lg:self-auto">
+                <SlidersHorizontal className="w-3.5 h-3.5" />
+                <span>SORT:</span>
+                <button
+                  onClick={() => setSortBy("featured")}
+                  className={`hover:text-[#151515] transition-colors ${
+                    sortBy === "featured" ? "text-[#151515] font-semibold underline" : ""
+                  }`}
                 >
-                  <Link href={`/work/${proj.slug}`} className={`block relative ${proj.aspect} overflow-hidden group bg-[var(--bg-slate)]`}>
-                    <div className="absolute inset-0 bg-[var(--bg-midnight-blue)] mix-blend-multiply opacity-10 transition-opacity duration-500 group-hover:opacity-0 z-10" />
-                    <Image
-                      src={proj.img}
-                      alt={proj.title}
-                      fill
-                      className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                    />
+                  Curated
+                </button>
+                <span>/</span>
+                <button
+                  onClick={() => setSortBy("year")}
+                  className={`hover:text-[#151515] transition-colors ${
+                    sortBy === "year" ? "text-[#151515] font-semibold underline" : ""
+                  }`}
+                >
+                  Year
+                </button>
+                <span>/</span>
+                <button
+                  onClick={() => setSortBy("title")}
+                  className={`hover:text-[#151515] transition-colors ${
+                    sortBy === "title" ? "text-[#151515] font-semibold underline" : ""
+                  }`}
+                >
+                  Title
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Editorial Layout: Large -> Dual -> Large -> Dual */}
+        <section className="px-6 lg:px-12 max-w-7xl mx-auto space-y-24">
+          {layoutChunks.map((chunk, chunkIdx) => {
+            if (chunk.type === "large") {
+              const project = chunk.items[0];
+              if (!project) return null;
+              const plateInfo = getImagePlateInfo(project.coverImage);
+
+              return (
+                <article key={`chunk-${chunkIdx}-${project.id}`} className="space-y-6 group">
+                  <Link href={`/work/${project.slug}`} className="block relative overflow-hidden">
+                    <div className={`relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] shadow-sm ${plateInfo.aspectClass} ${plateInfo.isLandscape ? (plateInfo.aspectClass === "aspect-[4/3]" ? "max-w-5xl mx-auto" : "max-w-6xl mx-auto") : "max-w-2xl mx-auto"}`}>
+                      <Image
+                        src={project.coverImage}
+                        alt={project.name}
+                        fill
+                        unoptimized
+                        sizes="100vw"
+                        priority={chunkIdx === 0}
+                        quality={100}
+                        className="object-contain"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                      
+                      <div className="absolute bottom-6 left-6 lg:left-10 right-6 flex items-end justify-between text-white z-10">
+                        <div>
+                          <span className="type-meta text-white/80 text-[10px] tracking-widest block mb-1">
+                            PLATE 0{chunkIdx + 1} // {project.location.toUpperCase()}
+                          </span>
+                          <h2 className="font-serif text-3xl sm:text-5xl text-white">
+                            {project.name}
+                          </h2>
+                        </div>
+                        <div className="hidden sm:flex items-center gap-1 text-xs type-meta bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/30 text-white">
+                          <span>Inspect Plate</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </div>
+                      </div>
+                    </div>
                   </Link>
-                </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="w-full md:w-1/2 md:ml-auto flex flex-col border-t border-[var(--border-medium)] pt-8"
-                >
-                  <div className="flex flex-col gap-1 mb-6">
-                    <div className="flex items-center gap-4">
-                      <span className="type-meta text-[var(--accent-dark-bronze)]">{num} / {proj.category}</span>
-                      <span className="type-meta text-[var(--ink-muted)]">• {proj.year}</span>
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 pt-3 border-t border-[#D9D5CE]">
+                    <div className="space-y-1">
+                      <p className="type-body text-[#77736D] max-w-2xl">
+                        {project.subtitle}
+                      </p>
+                      <div className="flex items-center gap-4 type-meta text-[11px] text-[#77736D]">
+                        <span>YEAR: {project.year}</span>
+                        <span>•</span>
+                        <span>CLIENT: {project.client || "Studio Monograph"}</span>
+                        <span>•</span>
+                        <span className="capitalize">DISCIPLINE: {project.category}</span>
+                      </div>
                     </div>
-                    <span className="text-[11px] font-mono tracking-wider text-[var(--ink-muted)] uppercase">
-                      {proj.location}
-                    </span>
+                    <Link
+                      href={`/work/${project.slug}`}
+                      className="type-meta text-xs text-[#151515] hover:text-[#CC5500] transition-colors flex items-center gap-1.5 shrink-0"
+                    >
+                      <span>VIEW MONOGRAPH</span>
+                      <ArrowUpRight className="w-4 h-4" />
+                    </Link>
                   </div>
-                  <Link href={`/work/${proj.slug}`} className="group inline-block w-max">
-                    <h2 className="type-display-title mb-4 group-hover:text-[var(--accent-dark-bronze)] transition-colors duration-400">
-                      {proj.title}
-                    </h2>
-                  </Link>
-                  <p className="type-body-base text-[var(--ink-muted)] mb-8">
-                    {proj.desc}
-                  </p>
-                  <Link
-                    href={`/work/${proj.slug}`}
-                    className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
-                  >
-                    <span>Inspect Plate &rarr;</span>
-                  </Link>
-                </motion.div>
+                </article>
+              );
+            }
+
+            // Dual Grid (IMAGE IMAGE)
+            return (
+              <div key={`chunk-dual-${chunkIdx}`} className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-start">
+                {chunk.items.map((project, itemIdx) => {
+                  const plateInfo = getImagePlateInfo(project.coverImage);
+
+                  return (
+                    <article key={project.id} className="space-y-5 group">
+                      <Link href={`/work/${project.slug}`} className="block relative overflow-hidden">
+                        <div className={`relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] shadow-sm ${plateInfo.aspectClass}`}>
+                          <Image
+                            src={project.coverImage}
+                            alt={project.name}
+                            fill
+                            unoptimized
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            quality={100}
+                            className="object-contain"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                          <div className="absolute bottom-5 left-5 right-5 text-white z-10">
+                            <span className="type-meta text-white/80 text-[10px] tracking-widest block mb-1">
+                              {project.location.toUpperCase()} · {project.year}
+                            </span>
+                            <h2 className="font-serif text-2xl sm:text-3xl text-white">
+                              {project.name}
+                            </h2>
+                          </div>
+                        </div>
+                      </Link>
+
+                    <div className="space-y-2 pt-2 border-t border-[#D9D5CE]">
+                      <div className="flex items-center justify-between type-meta text-[11px] text-[#77736D]">
+                        <span className="uppercase">{project.category}</span>
+                        <span>PLATE // 0{chunkIdx + itemIdx + 2}</span>
+                      </div>
+                      <p className="type-small text-[#77736D] line-clamp-2">
+                        {project.subtitle}
+                      </p>
+                      <Link
+                        href={`/work/${project.slug}`}
+                        className="inline-flex items-center gap-1 type-meta text-xs text-[#151515] hover:text-[#CC5500] transition-colors pt-1"
+                      >
+                        <span>Examine Study</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </article>
+                  );
+                })}
               </div>
             );
           })}
-        </div>
+        </section>
+
+        {/* Bottom Editorial Commission Callout */}
+        <section className="px-6 lg:px-12 max-w-7xl mx-auto mt-32">
+          <div className="bg-[#171717] text-[#F4F1EB] p-12 lg:p-20 relative overflow-hidden">
+            <div className="max-w-2xl space-y-6 relative z-10">
+              <span className="type-meta text-[#A39E96] block">
+                COMMISSION AN ARCHIVE
+              </span>
+              <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white font-normal leading-tight">
+                Have a celebration, architectural space, or monograph in mind?
+              </h2>
+              <p className="type-body text-[#A39E96]">
+                We accept twelve select commissions annually worldwide. Inquiries for 2026/2027 are currently under review.
+              </p>
+              <div className="pt-4 flex flex-wrap items-center gap-5">
+                <Link
+                  href="/contact"
+                  className="bg-[#F4F1EB] text-[#171717] px-8 py-4 type-meta text-xs hover:bg-[#CC5500] hover:text-white transition-colors"
+                >
+                  START AN INQUIRY →
+                </Link>
+                <Link
+                  href="/booking"
+                  className="border border-white/20 text-white px-8 py-4 type-meta text-xs hover:border-white transition-colors"
+                >
+                  RESERVE COMMISSION DATE
+                </Link>
+              </div>
+            </div>
+            <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-15 pointer-events-none hidden lg:block">
+              <Image
+                src="/images/sandstone-palace-domes.jpg"
+                alt="Background Monograph"
+                fill
+                quality={100}
+                sizes="33vw"
+                className="object-contain"
+              />
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer />
     </div>
+  );
+}
+
+export default function WorkPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#F4F1EB]" />}>
+      <WorkArchiveContent />
+    </Suspense>
   );
 }

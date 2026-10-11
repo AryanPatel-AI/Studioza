@@ -1,146 +1,185 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { RefreshCw, CheckCircle2, Clock, Inbox, PlayCircle, Archive } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { Search, Filter, ArrowRight, Clock, Mail, Phone, MapPin, CheckCircle2 } from "lucide-react";
+import { INITIAL_INQUIRIES, InquiryItem } from "@/lib/data/studioData";
+
+const PIPELINE_STATUSES = [
+  "ALL",
+  "NEW",
+  "REVIEWING",
+  "CONTACTED",
+  "PROPOSAL",
+  "BOOKED",
+  "COMPLETED",
+];
 
 export default function AdminInquiriesPage() {
-  const [inquiries, setInquiries] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [inquiries, setInquiries] = useState<InquiryItem[]>(INITIAL_INQUIRIES);
+  const [statusFilter, setStatusFilter] = useState("ALL");
+  const [search, setSearch] = useState("");
 
-  const loadInquiries = () => {
-    setIsLoading(true);
+  useEffect(() => {
     fetch("/api/admin/inquiries")
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data)) setInquiries(data);
+        if (Array.isArray(data) && data.length > 0) {
+          setInquiries(data);
+        }
       })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
-  };
-
-  useEffect(() => {
-    loadInquiries();
+      .catch(() => {});
   }, []);
 
-  const updateStatus = async (id: string, newStatus: string) => {
-    const res = await fetch(`/api/admin/inquiries/${id}/status`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: newStatus }),
-    });
-
-    if (res.ok) {
-      setInquiries(
-        inquiries.map((inq) =>
-          inq.id === id ? { ...inq, status: newStatus } : inq
-        )
-      );
-    }
+  const handleUpdateStatus = (id: string, newStatus: any) => {
+    setInquiries((prev) =>
+      prev.map((inq) => (inq.id === id ? { ...inq, status: newStatus } : inq))
+    );
   };
 
-  const getStatusIcon = (status: string) => {
-    switch(status) {
-      case "NEW": return <Clock className="w-3 h-3" />;
-      case "CONTACTED": return <Inbox className="w-3 h-3" />;
-      case "IN PROGRESS": return <PlayCircle className="w-3 h-3" />;
-      case "COMPLETED": return <CheckCircle2 className="w-3 h-3" />;
-      case "ARCHIVED": return <Archive className="w-3 h-3" />;
-      default: return <Clock className="w-3 h-3" />;
+  const filtered = inquiries.filter((inq) => {
+    const matchesStatus = statusFilter === "ALL" || inq.status === statusFilter;
+    const matchesSearch =
+      inq.name.toLowerCase().includes(search.toLowerCase()) ||
+      inq.email.toLowerCase().includes(search.toLowerCase()) ||
+      (inq.service && inq.service.toLowerCase().includes(search.toLowerCase()));
+    return matchesStatus && matchesSearch;
+  });
+
+  const getBadgeStyle = (status: string) => {
+    switch (status) {
+      case "NEW":
+        return "bg-amber-100 text-amber-900 border-amber-300";
+      case "REVIEWING":
+        return "bg-sky-100 text-sky-900 border-sky-300";
+      case "CONTACTED":
+        return "bg-indigo-100 text-indigo-900 border-indigo-300";
+      case "PROPOSAL":
+        return "bg-purple-100 text-purple-900 border-purple-300";
+      case "BOOKED":
+        return "bg-emerald-100 text-emerald-900 border-emerald-300";
+      case "COMPLETED":
+        return "bg-stone-200 text-stone-800 border-stone-300";
+      default:
+        return "bg-stone-100 text-stone-700 border-stone-300";
     }
   };
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#D9D5CE] pb-6">
         <div>
-          <h1 className="text-3xl font-bold text-white">
-            Client Shoot Inquiries
+          <span className="type-meta text-[#77736D] block mb-1">CLIENT COMMISSION PIPELINE</span>
+          <h1 className="font-serif text-4xl sm:text-5xl font-normal text-[#151515]">
+            Inquiries CRM
           </h1>
-          <p className="text-sm text-stone-200/80 mt-1">
-            Review incoming commission requests and update outreach status.
+          <p className="type-body text-[#77736D] mt-1">
+            Pipeline: NEW → REVIEWING → CONTACTED → PROPOSAL → BOOKED → COMPLETED
           </p>
         </div>
-        <button
-          onClick={loadInquiries}
-          disabled={isLoading}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-none type-body-base font-semibold text-copper-50 bg-gradient-to-r from-copper-300 to-copper-500 hover:from-copper-400 hover:to-copper-600 shadow-md shadow-copper-500/20 transition-all cursor-pointer"
-        >
-          <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin" : ""}`} />
-          Refresh Registry
-        </button>
       </div>
 
-      <div className="bg-black border border-stone-800 rounded-none overflow-hidden shadow-2xl shadow-stone-950/40">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-stone-500/20 text-left">
-            <thead className="bg-black type-body-base font-semibold text-[var(--accent-muted-gold)]">
-              <tr>
-                <th className="px-6 py-4">Date</th>
-                <th className="px-6 py-4">Patron Details</th>
-                <th className="px-6 py-4">Project Info</th>
-                <th className="px-6 py-4">Commission Brief</th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4 text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-stone-500/10 text-sm">
-              {inquiries.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-stone-500">
-                    {isLoading ? "Loading inquiries from database..." : "No commission inquiries recorded yet."}
-                  </td>
-                </tr>
-              ) : (
-                inquiries.map((inq) => (
-                  <tr key={inq.id} className="hover:bg-stone-900/20 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap type-body-base text-stone-500 align-top">
-                      {new Date(inq.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap align-top">
-                      <div className="text-white font-medium">{inq.name}</div>
-                      <div className="type-body-base text-[var(--accent-muted-gold)]">{inq.email}</div>
-                      {inq.company && <div className="text-stone-400 text-xs mt-1">Company: {inq.company}</div>}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap align-top text-stone-400 text-xs space-y-1">
-                      <div>Budget: {inq.budget || "N/A"}</div>
-                      <div>Timeline: {inq.timeline || "N/A"}</div>
-                      <div>Ref: {inq.reference || "N/A"}</div>
-                    </td>
-                    <td className="px-6 py-4 type-body-base text-white max-w-xs truncate align-top whitespace-pre-wrap">
-                      {inq.message}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap align-top">
-                      <span
-                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full type-body-base font-semibold uppercase ${
-                          inq.status === "NEW" ? "bg-copper-500/15 text-copper-600 border border-copper-500/30" :
-                          inq.status === "COMPLETED" ? "bg-green-950 text-green-500 border border-green-900" :
-                          inq.status === "ARCHIVED" ? "bg-stone-900 text-stone-500 border border-stone-800" :
-                          "bg-blue-950 text-blue-500 border border-blue-900"
-                        }`}
-                      >
-                        {getStatusIcon(inq.status)}
-                        {inq.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right type-body-base align-top">
-                      <select 
-                        className="px-3 py-1.5 rounded-lg type-body-base text-white bg-stone-950 border border-stone-800 focus:outline-none"
-                        value={inq.status}
-                        onChange={(e) => updateStatus(inq.id, e.target.value)}
-                      >
-                        <option value="NEW">New</option>
-                        <option value="CONTACTED">Contacted</option>
-                        <option value="IN PROGRESS">In Progress</option>
-                        <option value="COMPLETED">Completed</option>
-                        <option value="ARCHIVED">Archived</option>
-                      </select>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+      {/* Filter Bar */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-white p-4 border border-[#D9D5CE]">
+        <div className="relative flex-1">
+          <Search className="w-4 h-4 text-[#77736D] absolute left-3 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by patron name, email, or service..."
+            className="w-full pl-9 pr-4 py-2 border border-[#D9D5CE] text-sm focus:outline-hidden focus:border-[#151515]"
+          />
         </div>
+
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+          <Filter className="w-3.5 h-3.5 text-[#77736D] shrink-0" />
+          {PIPELINE_STATUSES.map((st) => (
+            <button
+              key={st}
+              onClick={() => setStatusFilter(st)}
+              className={`type-meta text-[10px] px-2.5 py-1.5 transition-colors whitespace-nowrap ${
+                statusFilter === st
+                  ? "bg-[#151515] text-[#F4F1EB]"
+                  : "bg-[#F4F1EB] text-[#77736D] hover:text-[#151515]"
+              }`}
+            >
+              {st}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Inquiries Table */}
+      <div className="bg-white border border-[#D9D5CE] divide-y divide-[#D9D5CE]">
+        {filtered.map((inq) => (
+          <div
+            key={inq.id}
+            className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:bg-[#F4F1EB]/30 transition-colors"
+          >
+            <div className="space-y-1.5 flex-1">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="font-serif text-2xl text-[#151515]">{inq.name}</span>
+                <span className="type-meta text-xs bg-[#F4F1EB] px-2 py-0.5 border border-[#D9D5CE]">
+                  {inq.service}
+                </span>
+
+                {/* Status Dropdown to advance in pipeline */}
+                <select
+                  value={inq.status}
+                  onChange={(e) => handleUpdateStatus(inq.id, e.target.value)}
+                  className={`type-meta text-[10px] px-2 py-0.5 font-bold border rounded-xs cursor-pointer focus:outline-none ${getBadgeStyle(
+                    inq.status
+                  )}`}
+                >
+                  <option value="NEW">NEW</option>
+                  <option value="REVIEWING">REVIEWING</option>
+                  <option value="CONTACTED">CONTACTED</option>
+                  <option value="PROPOSAL">PROPOSAL</option>
+                  <option value="BOOKED">BOOKED</option>
+                  <option value="COMPLETED">COMPLETED</option>
+                </select>
+
+                <span className="text-xs text-[#77736D] font-mono">{inq.createdAt}</span>
+              </div>
+
+              <p className="type-small text-[#77736D] line-clamp-1">
+                &ldquo;{inq.message}&rdquo;
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 text-xs text-[#77736D] pt-1">
+                <span className="flex items-center gap-1">
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>{inq.email}</span>
+                </span>
+                {inq.phone && (
+                  <span className="flex items-center gap-1">
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>{inq.phone}</span>
+                  </span>
+                )}
+                {inq.location && (
+                  <span className="flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span>{inq.location}</span>
+                  </span>
+                )}
+                {inq.budget && <span>Budget: {inq.budget}</span>}
+              </div>
+            </div>
+
+            <div className="self-end md:self-auto shrink-0 flex items-center gap-3">
+              <Link
+                href={`/admin/inquiries/${inq.id}`}
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#151515] text-[#F4F1EB] type-meta text-xs hover:bg-[#333333] transition-colors"
+              >
+                <span>Inspect Lead</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

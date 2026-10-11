@@ -1,40 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const cormorant = Cormorant_Garamond({
-  variable: "--",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-});
-
-export const metadata: Metadata = {
-  title: "Studioza Atelier | Fine Photography & Art Direction",
-  description:
-    "Bespoke luxury photography studio delivering medium-format editorial covers, intimate cinematic portraits, and architectural archives.",
-};
-
 import { AtelierTransitionProvider } from "@/components/transitions";
 import LenisProvider from "@/components/ui/LenisProvider";
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export const metadata: Metadata = {
+  title: "Studioza — Digital Photography Magazine & Creative Atelier",
+  description:
+    "An editorial photography studio platform operating at the intersection of cinematic storytelling, medium-format discipline, and digital architecture.",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
+    <html lang="en" className="h-full antialiased">
+      <body className="min-h-full flex flex-col font-sans">
         <LenisProvider>
           <AtelierTransitionProvider>{children}</AtelierTransitionProvider>
         </LenisProvider>

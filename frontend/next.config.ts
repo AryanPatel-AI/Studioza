@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // Serve 100% original full-resolution master files without any downsampling, resizing, or compression
+    unoptimized: true,
+    qualities: [75, 100],
     remotePatterns: [
       {
         protocol: "https",

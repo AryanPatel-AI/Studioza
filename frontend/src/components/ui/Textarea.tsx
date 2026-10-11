@@ -1,5 +1,9 @@
-import React from 'react';
-import { cn } from '@/lib/utils';
+/**
+ * Editorial Multi-line Textarea
+ * Custom border and typography textarea designed for project descriptions and client inquiry messages.
+ */
+import React from "react";
+import { cn } from "@/lib/utils";
 
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 

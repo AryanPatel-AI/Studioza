@@ -1,3 +1,7 @@
+/**
+ * MotionReveal Scroll Animation Primitive
+ * Employs IntersectionObserver to trigger smooth CSS transforms on scroll with prefers-reduced-motion fallback.
+ */
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -27,6 +31,7 @@ export default function MotionReveal({
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
+    // Respect OS-level reduced motion preferences
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
     if (mediaQuery.matches) {
@@ -41,30 +46,20 @@ export default function MotionReveal({
           observer.unobserve(entry.target);
         }
       },
-      {
-        threshold,
-        rootMargin: "0px 0px -40px 0px",
-      }
+      { threshold, rootMargin: "0px 0px -40px 0px" }
     );
 
     const currentDom = domRef.current;
-    if (currentDom) {
-      observer.observe(currentDom);
-    }
+    if (currentDom) observer.observe(currentDom);
 
     return () => {
       if (currentDom) observer.unobserve(currentDom);
     };
   }, [threshold]);
 
-  // Initial & Visible Styles based on selected animation
   const getStyles = () => {
     if (prefersReducedMotion) {
-      return {
-        opacity: 1,
-        transform: "none",
-        transition: "none",
-      };
+      return { opacity: 1, transform: "none", transition: "none" };
     }
 
     const baseTransition = `opacity ${durationMs}ms cubic-bezier(0.16, 1, 0.3, 1) ${delayMs}ms, transform ${durationMs}ms cubic-bezier(0.16, 1, 0.3, 1) ${delayMs}ms`;
@@ -72,44 +67,18 @@ export default function MotionReveal({
     if (!isVisible) {
       switch (animation) {
         case "fade-up":
-          return {
-            opacity: 0,
-            transform: "translate3d(0, 28px, 0)",
-            transition: baseTransition,
-            willChange: "opacity, transform",
-          };
+          return { opacity: 0, transform: "translate3d(0, 28px, 0)", transition: baseTransition, willChange: "opacity, transform" };
         case "fade-scale":
-          return {
-            opacity: 0,
-            transform: "scale(0.96) translate3d(0, 16px, 0)",
-            transition: baseTransition,
-            willChange: "opacity, transform",
-          };
+          return { opacity: 0, transform: "scale(0.96) translate3d(0, 16px, 0)", transition: baseTransition, willChange: "opacity, transform" };
         case "reveal-aperture":
-          return {
-            opacity: 0,
-            transform: "scale(1.04)",
-            filter: "blur(4px)",
-            transition: `${baseTransition}, filter ${durationMs}ms ease-out ${delayMs}ms`,
-            willChange: "opacity, transform, filter",
-          };
+          return { opacity: 0, transform: "scale(1.04)", filter: "blur(4px)", transition: `${baseTransition}, filter ${durationMs}ms ease-out ${delayMs}ms`, willChange: "opacity, transform, filter" };
         case "fade-in":
         default:
-          return {
-            opacity: 0,
-            transform: "none",
-            transition: baseTransition,
-            willChange: "opacity",
-          };
+          return { opacity: 0, transform: "none", transition: baseTransition, willChange: "opacity" };
       }
     }
 
-    return {
-      opacity: 1,
-      transform: "translate3d(0, 0, 0) scale(1)",
-      filter: "none",
-      transition: baseTransition,
-    };
+    return { opacity: 1, transform: "translate3d(0, 0, 0) scale(1)", filter: "none", transition: baseTransition };
   };
 
   return (

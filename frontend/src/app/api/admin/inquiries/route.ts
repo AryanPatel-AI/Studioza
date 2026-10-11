@@ -1,3 +1,7 @@
+/**
+ * Admin Inquiries List API Route
+ * Authenticates administrator credentials and returns inquiries ordered chronologically.
+ */
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSessionUser } from "@/lib/auth/session";
@@ -5,7 +9,7 @@ import { getSessionUser } from "@/lib/auth/session";
 export async function GET() {
   try {
     const user = await getSessionUser();
-    if (!user || user.role !== "admin") {
+    if (!user || (user.role !== "ADMIN" && user.role !== "EDITOR")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

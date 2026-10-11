@@ -13,8 +13,6 @@ import {
   LogOut,
   Menu,
   X,
-  Plus,
-  Layers,
 } from "lucide-react";
 import { logoutUser } from "@/app/actions/auth";
 
@@ -29,10 +27,15 @@ interface AppShellProps {
   };
 }
 
+/**
+ * AppShell - Studio desktop sidebar navigation and responsive mobile drawer.
+ * Wraps all dashboard routes with contextual nav items, user badge, and signout trigger.
+ */
 export default function AppShell({ children, user }: AppShellProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  // Core navigation items; administrative link appended dynamically
   const navigation = [
     { name: "Archive", href: "/dashboard", icon: LayoutDashboard },
     { name: "Projects", href: "/projects", icon: FolderKanban },
@@ -73,14 +76,9 @@ export default function AppShell({ children, user }: AppShellProps) {
               className="flex flex-col group select-none"
               onClick={() => setMobileOpen(false)}
             >
-              <span className="font-serif text-lg leading-none tracking-normal text-ink-primary">
-                Studioza
-              </span>
-              <span className="type-mono-micro mt-1 text-ink-muted uppercase">
-                Workspace
-              </span>
+              <span className="font-serif text-lg leading-none tracking-normal text-ink-primary">Studioza</span>
+              <span className="type-mono-micro mt-1 text-ink-muted uppercase">Workspace</span>
             </Link>
-
             <button
               onClick={() => setMobileOpen(false)}
               className="text-ink-muted hover:text-ink-primary md:hidden"
@@ -135,7 +133,6 @@ export default function AppShell({ children, user }: AppShellProps) {
                 <p className="type-mono-micro text-ink-muted truncate opacity-70 mt-0.5">{user.email}</p>
               </div>
             </Link>
-
             <button
               onClick={handleLogout}
               className="text-ink-muted hover:text-copper-600 transition-colors shrink-0"
@@ -150,7 +147,6 @@ export default function AppShell({ children, user }: AppShellProps) {
 
       {/* Main Content Shell */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Bar on Mobile */}
         <header className="h-16 px-6 border-b border-hairline bg-background flex items-center justify-between md:hidden sticky top-0 z-30">
           <div className="flex items-center gap-4">
             <button
@@ -164,7 +160,6 @@ export default function AppShell({ children, user }: AppShellProps) {
           </div>
         </header>
 
-        {/* Page Content Body */}
         <main className="flex-1 p-6 sm:p-12 max-w-7xl w-full mx-auto">
           {children}
         </main>
@@ -172,3 +167,4 @@ export default function AppShell({ children, user }: AppShellProps) {
     </div>
   );
 }
+

@@ -1,3 +1,7 @@
+/**
+ * FloatingOpticalGlass Component
+ * Interactive perspective glass tile with counter-shifting soft drop shadows and restrained tint styles.
+ */
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -34,12 +38,12 @@ export default function FloatingOpticalGlass({
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
 
-    const xOffset = (px - 0.5) * depth;
-    const yOffset = (py - 0.5) * depth;
-    const rx = (py - 0.5) * -4;
-    const ry = (px - 0.5) * 4;
-
-    setTransform({ x: xOffset, y: yOffset, rotateX: rx, rotateY: ry });
+    setTransform({
+      x: (px - 0.5) * depth,
+      y: (py - 0.5) * depth,
+      rotateX: (py - 0.5) * -4,
+      rotateY: (px - 0.5) * 4,
+    });
   };
 
   const handleMouseLeave = () => {
@@ -47,7 +51,6 @@ export default function FloatingOpticalGlass({
     setTransform({ x: 0, y: 0, rotateX: 0, rotateY: 0 });
   };
 
-  // Flattened Tint Styles
   const tintStyles = {
     champagne: "bg-background border border-hairline",
     smoke: "bg-charcoal text-ink-inverse border border-hairline",
@@ -61,11 +64,9 @@ export default function FloatingOpticalGlass({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
       className={`relative select-none ${className}`}
-      style={{
-        perspective: "1000px",
-      }}
+      style={{ perspective: "1000px" }}
     >
-      {/* Flattened Physical Drop Shadow */}
+      {/* Physical counter-shifting drop shadow */}
       <div
         className="absolute inset-2 bg-charcoal pointer-events-none transition-all ease-out z-0"
         style={{
@@ -78,7 +79,7 @@ export default function FloatingOpticalGlass({
         }}
       />
 
-      {/* Flat Architectural Panel (No glass) */}
+      {/* Floating panel container */}
       <div
         className={`relative z-10 overflow-hidden rounded-none ${tintStyles} transition-transform ease-out will-change-transform`}
         style={{
@@ -92,7 +93,6 @@ export default function FloatingOpticalGlass({
             : "0 10px 30px -10px rgba(0, 0, 0, 0.1)",
         }}
       >
-        {/* Interior Surface Content */}
         <div className="relative z-30">{children}</div>
       </div>
     </div>

@@ -1,3 +1,7 @@
+/**
+ * SpiralScrollGallery Component
+ * Implements a 3D cylindrical spiral gallery driven by Framer Motion scroll progress and perspective transforms.
+ */
 "use client";
 
 import React, { useRef } from "react";
@@ -16,47 +20,34 @@ const IMAGES = [
 
 export default function SpiralScrollGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Track the scroll progress of this specific component
+
+  // Measure component-relative vertical scroll progress
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  // Map scroll progress to a full 360-degree rotation (or multiple turns)
-  // Negative to twist down into the screen.
+  // Map progress to two full 360-degree rotations (-720 deg)
   const twistRotation = useTransform(scrollYProgress, [0, 1], [0, -720]);
-  
+
   return (
-    <section 
-      ref={containerRef} 
-      className="relative w-full bg-sage-100 h-[400vh]" // extremely tall so we can scroll
-    >
+    <section ref={containerRef} className="relative w-full bg-sage-100 h-[400vh]">
       <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center perspective-[1200px]">
-        {/* Header Text Overlay */}
+        {/* Sticky Header Overlay */}
         <div className="absolute top-20 left-1/2 -transtone-x-1/2 z-50 text-center pointer-events-none mix-blend-difference">
-          <h2 className="text-4xl sm:text-6xl text-foreground er">
-            Spiral Archive
-          </h2>
-          <p className="text-foreground-muted mt-2 text-sm uppercase">
-            Scroll to descend
-          </p>
+          <h2 className="text-4xl sm:text-6xl text-foreground font-serif">Spiral Archive</h2>
+          <p className="text-foreground-muted mt-2 text-sm uppercase">Scroll to descend</p>
         </div>
 
-        {/* The rotating spiral container */}
-        <motion.div 
-          style={{
-            rotateZ: twistRotation,
-            transformStyle: "preserve-3d"
-          }}
+        {/* 3D Rotating Cylinder Wheel */}
+        <motion.div
+          style={{ rotateZ: twistRotation, transformStyle: "preserve-3d" }}
           className="relative w-full max-w-4xl aspect-square flex items-center justify-center"
         >
           {IMAGES.map((src, i) => {
-            // Distribute images evenly around a circle
             const angle = (i / IMAGES.length) * 360;
-            // Radius of the circle (how far out they are)
-            const radius = 400; 
-            
+            const radius = 400; // Radial distance from central anchor
+
             return (
               <motion.div
                 key={i}
@@ -66,10 +57,10 @@ export default function SpiralScrollGallery() {
                   transform: `rotateZ(${angle}deg) translateY(-${radius}px) rotateX(15deg)`,
                 }}
               >
-                <img 
-                  src={src} 
-                  alt={`Archive photo ${i + 1}`} 
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 cursor-pointer"
+                <img
+                  src={src}
+                  alt={`Archive photo ${i + 1}`}
+                  className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-700 cursor-pointer p-1 bg-stone-950"
                 />
               </motion.div>
             );

@@ -1,114 +1,126 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import Link from "next/link";
 import Navbar from "@/components/core/Navbar";
 import Footer from "@/components/core/Footer";
 import FilmGrain from "@/components/film/FilmGrain";
-import Link from "next/link";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { SERVICES, getImagePlateInfo } from "@/lib/data/studioData";
 
-const services = [
-  {
-    id: "digital",
-    num: "01",
-    title: "Digital Experiences",
-    desc: "We construct kinetic web architectures and interactive platforms that feel physical. By leveraging WebGL and strict computational motion, we create environments that reject synthetic smoothing in favor of raw digital performance.",
-    image: "/images/sandstone-palace-domes.jpg",
-    workLink: "/work/sandstone-domes",
-    workTitle: "Sandstone Palace Domes"
-  },
-  {
-    id: "brand",
-    num: "02",
-    title: "Brand Systems",
-    desc: "Rigorous typographical hierarchies and symbol systems rooted in classical graphic design. We treat brand identity as an architectural foundation—monumental, scalable, and resistant to ephemeral trends.",
-    image: "/images/palace-arch-courtyard.jpg",
-    workLink: "/work/amer-citadel",
-    workTitle: "Amer Citadel Study"
-  },
-  {
-    id: "photo",
-    num: "03",
-    title: "Photography",
-    desc: "A discipline of light and time. We balance medium-format digital capture with silver halide methodology, producing archival-grade imagery that focuses on structural chiaroscuro rather than flat illumination.",
-    image: "/images/fort-ramparts-overlook.jpg",
-    workLink: "/work/fort-ramparts",
-    workTitle: "Fort Ramparts & High Ridge"
-  }
-];
-
-export default function ServicesPage() {
+export default function ServicesIndexPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg-deep-night)] text-[var(--ink-inverse)] relative font-sans selection:bg-[var(--accent-muted-gold)] selection:text-[var(--bg-near-black)]">
+    <div className="min-h-screen bg-[#F4F1EB] text-[#151515] relative">
       <FilmGrain />
       <Navbar />
 
-      <main className="pt-40 pb-32">
-        <div className="px-6 lg:px-12 max-w-[100rem] mx-auto mb-32 border-b border-[rgba(247,245,240,0.15)] pb-12">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
-            className="type-display-hero text-[var(--bg-warm-ivory)]"
-          >
-            Disciplines
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
-            className="type-body-lead text-[var(--ink-inverse-muted)] mt-6 max-w-2xl"
-          >
-            The studio operates across core practices, treating each as a material study in light, form, and code.
-          </motion.p>
-        </div>
+      <main className="pt-32 pb-32">
+        {/* Header */}
+        <section className="px-6 lg:px-12 max-w-7xl mx-auto mb-20">
+          <div className="border-b border-[#D9D5CE] pb-10 space-y-4">
+            <span className="type-meta text-[#77736D]">03 // Studio Disciplines</span>
+            <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl font-normal text-[#151515]">
+              Services
+            </h1>
+            <p className="type-body-l text-[#77736D] max-w-2xl">
+              We specialize in five core creative disciplines: weddings, fine art portraits, fashion editorials, architectural documentation, and private cultural events.
+            </p>
+          </div>
+        </section>
 
-        <div className="flex flex-col">
-          {services.map((service, index) => (
-            <div key={service.id} className="border-b border-[rgba(247,245,240,0.1)] group">
-              <div className="px-6 lg:px-12 max-w-[100rem] mx-auto py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
-                
-                <motion.div 
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
-                  className="lg:col-span-5 flex flex-col"
-                >
-                  <span className="type-meta text-[var(--accent-muted-gold)] mb-6">{service.num} / CORE</span>
-                  <h2 className="type-display-title text-[var(--bg-warm-ivory)] mb-8">{service.title}</h2>
-                  <p className="type-body-base text-[var(--ink-inverse-muted)] mb-12 max-w-md">
-                    {service.desc}
-                  </p>
-                  <div>
-                    <span className="type-meta text-[var(--ink-inverse-muted)] block mb-4">Featured Commission</span>
-                    <Link href={service.workLink} className="inline-block type-body-base text-[var(--ink-inverse)] hover:text-[var(--accent-muted-gold)] transition-colors border-b border-[rgba(247,245,240,0.3)] hover:border-[var(--accent-muted-gold)] pb-1">
-                      {service.workTitle} →
+        {/* Disciplines & Services Showcase */}
+        <section className="px-6 lg:px-12 max-w-7xl mx-auto space-y-24">
+          {SERVICES.map((service, idx) => (
+            <div
+              key={service.slug}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center border-b border-[#D9D5CE] pb-24"
+            >
+              <div className="lg:col-span-6">
+                {(() => {
+                  const plateInfo = getImagePlateInfo(service.coverImage);
+                  return (
+                    <Link href={`/services/${service.slug}`} className="group block overflow-hidden">
+                      <div className={`relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] p-4 flex items-center justify-center ${plateInfo.aspectClass} ${plateInfo.isLandscape ? "w-full" : "max-w-sm mx-auto"}`}>
+                        <Image
+                          quality={100}
+                          unoptimized
+                          src={service.coverImage}
+                          alt={service.name}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                          className="object-contain p-2"
+                        />
+                      </div>
                     </Link>
-                  </div>
-                </motion.div>
+                  );
+                })()}
+              </div>
 
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
-                  className="lg:col-span-7 aspect-[16/9] overflow-hidden relative bg-[var(--bg-midnight-blue)]"
-                >
-                  <div className="absolute inset-0 bg-[var(--bg-deep-night)] mix-blend-multiply opacity-40 transition-opacity duration-700 group-hover:opacity-0 z-10" />
-                  <Image 
-                    src={service.image} 
-                    alt={service.title} 
-                    fill 
-                    className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)] grayscale group-hover:grayscale-0" 
-                  />
-                </motion.div>
-                
+              <div className="lg:col-span-6 space-y-6">
+                <div className="flex items-center justify-between">
+                  <span className="type-meta text-[#77736D]">DISCIPLINE 0{idx + 1}</span>
+                  <span className="type-meta text-[#CC5500] text-xs">{service.startingPrice}</span>
+                </div>
+
+                <h2 className="font-serif text-4xl sm:text-5xl font-normal text-[#151515]">
+                  <Link href={`/services/${service.slug}`} className="hover:underline">
+                    {service.name}
+                  </Link>
+                </h2>
+
+                <p className="type-body-l text-[#77736D]">
+                  {service.tagline}
+                </p>
+
+                <p className="type-body text-[#151515] leading-relaxed">
+                  {service.philosophy}
+                </p>
+
+                <div className="pt-2 flex items-center gap-6">
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="inline-flex items-center gap-2 bg-[#151515] text-[#F4F1EB] px-6 py-3.5 type-meta text-xs hover:bg-[#333333] transition-colors"
+                  >
+                    <span>View Deliverables &amp; Process</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                  <Link
+                    href="/booking"
+                    className="type-meta text-[#151515] hover:underline text-xs"
+                  >
+                    Book Consultation →
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
-        </div>
+        </section>
+
+        {/* Studio Standard Principles */}
+        <section className="px-6 lg:px-12 max-w-7xl mx-auto pt-24">
+          <div className="bg-[#171717] text-white p-12 lg:p-16 space-y-8">
+            <span className="type-meta text-[#CC5500]">Our Technical &amp; Archival Standard</span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-white/10 pt-8">
+              <div className="space-y-2">
+                <h4 className="font-serif text-2xl text-white">Medium Format Glass</h4>
+                <p className="type-small text-[#A39E96]">
+                  Phase One and Hasselblad medium format sensors delivering 100MP optical resolution and natural dynamic range.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-serif text-2xl text-white">Silver Halide Chemistry</h4>
+                <p className="type-small text-[#A39E96]">
+                  Selected large format 4x5 and 120 film sheets hand-processed in our Jaipur darkroom for true tonal richness.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-serif text-2xl text-white">Bespoke Monograph Binding</h4>
+                <p className="type-small text-[#A39E96]">
+                  Heirloom books printed on 100% cotton rag paper, bound by master artisans in leather and Florentine marble paper.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer />

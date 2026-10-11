@@ -1,8 +1,8 @@
-"use server";
+'use server';
 
-import { prisma } from "@/lib/prisma";
-import { requireAuth } from "@/lib/auth/session";
-import { revalidatePath } from "next/cache";
+import { prisma } from '@/lib/prisma';
+import { requireAuth } from '@/lib/auth/session';
+import { revalidatePath } from 'next/cache';
 
 export async function publishProject(projectId: string) {
   try {
@@ -10,61 +10,38 @@ export async function publishProject(projectId: string) {
 
     const project = await prisma.project.findUnique({
       where: { id: projectId },
+      include: { images: true },
     });
-
-    if (!project) {
-      return { error: "Project not found." };
+    if (!project) return { error: 'Project not found.' };
+    if (project.createdById !== user.id && user.role !== 'ADMIN') {
+      return { error: 'Unauthorized.' };
     }
-
-    if (project.ownerId !== user.id && user.role !== "admin") {
-      return { error: "Unauthorized." };
-    }
-
-    if (!project.name || !project.slug) {
-      return { error: "Project requires a name and slug before publishing." };
-    }
-
-    let parsedContent = [];
-    try {
-      parsedContent = JSON.parse(project.content || "[]");
-    } catch {
-      return { error: "Project contains invalid content." };
-    }
-
-    if (!Array.isArray(parsedContent) || parsedContent.length === 0) {
-      return { error: "Project must contain at least one content section before publishing." };
+    if (!project.title || !project.slug) {
+      return { error: 'Project requires a title and slug before publishing.' };
     }
 
     const updated = await prisma.project.update({
       where: { id: projectId },
-      data: {
-        status: "published",
-        publishedAt: new Date(),
-      },
+      data: { status: 'PUBLISHED', publishedAt: new Date() },
     });
 
     await prisma.activity.create({
       data: {
-        projectId: project.id,
-        userId: user.id,
-        type: "PROJECT_PUBLISHED",
-        metadata: JSON.stringify({ slug: updated.slug, name: updated.name }),
+        actorId: user.id,
+        action: 'PROJECT_PUBLISHED',
+        targetType: 'project',
+        targetId: project.id,
+        summary: `Published monograph: ${project.title}`,
       },
     });
 
-    revalidatePath(`/projects/${projectId}`);
-    revalidatePath(`/p/${updated.slug}`);
-    revalidatePath("/dashboard");
-    revalidatePath("/projects");
+    revalidatePath(`/project/${updated.slug}`);
+    revalidatePath('/portfolio');
 
-    return {
-      success: true,
-      slug: updated.slug,
-      publishedAt: updated.publishedAt,
-    };
+    return { success: true, slug: updated.slug, publishedAt: updated.publishedAt };
   } catch (err: any) {
-    console.error("publishProject error:", err);
-    return { error: "An unexpected error occurred during publishing." };
+    console.error('publishProject error:', err);
+    return { error: 'An unexpected error occurred during publishing.' };
   }
 }
 
@@ -72,42 +49,33 @@ export async function unpublishProject(projectId: string) {
   try {
     const user = await requireAuth();
 
-    const project = await prisma.project.findUnique({
-      where: { id: projectId },
-    });
-
-    if (!project) {
-      return { error: "Project not found." };
-    }
-
-    if (project.ownerId !== user.id && user.role !== "admin") {
-      return { error: "Unauthorized." };
+    const project = await prisma.project.findUnique({ where: { id: projectId } });
+    if (!project) return { error: 'Project not found.' };
+    if (project.createdById !== user.id && user.role !== 'ADMIN') {
+      return { error: 'Unauthorized.' };
     }
 
     const updated = await prisma.project.update({
       where: { id: projectId },
-      data: {
-        status: "draft",
-      },
+      data: { status: 'DRAFT' },
     });
 
     await prisma.activity.create({
       data: {
-        projectId: project.id,
-        userId: user.id,
-        type: "PROJECT_UNPUBLISHED",
-        metadata: JSON.stringify({ name: updated.name }),
+        actorId: user.id,
+        action: 'PROJECT_UNPUBLISHED',
+        targetType: 'project',
+        targetId: project.id,
+        summary: `Reverted monograph to draft: ${project.title}`,
       },
     });
 
-    revalidatePath(`/projects/${projectId}`);
-    revalidatePath(`/p/${updated.slug}`);
-    revalidatePath("/dashboard");
-    revalidatePath("/projects");
+    revalidatePath(`/project/${updated.slug}`);
+    revalidatePath('/portfolio');
 
-    return { success: true };
+    return { success: true, slug: updated.slug };
   } catch (err: any) {
-    console.error("unpublishProject error:", err);
-    return { error: "Failed to unpublish project." };
+    console.error('unpublishProject error:', err);
+    return { error: 'An unexpected error occurred while unpublishing.' };
   }
 }

@@ -1,3 +1,8 @@
+/**
+ * StudioLightingStage3D
+ * Interactive WebGL photographic lighting simulator built with Three.js.
+ * Demonstrates classic studio lighting setups (Chiaroscuro, Rembrandt, Split, Rim) with real-time shadow mapping.
+ */
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
@@ -12,7 +17,7 @@ interface StudioLightingStage3DProps {
 
 interface LightingPreset {
   name: string;
-  keyAngle: number; // in radians
+  keyAngle: number;
   keyElevation: number;
   keyIntensity: number;
   rimAngle: number;
@@ -21,6 +26,7 @@ interface LightingPreset {
   description: string;
 }
 
+// Classical lighting schemes with studio color temperatures
 const PRESETS: Record<string, LightingPreset> = {
   chiaroscuro: {
     name: "Classic Chiaroscuro",
@@ -76,7 +82,7 @@ export default function StudioLightingStage3D({
   const [keyPower, setKeyPower] = useState(3.8);
   const [rimPower, setRimPower] = useState(4.2);
 
-  // Scene references
+  // Three.js instances and references
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
@@ -88,7 +94,7 @@ export default function StudioLightingStage3D({
   const animFrameRef = useRef<number | null>(null);
   const isVisibleRef = useRef<boolean>(true);
 
-  // Orbit angle tracking
+  // Orbital angle tracking
   const currentAngles = useRef({
     keyAngle: PRESETS[initialPreset].keyAngle,
     keyElevation: PRESETS[initialPreset].keyElevation,
@@ -103,11 +109,11 @@ export default function StudioLightingStage3D({
     rimElevation: PRESETS[initialPreset].rimElevation,
   });
 
-  // Update light 3D positions in the scene
+  // Reposition strobes and spotlights in 3D polar coordinates
   const updateLightPositions = useCallback(() => {
     const radius = 3.2;
 
-    // Key Light (Blue Octabox)
+    // Key Light (Octabox)
     if (keyLightRef.current && keyStrobeMeshRef.current) {
       const kAngle = currentAngles.current.keyAngle;
       const kElev = currentAngles.current.keyElevation;
@@ -120,7 +126,7 @@ export default function StudioLightingStage3D({
       keyStrobeMeshRef.current.lookAt(0, 0.4, 0);
     }
 
-    // Rim Light (Amber Stripbox)
+    // Rim Light (Stripbox)
     if (rimLightRef.current && rimStrobeMeshRef.current) {
       const rAngle = currentAngles.current.rimAngle;
       const rElev = currentAngles.current.rimElevation;
@@ -134,7 +140,6 @@ export default function StudioLightingStage3D({
     }
   }, []);
 
-  // Apply Preset
   const selectPreset = (key: string) => {
     const preset = PRESETS[key];
     if (!preset) return;
@@ -154,15 +159,11 @@ export default function StudioLightingStage3D({
   }, [initialPreset]);
 
   useEffect(() => {
-    if (keyLightRef.current) {
-      keyLightRef.current.intensity = keyPower;
-    }
+    if (keyLightRef.current) keyLightRef.current.intensity = keyPower;
   }, [keyPower]);
 
   useEffect(() => {
-    if (rimLightRef.current) {
-      rimLightRef.current.intensity = rimPower;
-    }
+    if (rimLightRef.current) rimLightRef.current.intensity = rimPower;
   }, [rimPower]);
 
   useEffect(() => {
@@ -173,17 +174,16 @@ export default function StudioLightingStage3D({
     const width = container.clientWidth || 500;
     const height = container.clientHeight || 400;
 
-    // 1. Scene
+    // 1. Scene & Camera
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
-    // 2. Camera
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 50);
     camera.position.set(0, 1.6, 4.8);
     camera.lookAt(0, 0.35, 0);
     cameraRef.current = camera;
 
-    // 3. Renderer with shadow map support
+    // 2. High-performance WebGL Renderer
     const renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
@@ -198,21 +198,16 @@ export default function StudioLightingStage3D({
     renderer.toneMappingExposure = 1.2;
     rendererRef.current = renderer;
 
-    // 4. Studio Environment
-    // Seamless Studio Cyclorama Curved Floor & Backdrop (Obsidian Plaster)
+    // 3. Studio Cyclorama Floor
     const floorGeo = new THREE.PlaneGeometry(16, 16, 32, 32);
-    const floorMat = new THREE.MeshStandardMaterial({
-      color: 0x0c0b0a,
-      roughness: 0.7,
-      metalness: 0.15,
-    });
+    const floorMat = new THREE.MeshStandardMaterial({ color: 0x0c0b0a, roughness: 0.7, metalness: 0.15 });
     const floor = new THREE.Mesh(floorGeo, floorMat);
     floor.rotation.x = -Math.PI / 2;
     floor.position.y = -0.7;
     floor.receiveShadow = true;
     scene.add(floor);
 
-    // Subtle studio grid circles (Brass and warm charcoal)
+    // Studio grid circles
     const gridCircle1 = new THREE.Mesh(
       new THREE.RingGeometry(1.5, 1.52, 48),
       new THREE.MeshBasicMaterial({ color: 0x26221d, side: THREE.DoubleSide })
@@ -229,51 +224,33 @@ export default function StudioLightingStage3D({
     gridCircle2.position.y = -0.69;
     scene.add(gridCircle2);
 
-    // 5. Subject Model (Sculptural Studio Portrait Bust & Plinth)
+    // 4. Subject Model (Portrait Bust)
     const subjectGroup = new THREE.Group();
     subjectMeshRef.current = subjectGroup;
     scene.add(subjectGroup);
 
-    // Marble/Plaster Material with soft subsurface scattering look
-    const bustMat = new THREE.MeshStandardMaterial({
-      color: 0xe8e5df,
-      roughness: 0.45,
-      metalness: 0.05,
-    });
+    const bustMat = new THREE.MeshStandardMaterial({ color: 0xe8e5df, roughness: 0.45, metalness: 0.05 });
 
-    // Sculptural Head / Torso Form
-    const head = new THREE.Mesh(
-      new THREE.SphereGeometry(0.55, 48, 48),
-      bustMat
-    );
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.55, 48, 48), bustMat);
     head.scale.set(0.85, 1.15, 0.95);
     head.position.y = 0.65;
     head.castShadow = true;
     head.receiveShadow = true;
     subjectGroup.add(head);
 
-    // Neck
-    const neck = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.24, 0.28, 0.35, 32),
-      bustMat
-    );
+    const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.28, 0.35, 32), bustMat);
     neck.position.y = 0.18;
     neck.castShadow = true;
     neck.receiveShadow = true;
     subjectGroup.add(neck);
 
-    // Shoulders
-    const shoulders = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.3, 0.85, 0.5, 32),
-      bustMat
-    );
+    const shoulders = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.85, 0.5, 32), bustMat);
     shoulders.scale.set(1.4, 0.9, 0.85);
     shoulders.position.y = -0.15;
     shoulders.castShadow = true;
     shoulders.receiveShadow = true;
     subjectGroup.add(shoulders);
 
-    // Plinth Pedestal
     const pedestal = new THREE.Mesh(
       new THREE.CylinderGeometry(0.55, 0.65, 0.4, 32),
       new THREE.MeshStandardMaterial({ color: 0x141210, roughness: 0.85, metalness: 0.15 })
@@ -283,19 +260,14 @@ export default function StudioLightingStage3D({
     pedestal.receiveShadow = true;
     subjectGroup.add(pedestal);
 
-    // 6. Strobes Construction
-    const strobeBodyMat = new THREE.MeshStandardMaterial({
-      color: 0x141210,
-      metalness: 0.85,
-      roughness: 0.25,
-    });
+    // 5. Lighting Strobes Construction
+    const strobeBodyMat = new THREE.MeshStandardMaterial({ color: 0x141210, metalness: 0.85, roughness: 0.25 });
 
-    // Key Light: 5200K Daylight Octabox
+    // Key Light Octabox
     const keyGroup = new THREE.Group();
     keyStrobeMeshRef.current = keyGroup;
     scene.add(keyGroup);
 
-    // Octabox Mesh
     const keyOcta = new THREE.Mesh(
       new THREE.CylinderGeometry(0.6, 0.25, 0.4, 8),
       new THREE.MeshStandardMaterial({ color: 0x181512, roughness: 0.4 })
@@ -303,15 +275,10 @@ export default function StudioLightingStage3D({
     keyOcta.rotation.x = Math.PI / 2;
     keyGroup.add(keyOcta);
 
-    // Octabox Diffuser Screen (Glowing warm daylight)
-    const keyScreen = new THREE.Mesh(
-      new THREE.CircleGeometry(0.58, 8),
-      new THREE.MeshBasicMaterial({ color: 0xfffaed })
-    );
+    const keyScreen = new THREE.Mesh(new THREE.CircleGeometry(0.58, 8), new THREE.MeshBasicMaterial({ color: 0xfffaed }));
     keyScreen.position.z = 0.205;
     keyGroup.add(keyScreen);
 
-    // Key SpotLight (5200K Soft Studio Flash)
     const keyLight = new THREE.SpotLight(0xfffaed, keyPower, 12, Math.PI / 4, 0.45, 1.2);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 1024;
@@ -321,27 +288,18 @@ export default function StudioLightingStage3D({
     scene.add(keyLight);
     keyLightRef.current = keyLight;
 
-    // Rim Light: Golden Amber Stripbox (2800K Tungsten Rim)
+    // Rim Light Stripbox
     const rimGroup = new THREE.Group();
     rimStrobeMeshRef.current = rimGroup;
     scene.add(rimGroup);
 
-    // Stripbox Mesh (Tall rectangular softbox)
-    const rimStrip = new THREE.Mesh(
-      new THREE.BoxGeometry(0.35, 0.9, 0.35),
-      strobeBodyMat
-    );
+    const rimStrip = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.9, 0.35), strobeBodyMat);
     rimGroup.add(rimStrip);
 
-    // Stripbox Diffuser Screen (Glowing amber)
-    const rimScreen = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.32, 0.85),
-      new THREE.MeshBasicMaterial({ color: 0xf59e0b })
-    );
+    const rimScreen = new THREE.Mesh(new THREE.PlaneGeometry(0.32, 0.85), new THREE.MeshBasicMaterial({ color: 0xf59e0b }));
     rimScreen.position.z = 0.18;
     rimGroup.add(rimScreen);
 
-    // Rim SpotLight
     const rimLight = new THREE.SpotLight(0xf59e0b, rimPower, 12, Math.PI / 3.5, 0.5, 1.2);
     rimLight.castShadow = true;
     rimLight.shadow.mapSize.width = 1024;
@@ -351,14 +309,12 @@ export default function StudioLightingStage3D({
     scene.add(rimLight);
     rimLightRef.current = rimLight;
 
-    // Ambient Fill (Deep Warm Obsidian Atmosphere)
     const ambient = new THREE.AmbientLight(0x14110e, 0.8);
     scene.add(ambient);
 
-    // Update positions initially
     updateLightPositions();
 
-    // 7. Viewport Observer
+    // 6. Intersection Observer & Resize Listeners
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -369,7 +325,6 @@ export default function StudioLightingStage3D({
     );
     observer.observe(container);
 
-    // 8. Resize Handler
     const onResize = () => {
       if (!container || !renderer || !camera) return;
       const newW = container.clientWidth;
@@ -380,24 +335,17 @@ export default function StudioLightingStage3D({
     };
     window.addEventListener("resize", onResize);
 
-    // 9. Render Loop with Smooth Interpolation
+    // 7. Render Loop with Smooth Polar Interpolation
     const animate = () => {
       animFrameRef.current = requestAnimationFrame(animate);
-
       if (!isVisibleRef.current) return;
 
-      // Smooth interpolation towards target preset angles
-      currentAngles.current.keyAngle +=
-        (targetAngles.current.keyAngle - currentAngles.current.keyAngle) * 0.08;
-      currentAngles.current.keyElevation +=
-        (targetAngles.current.keyElevation - currentAngles.current.keyElevation) * 0.08;
-      currentAngles.current.rimAngle +=
-        (targetAngles.current.rimAngle - currentAngles.current.rimAngle) * 0.08;
-      currentAngles.current.rimElevation +=
-        (targetAngles.current.rimElevation - currentAngles.current.rimElevation) * 0.08;
+      currentAngles.current.keyAngle += (targetAngles.current.keyAngle - currentAngles.current.keyAngle) * 0.08;
+      currentAngles.current.keyElevation += (targetAngles.current.keyElevation - currentAngles.current.keyElevation) * 0.08;
+      currentAngles.current.rimAngle += (targetAngles.current.rimAngle - currentAngles.current.rimAngle) * 0.08;
+      currentAngles.current.rimElevation += (targetAngles.current.rimElevation - currentAngles.current.rimElevation) * 0.08;
 
       updateLightPositions();
-
       renderer.render(scene, camera);
     };
 
@@ -472,7 +420,7 @@ export default function StudioLightingStage3D({
             <button
               key={key}
               onClick={() => selectPreset(key)}
-              className={`px-3 py-2 rounded-xl type-body-base  transition-all text-left flex flex-col cursor-pointer ${
+              className={`px-3 py-2 rounded-xl type-body-base transition-all text-left flex flex-col cursor-pointer ${
                 activePreset === key
                   ? "bg-copper-500 text-foreground font-semibold shadow-md shadow-copper-500/20"
                   : "bg-sage-50/50 hover:bg-sage-50/50 text-foreground border border-sage-300/40"
@@ -481,7 +429,7 @@ export default function StudioLightingStage3D({
               <span className="truncate">{preset.name}</span>
               <span
                 className={`type-body-base ${
-                  activePreset === key ? "text-concrete-900 " : "text-foreground-muted"
+                  activePreset === key ? "text-concrete-900" : "text-foreground-muted"
                 }`}
               >
                 {key === "chiaroscuro" ? "45° Daylight Key" : key === "rembrandt" ? "Cheek Triangle" : key === "split" ? "Lateral Divide" : "Backlight Halo"}

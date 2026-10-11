@@ -1,7 +1,10 @@
+/**
+ * AtelierProcessTimeline Component
+ * Interactive horizontal timeline navigating the 4 sequenced atelier disciplines (Concept, Production, Post, Archival).
+ */
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { ArrowRight, Check } from "lucide-react";
+import React, { useState, useRef } from "react";
 import StudioButton from "@/components/ui/StudioButton";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +35,7 @@ const PROCESS_STEPS: ProcessStep[] = [
       "Tactile Material & Wardrobe Moodboards",
       "Pre-Visualized Optical Schematics",
     ],
-    deliverables: "Comprehensive Creative Deck & Lighting Blueprint",
+    deliverables: "Creative Direction Deck & Lighting Setup Guide",
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1600&q=85",
     camera: "Phase One Pre-Viz Systems",
     lens: "Schneider Kreuznach 80mm",
@@ -108,24 +111,19 @@ export default function AtelierProcessTimeline() {
       className="py-24 sm:py-36 px-6 sm:px-12 lg:px-16 border-t border-hairline relative bg-background text-foreground overflow-hidden"
     >
       <div className="max-w-7xl mx-auto space-y-16 sm:space-y-24 relative z-10">
-        {/* ========================================================================= */}
-        {/* HEADER: MONOGRAPH METHODOLOGY SUMMARY                                     */}
-        {/* ========================================================================= */}
+        {/* Methodological Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-hairline">
           <div className="space-y-3 max-w-3xl">
             <div className="flex items-center gap-2 type-meta">
               <span className="w-1.5 h-1.5 rounded-full bg-copper-500" />
               <span>Chapter 03 • Atelier Methodology</span>
             </div>
-            <h2 className="type-display-section text-ink-primary">
-              The Creative Process
-            </h2>
+            <h2 className="type-display-section text-ink-primary">The Creative Process</h2>
             <p className="text-ink-muted type-body-base max-w-2xl pt-2">
               We do not sell pre-packaged photography tiers. Every project is an unhurried, rigorous editorial journey from raw atmospheric conception through to museum-grade silver-gelatin master editions.
             </p>
           </div>
 
-          {/* Technical Telemetry Counter */}
           <div className="flex items-center gap-6 type-meta">
             <div className="border-l border-hairline pl-4 py-1">
               <span className="text-stone-400 block text-[10px]">Methodology</span>
@@ -138,16 +136,13 @@ export default function AtelierProcessTimeline() {
           </div>
         </div>
 
-        {/* ========================================================================= */}
-        {/* RESTRAINED HAIRLINE TIMELINE RAIL                                          */}
-        {/* ========================================================================= */}
+        {/* Timeline Rail & Step Buttons */}
         <div className="space-y-6">
           <div className="flex items-center justify-between type-meta">
             <span>Progressive Cadence • Phase {current.number} of 04</span>
             <span className="text-copper-600">{current.title}</span>
           </div>
 
-          {/* Hairline Rail Track */}
           <div className="relative py-2">
             <div className="h-px w-full bg-stone-200 relative overflow-hidden">
               <div
@@ -156,7 +151,6 @@ export default function AtelierProcessTimeline() {
               />
             </div>
 
-            {/* 4 Architectural Step Triggers */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mt-6">
               {PROCESS_STEPS.map((step, idx) => {
                 const isActive = activeStep === idx;
@@ -180,33 +174,17 @@ export default function AtelierProcessTimeline() {
                         <span
                           className={cn(
                             "w-1.5 h-1.5 rounded-full transition-colors",
-                            isActive
-                              ? "bg-copper-500"
-                              : isPassed
-                              ? "bg-copper-500/50"
-                              : "bg-stone-300"
+                            isActive ? "bg-copper-500" : isPassed ? "bg-copper-500/50" : "bg-stone-300"
                           )}
                         />
-                        <span
-                          className={cn(
-                            "type-meta",
-                            isActive ? "text-copper-600 font-semibold" : "text-ink-muted"
-                          )}
-                        >
+                        <span className={cn("type-meta", isActive ? "text-copper-600 font-semibold" : "text-ink-muted")}>
                           PHASE {step.number}
                         </span>
                       </div>
-                      <span className="text-[10px] text-stone-400">
-                        [{step.roman}]
-                      </span>
+                      <span className="text-[10px] text-stone-400">[{step.roman}]</span>
                     </div>
 
-                    <h4
-                      className={cn(
-                        "type-body-base   transition-colors",
-                        isActive ? "text-ink-primary " : "text-ink-muted"
-                      )}
-                    >
+                    <h4 className={cn("type-body-base transition-colors", isActive ? "text-ink-primary font-medium" : "text-ink-muted")}>
                       {step.title}
                     </h4>
                   </button>
@@ -216,35 +194,19 @@ export default function AtelierProcessTimeline() {
           </div>
         </div>
 
-        {/* ========================================================================= */}
-        {/* STEP SHOWCASE: TYPOGRAPHY, TELEMETRY & SUPPORTING PHOTOGRAPHY             */}
-        {/* ========================================================================= */}
+        {/* Step Detailed Narrative & Spec Showcase */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-14 lg:gap-16 items-center">
-          {/* Left Column: Rich Editorial Typography */}
           <div className="lg:col-span-6 space-y-6">
             <div className="space-y-3">
-              <span className="type-meta text-copper-500 block">
-                [Phase {current.number} // Protocol]
-              </span>
-
-              <h3 className="type-display-project text-ink-primary">
-                {current.title}
-              </h3>
-
-              <p className="type-body-base text-copper-600">
-                {current.subtitle}
-              </p>
+              <span className="type-meta text-copper-500 block">[Phase {current.number} // Protocol]</span>
+              <h3 className="type-display-project text-ink-primary">{current.title}</h3>
+              <p className="type-body-base text-copper-600">{current.subtitle}</p>
             </div>
 
-            <p className="type-body-base text-ink-body">
-              {current.narrative}
-            </p>
+            <p className="type-body-base text-ink-body">{current.narrative}</p>
 
-            {/* Architectural Telemetry Checklist */}
             <div className="pt-2 space-y-2.5">
-              <span className="type-meta text-ink-muted block">
-                Phase Verification Standards:
-              </span>
+              <span className="type-meta text-ink-muted block">Phase Verification Standards:</span>
               <ul className="space-y-2 text-xs text-ink-body">
                 {current.telemetry.map((t) => (
                   <li key={t} className="flex items-center gap-2.5">
@@ -255,43 +217,30 @@ export default function AtelierProcessTimeline() {
               </ul>
             </div>
 
-            {/* Deliverables Card */}
             <div className="pt-4">
               <div className="pt-4 border-t border-hairline space-y-1">
-                <span className="type-meta text-ink-muted block">
-                  Phase Deliverables
-                </span>
-                <p className="type-meta text-ink-primary">
-                  {current.deliverables}
-                </p>
+                <span className="type-meta text-ink-muted block">Phase Deliverables</span>
+                <p className="type-meta text-ink-primary">{current.deliverables}</p>
               </div>
             </div>
 
-            {/* Action */}
             <div className="pt-2 flex items-center gap-4">
-              <StudioButton
-                variant="primary"
-                size="md"
-                href="/contact"
-                icon="arrow-right"
-              >
+              <StudioButton variant="primary" size="md" href="/contact" icon="arrow-right">
                 Inquire Commission
               </StudioButton>
             </div>
           </div>
 
-          {/* Right Column: Architectural Image Plate */}
           <div className="lg:col-span-6">
             <div className="relative group overflow-hidden bg-stone-100">
-              <div className="aspect-[4/3] w-full overflow-hidden">
+              <div className="aspect-[4/3] w-full overflow-hidden flex items-center justify-center bg-[#EAE6DE] p-3">
                 <img
                   src={current.image}
                   alt={current.title}
-                  className="w-full h-full object-cover filter grayscale-[0.05] sepia-[0.02] brightness-[0.95] contrast-[1.04] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] group-hover:grayscale-0"
+                  className="w-full h-full object-contain filter grayscale-[0.05] sepia-[0.02] brightness-[0.95] contrast-[1.04] transition-all duration-700 ease-out group-hover:grayscale-0"
                 />
               </div>
 
-              {/* Negative Film Rebate Markings */}
               <div className="pt-4 flex items-center justify-between text-[11px] text-ink-muted border-t border-hairline mt-6">
                 <div className="flex items-center gap-2">
                   <span className="text-copper-600">PHASE {current.number}</span>

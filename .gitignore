@@ -23,16 +23,11 @@ dist/
 .turbo/
 **/.turbo/
 
-# AI agent workspace & ide files
+# IDE & local workspace
 .vscode/
 **/.vscode/
-.agents/
-**/.agents/
-skills-lock.json
-.gemini/
-**/.gemini/
-.claude/
-**/.claude/
+.idea/
+**/.idea/
 
 # databases & local data
 *.db
@@ -73,9 +68,5 @@ frontend/.env*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# uploads
 frontend/public/uploads/
-
-# Temporary patch scripts & scratch files
-/*.js
-/*.sh
-frontend/page.txt

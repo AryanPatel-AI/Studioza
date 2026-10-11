@@ -13,24 +13,24 @@ import {
   Monitor,
   Tablet,
   Smartphone,
-  Plus,
   Trash2,
   ChevronUp,
   ChevronDown,
   ExternalLink,
   Settings,
   Sparkles,
-  Layers,
   Layout,
   FileText,
   Image as ImageIcon,
   Share2,
   AlertCircle,
-  Copy,
 } from "lucide-react";
 import { saveProjectContent } from "@/app/actions/workspace";
 import { publishProject, unpublishProject } from "@/app/actions/publishing";
 
+/**
+ * Editorial content block schema for the interactive canvas.
+ */
 interface BlockItem {
   id: string;
   type: "hero" | "text" | "features" | "gallery" | "cta";
@@ -58,6 +58,11 @@ interface WorkspaceEditorProps {
     updatedAt: Date;
   };
 }
+
+/**
+ * WorkspaceEditor - Interactive visual page builder and real-time device preview.
+ * Supports block creation, re-ordering, property customization, auto-saving, and one-click publishing.
+ */
 
 export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
   const router = useRouter();
@@ -723,7 +728,7 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
                           <img
                             src={block.imageUrl}
                             alt={block.title || "Hero banner"}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain"
                           />
                         </div>
                       )}
@@ -799,11 +804,11 @@ export default function WorkspaceEditor({ project }: WorkspaceEditorProps) {
                             key={idx}
                             className="group rounded-2xl overflow-hidden border border-sage-300/40 bg-sage-50 shadow-sm"
                           >
-                            <div className="aspect-[4/3] overflow-hidden">
+                            <div className="aspect-[4/3] overflow-hidden flex items-center justify-center bg-[#EAE6DE] p-2">
                               <img
                                 src={item.imageUrl}
                                 alt={item.title}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                className="w-full h-full object-contain p-1"
                               />
                             </div>
                             <div className="p-4 flex items-center justify-between">

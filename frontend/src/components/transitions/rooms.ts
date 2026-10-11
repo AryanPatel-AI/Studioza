@@ -1,3 +1,8 @@
+/**
+ * Atelier Gallery Room Registry
+ * Maps route paths to exhibition room numbers, titles, optical equipment specifications, and ambient lighting grades.
+ */
+
 export interface RoomInfo {
   path: string;
   number: string;
@@ -82,13 +87,10 @@ export const ATELIER_ROOMS: Record<string, RoomInfo> = {
   },
 };
 
+/** Resolves room metadata for any target route, supporting dynamic sub-paths */
 export function getRoomInfo(pathname: string): RoomInfo {
-  // Direct exact match
-  if (ATELIER_ROOMS[pathname]) {
-    return ATELIER_ROOMS[pathname];
-  }
+  if (ATELIER_ROOMS[pathname]) return ATELIER_ROOMS[pathname];
 
-  // Nested project monograph routes
   if (pathname.startsWith("/projects/")) {
     return {
       path: pathname,
@@ -100,7 +102,6 @@ export function getRoomInfo(pathname: string): RoomInfo {
     };
   }
 
-  // Admin routes
   if (pathname.startsWith("/admin")) {
     return {
       path: pathname,
@@ -112,7 +113,6 @@ export function getRoomInfo(pathname: string): RoomInfo {
     };
   }
 
-  // Default fallback room
   return {
     path: pathname,
     number: "ATELIER",

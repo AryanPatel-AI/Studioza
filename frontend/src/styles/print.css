@@ -1,0 +1,83 @@
+/**
+ * Studioza Archival Monograph Print Stylesheet (print.css)
+ * Formats digital monograph folios for clean, museum-grade PDF archival export.
+ * Strips navigation, headers, interactive buttons, and letterbox noise.
+ */
+
+@media print {
+  /* Page Geometry & Archival Defaults */
+  @page {
+    size: A4 portrait;
+    margin: 1.5cm 1.5cm 2cm 1.5cm;
+  }
+
+  body {
+    background: #FFFFFF !important;
+    color: #151515 !important;
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Strip UI chrome */
+  header,
+  nav,
+  footer,
+  .no-print,
+  button,
+  .film-grain,
+  .custom-cursor {
+    display: none !important;
+  }
+
+  /* Force clean background & full ink contrast */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Monograph Title Block */
+  .monograph-header {
+    border-bottom: 1pt solid #151515 !important;
+    padding-bottom: 12pt !important;
+    margin-bottom: 24pt !important;
+    page-break-after: avoid;
+  }
+
+  /* Plates & Negative Reproductions */
+  figure,
+  .print-plate {
+    page-break-inside: avoid !important;
+    margin-bottom: 24pt !important;
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid !important;
+  }
+
+  figcaption {
+    font-size: 8.5pt !important;
+    color: #555555 !important;
+    border-bottom: 0.5pt solid #CCCCCC !important;
+    padding-top: 4pt !important;
+    page-break-before: avoid;
+  }
+
+  /* Narrative & Credits */
+  .monograph-narrative {
+    max-width: 100% !important;
+    columns: 2;
+    column-gap: 24pt;
+    margin-bottom: 30pt !important;
+    page-break-inside: auto;
+  }
+
+  .monograph-credits {
+    page-break-inside: avoid !important;
+    border-top: 1pt solid #151515 !important;
+    padding-top: 12pt !important;
+    margin-top: 24pt !important;
+  }
+}

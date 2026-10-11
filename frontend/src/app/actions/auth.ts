@@ -1,28 +1,29 @@
+/**
+ * User Authentication Server Actions
+ * Handles user registration, bcrypt password hashing, login verification, session cookie issuance, and profile updates.
+ */
 "use server";
 
 import bcrypt from "bcrypt";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import {
-  signToken,
-  setSessionCookie,
-  clearSessionCookie,
-  getSessionUser,
-  requireAuth,
-} from "@/lib/auth/session";
+import { signToken, setSessionCookie, clearSessionCookie, requireAuth } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
 
+/** Input validation schema for account registration */
 const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(60),
   email: z.string().email("Invalid email address").toLowerCase().trim(),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
+/** Input validation schema for account login */
 const loginSchema = z.object({
   email: z.string().email("Invalid email address").toLowerCase().trim(),
   password: z.string().min(1, "Password is required"),
 });
 
+/** Registers a new user account with hashed password and logs them in */
 export async function registerUser(formData: FormData) {
   try {
     const rawData = {
@@ -38,27 +39,17 @@ export async function registerUser(formData: FormData) {
 
     const { name, email, password } = validation.data;
 
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-
+    const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       return { error: "An account with this email already exists." };
     }
 
-    // Check if this is the first user in the database; make them admin automatically
     const totalUsers = await prisma.user.count();
-    const role = totalUsers === 0 || email.includes("admin@") ? "admin" : "user";
-
+    const role = totalUsers === 0 ? ("ADMIN" as const) : ("EDITOR" as const);
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        role,
-      },
+      data: { name, email, passwordHash: hashedPassword, role },
     });
 
     const token = signToken({
@@ -69,12 +60,14 @@ export async function registerUser(formData: FormData) {
 
     await setSessionCookie(token);
 
-    // Record activity
+    // Record registration audit event
     await prisma.activity.create({
       data: {
-        userId: newUser.id,
-        type: "USER_REGISTERED",
-        metadata: JSON.stringify({ email: newUser.email, role: newUser.role }),
+        actorId: newUser.id,
+        action: "USER_REGISTERED",
+        targetType: "user",
+        targetId: newUser.id,
+        summary: `User registered with ${newUser.role} clearance`,
       },
     });
 
@@ -85,6 +78,7 @@ export async function registerUser(formData: FormData) {
   }
 }
 
+/** Authenticates user with email and password, issuing an HTTP-only JWT cookie on success */
 export async function loginUser(formData: FormData) {
   try {
     const rawData = {
@@ -98,18 +92,14 @@ export async function loginUser(formData: FormData) {
     }
 
     const { email, password } = validation.data;
-
-    const user = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (!user || !user.password) {
-      return { error: "Invalid email or password." };
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user || !user.passwordHash) {
+      return { error: "Those details do not match our records." };
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await bcrypt.compare(password, user.passwordHash);
     if (!passwordMatch) {
-      return { error: "Invalid email or password." };
+      return { error: "Those details do not match our records." };
     }
 
     const token = signToken({
@@ -119,7 +109,6 @@ export async function loginUser(formData: FormData) {
     });
 
     await setSessionCookie(token);
-
     return { success: true, role: user.role };
   } catch (err: any) {
     console.error("loginUser error:", err);
@@ -127,15 +116,16 @@ export async function loginUser(formData: FormData) {
   }
 }
 
+/** Logs out the current user, clearing session cookies and redirecting to /login */
 export async function logoutUser() {
   await clearSessionCookie();
   redirect("/login");
 }
 
+/** Updates user's display name and avatar URL */
 export async function updateUserProfile(formData: FormData) {
   try {
     const currentUser = await requireAuth();
-
     const name = formData.get("name")?.toString().trim();
     const avatarUrl = formData.get("avatarUrl")?.toString().trim();
 
@@ -145,10 +135,7 @@ export async function updateUserProfile(formData: FormData) {
 
     const updated = await prisma.user.update({
       where: { id: currentUser.id },
-      data: {
-        name,
-        avatarUrl: avatarUrl || null,
-      },
+      data: { name },
     });
 
     return { success: true, user: updated };

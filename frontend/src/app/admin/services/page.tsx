@@ -1,142 +1,145 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Plus, Tag, DollarSign, CheckCircle2, Briefcase } from "lucide-react";
+import React, { useState } from "react";
+import Link from "next/link";
+import { Plus, Edit, CheckCircle2, ArrowRight } from "lucide-react";
+import { SERVICES, ServiceData } from "@/lib/data/studioData";
 
 export default function AdminServicesPage() {
-  const [services, setServices] = useState<any[]>([]);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [services, setServices] = useState<ServiceData[]>(SERVICES);
+  const [showCreate, setShowCreate] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [newTagline, setNewTagline] = useState("");
+  const [newPrice, setNewPrice] = useState("");
 
-  const loadServices = () => {
-    fetch("/api/admin/services")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) setServices(data);
-      })
-      .catch(console.error);
-  };
-
-  useEffect(() => {
-    loadServices();
-  }, []);
-
-  const handleCreate = async (e: React.FormEvent) => {
+  const handleCreate = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    const res = await fetch("/api/admin/services", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        description,
-        price: parseFloat(price),
-        isActive: true,
-      }),
-    });
-    if (res.ok) {
-      const newService = await res.json();
-      setServices([newService, ...services]);
-      setName("");
-      setDescription("");
-      setPrice("");
-    }
-    setIsLoading(false);
+    const slug = newName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    const created: ServiceData = {
+      id: `serv-${Date.now()}`,
+      slug,
+      name: newName,
+      tagline: newTagline,
+      coverImage: "/images/palace-arch-courtyard.jpg",
+      philosophy: "Crafted with unhurried reverence.",
+      startingPrice: newPrice || "From $5,000",
+      included: ["Master medium format capture", "Archival digital gallery"],
+      process: [{ step: "01", title: "Consultation", description: "Discovery and alignment" }],
+      faqs: [],
+      portfolioSlugs: [],
+    };
+    setServices([...services, created]);
+    setNewName("");
+    setNewTagline("");
+    setNewPrice("");
+    setShowCreate(false);
   };
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold text-white">
-          Session Tiers &amp; Commissions
-        </h1>
-        <p className="text-sm text-stone-200/80 mt-1">
-          Add and manage photography commission packages, deliverable scopes, and pricing.
-        </p>
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#D9D5CE] pb-6">
+        <div>
+          <span className="type-meta text-[#77736D] block mb-1">COMMISSIONS &amp; TIERS</span>
+          <h1 className="font-serif text-4xl sm:text-5xl font-normal text-[#151515]">
+            Studio Services &amp; Packages
+          </h1>
+          <p className="type-body text-[#77736D] mt-1">
+            Manage commission offerings, deliverable scopes, pricing baselines, and booking questionnaires.
+          </p>
+        </div>
+
+        <div>
+          <button
+            type="button"
+            onClick={() => setShowCreate(!showCreate)}
+            className="bg-[#151515] text-[#F4F1EB] px-6 py-3 type-meta text-xs hover:bg-[#333333] transition-colors inline-flex items-center gap-2 cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>{showCreate ? "Cancel" : "Add Service Discipline"}</span>
+          </button>
+        </div>
       </div>
 
-      {/* Creation form: TONE 2 Golden Hour Warm Amber Accent */}
-      <div className="bg-gradient-to-br from-[#0c162e]/90 via-[#181926]/90 to-[#2b170a]/90 border border-copper-500/30 rounded-none p-8 shadow-2xl backdrop-blur-xl">
-        <h2 className="text-base font-bold text-white mb-6 flex items-center gap-2">
-          <Plus className="w-5 h-5 text-copper-600" />
-          Create New Photography Session Scope
-        </h2>
-        <form onSubmit={handleCreate} className="space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label className="block type-body-base font-semibold text-copper-600/90 mb-2">
-                Session Package Name
-              </label>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Fine Art Silver-Gelatin Portraiture"
-                className="w-full px-4 py-3 rounded-none border border-stone-800 bg-stone-900 text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-copper-400/50 focus:border-copper-500/50 transition-all text-sm"
-              />
-            </div>
-            <div>
-              <label className="block type-body-base font-semibold text-copper-600/90 mb-2">
-                Baseline Investment ($ USD)
-              </label>
-              <input
-                type="number"
-                required
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                placeholder="2400"
-                className="w-full px-4 py-3 rounded-none border border-stone-800 bg-stone-900 text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-copper-400/50 focus:border-copper-500/50 transition-all text-sm"
-              />
-            </div>
-          </div>
-          <div>
-            <label className="block type-body-base font-semibold text-copper-600/90 mb-2">
-              Deliverable Description &amp; Equipment Specifications
-            </label>
-            <textarea
+      {showCreate && (
+        <form onSubmit={handleCreate} className="bg-white p-8 border border-[#D9D5CE] space-y-4 animate-in fade-in duration-300">
+          <h3 className="font-serif text-2xl text-[#151515]">Add New Service</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <input
+              type="text"
               required
-              rows={3}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Shot on medium-format digital back, includes lighting schematic, 15 retouched master plates, and commercial rights..."
-              className="w-full px-4 py-3 rounded-none border border-stone-800 bg-stone-900 text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-copper-400/50 focus:border-copper-500/50 transition-all text-sm resize-none"
+              placeholder="Service Name (e.g. Fine Art Jewelry)"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              className="p-3 border border-[#D9D5CE] text-sm focus:outline-hidden focus:border-[#151515]"
+            />
+            <input
+              type="text"
+              required
+              placeholder="Tagline / Brief description"
+              value={newTagline}
+              onChange={(e) => setNewTagline(e.target.value)}
+              className="p-3 border border-[#D9D5CE] text-sm focus:outline-hidden focus:border-[#151515]"
+            />
+            <input
+              type="text"
+              required
+              placeholder="Starting Price (e.g. From $4,500)"
+              value={newPrice}
+              onChange={(e) => setNewPrice(e.target.value)}
+              className="p-3 border border-[#D9D5CE] text-sm focus:outline-hidden focus:border-[#151515]"
             />
           </div>
           <button
             type="submit"
-            disabled={isLoading}
-            className="px-6 py-3 rounded-full type-body-base font-semibold text-copper-50 bg-gradient-to-r from-copper-300 to-copper-500 hover:from-copper-400 hover:to-copper-600 shadow-md shadow-copper-500/20 transition-all disabled:opacity-50 cursor-pointer"
+            className="bg-[#151515] text-[#F4F1EB] px-6 py-2.5 type-meta text-xs hover:bg-[#333333] transition-colors"
           >
-            {isLoading ? "Saving Session..." : "Publish Session Scope"}
+            Save Discipline
           </button>
         </form>
-      </div>
+      )}
 
-      {/* Services List: TONE 1 Twilight Blue Hour */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {services.map((svc) => (
+      {/* Services List */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {services.map((s, idx) => (
           <div
-            key={svc.id}
-            className="rounded-none border border-stone-800 bg-black p-6 backdrop-blur-md flex flex-col justify-between shadow-xl shadow-stone-950/30"
+            key={s.slug}
+            className="bg-white p-8 border border-[#D9D5CE] space-y-4 flex flex-col justify-between"
           >
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="type-body-base text-[var(--accent-muted-gold)] font-semibold">
-                  Active Tier
-                </span>
-                <span className="text-xl font-bold text-copper-600">
-                  ${svc.price}
-                </span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="type-meta text-xs text-[#77736D]">0{idx + 1} // ACTIVE</span>
+                <span className="type-meta text-xs text-[#CC5500] font-semibold">{s.startingPrice}</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">{svc.name}</h3>
-              <p className="type-body-base text-white">{svc.description}</p>
+              <h3 className="font-serif text-3xl text-[#151515]">{s.name}</h3>
+              <p className="type-small text-[#77736D] leading-relaxed">{s.tagline}</p>
+              <div className="pt-2 text-xs text-[#151515] space-y-1">
+                <span className="type-meta text-[10px] text-[#77736D] block">INCLUDED HIGHLIGHTS:</span>
+                {s.included.slice(0, 3).map((inc, i) => (
+                  <p key={i} className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#9CAF88] shrink-0" />
+                    <span>{inc}</span>
+                  </p>
+                ))}
+              </div>
             </div>
-            <div className="mt-6 pt-4 border-t border-stone-500/20 type-body-base text-stone-500 flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-              Live on Client Directory
+
+            <div className="pt-6 border-t border-[#D9D5CE] flex items-center justify-between">
+              <Link
+                href={`/admin/services/${s.slug}`}
+                className="type-meta text-xs text-[#151515] hover:underline flex items-center gap-1.5 font-semibold"
+              >
+                <Edit className="w-3.5 h-3.5" />
+                <span>Edit Scope &amp; Deliverables</span>
+              </Link>
+              <Link
+                href={`/services/${s.slug}`}
+                target="_blank"
+                className="type-meta text-xs text-[#77736D] hover:text-[#151515] flex items-center gap-1"
+              >
+                <span>Live Public Page</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
         ))}

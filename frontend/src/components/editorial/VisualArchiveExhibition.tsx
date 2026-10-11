@@ -1,9 +1,11 @@
+/**
+ * VisualArchiveExhibition Component
+ * Comprehensive museum exhibition showcase featuring curatorial suite filtration, clip-path scroll reveals, and archival photographic insets.
+ */
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Scan, ArrowUpRight } from "lucide-react";
 import LiquidRefractionLoupe from "@/components/optical/LiquidRefractionLoupe";
-import StudioButton from "@/components/ui/StudioButton";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
@@ -203,37 +205,7 @@ const CURATORIAL_CATEGORIES: { key: CuratorialCategory; label: string; index: st
 
 export default function VisualArchiveExhibition() {
   const [activeCategory, setActiveCategory] = useState<CuratorialCategory>("ALL");
-  const [scrollY, setScrollY] = useState(0);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const containerRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mediaQuery.matches);
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
-  }, []);
-
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    let rafId: number;
-    const handleScroll = () => {
-      rafId = requestAnimationFrame(() => {
-        if (containerRef.current) {
-          const rect = containerRef.current.getBoundingClientRect();
-          setScrollY(window.scrollY - rect.top);
-        }
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(rafId);
-    };
-  }, [prefersReducedMotion]);
 
   const displayedPlates =
     activeCategory === "ALL"
@@ -247,9 +219,7 @@ export default function VisualArchiveExhibition() {
       className="py-24 sm:py-36 px-6 sm:px-12 lg:px-16 border-t border-hairline relative bg-background text-foreground overflow-hidden"
     >
       <div className="max-w-7xl mx-auto space-y-20 sm:space-y-32 relative z-10">
-        {/* ========================================================================= */}
-        {/* EXHIBITION HEADER & CURATORIAL DIRECTORY                                   */}
-        {/* ========================================================================= */}
+        {/* Exhibition Header & Directory Filters */}
         <div className="space-y-10 pb-8 border-b border-hairline">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div className="space-y-3 max-w-3xl">
@@ -257,34 +227,25 @@ export default function VisualArchiveExhibition() {
                 <span className="w-1.5 h-1.5 rounded-full bg-copper-500" />
                 <span>Exhibition Room I • The Permanent Archive</span>
               </div>
-              <h2 className="type-display-section text-ink-primary">
-                Curated Visual Archive
-              </h2>
+              <h2 className="type-display-section text-ink-primary">Curated Visual Archive</h2>
               <p className="text-ink-body type-body-base max-w-2xl pt-2">
                 A physical retrospective of medium format master negatives, archival selenium prints, and architectural chiaroscuro. Exploring light density and tactile form across four continents.
               </p>
             </div>
 
-            {/* Curatorial Ledger Telemetry */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 type-meta text-ink-muted">
               <div className="border-l sm:border-l-0 sm:border-r border-hairline pl-4 sm:pl-0 sm:pr-6 py-1">
-                <span className="text-stone-400 block text-[10px] uppercase">
-                  Archive Volume
-                </span>
+                <span className="text-stone-400 block text-[10px] uppercase">Archive Volume</span>
                 <span className="text-ink-primary">Vol. XXIV — 2026</span>
               </div>
               <div>
-                <span className="text-stone-400 block text-[10px] uppercase">
-                  Print Classification
-                </span>
+                <span className="text-stone-400 block text-[10px] uppercase">Print Classification</span>
                 <span className="text-copper-600">Silver Gelatin &amp; Baryta</span>
               </div>
             </div>
           </div>
 
-          {/* ========================================================================= */}
-          {/* CURATORIAL SALON DIRECTORY TABS                                           */}
-          {/* ========================================================================= */}
+          {/* Curatorial Salon Category Tabs */}
           <div className="pt-4">
             <div className="flex items-center justify-between type-meta mb-3">
               <span>Curatorial Index Directory</span>
@@ -303,9 +264,7 @@ export default function VisualArchiveExhibition() {
                     onClick={() => setActiveCategory(cat.key)}
                     className={cn(
                       "group relative shrink-0 sm:shrink px-3 py-1.5 type-meta transition-colors cursor-pointer flex items-center gap-2 select-none",
-                      isActive
-                        ? "text-copper-600 "
-                        : "text-ink-muted hover:text-ink-primary"
+                      isActive ? "text-copper-600 font-semibold" : "text-ink-muted hover:text-ink-primary"
                     )}
                   >
                     <span
@@ -317,10 +276,7 @@ export default function VisualArchiveExhibition() {
                       [{cat.index}]
                     </span>
                     <span>{cat.label}</span>
-
-                    {isActive && (
-                      <span className="absolute -bottom-2.5 left-2 right-2 h-px bg-copper-500" />
-                    )}
+                    {isActive && <span className="absolute -bottom-2.5 left-2 right-2 h-px bg-copper-500" />}
                   </button>
                 );
               })}
@@ -328,9 +284,7 @@ export default function VisualArchiveExhibition() {
           </div>
         </div>
 
-        {/* ========================================================================= */}
-        {/* EXHIBITION SUITES: ASYMMETRIC ARCHITECTURAL LAYOUT                        */}
-        {/* ========================================================================= */}
+        {/* Exhibition Suites */}
         <div className="space-y-32 sm:space-y-44 lg:space-y-56">
           {displayedPlates.map((plate, index) => {
             const isReversed = index % 2 === 1;
@@ -344,40 +298,29 @@ export default function VisualArchiveExhibition() {
                 transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 className="relative flex flex-col space-y-12 sm:space-y-16 pb-16 sm:pb-24 border-b border-hairline last:border-0"
               >
-                {/* 1. Metadata Block (Top) */}
+                {/* Plate Meta & Heading */}
                 <motion.div
                   initial={{ opacity: 0, x: isReversed ? 30 : -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-10%" }}
                   transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                  className={cn(
-                    "w-full flex flex-col",
-                    isReversed ? "items-end text-right" : "items-start text-left"
-                  )}
+                  className={cn("w-full flex flex-col", isReversed ? "items-end text-right" : "items-start text-left")}
                 >
                   <span className="type-mono-meta text-ink-muted block mb-4 sm:mb-6">{plate.roomNumber}</span>
-                  
                   <h3 className="type-display-hero text-ink-primary leading-[1.05] tracking-tight max-w-4xl mb-6 sm:mb-10">
                     {plate.title}
                   </h3>
-                  
                   <div className="type-mono-micro text-ink-muted space-y-1 mb-6 sm:mb-8">
                     <p>{plate.location}</p>
                     <p>{plate.year}</p>
                   </div>
-                  
                   <div className="type-mono-micro text-copper-600 uppercase tracking-widest pt-4 border-t border-hairline min-w-[200px]">
                     {plate.category} / PHOTOGRAPHY
                   </div>
                 </motion.div>
 
-                {/* 2. Massive Photography Block */}
-                <div
-                  className={cn(
-                    "w-full lg:w-[85%] relative",
-                    isReversed ? "self-start" : "self-end"
-                  )}
-                >
+                {/* Primary Photo Plate with optional Loupe */}
+                <div className={cn("w-full lg:w-[85%] relative", isReversed ? "self-start" : "self-end")}>
                   <motion.div
                     initial={{ clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)" }}
                     whileInView={{ clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0% 100%)" }}
@@ -401,15 +344,12 @@ export default function VisualArchiveExhibition() {
                           src={plate.primaryImage.src}
                           alt={plate.primaryImage.alt}
                           loading="lazy"
-                          className={cn(
-                            "w-full h-auto object-cover",
-                            plate.primaryImage.aspect
-                          )}
+                          className={cn("w-full h-auto object-contain", plate.primaryImage.aspect)}
                         />
                       </div>
                     )}
 
-                    {/* Archival Inset */}
+                    {/* Archival Inset Thumbnail */}
                     {plate.overlappingImage && (
                       <motion.div
                         initial={{ opacity: 0, y: 40 }}
@@ -422,10 +362,7 @@ export default function VisualArchiveExhibition() {
                           isReversed ? "lg:left-auto lg:-left-12" : ""
                         )}
                       >
-                        <div className={cn(
-                          "relative overflow-hidden group/inset",
-                          plate.overlappingImage.aspect
-                        )}>
+                        <div className={cn("relative overflow-hidden group/inset", plate.overlappingImage.aspect)}>
                           <motion.img
                             whileHover={{ scale: 1.1, filter: "grayscale(0%)" }}
                             initial={{ filter: "grayscale(100%)" }}
@@ -433,11 +370,9 @@ export default function VisualArchiveExhibition() {
                             src={plate.overlappingImage.src}
                             alt={plate.overlappingImage.alt}
                             loading="lazy"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain"
                           />
                         </div>
-
-                        {/* Connected Metadata */}
                         <div className="pt-2">
                           <span className="type-mono-micro text-[10px] text-ink-muted">
                             {plate.overlappingImage.label}
@@ -448,16 +383,13 @@ export default function VisualArchiveExhibition() {
                   </motion.div>
                 </div>
 
-                {/* 3. The Thesis (Bottom Description) */}
-                <motion.div 
+                {/* Curatorial Thesis Paragraph */}
+                <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-5%" }}
                   transition={{ duration: 1, delay: 0.4 }}
-                  className={cn(
-                    "w-full pt-8 sm:pt-16 max-w-2xl",
-                    isReversed ? "self-end lg:pr-12" : "self-start lg:pl-12"
-                  )}
+                  className={cn("w-full pt-8 sm:pt-16 max-w-2xl", isReversed ? "self-end lg:pr-12" : "self-start lg:pl-12")}
                 >
                   <p className="type-body-lead text-ink-primary leading-relaxed">
                     {plate.curatorialThesis}

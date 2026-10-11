@@ -1,460 +1,672 @@
-"use client";
-
 import React from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import Navbar from "@/components/core/Navbar";
 import Footer from "@/components/core/Footer";
 import FilmGrain from "@/components/film/FilmGrain";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Camera, Compass, Layers, Calendar, Sliders } from "lucide-react";
+import { PROJECTS, ProjectData, getImagePlateInfo } from "@/lib/data/studioData";
 
-const PROJECT_DETAILS: Record<
+const SLUG_ALIASES: Record<string, string> = {
+  // Canonical monograph slugs
+  "jaipur-royal-citadels": "jaipur-royal-citadels",
+  "kashmir-valley-expedition": "kashmir-valley-expedition",
+  "chittor-fort-monoliths": "chittor-fort-monoliths",
+  "uttarakhand-sacred-sanctuaries": "uttarakhand-sacred-sanctuaries",
+  "vrindavan-sacred-architecture": "vrindavan-sacred-architecture",
+  "bareilly-monograph-series": "bareilly-monograph-series",
+
+  // Legacy & convenience aliases
+  "heritage-celebration": "jaipur-royal-citadels",
+  "amer-citadel": "jaipur-royal-citadels",
+  "heritage": "jaipur-royal-citadels",
+  "jaigarh-citadel": "jaipur-royal-citadels",
+  "hilltop-citadel": "jaipur-royal-citadels",
+  "citadel": "jaipur-royal-citadels",
+  "courtyard-scale": "jaipur-royal-citadels",
+  "sandstone-domes": "jaipur-royal-citadels",
+  "fort-ramparts": "jaipur-royal-citadels",
+  "sheesh-mahal-portraits": "jaipur-royal-citadels",
+  "portraits": "jaipur-royal-citadels",
+
+  "kashmir": "kashmir-valley-expedition",
+  "dal-lake": "kashmir-valley-expedition",
+  "sonamarg": "kashmir-valley-expedition",
+
+  "chittorgarh-citadel": "chittor-fort-monoliths",
+  "amber-couture": "chittor-fort-monoliths",
+  "chittor": "chittor-fort-monoliths",
+  "chittorgarh": "chittor-fort-monoliths",
+  "chittor-fort": "chittor-fort-monoliths",
+  "monochrome-temple": "chittor-fort-monoliths",
+
+  "jageshwar-dham": "uttarakhand-sacred-sanctuaries",
+  "jageshwar": "uttarakhand-sacred-sanctuaries",
+  "rishikesh": "uttarakhand-sacred-sanctuaries",
+  "temple-shikhara": "uttarakhand-sacred-sanctuaries",
+
+  "vrindavan": "vrindavan-sacred-architecture",
+  "prem-mandir": "vrindavan-sacred-architecture",
+  "banke-bihari": "vrindavan-sacred-architecture",
+
+  "estate-monograph": "bareilly-monograph-series",
+  "estate": "bareilly-monograph-series",
+  "bareilly": "bareilly-monograph-series",
+  "bareilly-heritage": "bareilly-monograph-series",
+  "pelican-solitude": "bareilly-monograph-series",
+  "rajasthan-luxury-resort": "bareilly-monograph-series",
+  "resort": "bareilly-monograph-series",
+  "fashion": "chittor-fort-monoliths",
+};
+
+// Camera and print specifications for each project
+const TECHNICAL_ARCHIVE_DATA: Record<
   string,
   {
-    title: string;
-    category: string;
-    year: string;
+    camera: string;
+    lens: string;
+    medium: string;
     location: string;
-    heroImage: string;
-    statement: string;
-    context: string;
-    discipline: string;
-    optics: string;
-    elevation: string;
-    curatorialNotes: string;
-    images: { src: string; caption: string }[];
+    coordinates: string;
+    elevation?: string;
+    year: string;
+    paper: string;
+    edition: string;
   }
 > = {
-  "hilltop-citadel": {
-    title: "Jaigarh Mountain Citadel",
-    category: "Topographical Military Architecture",
+  "jaipur-royal-citadels": {
+    camera: "Phase One IQ4 150MP & Linhof Master Technika 4x5",
+    lens: "Schneider Kreuznach 80mm LS f/2.8 & Rodenstock 90mm",
+    medium: "16-Bit Trichromatic RAW & Kodak Tri-X 320 4x5 Sheet Film",
+    location: "Amber Fort, Nahargarh & Jaigarh Fort, Jaipur, Rajasthan",
+    coordinates: "26.9855° N, 75.8513° E",
+    elevation: "648m above sea level",
     year: "2026",
-    location: "Cheel ka Teela, Amber (26.9855° N, 75.8507° E)",
-    heroImage: "/images/hilltop-fortress-crest.jpg",
-    statement:
-      "Massive stone bastions and watchtowers crowning the rugged Aravalli ridge under brooding atmospheric skies.",
-    context:
-      "Constructed in 1726 to protect the Amber Palace complex below, Jaigarh Fort's crenellated walls span rugged granite cliffs. Captured with medium-format optics during an overcast monsoon transition, isolating the dialogue between raw geologic topography and human stonecraft.",
-    discipline: "Medium Format • 55mm • Diffuse Ambient Light",
-    optics: "Schneider Kreuznach 55mm f/3.5 LS // 1/250s at f/8, ISO 100",
-    elevation: "648m above sea level // Aravalli Escarpment Ridge",
-    curatorialNotes:
-      "The composition deliberately allocates two-thirds of the frame to the leaden, overcast sky, emphasizing the isolation and defensive posture of the Diwa Burj watchtower against the mountain terrain.",
-    images: [
-      { src: "/images/hilltop-fortress-crest.jpg", caption: "Plate 01 — Diwa Burj Watchtower & Mountain Crest" },
-      { src: "/images/fort-ramparts-overlook.jpg", caption: "Plate 02 — Stepped Parapets & Water Harvesting Basin" },
-      { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 03 — Palace Pavilions in the Basin Below" },
-      { src: "/images/city-aerial-overview.jpg", caption: "Plate 04 — Territorial Valley Overview" },
-    ],
+    paper: "Hahnemühle Photo Rag Baryta 315gsm 100% Cotton",
+    edition: "Limited Archival Folio of 7",
   },
-  "temple-shikhara": {
-    title: "Shikhara & Oleander Bloom",
-    category: "Sacred Epigraphy & Living Flora",
+  "kashmir-valley-expedition": {
+    camera: "Fuji GFX 100 II & Phase One IQ4 150MP",
+    lens: "Fujinon GF 45mm f/2.8 & Schneider 120mm f/5.6",
+    medium: "16-Bit Medium Format Digital RAW & Kodak Portra 400",
+    location: "Dal Lake, Srinagar, Sonamarg & Pulwama, Jammu & Kashmir",
+    coordinates: "34.0837° N, 74.7973° E",
+    elevation: "2,800m above sea level",
     year: "2026",
-    location: "Rajasthan Heritage Corridor (26.9220° N, 75.8267° E)",
-    heroImage: "/images/temple-shikhara-oleander.jpg",
-    statement:
-      "Ancient carved stone temple spire framed through wild blooming oleander branches against an ethereal glowing sky.",
-    context:
-      "This study investigates the juxtaposition of enduring Nagara architectural permanence and fleeting botanical life. The intricately carved sandstone shikhara rises into the frame with its saffron dhwaja flag gently catching the breeze, softened by foreground oleander petals.",
-    discipline: "Medium Format • 105mm • High-Key Illumination",
-    optics: "Hasselblad HC 100mm f/2.2 // 1/500s at f/5.6, ISO 64",
-    elevation: "430m above sea level // Sacred Hill Foot",
-    curatorialNotes:
-      "A high-key exposure blows out the overcast sky into a pure white field, isolating the silhouette of the stone shikhara and establishing dialogue between deep green oleander foliage and pale sandstone.",
-    images: [
-      { src: "/images/temple-shikhara-oleander.jpg", caption: "Plate 01 — Nagara Spire & Blooming Oleander" },
-      { src: "/images/aryan-patel-temple-monochrome.jpg", caption: "Plate 02 — Shikhara Carving & Human Scale in Monochrome" },
-      { src: "/images/palace-arch-courtyard.jpg", caption: "Plate 03 — Chiaroscuro Arch & Sanctuary Transition" },
-    ],
+    paper: "Hahnemühle Museum Etching 350gsm 100% Cotton Rag",
+    edition: "Alpine Expedition Portfolio of 5",
   },
-  "courtyard-scale": {
-    title: "Courtyard Scale & Living Heritage",
-    category: "Cultural Space & Architectural Scale",
+  "chittor-fort-monoliths": {
+    camera: "Canon EOS 200D II & Linhof 4x5 Field Camera",
+    lens: "EF-S 18-55mm IS STM & Schneider Super-Angulon 90mm f/8",
+    medium: "14-Bit High Latitude RAW & Kodak Tri-X 320",
+    location: "Chittor Fort, Chittorgarh, Mewar, Rajasthan",
+    coordinates: "24.8879° N, 74.6452° E",
+    elevation: "590m above sea level",
     year: "2026",
-    location: "Amber Palace Complex (26.9855° N, 75.8513° E)",
-    heroImage: "/images/ochre-palace-courtyard-scale.jpg",
-    statement:
-      "Sun-drenched terracotta and mineral ochre walls framing human movement across historic palace courtyards.",
-    context:
-      "Unlike static architectural photography, this monograph documents living heritage. The interplay of warm ochre lime plaster, Bangaldar curved eaves, and passersby captures the monumental volume of royal courtyards as active, inhabited cultural spaces.",
-    discipline: "Medium Format • 35mm • Natural Tungsten Noon Light",
-    optics: "Rodenstock 35mm f/4.5 HR // 1/400s at f/11, ISO 100",
-    elevation: "510m above sea level // Palace Core Terraces",
-    curatorialNotes:
-      "The vertical compression highlights the monumental height of the palace facades compared to human visitors below, honoring centuries of lime-plaster patination and weathering.",
-    images: [
-      { src: "/images/ochre-palace-courtyard-scale.jpg", caption: "Plate 01 — Ochre Facades & Strolling Figures" },
-      { src: "/images/aryan-patel-pillared-court.jpg", caption: "Plate 02 — Colonnade Perspective & Pillar Geometry" },
-      { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 03 — Bangaldar Roofline & Sky Boundary" },
-      { src: "/images/temple-shikhara-oleander.jpg", caption: "Plate 04 — Adjacent Sanctuary & Flora" },
-    ],
+    paper: "Hahnemühle Museum Etching 350gsm 100% Cotton Rag",
+    edition: "Architectural Folio of 7",
   },
-  "amer-citadel": {
-    title: "Amer Citadel Study",
-    category: "Architectural Chiaroscuro",
+  "uttarakhand-sacred-sanctuaries": {
+    camera: "Canon EOS 200D II & Hasselblad 907X 50C",
+    lens: "EF-S 18-55mm IS STM & XCD 45mm f/4 P",
+    medium: "14-Bit High Latitude RAW & Ilford HP5 Plus 120",
+    location: "Jageshwar Dham Almora & Rishikesh, Uttarakhand",
+    coordinates: "29.6406° N, 79.8519° E",
+    elevation: "1,870m above sea level",
     year: "2026",
-    location: "Amer, Rajasthan (26.9855° N, 75.8513° E)",
-    heroImage: "/images/palace-arch-courtyard.jpg",
-    statement:
-      "A monumental study in silhouette, deep shadow, and classical Rajasthani palace archways.",
-    context:
-      "Captured under natural high-noon illumination, this monograph explores the dramatic transition between dark monolithic corridors and the blazing light of the palace courtyard.",
-    discipline: "Medium Format • 80mm • Archival Mineral Pigment",
-    optics: "Mamiya 80mm f/2.8 Sekor // 1/320s at f/8, ISO 100",
-    elevation: "515m above sea level // Amer Citadel Interior",
-    curatorialNotes:
-      "The exposure is keyed strictly to the bright exterior courtyard, allowing the monumental inner arches to fall into deep structural darkness that sculpts negative space.",
-    images: [
-      { src: "/images/palace-arch-courtyard.jpg", caption: "Plate 01 — Monolithic Archway Framing" },
-      { src: "/images/aryan-patel-pillared-court.jpg", caption: "Plate 02 — Pillared Colonnade Scale Study" },
-      { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 03 — Sandstone Pavilion Roofline" },
-      { src: "/images/aryan-patel-sheesh-mahal.jpg", caption: "Plate 04 — Glass Inlay Hall Interior" },
-    ],
+    paper: "Awagami Bamboo Japanese Fine Art Washi 250gsm",
+    edition: "Sacred Monograph Edition of 6",
   },
-  "sandstone-domes": {
-    title: "Sandstone Palace Domes",
-    category: "Heritage Geometry & Sky",
+  "vrindavan-sacred-architecture": {
+    camera: "Hasselblad H6D-100c & Leica M11-P",
+    lens: "Hasselblad HC 100mm f/2.2 & Summilux-M 35mm f/1.4",
+    medium: "16-Bit Medium Format Digital RAW",
+    location: "Shri Banke Bihari & Prem Mandir, Vrindavan, Uttar Pradesh",
+    coordinates: "27.5806° N, 77.7006° E",
     year: "2026",
-    location: "Amber Fort, Rajasthan (26.9855° N, 75.8513° E)",
-    heroImage: "/images/sandstone-palace-domes.jpg",
-    statement:
-      "Curvilinear Bangaldar pavilions and carved sandstone chhatris set against atmospheric turquoise heavens.",
-    context:
-      "Focusing on the golden yellow stone masonry that has endured centuries of desert monsoon cycles. Captured as high cirrus clouds soften the sky into a rich cyan canvas, with swallows darting between finials.",
-    discipline: "Medium Format • 65mm • Natural Tungsten & Sky Illumination",
-    optics: "Fujinon 65mm f/5.6 SW // 1/125s at f/11, ISO 100",
-    elevation: "520m above sea level // Upper Terrace Pavilion",
-    curatorialNotes:
-      "A golden-yellow and cyan color harmony derived straight from unvarnished sandstone masonry and high-altitude desert atmosphere.",
-    images: [
-      { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 01 — Curvilinear Eaves & Finial Symmetry" },
-      { src: "/images/palace-arch-courtyard.jpg", caption: "Plate 02 — Lower Corridor Chiaroscuro" },
-      { src: "/images/fort-ramparts-overlook.jpg", caption: "Plate 03 — Ridge Wall Bastion Axis" },
-      { src: "/images/city-aerial-overview.jpg", caption: "Plate 04 — Terraced Valley Settlement Below" },
-    ],
+    paper: "Canson Infinity Platine Fibre Rag 310gsm",
+    edition: "Exhibition Monograph of 8",
   },
-  "pelican-solitude": {
-    title: "Sagar Lake Pelicans",
-    category: "Wildlife Form & Riparian Stillness",
-    year: "2026",
-    location: "Sagar Lake, Amber (26.9875° N, 75.8560° E)",
-    heroImage: "/images/pelicans-lake.jpg",
-    statement:
-      "Two pelicans resting on a solitary stone block in shimmering turquoise waters.",
-    context:
-      "An unhurried telephoto capture emphasizing stillness and organic form against the blurred monumental ramparts of the fort behind.",
-    discipline: "Medium Format • 210mm • Natural Illumination",
-    optics: "Schneider 210mm f/5.6 Apo-Symmar // 1/800s at f/5.6, ISO 160",
-    elevation: "420m above sea level // Sagar Lake Basin",
-    curatorialNotes:
-      "The shallow depth-of-field isolates the two pelicans on their submerged masonry block, transforming the water surface into a luminous turquoise mirror.",
-    images: [
-      { src: "/images/pelicans-lake.jpg", caption: "Plate 01 — Pelicans on Submerged Stone Block" },
-      { src: "/images/city-aerial-overview.jpg", caption: "Plate 02 — Sagar Valley Basin & Morning Mist" },
-      { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 03 — Fort Crest Silhouetted Against Horizon" },
-    ],
-  },
-  "jaipur-aerial": {
-    title: "Dense Masonry Aerial",
-    category: "Urban Cartography & Atmosphere",
+  "bareilly-monograph-series": {
+    camera: "Canon EOS 200D II & Rolleiflex 2.8F",
+    lens: "Carl Zeiss Planar 80mm f/2.8 & 50mm f/1.8",
+    medium: "Kodak Portra 160 120 Film & High Latitude Digital",
+    location: "Bareilly Havelis, Terraces & Civil Lines, Uttar Pradesh",
+    coordinates: "28.3670° N, 79.4304° E",
     year: "2025",
-    location: "Jaipur, India (26.9124° N, 75.7873° E)",
-    heroImage: "/images/city-aerial-overview.jpg",
-    statement:
-      "High-vantage panoramic study of historic urban density, rooftops, and soaring birds in misty morning light.",
-    context:
-      "Looking down from the hill forts over centuries of contiguous stone architecture, captured during morning mist with black kites wheeling in the thermal currents.",
-    discipline: "Medium Format • 45mm • ISO 100",
-    optics: "Mamiya 45mm f/2.8 // 1/500s at f/8, ISO 100",
-    elevation: "590m above sea level // Nahargarh Edge",
-    curatorialNotes:
-      "Captures the grid-like precision of historic Jaipur architecture dissolving into morning haze with birds in flight adding kinetic life.",
-    images: [
-      { src: "/images/city-aerial-overview.jpg", caption: "Plate 01 — Dense Urban Fabric & Roof Terraces" },
-      { src: "/images/fort-ramparts-overlook.jpg", caption: "Plate 02 — Watchtower Bastion Viewpoint" },
-      { src: "/images/sandstone-palace-domes.jpg", caption: "Plate 03 — Pavilion Shading Above Settlement" },
-    ],
+    paper: "Hahnemühle Photo Rag 308gsm 100% Cotton",
+    edition: "Private Family Archive Edition of 3",
   },
-  "fort-ramparts": {
-    title: "Fort Ramparts & High Ridge",
-    category: "Territorial Architecture & Bastions",
+  // Legacy project slug keys
+  "jaigarh-citadel": {
+    camera: "Linhof Master Technika 4x5 & Phase One IQ4 150MP",
+    lens: "Rodenstock Grandagon-N 90mm f/4.5 & Schneider 150mm",
+    medium: "16-Bit Trichromatic Digital & Kodak Tri-X 320 4x5 Sheet Film",
+    location: "Cheel ka Teela, Aravalli Mountain Range, Rajasthan",
+    coordinates: "26.9855° N, 75.8513° E",
+    elevation: "648m above sea level",
     year: "2026",
-    location: "Jaigarh Fort, Rajasthan (26.9855° N, 75.8507° E)",
-    heroImage: "/images/fort-ramparts-overlook.jpg",
-    statement:
-      "Ancient stepped ramparts and historic rainwater harvesting infrastructure snaking across rugged mountain ridges.",
-    context:
-      "Commissioned to document how ancient civil defense and water engineering formed a unified topological system. The crenellated parapets follow the steep contours of the Aravalli range with monolithic gravitas.",
-    discipline: "Medium Format • 50mm • Natural Ambient Light",
-    optics: "Schneider 50mm f/4 LS // 1/250s at f/11, ISO 100",
-    elevation: "640m above sea level // Fort Western Battlement",
-    curatorialNotes:
-      "Features the historic 'Taanka' rainwater harvesting signage, documenting ingenious indigenous water collection across desert fortresses.",
-    images: [
-      { src: "/images/fort-ramparts-overlook.jpg", caption: "Plate 01 — Crenellated Parapets & Harvesting Tank" },
-      { src: "/images/city-aerial-overview.jpg", caption: "Plate 02 — Valley Settlement Cartography" },
-      { src: "/images/palace-arch-courtyard.jpg", caption: "Plate 03 — Interior Bastion Gateways" },
-    ],
+    paper: "Hahnemühle Photo Rag Baryta 315gsm 100% Cotton",
+    edition: "Limited Archival Folio of 7",
   },
-  "monochrome-temple": {
-    title: "Monolithic Shikhara Expedition",
-    category: "Epigraphical Heritage & Form",
+  "heritage-celebration": {
+    camera: "Hasselblad H6D-100c & Leica M11-P",
+    lens: "Hasselblad HC 100mm f/2.2 & Summilux-M 35mm f/1.4",
+    medium: "Kodak Portra 400 120 Film & 16-Bit Medium Format Digital RAW",
+    location: "Rambagh Palace Courtyards, Jaipur, Rajasthan",
+    coordinates: "26.8927° N, 75.8083° E",
+    year: "2026",
+    paper: "Awagami Bamboo Japanese Fine Art Washi 250gsm",
+    edition: "Bespoke Royal Monograph, Unique 1 of 1",
+  },
+  "sheesh-mahal-portraits": {
+    camera: "Phase One XF IQ3 100MP Trichromatic",
+    lens: "Schneider Kreuznach 80mm LS f/2.8 & Zeiss Otus 55mm f/1.4",
+    medium: "Ultra-High Bit Depth Sensor & Ilford HP5 Plus 120",
+    location: "Hall of Private Audience, Amer Palace, Rajasthan",
+    coordinates: "26.9859° N, 75.8507° E",
     year: "2025",
-    location: "Rajasthan Heritage Corridor (26.9200° N, 75.8200° E)",
-    heroImage: "/images/aryan-patel-temple-monochrome.jpg",
-    statement:
-      "Black and white study of an ancient carved stone temple spire, exploring tactile masonry, weathering, and human scale.",
-    context:
-      "Captured on silver gelatin film emulation, stripping all color to isolate the intricate rhythms of stone carving, multi-tiered shikhara spires, and the quiet presence of the expeditioner.",
-    discipline: "Monochrome Silver Gelatin Emulsion • 90mm • High Contrast",
-    optics: "Leica 90mm f/2.5 Summarit // 1/640s at f/5.6, Tri-X 400",
-    elevation: "460m above sea level // Monolithic Temple Precinct",
-    curatorialNotes:
-      "Stripped of color to focus purely on the sculptural relief and deep erosion grooves carved into centuries-old stone blocks.",
-    images: [
-      { src: "/images/aryan-patel-temple-monochrome.jpg", caption: "Plate 01 — Temple Spire & Expeditioner Scale" },
-      { src: "/images/aryan-patel-sheesh-mahal.jpg", caption: "Plate 02 — Sheesh Mahal Glass Mosaic Study" },
-      { src: "/images/palace-arch-courtyard.jpg", caption: "Plate 03 — Palace Archway Light Study" },
-    ],
+    paper: "Canson Infinity Platine Fibre Rag 310gsm",
+    edition: "Exhibition Portfolio of 12",
+  },
+  "chittorgarh-citadel": {
+    camera: "Canon EOS 200D II & Hasselblad 907X 50C",
+    lens: "EF-S 18-55mm IS STM & XCD 45mm f/4 P",
+    medium: "14-Bit High Latitude RAW & Kodak Tri-X 320",
+    location: "Jageshwar Dham, Almora, Uttarakhand",
+    coordinates: "29.6406° N, 79.8519° E",
+    elevation: "1,870m above sea level",
+    year: "2026",
+    paper: "Hahnemühle Museum Etching 350gsm 100% Cotton Rag",
+    edition: "Architectural Folio of 7",
+  },
+  "amber-couture": {
+    camera: "Hasselblad 907X 50C & Linhof 4x5 Field Camera",
+    lens: "XCD 45mm f/4 P & Schneider Super-Angulon 90mm f/8",
+    medium: "Kodak Tri-X 320 4x5 Sheet Film & Medium Format RAW",
+    location: "Chittorgarh Fort (Chittor Fort), Mewar, Rajasthan",
+    coordinates: "24.8879° N, 74.6452° E",
+    elevation: "590m above sea level",
+    year: "2026",
+    paper: "Hahnemühle Museum Etching 350gsm 100% Cotton Rag",
+    edition: "Architectural Folio of 7",
+  },
+  "estate-monograph": {
+    camera: "Rolleiflex 2.8F & Hasselblad 503CW",
+    lens: "Carl Zeiss Planar 80mm f/2.8",
+    medium: "Kodak Portra 160 & Kodak T-Max 400 120 Film",
+    location: "Lake Pichola Ancestral Estate, Udaipur, Rajasthan",
+    coordinates: "24.5764° N, 73.6835° E",
+    year: "2025",
+    paper: "Hahnemühle Museum Etching 350gsm 100% Cotton",
+    edition: "Private Family Archive Edition of 3",
+  },
+  "rajasthan-luxury-resort": {
+    camera: "Arca-Swiss Rm3di Technical Camera & Phase One IQ4 150MP",
+    lens: "Rodenstock HR Digaron-W 40mm f/4.0 Tilt-Shift",
+    medium: "16-Bit Low ISO Technical Digital Plate",
+    location: "Amanbagh Sanctuary, Ajabgarh Valley, Alwar",
+    coordinates: "27.1892° N, 76.2844° E",
+    year: "2026",
+    paper: "Hahnemühle German Etching 310gsm",
+    edition: "Architectural Monograph of 10",
   },
 };
 
-export default function ProjectDetailPage({
+export function generateStaticParams() {
+  const primarySlugs = PROJECTS.map((project) => ({ slug: project.slug }));
+  const aliasSlugs = Object.keys(SLUG_ALIASES).map((slug) => ({ slug }));
+  return [...primarySlugs, ...aliasSlugs];
+}
+
+export default async function WorkCaseStudyPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const unwrappedParams = React.use(params);
-  const slug = unwrappedParams?.slug || "";
+  const resolvedParams = await params;
+  const rawSlug = resolvedParams.slug;
+  const canonicalSlug = SLUG_ALIASES[rawSlug] || rawSlug;
 
-  const project =
-    PROJECT_DETAILS[slug] || {
-      title: slug.replace(/-/g, " ").toUpperCase(),
-      category: "Architectural Photography",
-      year: "2026",
-      location: "Studioza Atelier Archive",
-      heroImage: "/images/palace-arch-courtyard.jpg",
-      statement:
-        "An exploration into spatial form, texture, and light, challenging the modern norms of synthetic smoothing.",
-      context:
-        "The project required a ground-up conceptualization of structural identity. We approached the commission with a classical darkroom discipline, treating digital capture with silver halide patience.",
-      discipline: "Medium Format • Silver Halide Discipline",
-      optics: "Medium Format Prime Optics",
-      elevation: "Archival Field Coordinates",
-      curatorialNotes: "Archival monograph preserved in the Studioza permanent collection.",
-      images: [
-        { src: "/images/palace-arch-courtyard.jpg", caption: "Plate 01 — Spatial Geometry" },
-        { src: "/images/pelicans-lake.jpg", caption: "Plate 02 — Riparian Quietude" },
-        { src: "/images/city-aerial-overview.jpg", caption: "Plate 03 — Environmental Scale" },
-      ],
-    };
+  const projectIndex = PROJECTS.findIndex((p) => p.slug === canonicalSlug);
+  if (projectIndex === -1) {
+    notFound();
+  }
+
+  const project = PROJECTS[projectIndex];
+  const prevProject = projectIndex > 0 ? PROJECTS[projectIndex - 1] : PROJECTS[PROJECTS.length - 1];
+  const nextProject = projectIndex < PROJECTS.length - 1 ? PROJECTS[projectIndex + 1] : PROJECTS[0];
+
+  const tech = TECHNICAL_ARCHIVE_DATA[project.slug] || {
+    camera: "Phase One IQ4 150MP Medium Format",
+    lens: "Schneider Kreuznach 80mm LS f/2.8",
+    medium: "16-Bit Trichromatic RAW",
+    location: project.location,
+    coordinates: "26.9124° N, 75.7873° E",
+    year: project.year,
+    paper: "Hahnemühle Photo Rag Baryta 315gsm",
+    edition: "Limited Archival Monograph",
+  };
+
+  const plateNumber = String(projectIndex + 1).padStart(2, "0");
+
+  // Visual plates for the case-study layout
+  const heroPlate = project.coverImage;
+  const fullWidthPlate1 = project.gallery[0]?.url || project.coverImage;
+  const dualPlate1 = project.gallery[1]?.url || project.coverImage;
+  const dualPlate2 = project.gallery[2]?.url || project.gallery[0]?.url || project.coverImage;
+  const fullWidthPlate2 = project.gallery[3]?.url || project.gallery[0]?.url || project.coverImage;
+
+  const heroInfo = getImagePlateInfo(heroPlate);
+  const plate1Info = getImagePlateInfo(fullWidthPlate1);
+  const plate2Info = getImagePlateInfo(dualPlate1);
+  const plate3Info = getImagePlateInfo(dualPlate2);
+  const plate4Info = getImagePlateInfo(fullWidthPlate2);
 
   return (
-    <div className="min-h-screen bg-[var(--bg-warm-ivory)] text-[var(--ink-primary)] relative font-sans">
+    <div className="min-h-screen bg-[#F4F1EB] text-[#151515] relative selection:bg-[#151515] selection:text-[#F4F1EB]">
       <FilmGrain />
       <Navbar />
 
-      <main>
-        {/* HERO VISUAL */}
-        <section className="relative h-[85vh] w-full overflow-hidden bg-[var(--bg-deep-night)]">
-          <motion.div
-            initial={{ scale: 1.08, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] as any }}
-            className="absolute inset-0"
+      <main className="pt-28 pb-32">
+        {/* Navigation Breadcrumb */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-6 pb-8">
+          <Link
+            href="/work"
+            className="inline-flex items-center gap-2 type-meta text-[#77736D] hover:text-[#151515] transition-colors"
           >
-            <Image
-              src={project.heroImage}
-              alt={project.title}
-              fill
-              priority
-              className="object-cover opacity-90 contrast-[1.06]"
-            />
-          </motion.div>
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Archive // Return to Monograph Catalog</span>
+          </Link>
+        </div>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep-night)] via-[var(--bg-deep-night)]/25 to-transparent pointer-events-none" />
+        {/* Project Hero */}
+        <header className="px-6 lg:px-12 max-w-7xl mx-auto mb-16">
+          <div className="space-y-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#D9D5CE] pb-8 gap-6">
+              <div>
+                <span className="type-meta text-[#77736D] tracking-widest block mb-2">
+                  PROJECT HERO // {project.category.toUpperCase()}
+                </span>
+                <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl font-normal text-[#151515] tracking-tight uppercase">
+                  {project.name}
+                </h1>
+              </div>
+              <div className="text-left md:text-right type-meta text-xs text-[#77736D] space-y-1">
+                <span className="block text-[#151515] font-semibold text-sm tracking-widest">
+                  {project.location.toUpperCase()}
+                </span>
+                <span className="block text-[#CC5500] font-mono text-sm">
+                  PLATE {plateNumber}
+                </span>
+                <span>VOL. XXVI // ARCHIVAL STUDY</span>
+              </div>
+            </div>
 
-          <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-16 max-w-7xl mx-auto w-full z-10">
-            <span className="type-meta text-[var(--accent-muted-gold)] mb-3 uppercase tracking-widest">
-              {project.location} // {project.category}
-            </span>
-            <motion.h1
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="type-display-hero text-[var(--bg-warm-ivory)] drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)]"
-            >
-              {project.title}
-            </motion.h1>
+            {/* Hero Photographic Plate — Displayed at natural proportion without digital crop */}
+            <div className={`relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] shadow-sm ${heroInfo.aspectClass} ${heroInfo.isLandscape ? (heroInfo.aspectClass === "aspect-[4/3]" ? "w-full max-w-5xl mx-auto" : "w-full max-w-6xl mx-auto") : "max-w-2xl mx-auto"}`}>
+              <Image
+                src={heroPlate}
+                alt={project.name}
+                fill
+                priority
+                unoptimized
+                quality={100}
+                sizes="100vw"
+                className="object-contain"
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent p-4 sm:p-6 flex items-end justify-between type-meta text-white/90 text-[10px] sm:text-xs tracking-widest pointer-events-none">
+                <span>{tech.location.toUpperCase()}</span>
+                <span>{tech.coordinates}</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Divider */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 my-14">
+          <hr className="border-t border-[#D9D5CE]" />
+        </div>
+
+        {/* Introduction */}
+        <section className="px-6 lg:px-12 max-w-4xl mx-auto my-16">
+          <span className="type-meta text-[#77736D] block mb-4 text-xs">
+            01 // INTRODUCTION
+          </span>
+          <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#151515] leading-relaxed font-normal">
+            &ldquo;{project.intro}&rdquo;
+          </blockquote>
+          <div className="mt-8 flex flex-wrap gap-8 type-meta text-xs text-[#77736D] border-t border-[#D9D5CE] pt-6">
+            <div>
+              <span className="block text-[10px] text-[#A39E96]">COMMISSION PATRON</span>
+              <span className="text-[#151515] font-semibold">{project.client || "Studioza Atelier Monograph"}</span>
+            </div>
+            <div>
+              <span className="block text-[10px] text-[#A39E96]">YEAR</span>
+              <span className="text-[#151515] font-semibold">{project.year}</span>
+            </div>
+            <div>
+              <span className="block text-[10px] text-[#A39E96]">DISCIPLINE</span>
+              <span className="text-[#151515] font-semibold uppercase">{project.category}</span>
+            </div>
+            {tech.elevation && (
+              <div>
+                <span className="block text-[10px] text-[#A39E96]">ELEVATION</span>
+                <span className="text-[#151515] font-semibold">{tech.elevation}</span>
+              </div>
+            )}
           </div>
         </section>
 
-        {/* METADATA & CURATORIAL CONTEXT STORY */}
-        <section className="py-24 px-6 lg:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 border-b border-[var(--border-medium)] pb-24">
-          <div className="md:col-span-4 flex flex-col gap-6 type-meta text-[var(--ink-muted)]">
-            <div>
-              <p className="text-[var(--ink-primary)] font-semibold mb-1 uppercase tracking-wider text-xs">
-                Location &amp; Coordinates
-              </p>
-              <p className="type-body-base text-[var(--ink-muted)]">{project.location}</p>
-            </div>
-            <div>
-              <p className="text-[var(--ink-primary)] font-semibold mb-1 uppercase tracking-wider text-xs">
-                Elevation &amp; Topography
-              </p>
-              <p className="type-body-base text-[var(--ink-muted)]">{project.elevation}</p>
-            </div>
-            <div>
-              <p className="text-[var(--ink-primary)] font-semibold mb-1 uppercase tracking-wider text-xs">
-                Optical Rig &amp; Exposure
-              </p>
-              <p className="type-body-base text-[var(--ink-muted)]">{project.optics}</p>
-            </div>
-            <div>
-              <p className="text-[var(--ink-primary)] font-semibold mb-1 uppercase tracking-wider text-xs">
-                Discipline
-              </p>
-              <p className="type-body-base text-[var(--ink-muted)]">{project.discipline}</p>
-            </div>
-            <div>
-              <p className="text-[var(--ink-primary)] font-semibold mb-1 uppercase tracking-wider text-xs">
-                Archival Year
-              </p>
-              <p className="type-body-base text-[var(--ink-muted)]">{project.year}</p>
-            </div>
-          </div>
+        {/* Divider */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 my-14">
+          <hr className="border-t border-[#D9D5CE]" />
+        </div>
 
-          <div className="md:col-span-8 space-y-8">
-            <h2 className="type-display-statement text-[var(--ink-primary)]">
-              {project.statement}
-            </h2>
-            <div className="type-body-base text-[var(--ink-body)] space-y-6 max-w-2xl leading-relaxed">
-              <p>{project.context}</p>
-              {project.curatorialNotes && (
-                <div className="border-l-2 border-[var(--accent-dark-bronze)] pl-6 py-2 bg-[var(--bg-slate)]/40 text-[var(--ink-primary)] font-serif italic">
-                  &ldquo;{project.curatorialNotes}&rdquo;
-                </div>
-              )}
-              <p className="text-xs uppercase tracking-wider text-[var(--ink-muted)]">
-                Printed on 310gsm Hahnemühle Photo Rag Baryta with archival mineral pigment inks. Strictly zero synthetic smoothing.
-              </p>
+        {/* Primary Full Width Plate */}
+        <section className="px-6 lg:px-12 max-w-7xl mx-auto my-16">
+          <div className="space-y-4">
+            <div className={`relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] shadow-sm ${plate1Info.aspectClass} ${plate1Info.isLandscape ? (plate1Info.aspectClass === "aspect-[4/3]" ? "w-full max-w-5xl mx-auto" : "w-full max-w-6xl mx-auto") : "max-w-2xl mx-auto"}`}>
+              <Image
+                src={fullWidthPlate1}
+                alt={`${project.name} primary plate`}
+                fill
+                unoptimized
+                quality={100}
+                sizes="100vw"
+                className="object-contain"
+              />
+            </div>
+            <div className="flex justify-between items-center type-meta text-xs text-[#77736D] px-1">
+              <span>{project.gallery[0]?.caption || "Plate 01: Monumental study in chiaroscuro and atmospheric desert haze."}</span>
+              <span className="font-mono text-[#CC5500]">PLATE {plateNumber}.1</span>
             </div>
           </div>
         </section>
 
-        {/* IMAGE SEQUENCE */}
-        <section className="py-24 bg-[var(--bg-deep-night)] text-[var(--ink-inverse)]">
-          <div className="max-w-[100rem] mx-auto px-6 lg:px-12 space-y-24">
-            <div className="text-center max-w-xl mx-auto mb-16">
-              <span className="type-meta text-[var(--accent-muted-gold)] uppercase tracking-widest block mb-2">
-                Curatorial Plates
+        {/* Divider */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 my-14">
+          <hr className="border-t border-[#D9D5CE]" />
+        </div>
+
+        {/* Paired Detail Plates */}
+        <section className="px-6 lg:px-12 max-w-7xl mx-auto my-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-start">
+            <div className="space-y-3">
+              <div className={`relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] shadow-sm ${plate2Info.aspectClass}`}>
+                <Image
+                  src={dualPlate1}
+                  alt={`${project.name} secondary detail`}
+                  fill
+                  unoptimized
+                  quality={100}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain"
+                />
+              </div>
+              <div className="flex justify-between type-meta text-[11px] text-[#77736D]">
+                <span>{project.gallery[1]?.caption || "Geometric alignment and masonry texture."}</span>
+                <span className="font-mono text-[#CC5500]">PLATE {plateNumber}.2</span>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div className={`relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] shadow-sm ${plate3Info.aspectClass}`}>
+                <Image
+                  src={dualPlate2}
+                  alt={`${project.name} tertiary detail`}
+                  fill
+                  unoptimized
+                  quality={100}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain"
+                />
+              </div>
+              <div className="flex justify-between type-meta text-[11px] text-[#77736D]">
+                <span>{project.gallery[2]?.caption || "Intimate light dialogue in shadowed alcoves."}</span>
+                <span className="font-mono text-[#CC5500]">PLATE {plateNumber}.3</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 my-14">
+          <hr className="border-t border-[#D9D5CE]" />
+        </div>
+
+        {/* Curatorial & Field Notes */}
+        <section className="px-6 lg:px-12 max-w-4xl mx-auto my-20">
+          <span className="type-meta text-[#77736D] block mb-4 text-xs">
+            02 // CURATORIAL NOTES & FIELD MONOGRAPH
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#151515] mb-8 font-normal">
+            Atmospheric Discipline & Method
+          </h2>
+          <div className="prose prose-lg text-[#151515] space-y-6 font-sans leading-relaxed text-base sm:text-lg">
+            <p className="type-body-l text-[#151515]/90">
+              {project.story}
+            </p>
+            <p className="type-body text-[#77736D]">
+              In every frame, we intentionally restrained artificial intervention. By harmonizing shutter timing with the earth’s natural rotation, each plate records the geological weight of stone and the fragile fleeting presence of human celebration without digital contrivance.
+            </p>
+          </div>
+
+          {/* Credits */}
+          {project.credits && project.credits.length > 0 && (
+            <div className="mt-12 pt-8 border-t border-[#D9D5CE]">
+              <span className="type-meta text-[11px] text-[#77736D] block mb-4">
+                COMMISSION CREDITS & ARCHIVAL COLLABORATORS
               </span>
-              <h3 className="type-display-title text-[var(--bg-warm-ivory)]">Archival Sequence</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 type-meta text-xs">
+                {project.credits.map((credit, idx) => (
+                  <div key={idx}>
+                    <span className="text-[#77736D] block text-[10px]">{credit.role}</span>
+                    <span className="text-[#151515] font-semibold">{credit.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+
+        {/* Divider */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 my-14">
+          <hr className="border-t border-[#D9D5CE]" />
+        </div>
+
+        {/* Landscape Horizon Plate */}
+        <section className="px-6 lg:px-12 max-w-7xl mx-auto my-16">
+          <div className="space-y-4">
+            <div className={`relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] shadow-sm ${plate4Info.aspectClass} ${plate4Info.isLandscape ? (plate4Info.aspectClass === "aspect-[4/3]" ? "w-full max-w-5xl mx-auto" : "w-full max-w-6xl mx-auto") : "max-w-2xl mx-auto"}`}>
+              <Image
+                src={fullWidthPlate2}
+                alt={`${project.name} panoramic plate`}
+                fill
+                unoptimized
+                quality={100}
+                sizes="100vw"
+                className="object-contain"
+              />
+            </div>
+            <div className="flex justify-between items-center type-meta text-xs text-[#77736D] px-1">
+              <span>{project.gallery[3]?.caption || "Plate 04: Twilight dispersion across sandstone and slate mountain horizon."}</span>
+              <span className="font-mono text-[#CC5500]">PLATE {plateNumber}.4</span>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 my-14">
+          <hr className="border-t border-[#D9D5CE]" />
+        </div>
+
+        {/* Technical Data Sheet */}
+        <section className="px-6 lg:px-12 max-w-5xl mx-auto my-20">
+          <div className="border border-[#151515] p-8 sm:p-12 bg-[#F4F1EB]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-[#151515] mb-8 gap-4">
+              <div>
+                <span className="type-meta text-[#77736D] text-[10px] block">
+                  SYSTEM CATALOG // SHEET DATA
+                </span>
+                <h3 className="font-serif text-3xl text-[#151515] font-normal tracking-tight">
+                  Technical Archive
+                </h3>
+              </div>
+              <span className="font-mono text-xs type-meta bg-[#151515] text-[#F4F1EB] px-3 py-1">
+                REF: STZ-PLT-{plateNumber}
+              </span>
             </div>
 
-            {/* Sequence 1: Full-Width Monolith */}
-            {project.images[0] && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 1 }}
-                className="space-y-4"
-              >
-                <div className="aspect-[16/10] w-full relative overflow-hidden bg-[var(--bg-slate)]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-8 type-meta text-xs">
+              <div>
+                <span className="text-[#77736D] block text-[10px] mb-1 flex items-center gap-1.5">
+                  <Camera className="w-3 h-3 text-[#CC5500]" /> CAMERA SYSTEM
+                </span>
+                <span className="text-[#151515] font-medium">{tech.camera}</span>
+              </div>
+              <div>
+                <span className="text-[#77736D] block text-[10px] mb-1 flex items-center gap-1.5">
+                  <Sliders className="w-3 h-3 text-[#CC5500]" /> OPTICS / LENS
+                </span>
+                <span className="text-[#151515] font-medium">{tech.lens}</span>
+              </div>
+              <div>
+                <span className="text-[#77736D] block text-[10px] mb-1 flex items-center gap-1.5">
+                  <Layers className="w-3 h-3 text-[#CC5500]" /> FILM / DIGITAL EMULSION
+                </span>
+                <span className="text-[#151515] font-medium">{tech.medium}</span>
+              </div>
+              <div>
+                <span className="text-[#77736D] block text-[10px] mb-1 flex items-center gap-1.5">
+                  <Compass className="w-3 h-3 text-[#CC5500]" /> GEOGRAPHIC LOCATION
+                </span>
+                <span className="text-[#151515] font-medium">{tech.location}</span>
+              </div>
+              <div>
+                <span className="text-[#77736D] block text-[10px] mb-1 flex items-center gap-1.5">
+                  <Calendar className="w-3 h-3 text-[#CC5500]" /> ARCHIVAL CAPTURE YEAR
+                </span>
+                <span className="text-[#151515] font-medium">{tech.year}</span>
+              </div>
+              <div>
+                <span className="text-[#77736D] block text-[10px] mb-1 flex items-center gap-1.5">
+                  <Layers className="w-3 h-3 text-[#CC5500]" /> PAPER SUBSTRATE
+                </span>
+                <span className="text-[#151515] font-medium">{tech.paper}</span>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-[#D9D5CE] flex justify-between items-center text-[10px] type-meta text-[#77736D]">
+              <span>COORDINATES: {tech.coordinates}</span>
+              <span className="text-[#151515] font-semibold">{tech.edition}</span>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 my-14">
+          <hr className="border-t border-[#D9D5CE]" />
+        </div>
+
+        {/* Previous & Next Monograph Navigation */}
+        <section className="px-6 lg:px-12 max-w-7xl mx-auto my-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-b border-[#D9D5CE] py-12">
+            {/* Previous */}
+            <Link
+              href={`/work/${prevProject.slug}`}
+              className="group block space-y-4 hover:opacity-90 transition-opacity"
+            >
+              <span className="type-meta text-xs text-[#77736D] flex items-center gap-1.5">
+                <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+                <span>PREVIOUS MONOGRAPH</span>
+              </span>
+              <div className="flex items-center gap-5">
+                <div className="w-24 h-16 bg-[#EAE6DE] relative shrink-0 overflow-hidden">
                   <Image
-                    src={project.images[0].src}
-                    alt={project.images[0].caption}
+                    src={prevProject.coverImage}
+                    alt={prevProject.name}
                     fill
-                    className="object-cover"
+                    quality={100}
+                    sizes="96px"
+                    className="object-contain"
                   />
                 </div>
-                <div className="flex justify-between items-center type-meta text-[var(--ink-inverse-muted)] pt-2">
-                  <span>01 // {project.images[0].caption}</span>
-                  <span>100% UNCOMPRESSED RAW</span>
+                <div>
+                  <h4 className="font-serif text-2xl text-[#151515] group-hover:text-[#CC5500] transition-colors">
+                    {prevProject.name}
+                  </h4>
+                  <span className="type-meta text-[11px] text-[#77736D]">
+                    {prevProject.location} · {prevProject.year}
+                  </span>
                 </div>
-              </motion.div>
-            )}
+              </div>
+            </Link>
 
-            {/* Sequence 2 & 3: Staggered Pair */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
-              {project.images[1] && (
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 1 }}
-                  className="space-y-4"
-                >
-                  <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-slate)]">
-                    <Image
-                      src={project.images[1].src}
-                      alt={project.images[1].caption}
-                      fill
-                      className="object-cover object-top"
-                    />
-                  </div>
-                  <div className="type-meta text-[var(--ink-inverse-muted)] pt-2">
-                    02 // {project.images[1].caption}
-                  </div>
-                </motion.div>
-              )}
-
-              {project.images[2] && (
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 1, delay: 0.2 }}
-                  className="space-y-4 md:mt-24"
-                >
-                  <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-slate)]">
-                    <Image
-                      src={project.images[2].src}
-                      alt={project.images[2].caption}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="type-meta text-[var(--ink-inverse-muted)] pt-2">
-                    03 // {project.images[2].caption}
-                  </div>
-                </motion.div>
-              )}
-            </div>
+            {/* Next */}
+            <Link
+              href={`/work/${nextProject.slug}`}
+              className="group block space-y-4 md:text-right hover:opacity-90 transition-opacity"
+            >
+              <span className="type-meta text-xs text-[#77736D] flex items-center justify-start md:justify-end gap-1.5">
+                <span>NEXT MONOGRAPH</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </span>
+              <div className="flex items-center justify-start md:justify-end gap-5">
+                <div className="order-2 md:order-1">
+                  <h4 className="font-serif text-2xl text-[#151515] group-hover:text-[#CC5500] transition-colors">
+                    {nextProject.name}
+                  </h4>
+                  <span className="type-meta text-[11px] text-[#77736D]">
+                    {nextProject.location} · {nextProject.year}
+                  </span>
+                </div>
+                <div className="w-24 h-16 bg-[#EAE6DE] relative shrink-0 overflow-hidden order-1 md:order-2">
+                  <Image
+                    src={nextProject.coverImage}
+                    alt={nextProject.name}
+                    fill
+                    quality={100}
+                    sizes="96px"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            </Link>
           </div>
         </section>
 
-        {/* CREDITS & PAGINATION */}
-        <section className="py-32 px-6 lg:px-12 bg-[var(--bg-warm-ivory)] border-t border-[var(--border-medium)]">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
-            <div>
-              <h3 className="type-meta text-[var(--ink-muted)] mb-4 uppercase tracking-widest text-xs">
-                Credits
-              </h3>
-              <ul className="type-body-base space-y-2 text-[var(--ink-body)]">
-                <li>
-                  <span className="text-[var(--ink-muted)]">Photographer:</span> Aryan Patel
-                </li>
-                <li>
-                  <span className="text-[var(--ink-muted)]">Curation:</span> Studioza Atelier Archive
-                </li>
-                <li>
-                  <span className="text-[var(--ink-muted)]">Medium:</span> Medium Format Film &amp; Raw Capture
-                </li>
-              </ul>
-            </div>
+        {/* Divider */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 my-14">
+          <hr className="border-t border-[#D9D5CE]" />
+        </div>
 
-            <div className="text-left md:text-right">
-              <span className="type-meta text-[var(--ink-muted)] block mb-4 uppercase tracking-widest text-xs">
-                Navigation
-              </span>
+        {/* Commission CTA */}
+        <section className="px-6 lg:px-12 max-w-5xl mx-auto text-center my-20">
+          <div className="bg-[#171717] text-[#F4F1EB] p-12 sm:p-20 space-y-6 relative overflow-hidden">
+            <span className="type-meta text-[#A39E96] tracking-widest text-xs">
+              COMMISSION DIALOGUE
+            </span>
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white font-normal leading-tight">
+              Let us document your celebration or architectural commission.
+            </h2>
+            <p className="type-body text-[#A39E96] max-w-xl mx-auto">
+              Each commission is treated as a lasting museum-grade monograph. Reserve dates or consult on location scouting worldwide.
+            </p>
+            <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
               <Link
-                href="/work"
-                className="type-display-title hover:text-[var(--accent-dark-bronze)] transition-colors"
+                href="/contact"
+                className="bg-[#F4F1EB] text-[#171717] px-8 py-4 type-meta text-xs hover:bg-[#CC5500] hover:text-white transition-colors"
               >
-                Archive Overview &rarr;
+                START AN INQUIRY →
+              </Link>
+              <Link
+                href="/booking"
+                className="border border-white/20 text-white px-8 py-4 type-meta text-xs hover:border-white transition-colors"
+              >
+                SCHEDULE A CONSULTATION
               </Link>
             </div>
           </div>

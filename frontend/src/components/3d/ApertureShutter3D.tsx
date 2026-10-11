@@ -1,3 +1,7 @@
+/**
+ * ApertureShutter3D Component
+ * Interactive mechanical lens aperture trigger with rotating iris blades and flash exposure feedback.
+ */
 "use client";
 
 import { useState } from "react";
@@ -16,6 +20,7 @@ export default function ApertureShutter3D({
 }: ApertureShutter3DProps) {
   const [isSnapping, setIsSnapping] = useState(false);
 
+  // Trigger camera snap animation and trigger callback
   const triggerSnap = () => {
     if (isSnapping) return;
     setIsSnapping(true);
@@ -29,7 +34,7 @@ export default function ApertureShutter3D({
   return (
     <button
       onClick={triggerSnap}
-      className={`relative group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-sage-50/50 hover:bg-sage-50/50 border border-sage-300/40 hover:border-copper-500/50 type-body-base   text-foreground hover:text-foreground backdrop-blur-md transition-all cursor-pointer overflow-hidden shadow-lg select-none active:scale-95 ${className}`}
+      className={`relative group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-sage-50/50 hover:bg-sage-50/50 border border-sage-300/40 hover:border-copper-500/50 type-body-base text-foreground hover:text-foreground backdrop-blur-md transition-all cursor-pointer overflow-hidden shadow-lg select-none active:scale-95 ${className}`}
       aria-label={label}
     >
       {/* 3D Iris Shutter Icon */}
@@ -40,9 +45,7 @@ export default function ApertureShutter3D({
           }`}
         />
         {/* Shutter Blade Flash */}
-        {isSnapping && (
-          <span className="absolute inset-0 rounded-full bg-copper-200/90 animate-ping" />
-        )}
+        {isSnapping && <span className="absolute inset-0 rounded-full bg-copper-200/90 animate-ping" />}
       </div>
 
       <span>{isSnapping ? "1/1000s Leaf Shutter Actuated" : label}</span>

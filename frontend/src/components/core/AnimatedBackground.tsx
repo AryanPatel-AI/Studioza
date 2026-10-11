@@ -1,3 +1,7 @@
+/**
+ * AnimatedBackground Component
+ * Renders atmospheric twilight-blue and golden-amber bokeh discs, optical dust motes, and anamorphic lens flares on HTML5 Canvas.
+ */
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -16,7 +20,7 @@ export default function AnimatedBackground() {
     let width = window.innerWidth;
     let height = window.innerHeight;
 
-    // Respect reduced motion
+    // Detect reduced motion preference
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let isReducedMotion = motionQuery.matches;
 
@@ -35,18 +39,14 @@ export default function AnimatedBackground() {
     handleResize();
 
     if (isReducedMotion) {
-      // Just render a static gradient if reduced motion
-      const renderStatic = () => {
-        ctx.clearRect(0, 0, width, height);
-      };
-      renderStatic();
+      ctx.clearRect(0, 0, width, height);
       return () => {
         window.removeEventListener("resize", handleResize);
         motionQuery.removeEventListener("change", handleMotionChange);
       };
     }
 
-    // Interactive elements for the canvas
+    // Initialize bokeh optical discs
     const bokehCount = Math.min(Math.floor(width / 35), 45);
     const bokehs: {
       x: number;
@@ -60,28 +60,14 @@ export default function AnimatedBackground() {
       tone: "blue" | "amber";
     }[] = [];
 
-    const blueColors = [
-      "rgba(14, 165, 233, ", // Bright Sky
-      "rgba(59, 130, 246, ", // Sapphire
-      "rgba(99, 102, 241, ", // Indigo
-    ];
-
-    const amberColors = [
-      "rgba(245, 158, 11, ",  // Warm Amber
-      "rgba(217, 119, 6, ",   // Deep Golden Bronze
-      "rgba(251, 191, 36, ",  // Honey Gold
-    ];
+    const blueColors = ["rgba(14, 165, 233, ", "rgba(59, 130, 246, ", "rgba(99, 102, 241, "];
+    const amberColors = ["rgba(245, 158, 11, ", "rgba(217, 119, 6, ", "rgba(251, 191, 36, "];
 
     for (let i = 0; i < bokehCount; i++) {
       const isAmber = i % 2 === 0;
       const palette = isAmber ? amberColors : blueColors;
-      // Position blue towards the left/top, amber towards the right/bottom
-      const initialX = isAmber
-        ? width * 0.4 + Math.random() * (width * 0.6)
-        : Math.random() * (width * 0.6);
-      const initialY = isAmber
-        ? height * 0.3 + Math.random() * (height * 0.7)
-        : Math.random() * (height * 0.7);
+      const initialX = isAmber ? width * 0.4 + Math.random() * (width * 0.6) : Math.random() * (width * 0.6);
+      const initialY = isAmber ? height * 0.3 + Math.random() * (height * 0.7) : Math.random() * (height * 0.7);
 
       bokehs.push({
         x: initialX,
@@ -96,7 +82,7 @@ export default function AnimatedBackground() {
       });
     }
 
-    // Optical Dust Motes with dual-tone lighting
+    // Initialize luminous studio dust motes
     const moteCount = Math.min(Math.floor(width / 26), 55);
     const motes: {
       x: number;
@@ -123,6 +109,7 @@ export default function AnimatedBackground() {
       });
     }
 
+    // Render loop
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
@@ -133,23 +120,13 @@ export default function AnimatedBackground() {
         b.y += b.vy;
         b.alpha += b.dAlpha;
 
-        if (b.alpha <= 0.03 || b.alpha >= 0.16) {
-          b.dAlpha = -b.dAlpha;
-        }
-
+        if (b.alpha <= 0.03 || b.alpha >= 0.16) b.dAlpha = -b.dAlpha;
         if (b.x < -b.radius) b.x = width + b.radius;
         if (b.x > width + b.radius) b.x = -b.radius;
         if (b.y < -b.radius) b.y = height + b.radius;
         if (b.y > height + b.radius) b.y = -b.radius;
 
-        const gradient = ctx.createRadialGradient(
-          b.x,
-          b.y,
-          0,
-          b.x,
-          b.y,
-          b.radius
-        );
+        const gradient = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.radius);
         gradient.addColorStop(0, `${b.color}${b.alpha * 1.8})`);
         gradient.addColorStop(0.5, `${b.color}${b.alpha * 0.9})`);
         gradient.addColorStop(1, `${b.color}0)`);
@@ -160,7 +137,7 @@ export default function AnimatedBackground() {
         ctx.fill();
       }
 
-      // Draw subtle light threads between nearby motes
+      // Draw light threads between nearby motes
       for (let i = 0; i < motes.length; i++) {
         for (let j = i + 1; j < motes.length; j++) {
           const dx = motes[i].x - motes[j].x;
@@ -186,10 +163,7 @@ export default function AnimatedBackground() {
         m.y += m.vy;
         m.alpha += m.dAlpha;
 
-        if (m.alpha <= 0.2 || m.alpha >= 0.85) {
-          m.dAlpha = -m.dAlpha;
-        }
-
+        if (m.alpha <= 0.2 || m.alpha >= 0.85) m.dAlpha = -m.dAlpha;
         if (m.x < 0) m.x = width;
         if (m.x > width) m.x = 0;
         if (m.y < 0) m.y = height;
@@ -218,7 +192,7 @@ export default function AnimatedBackground() {
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden -z-20 bg-[var(--bg-deep-night)]">
-      {/* 1. DISTINCT 2-TONE SPLIT BASE: Twilight Blue (Top-Left) + Golden Amber (Bottom-Right) */}
+      {/* 2-Tone Split Base */}
       <div
         className="absolute inset-0 opacity-80"
         style={{
@@ -230,67 +204,40 @@ export default function AnimatedBackground() {
         }}
       />
 
-      {/* 2. TONE 1: Radiant Twilight Blue Glowing Aura (Top Left & Center) */}
+      {/* Tone 1: Twilight Blue Glowing Aura */}
       <div
         className="absolute -top-24 -left-20 w-[750px] h-[750px] rounded-full blur-[140px] opacity-75 animate-pulse"
         style={{
-          background:
-            "radial-gradient(circle, rgba(14, 165, 233, 0.45) 0%, rgba(37, 99, 235, 0.3) 40%, rgba(15, 23, 42, 0) 75%)",
+          background: "radial-gradient(circle, rgba(14, 165, 233, 0.45) 0%, rgba(37, 99, 235, 0.3) 40%, rgba(15, 23, 42, 0) 75%)",
           animationDuration: "10s",
         }}
       />
 
-      {/* 3. TONE 2: Radiant Golden Hour Amber Glowing Aura (Bottom Right & Mid Right) */}
+      {/* Tone 2: Golden Hour Amber Glowing Aura */}
       <div
         className="absolute top-1/2 -right-24 w-[780px] h-[780px] rounded-full blur-[150px] opacity-70 animate-pulse"
         style={{
-          background:
-            "radial-gradient(circle, rgba(245, 158, 11, 0.42) 0%, rgba(217, 119, 6, 0.28) 45%, rgba(24, 15, 8, 0) 75%)",
+          background: "radial-gradient(circle, rgba(245, 158, 11, 0.42) 0%, rgba(217, 119, 6, 0.28) 45%, rgba(24, 15, 8, 0) 75%)",
           animationDuration: "12s",
         }}
       />
 
-      {/* 4. Secondary Tone 1 Highlight (Lower Left Sapphire Wash) */}
-      <div
-        className="absolute -bottom-24 left-1/4 w-[600px] h-[600px] rounded-full blur-[130px] opacity-45"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(30, 58, 138, 0.5) 0%, rgba(14, 165, 233, 0.2) 50%, transparent 80%)",
-        }}
-      />
-
-      {/* 5. Dual-Spectrum Anamorphic Lens Flare (Cyan to Amber across the horizon) */}
+      {/* Anamorphic Lens Flare Line */}
       <div
         className="absolute top-1/3 -left-1/4 w-[150%] h-[3px] opacity-60 blur-[1px]"
         style={{
-          background:
-            "linear-gradient(90deg, transparent 0%, rgba(14, 165, 233, 0.7) 25%, rgba(59, 130, 246, 0.5) 45%, rgba(245, 158, 11, 0.8) 65%, transparent 100%)",
+          background: "linear-gradient(90deg, transparent 0%, rgba(14, 165, 233, 0.7) 25%, rgba(59, 130, 246, 0.5) 45%, rgba(245, 158, 11, 0.8) 65%, transparent 100%)",
         }}
       />
 
-      {/* 6. Viewfinder Alignment Mesh Grid with Dual-Tone Glow */}
-      <div
-        className="absolute inset-0 opacity-25"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(14, 165, 233, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(245, 158, 11, 0.08) 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
-          maskImage:
-            "radial-gradient(ellipse at 50% 50%, black 40%, transparent 90%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse at 50% 50%, black 40%, transparent 90%)",
-        }}
-      />
-
-      {/* 7. Active 2-Tone Bokeh & Motes Canvas */}
+      {/* Active Bokeh & Motes Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
-      {/* 8. Soft Edge Vignette */}
+      {/* Soft Edge Vignette */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background:
-            "radial-gradient(circle at 50% 50%, transparent 50%, var(--bg-deep-night) 100%)",
+          background: "radial-gradient(circle at 50% 50%, transparent 50%, var(--bg-deep-night) 100%)",
         }}
       />
     </div>

@@ -7,29 +7,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Navbar from "@/components/core/Navbar";
 import Footer from "@/components/core/Footer";
 import FilmGrain from "@/components/film/FilmGrain";
-import { MagneticButton } from "@/components/ui/MagneticButton";
-import { ArrowDownRight, ArrowUpRight, Camera } from "lucide-react";
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any } },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const letterVariant = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any } },
-};
+import { ArrowDownRight, ArrowUpRight, Camera, ArrowRight } from "lucide-react";
+import { PROJECTS, STORIES, SERVICES, TESTIMONIALS, getImagePlateInfo } from "@/lib/data/studioData";
 
 export default function AtelierHomepage() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -38,599 +17,666 @@ export default function AtelierHomepage() {
     offset: ["start start", "end start"],
   });
 
-  // Cinematic Parallax Physics
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.02, 1.15]);
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
-  const headline = "WE MAKE THINGS WORTH REMEMBERING".split(" ");
+  const featuredStory = STORIES[0];
+  const jaipurProject = PROJECTS[0];
+  const kashmirProject = PROJECTS[1];
+  const chittorProject = PROJECTS[2];
+  const uttarakhandProject = PROJECTS[3];
+  const portraitsProject = PROJECTS[6] || PROJECTS[2];
 
   return (
-    <div className="min-h-screen bg-[var(--bg-deep-night)] text-[var(--ink-inverse)] selection:bg-[var(--accent-muted-gold)] selection:text-[var(--bg-near-black)] relative overflow-x-hidden font-sans">
+    <div className="min-h-screen bg-[#F4F1EB] text-[#151515] relative overflow-x-hidden">
       <FilmGrain />
       <Navbar />
 
       <main>
         {/* ========================================================================= */}
-        {/* HERO SECTION — SIGNATURE PHOTOGRAPHER & MOUNTAIN RANGES VISUAL            */}
+        {/* 1. CINEMATIC HERO — MINIMAL, UNCLUTTERED, FULL VIEWPORT                   */}
         {/* ========================================================================= */}
         <section
           ref={heroRef}
           className="relative h-screen min-h-[720px] w-full flex flex-col justify-between overflow-hidden px-6 lg:px-12 select-none"
         >
-          {/* Master Photography Background Layer */}
+          {/* Background Photography Layer */}
           <motion.div
-            style={{ y: imageY, scale: imageScale }}
             className="absolute inset-0 w-full h-full z-0 overflow-hidden"
           >
-            <div className="relative w-full h-full">
-              <Image
-                src="/images/hero-photographer-mountains.jpg"
-                alt="Studioza Signature Optical Archive — Photographer on Mountain Summit"
-                fill
-                priority
-                sizes="100vw"
-                quality={90}
-                className="object-cover object-[center_32%] sm:object-center w-full h-full filter brightness-[0.72] contrast-[1.08] saturate-[1.08]"
-              />
-            </div>
-
-            {/* Darkroom Vignette & Atmospheric Contrast Overlays */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-near-black)]/75 via-transparent to-[var(--bg-deep-night)] pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep-night)] via-[var(--bg-deep-night)]/40 to-transparent pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-deep-night)]/40 via-transparent to-[var(--bg-deep-night)]/40 pointer-events-none" />
+            <Image
+              src="/images/Dal_Lake.jpeg"
+              alt="Studioza Signature Optical Archive — Dal Lake Expedition"
+              fill
+              priority
+              sizes="100vw"
+              quality={100}
+              className="object-cover object-center w-full h-full brightness-[0.82] contrast-[1.04]"
+            />
+            {/* Darkroom Vignette Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/70 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 pointer-events-none" />
           </motion.div>
 
           {/* Top Archival Telemetry Strip */}
-          <div className="relative z-10 w-full max-w-7xl mx-auto pt-32 sm:pt-36 flex items-center justify-between border-b border-[rgba(247,245,240,0.12)] pb-4 type-meta text-[var(--ink-inverse-muted)]">
+          <div className="relative z-10 w-full max-w-7xl mx-auto pt-32 sm:pt-36 flex items-center justify-between border-b border-white/15 pb-4 type-meta text-white/70">
             <div className="flex items-center gap-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-muted-gold)] animate-pulse" />
-              <span className="tracking-widest uppercase">VOL. XXVI // 40.7228° N, 74.0015° W</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#9CAF88] animate-pulse" />
+              <span className="tracking-widest">VOL. XXVI // JAIPUR · NEW YORK</span>
             </div>
-            <div className="hidden md:flex items-center gap-6 tracking-widest uppercase text-[11px]">
-              <span>MEDIUM FORMAT ARCHIVAL</span>
+            <div className="hidden md:flex items-center gap-6 tracking-widest text-[11px]">
+              <span>DIGITAL PHOTOGRAPHY MAGAZINE</span>
               <span>•</span>
-              <span>SILVER HALIDE DISCIPLINE</span>
+              <span>FINE ART ATELIER</span>
             </div>
-            <div className="text-right tracking-widest uppercase text-[11px] text-[var(--accent-muted-gold)]">
+            <div className="text-right tracking-widest text-[11px] text-[#CFA570]">
               EST. MMXVIII
             </div>
           </div>
 
-          {/* Hero Centerpiece Typography */}
+          {/* Hero Centerpiece — Uncluttered, Large Serif */}
           <motion.div
             style={{ y: heroY, opacity: heroOpacity }}
             className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col justify-center items-center text-center my-auto px-4"
           >
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              animate="visible"
-              className="flex flex-wrap justify-center gap-x-3.5 sm:gap-x-5 gap-y-2 mb-8 max-w-5xl"
-            >
-              {headline.map((word, i) => (
-                <motion.span
-                  key={i}
-                  variants={letterVariant}
-                  className="type-display-hero text-[var(--bg-warm-ivory)] drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] tracking-[-0.02em]"
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </motion.div>
+            <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-white font-normal tracking-tight leading-[0.92] max-w-5xl mb-8 drop-shadow-[0_12px_24px_rgba(0,0,0,0.7)]">
+              STORIES WORTH
+              <br />
+              <span className="italic font-light">REMEMBERING.</span>
+            </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
-              className="text-[var(--bg-warm-ivory)]/90 max-w-2xl text-center type-body-lead mb-10 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]"
-            >
-              An independent creative studio operating at the intersection of cinematic design, digital architecture, and analog photographic discipline.
-            </motion.p>
+            <p className="text-white/85 max-w-xl text-center type-body-l mb-10 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] font-light">
+              An editorial photography platform operating at the intersection of cinematic design, medium-format discipline, and timeless architecture.
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.2, duration: 0.8 }}
-              className="flex items-center gap-4"
-            >
-              <Link href="#work">
-                <MagneticButton
-                  variant="primary"
-                  className="bg-[var(--accent-muted-gold)] text-[var(--bg-near-black)] border-[var(--accent-muted-gold)] hover:bg-[var(--accent-dark-bronze)] hover:border-[var(--accent-dark-bronze)] px-8 py-3.5 shadow-[0_8px_32px_rgba(207,165,112,0.25)]"
-                >
-                  Explore Selected Work
-                </MagneticButton>
+            <div>
+              <Link
+                href="/portfolio"
+                className="inline-flex items-center gap-3 bg-white text-[#151515] px-8 py-4 type-meta text-[12px] hover:bg-[#CFA570] hover:text-[#151515] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.3)] group"
+              >
+                <span>EXPLORE THE FOLIO</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
-            </motion.div>
+            </div>
           </motion.div>
 
-          {/* Bottom Hero Baseline Telemetry & Scroll Cue */}
-          <div className="relative z-10 w-full max-w-7xl mx-auto pb-8 sm:pb-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[rgba(247,245,240,0.12)] pt-4 type-meta text-[var(--ink-inverse-muted)]">
+          {/* Bottom Hero Baseline Strip */}
+          <div className="relative z-10 w-full max-w-7xl mx-auto pb-8 sm:pb-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/15 pt-4 type-meta text-white/70">
             <div className="flex items-center gap-2">
-              <Camera className="w-3.5 h-3.5 text-[var(--accent-muted-gold)]" />
-              <span className="tracking-widest uppercase">PLATE 01 // ALPINE SUMMIT OBSERVATORY</span>
+              <Camera className="w-3.5 h-3.5 text-[#CFA570]" />
+              <span className="tracking-widest">PLATE 01 // DAL LAKE EXPEDITION</span>
             </div>
 
             <Link
-              href="#work"
-              className="group flex items-center gap-2 tracking-widest uppercase hover:text-[var(--bg-warm-ivory)] transition-colors text-[11px]"
+              href="#statement"
+              className="group flex items-center gap-2 tracking-widest hover:text-white transition-colors text-[11px]"
             >
               <span>Scroll to explore</span>
-              <ArrowDownRight className="w-3.5 h-3.5 text-[var(--accent-muted-gold)] transition-transform duration-500 group-hover:translate-y-0.5 group-hover:translate-x-0.5" />
+              <ArrowDownRight className="w-3.5 h-3.5 text-[#CFA570] transition-transform group-hover:translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
 
-            <div className="hidden sm:block tracking-widest uppercase text-[11px]">
-              MILAN • NEW YORK • TOKYO
+            <div className="hidden sm:block tracking-widest text-[11px]">
+              MEDIUM FORMAT · SILVER HALIDE
             </div>
           </div>
         </section>
 
         {/* ========================================================================= */}
-        {/* SELECTED WORK SECTION — AUTHENTIC ATELIER MONOGRAPHS                      */}
+        {/* 2. INTRO STATEMENT — EDITORIAL MANIFESTO                                  */}
         {/* ========================================================================= */}
-        <section
-          id="work"
-          className="py-32 px-6 lg:px-12 bg-[var(--bg-warm-ivory)] text-[var(--ink-primary)] relative border-t border-[var(--border-medium)]"
-        >
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeIn}
-              className="mb-20 flex justify-between items-end border-b border-[var(--border-light)] pb-6"
-            >
-              <div>
-                <span className="type-meta text-[var(--ink-muted)] block mb-2">01 / Curated Monograph Series</span>
-                <h2 className="type-display-title">Selected Work</h2>
-              </div>
-              <Link href="/work" className="type-meta text-[var(--ink-muted)] hover:text-[var(--accent-dark-bronze)] transition-colors flex items-center gap-1">
-                <span>View Complete Index</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </Link>
-            </motion.div>
-
-            {/* Asymmetric Curated Gallery of Real Works */}
-            <div className="space-y-32">
-              {/* Monograph 00: Monumental Mountain Citadel (Topographic Architecture Feature) */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeIn}
-                className="space-y-8"
-              >
-                <Link href="/work/hilltop-citadel" className="group block">
-                  <div className="aspect-[16/9] lg:aspect-[21/9] bg-[var(--bg-slate)] relative overflow-hidden">
-                    <Image
-                      src="/images/hilltop-fortress-crest.jpg"
-                      alt="Jaigarh Mountain Citadel — Aravalli Escarpment & Diwa Burj"
-                      fill
-                      priority
-                      className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep-night)]/70 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute bottom-6 left-6 lg:left-12 z-10 type-meta text-[var(--bg-warm-ivory)]/90 tracking-widest uppercase text-xs">
-                      CHEEL KA TEELA // 648M ELEVATION • OVERCAST MONSOON TRANSITION
-                    </div>
-                  </div>
-                </Link>
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-2 border-t border-[var(--border-light)]">
-                  <div>
-                    <span className="type-meta text-[var(--accent-dark-bronze)] block mb-1">PLATE 00 • TOPOGRAPHICAL CITADEL</span>
-                    <h3 className="type-display-title text-[var(--ink-primary)]">
-                      Jaigarh Mountain Citadel
-                    </h3>
-                    <p className="type-body-base text-[var(--ink-muted)] mt-1 max-w-xl">
-                      Massive stone bastions and the Diwa Burj watchtower crowning the rugged Aravalli ridge, capturing raw geological elevation under brooding skies.
-                    </p>
-                  </div>
-                  <Link
-                    href="/work/hilltop-citadel"
-                    className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors inline-flex items-center gap-1.5 uppercase tracking-widest shrink-0"
-                  >
-                    <span>Inspect Monograph</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </motion.div>
-
-              {/* Monograph 01: Amer Citadel Archway (Large Feature) */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeIn}
-                className="grid grid-cols-1 md:grid-cols-12 gap-10 items-end"
-              >
-                <div className="md:col-span-8">
-                  <Link href="/work/amer-citadel" className="group block">
-                    <div className="aspect-[4/5] sm:aspect-[16/11] bg-[var(--bg-slate)] relative overflow-hidden">
-                      <Image
-                        src="/images/palace-arch-courtyard.jpg"
-                        alt="Amer Citadel — Chiaroscuro Archway & Courtyard"
-                        fill
-                        className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                      />
-                    </div>
-                  </Link>
-                </div>
-                <div className="md:col-span-4 space-y-4">
-                  <span className="type-meta text-[var(--accent-dark-bronze)]">PLATE 01 • JAIPUR</span>
-                  <h3 className="type-display-statement text-[var(--ink-primary)]">
-                    Amer Citadel Study
-                  </h3>
-                  <p className="type-body-base text-[var(--ink-muted)]">
-                    A deep chiaroscuro framing through monumental Rajasthani masonry, capturing courtyard geometry under natural high-noon tungsten light.
-                  </p>
-                  <div className="pt-2">
-                    <Link
-                      href="/work/amer-citadel"
-                      className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors inline-flex items-center gap-1.5 uppercase"
-                    >
-                      <span>Inspect Plate</span>
-                      <ArrowUpRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Split Monograph: Shikhara Temple & Courtyard Living Heritage */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-20 items-start">
-                {/* Temple Shikhara & Oleander */}
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-100px" }}
-                  variants={fadeIn}
-                  className="md:col-span-6 flex flex-col gap-6"
-                >
-                  <Link href="/work/temple-shikhara" className="group block">
-                    <div className="aspect-[3/4] bg-[var(--bg-slate)] relative overflow-hidden">
-                      <Image
-                        src="/images/temple-shikhara-oleander.jpg"
-                        alt="Shikhara & Oleander Bloom — Nagara Architecture and Flora"
-                        fill
-                        className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                      />
-                    </div>
-                    <div className="flex justify-between items-start mt-6">
-                      <div>
-                        <span className="type-meta text-[var(--accent-dark-bronze)] block mb-1">PLATE 02 • SACRED FLORA</span>
-                        <h3 className="type-display-statement mb-1 group-hover:text-[var(--accent-dark-bronze)] transition-colors">
-                          Shikhara &amp; Oleander
-                        </h3>
-                        <p className="type-body-base text-[var(--ink-muted)]">Carved stone spire softened by wild blooming oleander.</p>
-                      </div>
-                      <span className="type-meta">2026</span>
-                    </div>
-                  </Link>
-                </motion.div>
-
-                {/* Ochre Palace Courtyard Scale */}
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-100px" }}
-                  variants={fadeIn}
-                  className="md:col-span-6 flex flex-col gap-6 md:mt-24"
-                >
-                  <Link href="/work/courtyard-scale" className="group block">
-                    <div className="aspect-[3/4] bg-[var(--bg-slate)] relative overflow-hidden">
-                      <Image
-                        src="/images/ochre-palace-courtyard-scale.jpg"
-                        alt="Ochre Palace Courtyard Scale — Living Architectural Heritage"
-                        fill
-                        className="object-cover w-full h-full scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                      />
-                    </div>
-                    <div className="flex justify-between items-start mt-6">
-                      <div>
-                        <span className="type-meta text-[var(--accent-dark-bronze)] block mb-1">PLATE 03 • LIVING HERITAGE</span>
-                        <h3 className="type-display-statement mb-1 group-hover:text-[var(--accent-dark-bronze)] transition-colors">
-                          Courtyard Scale
-                        </h3>
-                        <p className="type-body-base text-[var(--ink-muted)]">Terracotta facades &amp; human volume under sunlight.</p>
-                      </div>
-                      <span className="type-meta">2026</span>
-                    </div>
-                  </Link>
-                </motion.div>
-              </div>
-
-              {/* Monograph: Panoramic Sandstone Palace Domes */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeIn}
-                className="space-y-8"
-              >
-                <Link href="/work/sandstone-domes" className="group block">
-                  <div className="aspect-[16/9] lg:aspect-[21/9] bg-[var(--bg-slate)] relative overflow-hidden">
-                    <Image
-                      src="/images/sandstone-palace-domes.jpg"
-                      alt="Sandstone Palace Domes — Heritage Geometry & Sky"
-                      fill
-                      className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                    />
-                  </div>
-                </Link>
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-2 border-t border-[var(--border-light)]">
-                  <div>
-                    <span className="type-meta text-[var(--accent-dark-bronze)] block mb-1">PLATE 04 • AMBER</span>
-                    <h3 className="type-display-title text-[var(--ink-primary)]">
-                      Sandstone Palace Domes
-                    </h3>
-                    <p className="type-body-base text-[var(--ink-muted)] mt-1 max-w-xl">
-                      Curvilinear Bangaldar pavilions and carved sandstone chhatris resting under atmospheric turquoise heavens.
-                    </p>
-                  </div>
-                  <Link
-                    href="/work/sandstone-domes"
-                    className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors inline-flex items-center gap-1.5 uppercase tracking-widest shrink-0"
-                  >
-                    <span>Inspect Monograph</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </motion.div>
-
-              {/* Monograph: Fort Ramparts & High Ridge */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeIn}
-                className="grid grid-cols-1 md:grid-cols-12 gap-10 items-end"
-              >
-                <div className="md:col-span-8 order-2 md:order-1 space-y-4">
-                  <span className="type-meta text-[var(--accent-dark-bronze)]">PLATE 05 • JAIGARH RIDGE</span>
-                  <h3 className="type-display-statement text-[var(--ink-primary)]">
-                    Fort Ramparts &amp; High Ridge
-                  </h3>
-                  <p className="type-body-base text-[var(--ink-muted)] max-w-lg">
-                    Ancient stepped ramparts and historic rainwater harvesting infrastructure snaking across rugged mountain topography.
-                  </p>
-                  <div className="pt-2">
-                    <Link
-                      href="/work/fort-ramparts"
-                      className="type-meta text-[var(--ink-primary)] hover:text-[var(--accent-dark-bronze)] transition-colors inline-flex items-center gap-1.5 uppercase tracking-widest"
-                    >
-                      <span>Inspect Plate</span>
-                      <ArrowUpRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-                </div>
-                <div className="md:col-span-4 order-1 md:order-2">
-                  <Link href="/work/fort-ramparts" className="group block">
-                    <div className="aspect-[3/4] bg-[var(--bg-slate)] relative overflow-hidden">
-                      <Image
-                        src="/images/fort-ramparts-overlook.jpg"
-                        alt="Jaigarh Fort Ramparts Overlook — Territorial Architecture"
-                        fill
-                        className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                      />
-                    </div>
-                  </Link>
-                </div>
-              </motion.div>
-            </div>
+        <section id="statement" className="py-28 sm:py-36 px-6 lg:px-12 bg-[#F4F1EB] border-b border-[#D9D5CE]">
+          <div className="max-w-5xl mx-auto text-center space-y-8">
+            <span className="type-meta text-[#77736D] block">01 / The Atelier Manifesto</span>
+            <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#151515] leading-[1.15] font-normal tracking-tight">
+              We believe photography should feel like an heirloom magazine, not ephemeral digital noise.
+            </h2>
+            <p className="type-body-l text-[#77736D] max-w-2xl mx-auto leading-relaxed">
+              Every commission is treated as a historical document. From royal multi-day wedding celebrations in Jaipur to commercial monographs across Europe, we pair unhurried observation with medium-format optics.
+            </p>
           </div>
         </section>
 
         {/* ========================================================================= */}
-        {/* ATELIER FOUNDER & FIELD EXPEDITIONS SPOTLIGHT                             */}
+        {/* 3. SELECTED WORK — DELIBERATELY VARYING EDITORIAL LAYOUT                  */}
         {/* ========================================================================= */}
-        <section className="py-32 px-6 lg:px-12 bg-[var(--bg-midnight-blue)] text-[var(--ink-inverse)] border-t border-[rgba(247,245,240,0.1)]">
+        <section className="py-32 px-6 lg:px-12 bg-[#F4F1EB]">
           <div className="max-w-7xl mx-auto space-y-20">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeIn}
-                className="lg:col-span-5"
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#D9D5CE] pb-6 gap-4">
+              <div>
+                <span className="type-meta text-[#77736D] block mb-2">02 / Curated Monograph Series</span>
+                <h2 className="font-serif text-4xl sm:text-6xl font-normal text-[#151515]">Selected Work</h2>
+              </div>
+              <Link
+                href="/collections"
+                className="type-meta text-[#151515] hover:text-[#77736D] transition-colors flex items-center gap-1.5"
               >
-                <div className="aspect-[3/4] relative overflow-hidden border border-[rgba(247,245,240,0.15)] shadow-2xl">
-                  <Image
-                    src="/images/aryan-patel-pillared-court.jpg"
-                    alt="Aryan Patel — Creative Director & Photographer"
-                    fill
-                    className="object-cover object-top w-full h-full filter contrast-[1.04]"
-                  />
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeIn}
-                className="lg:col-span-7 space-y-8 lg:pl-12"
-              >
-                <span className="type-meta text-[var(--accent-muted-gold)]">02 / Behind the Lens</span>
-                <h2 className="type-display-title text-[var(--bg-warm-ivory)]">
-                  Aryan Patel
-                </h2>
-                <p className="type-body-lead text-[var(--ink-inverse-muted)] leading-relaxed">
-                  Founder, art director, and photographer at Studioza. Blending traditional large-format discipline, heritage architectural observation, and modern digital engineering across Rajasthan.
-                </p>
-                <blockquote className="border-l-2 border-[var(--accent-muted-gold)] pl-6 text-lg sm:text-xl font-serif italic text-[var(--bg-warm-ivory)]">
-                  &ldquo;Every plate is an unhurried encounter with space, scale, and natural illumination.&rdquo;
-                </blockquote>
-                <div className="pt-4 flex items-center gap-6">
-                  <Link href="/studio">
-                    <MagneticButton variant="dark">Read Atelier Story</MagneticButton>
-                  </Link>
-                  <Link href="/contact" className="type-meta text-[var(--accent-muted-gold)] hover:underline uppercase tracking-widest">
-                    Commission Direct →
-                  </Link>
-                </div>
-              </motion.div>
+                <span>View All Collections</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
             </div>
 
-            {/* Field Expedition Studies 4-Plate Series */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeIn}
-              className="border-t border-[rgba(247,245,240,0.12)] pt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
-            >
-              <div className="space-y-4 group">
-                <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-deep-night)] border border-[rgba(247,245,240,0.1)]">
-                  <Image
-                    src="/images/aryan-patel-sheesh-mahal.jpg"
-                    alt="Field Study — Sheesh Mahal Convex Mirror Glass"
-                    fill
-                    className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                  />
-                </div>
-                <div>
-                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 01 • MATERIALITY</span>
-                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Mirror Mosaic Hall</h4>
-                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Sheesh Mahal glass inlays catching natural light.</p>
-                </div>
-              </div>
-
-              <div className="space-y-4 group">
-                <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-deep-night)] border border-[rgba(247,245,240,0.1)]">
-                  <Image
-                    src="/images/aryan-patel-temple-monochrome.jpg"
-                    alt="Field Study — Monolithic Temple Shikhara"
-                    fill
-                    className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)] grayscale"
-                  />
-                </div>
-                <div>
-                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 02 • MONOCHROME</span>
-                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Stone Temple Spire</h4>
-                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Monolithic Nagara carving &amp; weathering.</p>
-                </div>
-              </div>
-
-              <div className="space-y-4 group">
-                <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-deep-night)] border border-[rgba(247,245,240,0.1)]">
-                  <Image
-                    src="/images/temple-shikhara-oleander.jpg"
-                    alt="Field Study — Temple Shikhara & Oleander"
-                    fill
-                    className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                  />
-                </div>
-                <div>
-                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 03 • LIVING FLORA</span>
-                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Shikhara &amp; Oleander</h4>
-                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Sacred spire framed by desert oleander blossoms.</p>
+            {/* Curated Editorial Project Grid */}
+            <div className="space-y-28">
+              {/* MONOGRAPH 01: Royal Citadels of Jaipur (Full Original 3:2 Landscape Form) */}
+              <div className="space-y-6">
+                <Link href={`/project/${jaipurProject.slug}`} className="group block overflow-hidden">
+                  <div className="aspect-[3/2] max-w-6xl mx-auto bg-[#EAE6DE] relative overflow-hidden border border-[#D9D5CE] shadow-sm">
+                    <Image
+                      src={jaipurProject.coverImage}
+                      alt={jaipurProject.name}
+                      fill
+                      unoptimized
+                      quality={100}
+                      sizes="100vw"
+                      className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-6 left-6 lg:left-10 z-10 type-meta text-white/90 text-xs tracking-widest flex items-center gap-3">
+                      <span>{jaipurProject.location.toUpperCase()} // {jaipurProject.year}</span>
+                      <span>•</span>
+                      <span className="text-[#CFA570]">ORIGINAL LANDSCAPE 3:2</span>
+                    </div>
+                  </div>
+                </Link>
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-4 pt-2 border-t border-[#D9D5CE]">
+                  <div>
+                    <span className="type-meta text-[#77736D] block mb-1">MONOGRAPH 01 • {jaipurProject.category.toUpperCase()}</span>
+                    <Link href={`/project/${jaipurProject.slug}`}>
+                      <h3 className="font-serif text-3xl sm:text-4xl text-[#151515] hover:text-[#CFA570] transition-colors">{jaipurProject.name}</h3>
+                    </Link>
+                    <p className="type-small text-[#77736D] mt-1 max-w-xl">{jaipurProject.subtitle}</p>
+                  </div>
+                  <Link
+                    href={`/project/${jaipurProject.slug}`}
+                    className="type-meta text-[#151515] hover:underline flex items-center gap-1 shrink-0"
+                  >
+                    <span>Inspect Monograph</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               </div>
 
-              <div className="space-y-4 group">
-                <div className="aspect-[3/4] relative overflow-hidden bg-[var(--bg-deep-night)] border border-[rgba(247,245,240,0.1)]">
-                  <Image
-                    src="/images/ochre-palace-courtyard-scale.jpg"
-                    alt="Field Study — Terracotta Courtyard Scale"
-                    fill
-                    className="object-cover scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-[var(--ease-editorial)]"
-                  />
-                </div>
-                <div>
-                  <span className="type-meta text-[var(--accent-muted-gold)] block">STUDY 04 • LIVING HERITAGE</span>
-                  <h4 className="type-display-statement text-base sm:text-lg text-[var(--bg-warm-ivory)]">Courtyard Volume</h4>
-                  <p className="text-xs text-[var(--ink-inverse-muted)] mt-1">Sunlit terracotta lime plaster &amp; human scale.</p>
+              {/* MONOGRAPH 02: Kashmir Valley Expedition (Full Original 3:2 Landscape Form) */}
+              <div className="space-y-6">
+                <Link href={`/project/${kashmirProject.slug}`} className="group block overflow-hidden">
+                  <div className="aspect-[3/2] max-w-6xl mx-auto bg-[#EAE6DE] relative overflow-hidden border border-[#D9D5CE] shadow-sm">
+                    <Image
+                      src={kashmirProject.coverImage}
+                      alt={kashmirProject.name}
+                      fill
+                      unoptimized
+                      quality={100}
+                      sizes="100vw"
+                      className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-6 left-6 lg:left-10 z-10 type-meta text-white/90 text-xs tracking-widest flex items-center gap-3">
+                      <span>{kashmirProject.location.toUpperCase()} // {kashmirProject.year}</span>
+                      <span>•</span>
+                      <span className="text-[#CFA570]">ORIGINAL LANDSCAPE 3:2</span>
+                    </div>
+                  </div>
+                </Link>
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-4 pt-2 border-t border-[#D9D5CE]">
+                  <div>
+                    <span className="type-meta text-[#77736D] block mb-1">MONOGRAPH 02 • {kashmirProject.category.toUpperCase()}</span>
+                    <Link href={`/project/${kashmirProject.slug}`}>
+                      <h3 className="font-serif text-3xl sm:text-4xl text-[#151515] hover:text-[#CFA570] transition-colors">{kashmirProject.name}</h3>
+                    </Link>
+                    <p className="type-small text-[#77736D] mt-1 max-w-xl">{kashmirProject.subtitle}</p>
+                  </div>
+                  <Link
+                    href={`/project/${kashmirProject.slug}`}
+                    className="type-meta text-[#151515] hover:underline flex items-center gap-1 shrink-0"
+                  >
+                    <span>Inspect Monograph</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               </div>
-            </motion.div>
+
+              {/* MONOGRAPH 03: Uttarakhand Sacred Sanctuaries (Full Original 3:2 Landscape Form) */}
+              <div className="space-y-6">
+                <Link href={`/project/${uttarakhandProject.slug}`} className="group block overflow-hidden">
+                  <div className="aspect-[3/2] max-w-6xl mx-auto bg-[#EAE6DE] relative overflow-hidden border border-[#D9D5CE] shadow-sm">
+                    <Image
+                      src={uttarakhandProject.coverImage}
+                      alt={uttarakhandProject.name}
+                      fill
+                      unoptimized
+                      quality={100}
+                      sizes="100vw"
+                      className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-6 left-6 lg:left-10 z-10 type-meta text-white/90 text-xs tracking-widest flex items-center gap-3">
+                      <span>{uttarakhandProject.location.toUpperCase()} // {uttarakhandProject.year}</span>
+                      <span>•</span>
+                      <span className="text-[#CFA570]">ORIGINAL LANDSCAPE 3:2</span>
+                    </div>
+                  </div>
+                </Link>
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-4 pt-2 border-t border-[#D9D5CE]">
+                  <div>
+                    <span className="type-meta text-[#77736D] block mb-1">MONOGRAPH 03 • {uttarakhandProject.category.toUpperCase()}</span>
+                    <Link href={`/project/${uttarakhandProject.slug}`}>
+                      <h3 className="font-serif text-3xl sm:text-4xl text-[#151515] hover:text-[#CFA570] transition-colors">{uttarakhandProject.name}</h3>
+                    </Link>
+                    <p className="type-small text-[#77736D] mt-1 max-w-xl">{uttarakhandProject.subtitle}</p>
+                  </div>
+                  <Link
+                    href={`/project/${uttarakhandProject.slug}`}
+                    className="type-meta text-[#151515] hover:underline flex items-center gap-1 shrink-0"
+                  >
+                    <span>Inspect Monograph</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* DUAL MONOGRAPHS: Authentic 2:3 Vertical Character & Temple Studies */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 items-start max-w-6xl mx-auto">
+                {/* Chittor Fort Monoliths (Left, 6 cols, Original 2:3 Vertical) */}
+                <div className="md:col-span-6 space-y-6">
+                  <Link href={`/project/${chittorProject.slug}`} className="group block overflow-hidden">
+                    <div className="aspect-[2/3] bg-[#EAE6DE] relative overflow-hidden border border-[#D9D5CE] shadow-sm">
+                      <Image
+                        src={chittorProject.coverImage}
+                        alt={chittorProject.name}
+                        fill
+                        unoptimized
+                        quality={100}
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute bottom-4 left-4 z-10 type-meta text-white/90 text-[11px] tracking-widest">
+                        {chittorProject.location} // {chittorProject.year}
+                      </div>
+                    </div>
+                  </Link>
+                  <div className="border-t border-[#D9D5CE] pt-3 flex justify-between items-start">
+                    <div>
+                      <span className="type-meta text-[#77736D] block mb-1">MONOGRAPH 04 • {chittorProject.category.toUpperCase()}</span>
+                      <Link href={`/project/${chittorProject.slug}`}>
+                        <h4 className="font-serif text-2xl sm:text-3xl text-[#151515] hover:text-[#CFA570] transition-colors">{chittorProject.name}</h4>
+                      </Link>
+                      <p className="type-small text-[#77736D] mt-1">{chittorProject.subtitle}</p>
+                    </div>
+                    <span className="type-meta text-[#77736D]">{chittorProject.year}</span>
+                  </div>
+                </div>
+
+                {/* Fine Art Portraits (Right, 6 cols, Original 2:3 Vertical, staggered top) */}
+                <div className="md:col-span-6 space-y-6 md:pt-16">
+                  <Link href={`/project/${portraitsProject.slug}`} className="group block overflow-hidden">
+                    <div className="aspect-[2/3] bg-[#EAE6DE] relative overflow-hidden border border-[#D9D5CE] shadow-sm">
+                      <Image
+                        src={portraitsProject.coverImage}
+                        alt={portraitsProject.name}
+                        fill
+                        unoptimized
+                        quality={100}
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute bottom-4 left-4 z-10 type-meta text-white/90 text-[11px] tracking-widest">
+                        {portraitsProject.location} // {portraitsProject.year}
+                      </div>
+                    </div>
+                  </Link>
+                  <div className="border-t border-[#D9D5CE] pt-3 flex justify-between items-start">
+                    <div>
+                      <span className="type-meta text-[#77736D] block mb-1">MONOGRAPH 05 • {portraitsProject.category.toUpperCase()}</span>
+                      <Link href={`/project/${portraitsProject.slug}`}>
+                        <h4 className="font-serif text-2xl sm:text-3xl text-[#151515] hover:text-[#CFA570] transition-colors">{portraitsProject.name}</h4>
+                      </Link>
+                      <p className="type-small text-[#77736D] mt-1">{portraitsProject.subtitle}</p>
+                    </div>
+                    <span className="type-meta text-[#77736D]">{portraitsProject.year}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* ========================================================================= */}
-        {/* DISCIPLINES SECTION                                                       */}
+        {/* 4. FEATURED STORY — EDITORIAL NARRATIVE (DARK SECTION)                    */}
         {/* ========================================================================= */}
-        <section className="py-32 px-6 lg:px-12 bg-[var(--bg-slate)] text-[var(--ink-inverse)] border-t border-[rgba(247,245,240,0.1)]">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeIn}
-              className="mb-20 flex justify-between items-end border-b border-[rgba(247,245,240,0.15)] pb-6"
-            >
-              <h2 className="type-display-title text-[var(--bg-warm-ivory)]">Disciplines</h2>
-              <span className="type-meta text-[var(--ink-inverse-muted)]">03 / Services &amp; Capabilities</span>
-            </motion.div>
+        <section className="py-32 px-6 lg:px-12 bg-[#171717] text-[#F4F1EB] relative">
+          <div className="max-w-7xl mx-auto space-y-16">
+            <div className="border-b border-white/10 pb-6 flex justify-between items-end">
+              <div>
+                <span className="type-meta text-[#CFA570] block mb-2">03 / Featured Editorial Story</span>
+                <h2 className="font-serif text-4xl sm:text-6xl text-white font-normal">Fieldwork &amp; Essays</h2>
+              </div>
+              <Link href="/stories" className="type-meta text-[#A7A7A7] hover:text-white flex items-center gap-1">
+                <span>View All Stories</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
-              {[
-                {
-                  title: "Digital Experiences",
-                  desc: "Interactive web installations, digital monographs, and online platforms engineered with responsive spatial kinetics and zero synthetic smoothing.",
-                },
-                {
-                  title: "Brand Systems",
-                  desc: "Comprehensive visual identities, editorial publications, and typography guidelines anchored in deep historical and architectural research.",
-                },
-                {
-                  title: "Creative Tech",
-                  desc: "Custom high-performance software frameworks, WebGL visualizers, and digital archives designed for longevity, speed, and sensory poise.",
-                },
-                {
-                  title: "Photography",
-                  desc: "Classical darkroom discipline, medium-format digital capture (100MP+), and archival pigment mastery for landmark cultural and commercial commissions.",
-                },
-              ].map((service, index) => (
-                <motion.div
-                  key={index}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-50px" }}
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: index * 0.1 } },
-                  }}
-                  className="group cursor-default"
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="text-[var(--accent-muted-gold)] type-meta">0{index + 1}</span>
-                    <h3 className="type-display-statement text-[var(--bg-warm-ivory)] group-hover:text-[var(--accent-muted-gold)] transition-colors duration-400">
-                      {service.title}
-                    </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+              <div className="lg:col-span-7">
+                <Link href={`/stories/${featuredStory.slug}`} className="group block overflow-hidden">
+                  <div className="aspect-[3/2] bg-black/40 relative overflow-hidden border border-white/10">
+                    <Image
+                      src={featuredStory.coverImage}
+                      alt={featuredStory.title}
+                      fill
+                      unoptimized
+                      quality={100}
+                      sizes="(max-width: 1024px) 100vw, 60vw"
+                      className="object-contain"
+                    />
                   </div>
-                  <p className="type-body-base text-[var(--ink-inverse-muted)] max-w-sm ml-8">
-                    {service.desc}
-                  </p>
-                </motion.div>
+                </Link>
+              </div>
+
+              <div className="lg:col-span-5 space-y-6">
+                <div className="flex items-center gap-4 type-meta text-[#A7A7A7] text-xs">
+                  <span>{featuredStory.category}</span>
+                  <span>•</span>
+                  <span>{featuredStory.readTime}</span>
+                </div>
+
+                <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-white font-normal leading-tight">
+                  <Link href={`/stories/${featuredStory.slug}`} className="hover:text-[#CFA570] transition-colors">
+                    {featuredStory.title}
+                  </Link>
+                </h3>
+
+                <p className="type-body text-[#A7A7A7] leading-relaxed">
+                  {featuredStory.excerpt}
+                </p>
+
+                <blockquote className="border-l-2 border-[#CFA570] pl-6 italic font-serif text-lg text-white/90">
+                  &ldquo;{featuredStory.quote}&rdquo;
+                </blockquote>
+
+                <div className="pt-4">
+                  <Link
+                    href={`/stories/${featuredStory.slug}`}
+                    className="inline-flex items-center gap-2 type-meta text-[#CFA570] hover:text-white transition-colors"
+                  >
+                    <span>Read Complete Monograph Essay</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 5. SERVICES & DISCIPLINES                                                 */}
+        {/* ========================================================================= */}
+        <section className="py-32 px-6 lg:px-12 bg-[#F4F1EB] border-b border-[#D9D5CE]">
+          <div className="max-w-7xl mx-auto space-y-16">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-[#D9D5CE] pb-6 gap-4">
+              <div>
+                <span className="type-meta text-[#77736D] block mb-2">04 / Creative Disciplines</span>
+                <h2 className="font-serif text-4xl sm:text-6xl text-[#151515] font-normal">Services</h2>
+              </div>
+              <Link href="/services" className="type-meta text-[#151515] hover:text-[#77736D] flex items-center gap-1">
+                <span>Detailed Deliverables &amp; Process</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {SERVICES.map((service, idx) => (
+                <Link
+                  key={service.slug}
+                  href={`/services/${service.slug}`}
+                  className="group bg-white p-8 border border-[#D9D5CE] hover:border-[#151515] transition-all duration-300 flex flex-col justify-between"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="type-meta text-[#77736D]">0{idx + 1}</span>
+                      <span className="type-meta text-[#CFA570] text-[11px] font-medium">{service.startingPrice}</span>
+                    </div>
+                    <h3 className="font-serif text-2xl text-[#151515] group-hover:text-[#77736D] transition-colors">
+                      {service.name}
+                    </h3>
+                    <p className="type-small text-[#77736D] leading-relaxed">
+                      {service.tagline}
+                    </p>
+                  </div>
+
+                  <div className="pt-8 border-t border-[#D9D5CE]/60 flex items-center justify-between type-meta text-xs">
+                    <span>Explore Discipline</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
+                </Link>
               ))}
             </div>
           </div>
         </section>
 
         {/* ========================================================================= */}
-        {/* COMMISSION / CONTACT CTA SECTION                                          */}
+        {/* 6. STUDIO PHILOSOPHY — PERSONAL CRAFT & FOUNDER SPOTLIGHT                 */}
         {/* ========================================================================= */}
-        <section className="py-40 px-6 lg:px-12 bg-[var(--bg-deep-night)] text-[var(--ink-inverse)] text-center relative overflow-hidden">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="max-w-3xl mx-auto relative z-10"
-          >
-            <motion.h2 variants={fadeIn} className="type-display-title text-[var(--bg-warm-ivory)] mb-8">
-              COMMISSION AN INQUIRY
-            </motion.h2>
-            <motion.p variants={fadeIn} className="type-body-lead text-[var(--ink-inverse-muted)] mb-12">
-              We collaborate with institutions, cultural brands, and visionaries who understand that enduring quality requires patience and uncompromising discipline.
-            </motion.p>
-            <motion.div variants={fadeIn}>
-              <Link href="/contact">
-                <MagneticButton variant="dark">Initiate Dialogue</MagneticButton>
+        <section className="py-32 px-6 lg:px-12 bg-[#F4F1EB]">
+          <div className="max-w-7xl mx-auto space-y-20">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+              <div className="lg:col-span-5">
+                <div className="aspect-[2/3] relative overflow-hidden border border-[#D9D5CE] shadow-sm bg-[#EAE6DE]">
+                  <Image
+                    src="/images/aryan-patel-temple-monochrome.jpg"
+                    alt="Aryan Patel — Creative Director & Principal Photographer"
+                    fill
+                    priority
+                    unoptimized
+                    quality={100}
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                    className="object-cover object-center"
+                  />
+                </div>
+                <div className="mt-3 flex items-center justify-between type-meta text-[11px] text-[#77736D] px-1">
+                  <span>PLATE 05 // ARYAN PATEL</span>
+                  <span>CHITTORGARH FORT, RAJASTHAN</span>
+                </div>
+              </div>
+
+              <div className="lg:col-span-7 space-y-8">
+                <span className="type-meta text-[#77736D]">05 / Philosophy &amp; Craft</span>
+                <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#151515] font-normal leading-tight">
+                  Aryan Patel
+                </h2>
+                <p className="type-body-l text-[#77736D] leading-relaxed">
+                  Founder and principal lens at Studioza. Trained in medium-format analog view cameras, Aryan blends historical architectural research with contemporary editorial lighting across Rajasthan and international capitals.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-[#D9D5CE]">
+                  <div className="space-y-1">
+                    <span className="type-meta text-[#151515] font-semibold block">Unhurried Time</span>
+                    <p className="type-small text-[#77736D]">Allowing human emotion to unfold without artificial stage directions.</p>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="type-meta text-[#151515] font-semibold block">Medium Format</span>
+                    <p className="type-small text-[#77736D]">100MP optical sensors and 120 film sheet fidelity for museum prints.</p>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="type-meta text-[#151515] font-semibold block">Natural Light</span>
+                    <p className="type-small text-[#77736D]">Honoring desert celestial paths, morning gold, and twilight shadows.</p>
+                  </div>
+                </div>
+
+                <div className="pt-4 flex items-center gap-6">
+                  <Link
+                    href="/studio"
+                    className="bg-[#151515] text-[#F4F1EB] px-8 py-3.5 type-meta text-[11px] hover:bg-[#333333] transition-colors"
+                  >
+                    Read Atelier Story
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="type-meta text-[#151515] hover:underline"
+                  >
+                    Direct Inquiries →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 7. FEATURED GALLERY — PHOTOGRAPHIC PLATES EXHIBITION                      */}
+        {/* ========================================================================= */}
+        <section className="py-24 px-6 lg:px-12 bg-[#EAE6DE] border-y border-[#D9D5CE]">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <div className="flex justify-between items-end border-b border-[#D9D5CE] pb-4">
+              <div>
+                <span className="type-meta text-[#77736D] block">06 / Exhibition</span>
+                <h3 className="font-serif text-3xl sm:text-4xl text-[#151515]">Plates &amp; Fragments</h3>
+              </div>
+              <span className="type-meta text-[#77736D]">MEDIUM FORMAT SAMPLES</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { src: "/images/aryan-patel-sheesh-mahal.jpg", title: "Convex Mosaic Inlay", sub: "Sheesh Mahal, Amber Fort" },
+                { src: "/images/palace-arch-courtyard.jpg", title: "Fluted Scalloped Archways", sub: "Nahargarh Fort, Jaipur" },
+                { src: "/images/temple-shikhara-oleander.jpg", title: "Flora & Monolithic Spire", sub: "Chittorgarh Fort, Rajasthan" },
+                { src: "/images/5A9200AE-C6BF-4275-8C64-49875EC857D0.jpg", title: "Ceremonial Oil Diya", sub: "Diwali Evening, Uttar Pradesh" },
+              ].map((plate, index) => {
+                const plateInfo = getImagePlateInfo(plate.src);
+                return (
+                  <div key={index} className="space-y-3 group">
+                    <div className={`${plateInfo.aspectClass} relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE]`}>
+                      <Image
+                        src={plate.src}
+                        alt={plate.title}
+                        fill
+                        unoptimized
+                        quality={100}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                    </div>
+                  <div className="border-t border-[#D9D5CE] pt-2">
+                    <h5 className="font-serif text-lg text-[#151515]">{plate.title}</h5>
+                    <p className="type-meta text-xs text-[#77736D]">{plate.sub}</p>
+                  </div>
+                </div>
+              );
+            })}
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 8. TESTIMONIALS                                                           */}
+        {/* ========================================================================= */}
+        <section className="py-32 px-6 lg:px-12 bg-[#F4F1EB]">
+          <div className="max-w-7xl mx-auto space-y-16">
+            <div className="text-center max-w-2xl mx-auto space-y-3">
+              <span className="type-meta text-[#77736D]">07 / Voices &amp; Praise</span>
+              <h2 className="font-serif text-4xl sm:text-5xl text-[#151515] font-normal">What Patrons Say</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {TESTIMONIALS.map((t) => (
+                <div
+                  key={t.id}
+                  className="bg-white p-8 border border-[#D9D5CE] space-y-6 flex flex-col justify-between"
+                >
+                  <p className="font-serif italic text-lg sm:text-xl text-[#151515] leading-relaxed">
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+                  <div className="border-t border-[#D9D5CE] pt-4">
+                    <span className="font-medium text-sm text-[#151515] block">{t.clientName}</span>
+                    <span className="type-meta text-[#77736D] text-[11px] block">{t.clientRole} — {t.location}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 9. JOURNAL / FIELDWORK STORIES SUMMARY                                    */}
+        {/* ========================================================================= */}
+        <section className="py-24 px-6 lg:px-12 bg-[#F4F1EB] border-t border-[#D9D5CE]">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <div className="flex justify-between items-end border-b border-[#D9D5CE] pb-6">
+              <div>
+                <span className="type-meta text-[#77736D] block mb-2">08 / The Journal</span>
+                <h2 className="font-serif text-3xl sm:text-5xl text-[#151515]">Field Notes &amp; Writings</h2>
+              </div>
+              <Link href="/journal" className="type-meta text-[#151515] hover:underline flex items-center gap-1">
+                <span>All Journal Articles</span>
+                <ArrowUpRight className="w-4 h-4" />
               </Link>
-            </motion.div>
-          </motion.div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {STORIES.map((s) => {
+                const plateInfo = getImagePlateInfo(s.coverImage);
+                return (
+                  <Link
+                    key={s.slug}
+                    href={`/stories/${s.slug}`}
+                    className="group space-y-4 block"
+                  >
+                    <div className={`relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] p-3 flex items-center justify-center ${plateInfo.aspectClass} ${plateInfo.isLandscape ? "w-full" : "max-w-xs mx-auto"}`}>
+                      <Image
+                        src={s.coverImage}
+                        alt={s.title}
+                        fill
+                        unoptimized
+                        quality={100}
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-contain p-2"
+                      />
+                    </div>
+                    <div>
+                      <span className="type-meta text-[#77736D] text-[11px]">{s.date} • {s.category}</span>
+                      <h4 className="font-serif text-2xl text-[#151515] group-hover:text-[#77736D] transition-colors mt-1">
+                        {s.title}
+                      </h4>
+                      <p className="type-small text-[#77736D] line-clamp-2 mt-1">
+                        {s.excerpt}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 10. CALL TO ACTION (CTA)                                                  */}
+        {/* ========================================================================= */}
+        <section className="py-36 px-6 lg:px-12 bg-[#171717] text-white text-center relative overflow-hidden">
+          <div className="max-w-3xl mx-auto space-y-8 relative z-10">
+            <span className="type-meta text-[#CFA570] block">09 / Begin a Commission</span>
+            <h2 className="font-serif text-4xl sm:text-6xl md:text-7xl font-normal leading-[1.05]">
+              Let&apos;s create something worth remembering.
+            </h2>
+            <p className="type-body-l text-[#A39E96] max-w-xl mx-auto">
+              We collaborate with couples, curators, and brands seeking enduring photographic works anchored in stillness and light.
+            </p>
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/booking"
+                className="w-full sm:w-auto bg-[#F4F1EB] text-[#151515] px-10 py-4 type-meta text-[12px] hover:bg-[#CFA570] hover:text-[#151515] transition-colors"
+              >
+                Start Commission Dossier →
+              </Link>
+              <Link
+                href="/contact"
+                className="w-full sm:w-auto border border-white/30 text-white px-8 py-4 type-meta text-[12px] hover:bg-white/10 transition-colors"
+              >
+                Inquire Directly
+              </Link>
+            </div>
+          </div>
         </section>
       </main>
 

@@ -1,9 +1,8 @@
+// Interactive studio lighting preview component
 "use client";
 
 import React, { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
-import { Sliders, Sun, Moon, Eye, ShieldCheck, ArrowRight } from "lucide-react";
-import StudioButton from "@/components/ui/StudioButton";
 import { cn } from "@/lib/utils";
 
 const StudioLightingStage3D = dynamic(
@@ -13,9 +12,7 @@ const StudioLightingStage3D = dynamic(
     loading: () => (
       <div className="w-full h-[460px] sm:h-[520px] bg-white/5 flex flex-col items-center justify-center gap-3">
         <div className="w-5 h-5 rounded-full border-2 border-white/20 border-t-copper-500 animate-spin" />
-        <span className="text-[10px] text-ink-muted uppercase">
-          Calibrating Optical Stage...
-        </span>
+        <span className="text-[10px] text-ink-muted uppercase">Calibrating Optical Stage...</span>
       </div>
     ),
   }
@@ -99,9 +96,7 @@ export default function LightingStudioInstallation() {
       className="py-24 sm:py-36 px-6 sm:px-12 lg:px-16 border-t border-hairline relative bg-background text-foreground overflow-hidden"
     >
       <div className="max-w-7xl mx-auto space-y-16 sm:space-y-24 relative z-10">
-        {/* ========================================================================= */}
-        {/* EXHIBIT HEADER & EDITORIAL TYPOGRAPHY                                     */}
-        {/* ========================================================================= */}
+        {/* Exhibit Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-hairline">
           <div className="space-y-3 max-w-3xl">
             <div className="flex items-center gap-2 type-meta">
@@ -109,20 +104,12 @@ export default function LightingStudioInstallation() {
               <span>Exhibit 08 • The Optical Stage</span>
             </div>
 
-            <h2 className="type-display-section text-ink-primary">
-              The Chiaroscuro Stage
-            </h2>
+            <h2 className="type-display-section text-ink-primary">The Chiaroscuro Stage</h2>
 
             <div className="flex flex-wrap items-baseline gap-4 sm:gap-6 pt-2">
-              <span className="type-display-project italic text-copper-600">
-                5200K / 2800K
-              </span>
-              <span className="type-display-project text-ink-primary">
-                {scheme.ratio}
-              </span>
-              <span className="type-meta border-l border-hairline pl-4 py-0.5">
-                Continuous Modeling Bench
-              </span>
+              <span className="type-display-project italic text-copper-600">5200K / 2800K</span>
+              <span className="type-display-project text-ink-primary">{scheme.ratio}</span>
+              <span className="type-meta border-l border-hairline pl-4 py-0.5">Continuous Modeling Bench</span>
             </div>
           </div>
 
@@ -137,11 +124,8 @@ export default function LightingStudioInstallation() {
           </div>
         </div>
 
-        {/* ========================================================================= */}
-        {/* CENTRAL INSTALLATION CHAMBER: 3D LIGHTING STAGE + SCHEMATIC BLUEPRINT     */}
-        {/* ========================================================================= */}
+        {/* 3D Stage & Lighting Control Console */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Column: Interactive 3D Lighting Stage */}
           <div className="lg:col-span-7 relative">
             <div className="absolute top-3.5 left-4 z-20 pointer-events-none text-stone-400 text-[10px] uppercase">
               STUDIO CYCLORAMA • 3D SHADOW SIMULATOR
@@ -151,40 +135,28 @@ export default function LightingStudioInstallation() {
             </div>
 
             <div className="rounded-[2px] overflow-hidden border border-hairline bg-black/50">
-              <StudioLightingStage3D
-                initialPreset={activePreset as any}
-                className="w-full h-[440px] sm:h-[500px]"
-              />
+              <StudioLightingStage3D initialPreset={activePreset as any} className="w-full h-[440px] sm:h-[500px]" />
             </div>
           </div>
 
-          {/* Right Column: Curatorial Console & 2D Overhead Blueprint */}
           <div className="lg:col-span-5 space-y-6">
             <div className="p-6 sm:p-7 bg-background border border-hairline space-y-6">
-              {/* Active Scheme Header */}
+              {/* Selected Setup Details */}
               <div className="flex items-center justify-between pb-4 border-b border-hairline">
                 <div>
-                  <span className="type-meta text-copper-600 block mb-1">
-                    Selected Setup
-                  </span>
+                  <span className="type-meta text-copper-600 block mb-1">Selected Setup</span>
                   <div className="flex items-baseline gap-2">
-                    <span className="type-display-project text-ink-primary">
-                      {scheme.name}
-                    </span>
+                    <span className="type-display-project text-ink-primary">{scheme.name}</span>
                   </div>
-                  <span className="type-meta text-ink-muted">
-                    {scheme.subtitle}
-                  </span>
+                  <span className="type-meta text-ink-muted">{scheme.subtitle}</span>
                 </div>
 
-                {/* Overhead 2D Stage Lighting Blueprint SVG */}
+                {/* Overhead 2D Diagram */}
                 <div className="relative w-16 h-16 border border-hairline bg-transparent flex items-center justify-center overflow-hidden">
                   <div className="w-2.5 h-2.5 rounded-full bg-stone-200 border border-copper-500 z-10" />
 
                   <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full pointer-events-none">
                     <circle cx="50" cy="50" r="32" fill="none" stroke="rgba(20,20,19,0.12)" strokeDasharray="2 2" />
-
-                    {/* Key Light Position */}
                     <circle
                       cx={50 + Math.cos((scheme.keyAngleDeg * Math.PI) / 180) * 32}
                       cy={50 + Math.sin((scheme.keyAngleDeg * Math.PI) / 180) * 32}
@@ -192,8 +164,6 @@ export default function LightingStudioInstallation() {
                       fill="#C85A17"
                       className="transition-all duration-500 ease-out"
                     />
-
-                    {/* Rim Light Position */}
                     <circle
                       cx={50 + Math.cos((scheme.rimAngleDeg * Math.PI) / 180) * 32}
                       cy={50 + Math.sin((scheme.rimAngleDeg * Math.PI) / 180) * 32}
@@ -205,7 +175,7 @@ export default function LightingStudioInstallation() {
                 </div>
               </div>
 
-              {/* Technical Telemetry Grid */}
+              {/* Color Temperature Specs */}
               <div className="grid grid-cols-2 gap-3 text-[11px]">
                 <div className="p-3 border border-hairline bg-transparent">
                   <span className="text-stone-400 block text-[9px] uppercase mb-0.5">Key Light</span>
@@ -217,29 +187,25 @@ export default function LightingStudioInstallation() {
                 </div>
               </div>
 
-              {/* Character & Historical Reference */}
+              {/* Historical Context */}
               <div className="space-y-2 text-xs">
-                <p className="text-ink-body">
-                  {scheme.character}
-                </p>
+                <p className="text-ink-body">{scheme.character}</p>
                 <div className="pt-2 border-t border-hairline text-[10px] text-ink-muted">
                   <span className="text-stone-400">HISTORICAL REF: </span>
                   <span className="text-ink-primary">{scheme.historicalReference}</span>
                 </div>
               </div>
 
-              {/* 4 Preset Buttons */}
+              {/* Stage Preset Buttons */}
               <div className="pt-2 border-t border-hairline space-y-2">
-                <span className="type-meta text-ink-muted block mb-2">
-                  Select Stage Configuration:
-                </span>
+                <span className="type-meta text-ink-muted block mb-2">Select Stage Configuration:</span>
                 <div className="grid grid-cols-2 gap-2">
                   {Object.values(SCHEMES).map((item) => (
                     <button
                       key={item.id}
                       onClick={() => setActivePreset(item.id)}
                       className={cn(
-                        "py-2 px-3 text-left  text-[10px] uppercase  rounded-[2px] border transition-colors cursor-pointer",
+                        "py-2 px-3 text-left text-[10px] uppercase rounded-[2px] border transition-colors cursor-pointer",
                         activePreset === item.id
                           ? "border-copper-500 bg-white/10 text-copper-500 font-semibold"
                           : "border-hairline bg-background text-ink-muted hover:border-white/20 hover:text-ink-primary"

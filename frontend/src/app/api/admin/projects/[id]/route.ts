@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { getSessionUser } from "@/lib/auth/session";
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { getSessionUser } from '@/lib/auth/session';
 
 export async function GET(
   req: Request,
@@ -8,19 +8,20 @@ export async function GET(
 ) {
   try {
     const user = await getSessionUser();
-    if (!user || user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!user || (user.role !== 'ADMIN' && user.role !== 'EDITOR')) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const resolvedParams = await params;
     const project = await prisma.project.findUnique({
       where: { id: resolvedParams.id },
+      include: { images: true, category: true },
     });
 
-    if (!project) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    if (!project) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     return NextResponse.json(project);
-  } catch (error) {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  } catch {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -30,31 +31,30 @@ export async function PATCH(
 ) {
   try {
     const user = await getSessionUser();
-    if (!user || user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!user || (user.role !== 'ADMIN' && user.role !== 'EDITOR')) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const resolvedParams = await params;
     const body = await req.json();
-    const { name, slug, description, status, category, gallery, credits } = body;
+    const { title, name, slug, intro, location, year, status, seoDescription } = body;
 
     const project = await prisma.project.update({
       where: { id: resolvedParams.id },
       data: {
-        ...(name && { name }),
+        ...((title || name) && { title: title || name }),
         ...(slug && { slug }),
-        ...(description !== undefined && { description }),
+        ...(intro !== undefined && { intro }),
+        ...(location !== undefined && { location }),
         ...(status && { status }),
-        ...(category !== undefined && { category }),
-        ...(gallery && { gallery }),
-        ...(credits && { credits }),
+        ...(seoDescription !== undefined && { seoDescription }),
       },
     });
 
     return NextResponse.json(project);
   } catch (error) {
-    console.error("Error updating project:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error('Error updating project:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -64,17 +64,14 @@ export async function DELETE(
 ) {
   try {
     const user = await getSessionUser();
-    if (!user || user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!user || user.role !== 'ADMIN') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const resolvedParams = await params;
-    await prisma.project.delete({
-      where: { id: resolvedParams.id },
-    });
-
+    await prisma.project.delete({ where: { id: resolvedParams.id } });
     return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  } catch {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

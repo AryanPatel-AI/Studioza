@@ -1,3 +1,7 @@
+/**
+ * HorizontalGallery Component
+ * Horizontally scrolling monograph film roll with progress track, arrow step controls, and 120-format negative film rebate edges.
+ */
 "use client";
 
 import { useRef, useState } from "react";
@@ -85,8 +89,7 @@ export default function HorizontalGallery() {
     if (maxScroll > 0) {
       const progress = scrollLeft / maxScroll;
       setScrollProgress(progress);
-      const idx = Math.min(items.length - 1, Math.max(0, Math.round(progress * (items.length - 1))));
-      setActiveItem(idx);
+      setActiveItem(Math.min(items.length - 1, Math.max(0, Math.round(progress * (items.length - 1)))));
     }
   };
 
@@ -97,20 +100,15 @@ export default function HorizontalGallery() {
 
   return (
     <div className="py-24 sm:py-36 relative overflow-hidden bg-background">
-      {/* Section Typography Header: Editorial Layout */}
+      {/* Header with Navigation Controls */}
       <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 mb-12 sm:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-8">
         <div>
-          <span className="type-meta block mb-3">
-            Sequence 01 — The Horizontal Anthology
-          </span>
-          <h2 className="type-display-section text-ink-primary">
-            The Continuous Roll
-          </h2>
+          <span className="type-meta block mb-3">Sequence 01 — The Horizontal Anthology</span>
+          <h2 className="type-display-section text-ink-primary">The Continuous Roll</h2>
         </div>
 
-        {/* Navigation Controls, Counter & Hairline Progress Bar */}
         <div className="flex items-center justify-between sm:justify-end gap-5 w-full md:w-auto">
-          {/* Mobile Current Plate Badge */}
+          {/* Mobile indicator */}
           <div className="sm:hidden flex items-center gap-2 text-[10px] text-copper-500 px-3 py-1 border-b border-hairline">
             <span className="w-1 h-1 rounded-full bg-copper-500" />
             <span>PLATE 0{activeItem + 1}</span>
@@ -118,6 +116,7 @@ export default function HorizontalGallery() {
             <span className="text-stone-500">0{items.length}</span>
           </div>
 
+          {/* Desktop progress bar */}
           <div className="hidden sm:flex flex-col gap-1.5 w-36">
             <div className="h-px w-full bg-stone-200 overflow-hidden">
               <div
@@ -135,14 +134,14 @@ export default function HorizontalGallery() {
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => scrollBy(-450)}
-              className="w-9 h-9 border border-hairline text-ink-primary hover:border-stone-400 hover:text-ink-primary flex items-center justify-center transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer active:scale-95 bg-transparent"
+              className="w-9 h-9 border border-hairline text-ink-primary hover:border-stone-400 hover:text-ink-primary flex items-center justify-center transition-all duration-400 cursor-pointer active:scale-95 bg-transparent"
               aria-label="Scroll left"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => scrollBy(450)}
-              className="w-9 h-9 border border-hairline text-ink-primary hover:border-stone-400 hover:text-ink-primary flex items-center justify-center transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer active:scale-95 bg-transparent"
+              className="w-9 h-9 border border-hairline text-ink-primary hover:border-stone-400 hover:text-ink-primary flex items-center justify-center transition-all duration-400 cursor-pointer active:scale-95 bg-transparent"
               aria-label="Scroll right"
             >
               <ArrowRight className="w-3.5 h-3.5" />
@@ -163,33 +162,27 @@ export default function HorizontalGallery() {
             key={item.id}
             className={`shrink-0 ${item.widthClass} flex flex-col justify-between group transition-all duration-500 snap-center sm:snap-align-none`}
           >
-            {/* Film Frame Header: Negative Film Rebate Markings */}
+            {/* Film frame rebate */}
             <div className="flex items-center justify-between text-[11px] text-ink-muted mb-3">
               <span className="text-copper-500">{item.plateNumber}</span>
               <span className="uppercase text-stone-400">ILFORD HP5 PLUS • {20 + idx}A</span>
               <span className="hidden sm:inline-block text-stone-400">{item.location}</span>
             </div>
 
-            {/* Asymmetric Image Container */}
-            <div className={`relative overflow-hidden ${item.aspect} bg-stone-100 border border-hairline`}>
+            {/* Negative Image */}
+            <div className={`relative overflow-hidden ${item.aspect} bg-stone-100 border border-hairline flex items-center justify-center p-3`}>
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)]"
+                className="w-full h-full object-contain"
               />
             </div>
 
-            {/* Editorial Caption Footnote (Art Gallery Placard Style) */}
+            {/* Placard details */}
             <div className="pt-6 space-y-2">
-              <h3 className="type-display-project text-ink-primary transition-colors">
-                {item.title}
-              </h3>
-              <p className="text-xs sm:text-[13px] text-ink-muted max-w-lg leading-relaxed">
-                {item.caption}
-              </p>
-              <div className="pt-2 text-[11px] text-stone-400">
-                {item.medium}
-              </div>
+              <h3 className="type-display-project text-ink-primary transition-colors">{item.title}</h3>
+              <p className="text-xs sm:text-[13px] text-ink-muted max-w-lg leading-relaxed">{item.caption}</p>
+              <div className="pt-2 text-[11px] text-stone-400">{item.medium}</div>
             </div>
           </div>
         ))}

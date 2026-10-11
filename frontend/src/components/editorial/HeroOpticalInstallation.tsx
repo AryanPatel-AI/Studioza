@@ -1,3 +1,7 @@
+/**
+ * HeroOpticalInstallation Component
+ * Kinetic hero section with Framer Motion scroll parallax physics, mouse displacement, and staggered typographic reveal.
+ */
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -11,20 +15,21 @@ export default function HeroOpticalInstallation() {
     offset: ["start start", "end start"],
   });
 
-  // Parallax transforms
+  // Parallax scroll transforms
   const yImage = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const yText = useTransform(scrollYProgress, [0, 1], ["0%", "45%"]);
   const opacityText = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
-  
+
   useEffect(() => {
     setIsLoaded(true);
     const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      setMousePosition({ x, y });
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 30,
+        y: (e.clientY / window.innerHeight - 0.5) * 30,
+      });
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -34,41 +39,31 @@ export default function HeroOpticalInstallation() {
   const title = "STUDIOZA".split("");
 
   return (
-    <section 
+    <section
       ref={containerRef}
       className="relative w-full h-[100svh] overflow-hidden bg-background text-foreground flex flex-col justify-between"
     >
-      {/* ========================================================================= */}
-      {/* 1. CINEMATIC PHOTOGRAPHY BACKGROUND WITH PARALLAX                         */}
-      {/* ========================================================================= */}
-      <motion.div 
-        style={{ y: yImage }}
-        className="absolute inset-0 w-full h-full z-0 overflow-hidden"
-      >
-        <motion.div 
+      {/* Cinematic Parallax Photography Layer */}
+      <motion.div style={{ y: yImage }} className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+        <motion.div
           initial={{ scale: 1.15, opacity: 0, filter: "blur(10px)" }}
           animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
           transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full h-full"
         >
           <img
-            src="/images/hero-photographer-mountains.jpg"
-            alt="Studioza Signature Optical Archive — Photographer on Mountain Summit"
-            className="w-full h-full object-cover object-[center_32%] sm:object-center"
-            style={{
-              filter: "contrast(1.04) saturate(1.08) brightness(0.82)",
-            }}
+            src="/images/Dal_Lake.jpeg"
+            alt="Studioza Signature Optical Archive — Dal Lake Expedition"
+            className="w-full h-full object-contain object-[center_32%] sm:object-center"
+            style={{ filter: "contrast(1.04) saturate(1.08) brightness(0.82)" }}
           />
         </motion.div>
-        
-        {/* Subtle Edge Vignette & Grain */}
+
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-background/95 pointer-events-none" />
       </motion.div>
 
-      {/* ========================================================================= */}
-      {/* 2. TOP METADATA & TELEMETRY (Fades in)                                    */}
-      {/* ========================================================================= */}
-      <motion.div 
+      {/* Top Metadata Strip */}
+      <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.4, duration: 1.2, ease: "easeOut" }}
@@ -84,11 +79,9 @@ export default function HeroOpticalInstallation() {
         </div>
       </motion.div>
 
-      {/* ========================================================================= */}
-      {/* 3. MASSIVE KINETIC TYPOGRAPHY                                             */}
-      {/* ========================================================================= */}
-      <motion.div 
-        style={{ 
+      {/* Kinetic Display Headline */}
+      <motion.div
+        style={{
           y: yText,
           opacity: opacityText,
           x: mousePosition.x * -1,
@@ -97,25 +90,23 @@ export default function HeroOpticalInstallation() {
       >
         <h1 className="flex overflow-hidden pb-4">
           <AnimatePresence>
-            {isLoaded && title.map((letter, index) => (
-              <motion.span
-                key={index}
-                initial={{ y: "110%", opacity: 0, rotate: 10 }}
-                animate={{ y: "0%", opacity: 1, rotate: 0 }}
-                transition={{
-                  duration: 1.4,
-                  ease: [0.16, 1, 0.3, 1],
-                  delay: 0.3 + index * 0.06,
-                }}
-                className="type-display-hero text-white tracking-tighter mix-blend-overlay drop-shadow-2xl"
-                style={{
-                  fontSize: "clamp(4rem, 15vw, 18rem)",
-                  lineHeight: "0.8",
-                }}
-              >
-                {letter}
-              </motion.span>
-            ))}
+            {isLoaded &&
+              title.map((letter, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ y: "110%", opacity: 0, rotate: 10 }}
+                  animate={{ y: "0%", opacity: 1, rotate: 0 }}
+                  transition={{
+                    duration: 1.4,
+                    ease: [0.16, 1, 0.3, 1],
+                    delay: 0.3 + index * 0.06,
+                  }}
+                  className="type-display-hero text-white tracking-tighter mix-blend-overlay drop-shadow-2xl"
+                  style={{ fontSize: "clamp(4rem, 15vw, 18rem)", lineHeight: "0.8" }}
+                >
+                  {letter}
+                </motion.span>
+              ))}
           </AnimatePresence>
         </h1>
         <motion.div
@@ -128,10 +119,8 @@ export default function HeroOpticalInstallation() {
         </motion.div>
       </motion.div>
 
-      {/* ========================================================================= */}
-      {/* 4. BOTTOM ACTION BAR (Fades in)                                           */}
-      {/* ========================================================================= */}
-      <motion.div 
+      {/* Bottom Action Cue */}
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.6, duration: 1.2, ease: "easeOut" }}

@@ -1,3 +1,7 @@
+/**
+ * Studio Platform End-to-End Verification Suite
+ * Exercises authentication, project lifecycle, content persistence, publishing, asset tracking, and audit logging.
+ */
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
@@ -6,6 +10,7 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "studio-secret-key-test";
 
+/** Returns boilerplate initial blocks for test projects */
 function getStarterContent(template: string, name: string) {
   return [
     { id: "hero-1", type: "hero", title: name, subtitle: "Digital work" },
@@ -27,22 +32,12 @@ async function runVerification() {
   if (!passwordValid) throw new Error("Bcrypt verification failed");
 
   const creatorUser = await prisma.user.create({
-    data: {
-      name: "Test Creator",
-      email: testEmail,
-      password: hashedPassword,
-      role: "user",
-    },
+    data: { name: "Test Creator", email: testEmail, password: hashedPassword, role: "user" },
   });
   console.log(`✓ Creator user registered successfully: ${creatorUser.id} (${creatorUser.email})`);
 
   const adminUser = await prisma.user.create({
-    data: {
-      name: "Test Admin",
-      email: adminEmail,
-      password: hashedPassword,
-      role: "admin",
-    },
+    data: { name: "Test Admin", email: adminEmail, password: hashedPassword, role: "admin" },
   });
   console.log(`✓ Admin user registered successfully: ${adminUser.id} (${adminUser.email})`);
 
@@ -72,10 +67,7 @@ async function runVerification() {
       status: "draft",
       ownerId: creatorUser.id,
       content: JSON.stringify(initialBlocks),
-      settings: JSON.stringify({
-        seoTitle: "Alpha Anthology — Live",
-        seoDescription: "A comprehensive digital showcase",
-      }),
+      settings: JSON.stringify({ seoTitle: "Alpha Anthology — Live", seoDescription: "A comprehensive digital showcase" }),
     },
   });
   console.log(`✓ Project created in Draft state: ${project.id} (/p/${project.slug})`);
@@ -106,10 +98,7 @@ async function runVerification() {
   console.log("\n[5] Testing Publishing Workflow...");
   const publishedProject = await prisma.project.update({
     where: { id: project.id },
-    data: {
-      status: "published",
-      publishedAt: new Date(),
-    },
+    data: { status: "published", publishedAt: new Date() },
   });
   if (publishedProject.status !== "published" || !publishedProject.publishedAt) {
     throw new Error("Publish status failed");
@@ -133,9 +122,7 @@ async function runVerification() {
 
   // 7. Test Activity Audit Retrieval
   console.log("\n[7] Testing Activity Audit Feed...");
-  const activities = await prisma.activity.findMany({
-    where: { userId: creatorUser.id },
-  });
+  const activities = await prisma.activity.findMany({ where: { userId: creatorUser.id } });
   console.log(`✓ Retrieved ${activities.length} audited activities for user`);
 
   // 8. Test Admin Overview Aggregations

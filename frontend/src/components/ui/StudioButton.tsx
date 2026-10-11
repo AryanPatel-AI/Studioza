@@ -1,3 +1,7 @@
+/**
+ * Studioza Interactive Kinetic Button
+ * Implements cursor magnetic attraction physics, tactile hover states, and smooth directional displacements.
+ */
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -12,7 +16,7 @@ export interface StudioButtonProps {
   href?: string;
   onClick?: () => void;
   icon?: "arrow-up-right" | "arrow-right" | "none" | React.ReactNode;
-  strength?: number; // Magnetic displacement factor (0 to 0.4)
+  strength?: number; // Magnetic displacement multiplier (default 0.20)
   className?: string;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
@@ -25,7 +29,7 @@ export default function StudioButton({
   href,
   onClick,
   icon = "none",
-  strength = 0.20,
+  strength = 0.2,
   className = "",
   type = "button",
   disabled = false,
@@ -43,6 +47,7 @@ export default function StudioButton({
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
+  // Calculate magnetic physics pull towards cursor
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current || disabled) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -62,47 +67,33 @@ export default function StudioButton({
     setPosition({ x: 0, y: 0 });
   };
 
-  // 1. Proportional Editorial Sizes
   const sizeClasses = {
     sm: "py-2 px-4 text-[11px] gap-1.5",
     md: "py-2.5 px-6 text-[11px] sm:text-xs gap-2",
     lg: "py-3.5 px-8 text-xs gap-2.5",
   }[size];
 
-  // 2. Architectural Editorial Visuals (Restrained, no neon glows, crisp radii)
   const variantClasses = {
-    primary:
-      "bg-sage-500 text-[#151515] border border-sage-500 hover:bg-sage-600 hover:border-sage-600 transition-colors duration-200 active:scale-[0.99]",
-    crystal:
-      "bg-transparent text-[#151515] border border-stone-200 hover:border-amber-500 hover:text-amber-600 transition-colors duration-200 active:scale-[0.99]",
-    outline:
-      "bg-transparent text-[#151515] border border-[#151515]/20 hover:border-[#151515] transition-colors duration-200 active:scale-[0.99]",
-    dark:
-      "bg-stone-900 text-[#F2F0E9] border border-stone-800 hover:border-stone-500 transition-colors duration-200 active:scale-[0.99]",
-    minimal:
-      "text-[#151515] hover:text-amber-500 bg-transparent px-0 py-1 hover:underline underline-offset-4 decoration-amber-500/30 transition-colors",
+    primary: "bg-sage-500 text-[#151515] border border-sage-500 hover:bg-sage-600 hover:border-sage-600 transition-colors duration-200 active:scale-[0.99]",
+    crystal: "bg-transparent text-[#151515] border border-stone-200 hover:border-amber-500 hover:text-amber-600 transition-colors duration-200 active:scale-[0.99]",
+    outline: "bg-transparent text-[#151515] border border-[#151515]/20 hover:border-[#151515] transition-colors duration-200 active:scale-[0.99]",
+    dark: "bg-stone-900 text-[#F2F0E9] border border-stone-800 hover:border-stone-500 transition-colors duration-200 active:scale-[0.99]",
+    minimal: "text-[#151515] hover:text-amber-500 bg-transparent px-0 py-1 hover:underline underline-offset-4 decoration-amber-500/30 transition-colors",
   }[variant];
 
-  // 3. Render Icon
   const renderIcon = () => {
     if (icon === "none") return null;
     if (icon === "arrow-up-right") {
       return (
         <ArrowUpRight
-          className={cn(
-            "w-3.5 h-3.5 transition-transform duration-300",
-            isHovered && "transtone-x-0.5 -transtone-y-0.5"
-          )}
+          className={cn("w-3.5 h-3.5 transition-transform duration-300", isHovered && "transtone-x-0.5 -transtone-y-0.5")}
         />
       );
     }
     if (icon === "arrow-right") {
       return (
         <ArrowRight
-          className={cn(
-            "w-3.5 h-3.5 transition-transform duration-300",
-            isHovered && "transtone-x-1"
-          )}
+          className={cn("w-3.5 h-3.5 transition-transform duration-300", isHovered && "transtone-x-1")}
         />
       );
     }
