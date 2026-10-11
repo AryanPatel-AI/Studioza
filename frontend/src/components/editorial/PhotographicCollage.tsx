@@ -51,13 +51,13 @@ export default function PhotographicCollage() {
   }, [selectedPlate, handleClose, handlePrev, handleNext]);
 
   return (
-    <section className="relative w-full bg-[#F4F1EB] text-[#151515] py-24 sm:py-32 px-4 sm:px-6 lg:px-12 select-none">
-      <div className="max-w-7xl mx-auto space-y-24">
+    <section className="relative w-full bg-[#F4F1EB] text-[#151515] py-20 sm:py-24 px-4 sm:px-6 lg:px-12 select-none">
+      <div className="max-w-7xl mx-auto space-y-14 lg:space-y-18">
         {/* ========================================================================= */}
         {/* COLLAGE PART I: 3:2 WIDESCREEN CITADEL & WATERSCAPE PANORAMAS             */}
         {/* ========================================================================= */}
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#D9D5CE] pb-4 gap-2">
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#D9D5CE] pb-3 gap-2">
             <div>
               <span className="type-meta text-[#77736D] block mb-1">
                 COLLAGE COMPOSITION // PANORAMIC EXPEDITIONS
@@ -67,12 +67,12 @@ export default function PhotographicCollage() {
               </h2>
             </div>
             <span className="type-meta text-[#CFA570] text-xs">
-              ORIGINAL 3:2 WIDESCREEN FORM
+              ORIGINAL 3:2 WIDESCREEN FORM · TIGHT CONTACT MOSAIC
             </span>
           </div>
 
-          {/* Panoramic Collage: Dynamic mosaic of 3:2 landscape plates */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-6 items-start">
+          {/* Panoramic Collage: Dynamic mosaic of 3:2 landscape plates arranged tightly */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-1.5 sm:gap-2 items-start">
             {/* Main Anchor: Jaigarh Fort Crest (Full 8 cols) */}
             <div
               onClick={() => setSelectedPlate(landscapePlates[10] || landscapePlates[0])}
@@ -101,7 +101,7 @@ export default function PhotographicCollage() {
             </div>
 
             {/* Stacked Right Column: Dal Lake & Jageshwar Riverbed (4 cols) */}
-            <div className="md:col-span-4 space-y-4 lg:space-y-6">
+            <div className="md:col-span-4 space-y-1.5 sm:space-y-2">
               {landscapePlates.slice(7, 9).map((plate) => (
                 <div
                   key={plate.id}
@@ -159,8 +159,8 @@ export default function PhotographicCollage() {
         {/* ========================================================================= */}
         {/* COLLAGE PART II: 2:3 VERTICAL PORTRAITS & TEMPLE MONOLITHS                */}
         {/* ========================================================================= */}
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#D9D5CE] pb-4 gap-2">
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#D9D5CE] pb-3 gap-2">
             <div>
               <span className="type-meta text-[#77736D] block mb-1">
                 COLLAGE COMPOSITION // SITTINGS &amp; TEMPLE SHIKHARAS
@@ -170,19 +170,17 @@ export default function PhotographicCollage() {
               </h2>
             </div>
             <span className="type-meta text-[#CFA570] text-xs">
-              ORIGINAL 2:3 VERTICAL FORM
+              ORIGINAL 2:3 VERTICAL FORM · TIGHT CONTACT MOSAIC
             </span>
           </div>
 
-          {/* Dynamic 5-Column Collage of Vertical Studies */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 lg:gap-4">
-            {portraitPlates.slice(0, 15).map((plate, idx) => (
+          {/* Dynamic 5-Column Collage of Vertical Studies Arranged Closely */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1.5 sm:gap-2">
+            {portraitPlates.slice(0, 15).map((plate) => (
               <div
                 key={plate.id}
                 onClick={() => setSelectedPlate(plate)}
-                className={`group relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] cursor-pointer shadow-sm ${
-                  idx % 4 === 1 ? "sm:translate-y-3" : idx % 4 === 3 ? "sm:-translate-y-2" : ""
-                }`}
+                className="group relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] cursor-pointer shadow-sm"
               >
                 <div className="aspect-[2/3] relative w-full overflow-hidden">
                   <Image

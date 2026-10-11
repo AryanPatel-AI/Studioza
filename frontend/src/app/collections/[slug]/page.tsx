@@ -288,7 +288,7 @@ export default function CollectionDetailPage({
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5 items-start">
                   {landscapePhotos.map((photo) => {
                     const originalIdx = collection.photographs.findIndex((p) => p.id === photo.id);
                     const photoInfo = getImagePlateInfo(photo.url);
@@ -354,7 +354,7 @@ export default function CollectionDetailPage({
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5 items-start">
                   {portraitPhotos.map((photo) => {
                     const originalIdx = collection.photographs.findIndex((p) => p.id === photo.id);
                     const photoInfo = getImagePlateInfo(photo.url);

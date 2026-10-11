@@ -61,7 +61,6 @@ export function getCuratedCollections(): CuratedCollection[] {
 }
 
 const SLUG_ALIASES: Record<string, string> = {
-  "chittorgarh-citadel": "jageshwar-dham",
   "sheesh-mahal-portraits": "sheesh-mahal",
   "estate-monograph": "bareilly-heritage",
   "lake-pichola": "dal-lake-monograph",
