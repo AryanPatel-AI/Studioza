@@ -9,6 +9,7 @@ import Footer from "@/components/core/Footer";
 import FilmGrain from "@/components/film/FilmGrain";
 import { ArrowDownRight, ArrowUpRight, Camera, ArrowRight } from "lucide-react";
 import { PROJECTS, STORIES, SERVICES, TESTIMONIALS, getImagePlateInfo } from "@/lib/data/studioData";
+import { RecentWorkGrid } from "@/components/editorial";
 
 export default function AtelierHomepage() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -137,13 +138,18 @@ export default function AtelierHomepage() {
         </section>
 
         {/* ========================================================================= */}
+        {/* 2. RECENT WORK — 5-COLUMN GALLERY SHOWCASE (STUDIO63 INSPIRED)            */}
+        {/* ========================================================================= */}
+        <RecentWorkGrid />
+
+        {/* ========================================================================= */}
         {/* 3. SELECTED WORK — DELIBERATELY VARYING EDITORIAL LAYOUT                  */}
         {/* ========================================================================= */}
         <section className="py-32 px-6 lg:px-12 bg-[#F4F1EB]">
           <div className="max-w-7xl mx-auto space-y-20">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#D9D5CE] pb-6 gap-4">
               <div>
-                <span className="type-meta text-[#77736D] block mb-2">02 / Curated Monograph Series</span>
+                <span className="type-meta text-[#77736D] block mb-2">03 / Curated Monograph Series</span>
                 <h2 className="font-serif text-4xl sm:text-6xl font-normal text-[#151515]">Selected Work</h2>
               </div>
               <Link

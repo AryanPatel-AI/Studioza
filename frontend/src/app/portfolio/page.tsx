@@ -12,7 +12,7 @@ import { useReveal } from '@/lib/useReveal';
 
 const CATEGORIES = [
   { id: 'all', label: 'All Monographs', slug: 'all' },
-  { id: 'architecture', label: 'Architecture', slug: 'architecture' },
+  { id: 'architecture', label: 'Architecture & Forts', slug: 'architecture' },
   { id: 'weddings', label: 'Weddings', slug: 'weddings' },
   { id: 'portraits', label: 'Portraits', slug: 'portraits' },
   { id: 'fashion', label: 'Fashion', slug: 'fashion' },
