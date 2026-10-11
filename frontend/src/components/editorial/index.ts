@@ -13,3 +13,4 @@ export { default as AtelierProcessTimeline } from "./AtelierProcessTimeline";
 export { default as EditorialContactSection } from "./EditorialContactSection";
 export { default as SpiralScrollGallery } from "./SpiralScrollGallery";
 export { default as RecentWorkGrid } from "./RecentWorkGrid";
+export { default as PhotographicCollage } from "./PhotographicCollage";
