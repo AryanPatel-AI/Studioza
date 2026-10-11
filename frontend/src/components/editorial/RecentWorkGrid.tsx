@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { RECENT_WORK_PLATES, RecentWorkPlate } from "@/lib/data/recentWorkPlates";
-import { X, ChevronLeft, ChevronRight, Maximize2, MapPin, Grid, SlidersHorizontal, Image as ImageIcon } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Maximize2, MapPin, Grid } from "lucide-react";
 
 interface CategoryTab {
   id: string;
@@ -26,13 +26,13 @@ export default function RecentWorkGrid() {
   const [orientationFilter, setOrientationFilter] = useState<OrientationFilter>("all");
   const [selectedPlate, setSelectedPlate] = useState<RecentWorkPlate | null>(null);
 
-  // Filter plates by category first
+  // Filter plates by category
   const categoryFilteredPlates = useMemo(() => {
     if (activeCategory === "all") return RECENT_WORK_PLATES;
     return RECENT_WORK_PLATES.filter((p) => p.categories.includes(activeCategory));
   }, [activeCategory]);
 
-  // Separate into portrait and landscape plates
+  // Segregate into portrait and landscape plates
   const portraitPlates = useMemo(() => {
     return categoryFilteredPlates.filter((p) => !p.isLandscape);
   }, [categoryFilteredPlates]);
@@ -63,7 +63,6 @@ export default function RecentWorkGrid() {
     return counts;
   }, []);
 
-  // Lightbox navigation
   const activeList = useMemo(() => {
     return displayedPlates;
   }, [displayedPlates]);
@@ -99,30 +98,30 @@ export default function RecentWorkGrid() {
   }, [selectedPlate, handleClose, handlePrev, handleNext]);
 
   return (
-    <section className="relative w-full bg-[#171717] text-[#F4F1EB] py-24 sm:py-32 px-4 sm:px-6 lg:px-10 overflow-hidden select-none border-t border-b border-white/10">
+    <section className="relative w-full bg-[#F4F1EB] text-[#151515] py-24 sm:py-32 px-4 sm:px-6 lg:px-10 overflow-hidden select-none border-t border-b border-[#D9D5CE]">
       <div className="max-w-[1920px] mx-auto space-y-12">
         {/* ========================================================================= */}
-        {/* HEADER: Studioza Palette "Recent Work" with Ghost Outline Typography      */}
+        {/* HEADER: Studioza Warm Parchment Palette & Ghost Outline Typography        */}
         {/* ========================================================================= */}
-        <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-8 pb-8 border-b border-white/10">
+        <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-8 pb-8 border-b border-[#D9D5CE]">
           <div className="space-y-3">
             <div className="flex items-baseline gap-4 sm:gap-6 flex-wrap relative">
-              <h2 className="text-4xl sm:text-6xl md:text-7xl font-sans font-extrabold tracking-tight text-[#F4F1EB] flex items-center">
+              <h2 className="text-4xl sm:text-6xl md:text-7xl font-sans font-extrabold tracking-tight text-[#151515] flex items-center">
                 <span>Recent&nbsp;</span>
                 <span className="text-[#CFA570]">Work</span>
               </h2>
-              {/* Layered Ghost Outline Text in Studioza Gold Hairline */}
+              {/* Layered Ghost Outline Text in Subtle Ink Hairline */}
               <span
                 aria-hidden="true"
                 className="select-none font-sans font-extrabold text-5xl sm:text-7xl md:text-8xl tracking-tight text-transparent transition-opacity opacity-20 pointer-events-none hidden sm:inline-block"
                 style={{
-                  WebkitTextStroke: "1.5px #CFA570",
+                  WebkitTextStroke: "1.5px rgba(21, 21, 21, 0.2)",
                 }}
               >
                 Work
               </span>
             </div>
-            <p className="text-xs sm:text-sm font-mono tracking-widest text-[#A7A7A7] uppercase flex items-center gap-2">
+            <p className="text-xs sm:text-sm font-mono tracking-widest text-[#77736D] uppercase flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#CFA570]" />
               Archival Catalog // 61 Medium Format Plates • Strict Aspect Ratios Preserved
             </p>
@@ -131,14 +130,14 @@ export default function RecentWorkGrid() {
           {/* Controls Cluster: Category Tabs & Orientation Segmented Control */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 flex-wrap">
             {/* Orientation Filter Switch: All vs Portraits vs Landscapes */}
-            <div className="inline-flex items-center p-1 bg-[#1F1E1B] rounded border border-white/10 text-xs font-mono uppercase tracking-wider">
+            <div className="inline-flex items-center p-1 bg-[#EAE6DE] rounded border border-[#D9D5CE] text-xs font-mono uppercase tracking-wider">
               <button
                 type="button"
                 onClick={() => setOrientationFilter("all")}
                 className={`px-3 py-1.5 rounded transition-all flex items-center gap-1.5 ${
                   orientationFilter === "all"
-                    ? "bg-[#CFA570] text-[#151515] font-semibold shadow-sm"
-                    : "text-[#A7A7A7] hover:text-white"
+                    ? "bg-[#151515] text-[#F4F1EB] font-semibold shadow-sm"
+                    : "text-[#77736D] hover:text-[#151515]"
                 }`}
               >
                 <Grid className="w-3.5 h-3.5" />
@@ -149,8 +148,8 @@ export default function RecentWorkGrid() {
                 onClick={() => setOrientationFilter("portrait")}
                 className={`px-3 py-1.5 rounded transition-all flex items-center gap-1.5 ${
                   orientationFilter === "portrait"
-                    ? "bg-[#CFA570] text-[#151515] font-semibold shadow-sm"
-                    : "text-[#A7A7A7] hover:text-white"
+                    ? "bg-[#151515] text-[#F4F1EB] font-semibold shadow-sm"
+                    : "text-[#77736D] hover:text-[#151515]"
                 }`}
               >
                 <span>2:3 Portraits ({portraitPlates.length})</span>
@@ -160,15 +159,15 @@ export default function RecentWorkGrid() {
                 onClick={() => setOrientationFilter("landscape")}
                 className={`px-3 py-1.5 rounded transition-all flex items-center gap-1.5 ${
                   orientationFilter === "landscape"
-                    ? "bg-[#CFA570] text-[#151515] font-semibold shadow-sm"
-                    : "text-[#A7A7A7] hover:text-white"
+                    ? "bg-[#151515] text-[#F4F1EB] font-semibold shadow-sm"
+                    : "text-[#77736D] hover:text-[#151515]"
                 }`}
               >
                 <span>3:2 Landscapes ({landscapePlates.length})</span>
               </button>
             </div>
 
-            {/* Category Navigation Pills in Studioza Palette */}
+            {/* Category Navigation Pills */}
             <div className="flex flex-wrap items-center gap-2 text-xs font-mono uppercase tracking-wider">
               {CATEGORIES.map((cat) => {
                 const isActive = activeCategory === cat.id;
@@ -177,19 +176,17 @@ export default function RecentWorkGrid() {
                   <button
                     key={cat.id}
                     type="button"
-                    onClick={() => {
-                      setActiveCategory(cat.id);
-                    }}
+                    onClick={() => setActiveCategory(cat.id)}
                     className={`px-3 py-1.5 rounded border transition-all duration-200 flex items-center gap-1.5 ${
                       isActive
-                        ? "bg-[#CFA570] text-[#151515] border-[#CFA570] font-semibold shadow-[0_2px_12px_rgba(207,165,112,0.25)]"
-                        : "bg-[#1F1E1B] text-[#A7A7A7] border-white/10 hover:border-[#CFA570]/40 hover:text-white"
+                        ? "bg-[#151515] text-[#F4F1EB] border-[#151515] font-semibold shadow-sm"
+                        : "bg-[#EAE6DE] text-[#77736D] border-[#D9D5CE] hover:border-[#151515] hover:text-[#151515]"
                     }`}
                   >
                     <span>{cat.label}</span>
                     <span
                       className={`text-[10px] px-1 py-0.2 rounded ${
-                        isActive ? "bg-[#151515]/20 text-[#151515]" : "text-[#77736D]"
+                        isActive ? "bg-white/20 text-[#F4F1EB]" : "text-[#77736D]"
                       }`}
                     >
                       {count}
@@ -209,18 +206,18 @@ export default function RecentWorkGrid() {
           {(orientationFilter === "all" || orientationFilter === "portrait") && portraitPlates.length > 0 && (
             <div className="space-y-4">
               {orientationFilter === "all" && landscapePlates.length > 0 && (
-                <div className="flex items-center justify-between border-b border-white/10 pb-3 pt-2">
-                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#CFA570]">
+                <div className="flex items-center justify-between border-b border-[#D9D5CE] pb-3 pt-2">
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#151515] font-semibold">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#CFA570]" />
                     <span>Folio Part I // Portrait &amp; Temple Studies (2:3 Vertical Form • {portraitPlates.length} Plates)</span>
                   </div>
-                  <span className="text-[11px] font-mono text-[#A7A7A7] hidden sm:inline">
-                    5-Column Seamless Edge-to-Edge Grid
+                  <span className="text-[11px] font-mono text-[#77736D] hidden sm:inline">
+                    5-Column Seamless Architectural Grid
                   </span>
                 </div>
               )}
 
-              {/* 5-Column Grid: pure 2:3 aspect ratio, identical heights in every row */}
+              {/* 5-Column Grid: pure 2:3 aspect ratio, uniform heights across every row */}
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1.5 sm:gap-2">
                 {portraitPlates.map((plate) => {
                   const aspectClass = plate.aspectRatio === "4/5" ? "aspect-[4/5]" : "aspect-[2/3]";
@@ -229,7 +226,7 @@ export default function RecentWorkGrid() {
                     <div
                       key={plate.id}
                       onClick={() => setSelectedPlate(plate)}
-                      className="group relative overflow-hidden bg-[#1F1E1B] cursor-pointer"
+                      className="group relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] cursor-pointer"
                     >
                       <div className={`relative w-full ${aspectClass} overflow-hidden`}>
                         <Image
@@ -242,8 +239,8 @@ export default function RecentWorkGrid() {
                           className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                         />
 
-                        {/* Darkroom Vignette Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                        {/* Subtle Vignette Overlay on Hover */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                         {/* Hover Caption Card */}
                         <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 text-white z-10 translate-y-3 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none flex flex-col justify-end">
@@ -259,14 +256,14 @@ export default function RecentWorkGrid() {
                           <h3 className="font-serif text-sm sm:text-base font-normal leading-snug drop-shadow-md text-[#F4F1EB]">
                             {plate.title}
                           </h3>
-                          <div className="flex items-center gap-1 text-[11px] text-[#A7A7A7] mt-1 font-sans">
+                          <div className="flex items-center gap-1 text-[11px] text-[#D9D5CE] mt-1 font-sans">
                             <MapPin className="w-3 h-3 text-[#CFA570] shrink-0" />
                             <span className="truncate">{plate.location}</span>
                           </div>
                         </div>
 
                         {/* Quick Expand Icon */}
-                        <div className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 text-[#CFA570] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                        <div className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-[#CFA570] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                           <Maximize2 className="w-3.5 h-3.5" />
                         </div>
                       </div>
@@ -281,25 +278,25 @@ export default function RecentWorkGrid() {
           {(orientationFilter === "all" || orientationFilter === "landscape") && landscapePlates.length > 0 && (
             <div className="space-y-4 pt-4">
               {orientationFilter === "all" && portraitPlates.length > 0 && (
-                <div className="flex items-center justify-between border-b border-white/10 pb-3 pt-6">
-                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#CFA570]">
+                <div className="flex items-center justify-between border-b border-[#D9D5CE] pb-3 pt-6">
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#151515] font-semibold">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#CFA570]" />
                     <span>Folio Part II // Citadel Panoramas &amp; Waterscapes (3:2 Landscape Form • {landscapePlates.length} Plates)</span>
                   </div>
-                  <span className="text-[11px] font-mono text-[#A7A7A7] hidden sm:inline">
+                  <span className="text-[11px] font-mono text-[#77736D] hidden sm:inline">
                     3-Column Widescreen Panoramic Grid
                   </span>
                 </div>
               )}
 
-              {/* 3-Column Grid: pure 3:2 aspect ratio, identical widescreen heights in every row */}
+              {/* 3-Column Grid: pure 3:2 aspect ratio, uniform widescreen heights across every row */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
                 {landscapePlates.map((plate) => {
                   return (
                     <div
                       key={plate.id}
                       onClick={() => setSelectedPlate(plate)}
-                      className="group relative overflow-hidden bg-[#1F1E1B] cursor-pointer"
+                      className="group relative overflow-hidden bg-[#EAE6DE] border border-[#D9D5CE] cursor-pointer"
                     >
                       <div className="relative w-full aspect-[3/2] overflow-hidden">
                         <Image
@@ -312,8 +309,8 @@ export default function RecentWorkGrid() {
                           className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                         />
 
-                        {/* Darkroom Vignette Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                        {/* Subtle Vignette Overlay on Hover */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                         {/* Hover Caption Card */}
                         <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 text-white z-10 translate-y-3 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none flex flex-col justify-end">
@@ -329,14 +326,14 @@ export default function RecentWorkGrid() {
                           <h3 className="font-serif text-base sm:text-lg font-normal leading-snug drop-shadow-md text-[#F4F1EB]">
                             {plate.title}
                           </h3>
-                          <div className="flex items-center gap-1.5 text-xs text-[#A7A7A7] mt-1 font-sans">
+                          <div className="flex items-center gap-1.5 text-xs text-[#D9D5CE] mt-1 font-sans">
                             <MapPin className="w-3.5 h-3.5 text-[#CFA570] shrink-0" />
                             <span className="truncate">{plate.location}</span>
                           </div>
                         </div>
 
                         {/* Quick Expand Icon */}
-                        <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 text-[#CFA570] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                        <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-[#CFA570] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                           <Maximize2 className="w-4 h-4" />
                         </div>
                       </div>
@@ -428,7 +425,7 @@ export default function RecentWorkGrid() {
               </button>
             </div>
 
-            {/* Bottom Caption & Archival Notes in Studioza Palette */}
+            {/* Bottom Caption & Archival Notes */}
             <div
               className="max-w-4xl mx-auto w-full text-center space-y-1.5 border-t border-white/10 pt-3"
               onClick={(e) => e.stopPropagation()}
